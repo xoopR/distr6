@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -319,7 +319,12 @@ the <a href='Distribution.html'>Distribution</a> is used.</p></dd>
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TruncatedDistribution</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>TruncatedDistribution</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  error <span class='op'>=</span> <span class='st'>"warn"</span>,
+  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -332,6 +337,10 @@ are the new values to set.</p></dd>
 
 <dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
 If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

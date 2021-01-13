@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -233,15 +233,15 @@
 <span class="co">#&gt; 2:  var     4      ℝ+          Variance - Squared Scale Parameter</span>
 <span class="co">#&gt; 3:   sd     2      ℝ+        Standard Deviation - Scale Parameter</span>
 <span class="co">#&gt; 4: prec  0.25      ℝ+ Precision - Inverse Squared Scale Parameter</span></code></pre></div>
-<p>But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will lead to the variance argument being ignored:</p>
+<p>But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will cause an error:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span>, prec <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;      id     value support                                 description</span>
-<span class="co">#&gt; 1: mean         4       ℝ                   Mean - Location Parameter</span>
-<span class="co">#&gt; 2:  var 0.3333333      ℝ+          Variance - Squared Scale Parameter</span>
-<span class="co">#&gt; 3:   sd 0.5773503      ℝ+        Standard Deviation - Scale Parameter</span>
-<span class="co">#&gt; 4: prec         3      ℝ+ Precision - Inverse Squared Scale Parameter</span></code></pre></div>
+<span class="co">#&gt; Error in FUN(X[[i]], ...): Conflicting parametrisations detected. Only one of {var, sd, prec} should be given.</span></code></pre></div>
+<p>In rare cases you may want to allow the method to resolve conflicts automatically, but this should be used with care and only with very good reason:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span>, prec <span class="op">=</span> <span class="fl">3</span>, resolveConflicts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Norm(mean = 4, var = 2, sd = 1.4142135623731, prec = 0.5)</span></code></pre></div>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">

@@ -87,7 +87,7 @@ creating a custom probability distribution that takes parameters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -404,7 +404,8 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
   <span class='va'>...</span>,
   lst <span class='op'>=</span> <span class='cn'>NULL</span>,
   error <span class='op'>=</span> <span class='st'>"warn"</span>,
-  .suppressCheck <span class='op'>=</span> <span class='cn'>FALSE</span>
+  .suppressCheck <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -421,6 +422,10 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 <dt><code>.suppressCheck</code></dt><dd><p><code>(logical(1))</code><br />
 Should be set internally only.</p></dd>
+
+<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
@@ -575,7 +580,7 @@ ps$addTrafos(dt = data.table::data.table(
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>settable</code></dt><dd><p><code>(logical(1))</code><br />
-If <code>TRUE</code> (default) only returns values of settable parameters, otherwise returns all.</p></dd>
+If <code>TRUE</code> (default) only returns values of settable parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

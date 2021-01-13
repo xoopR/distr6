@@ -87,7 +87,7 @@ is commonly used in physics and finance." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -236,11 +236,32 @@ is commonly used in physics and finance.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an R6 object inheriting from class SDistribution.</p>
+    <p>Returns an R6 object inheriting from class <a href='SDistribution.html'>SDistribution</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Cauchy distribution parameterised with  location, \(\alpha\), and scale, \(\beta\), is defined by the pdf, $$f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))$$ for \(\alpha \epsilon R\) and \(\beta &gt; 0\).</p>
+    <h2 class="hasAnchor" id="distribution-support"><a class="anchor" href="#distribution-support"></a>Distribution support</h2>
+
+    
+
 <p>The distribution is supported on the Reals.</p>
+    <h2 class="hasAnchor" id="default-parameterisation"><a class="anchor" href="#default-parameterisation"></a>Default Parameterisation</h2>
+
+    
+
+<p>Cauchy(location = 0, scale = 1)</p>
+    <h2 class="hasAnchor" id="omitted-methods"><a class="anchor" href="#omitted-methods"></a>Omitted Methods</h2>
+
+    
+
+
+<p>N/A</p>
+    <h2 class="hasAnchor" id="also-known-as"><a class="anchor" href="#also-known-as"></a>Also known as</h2>
+
+    
+
+
+<p>N/A</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -382,7 +403,7 @@ Michael P. McLaughlin.</p>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Cauchy</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>location <span class='op'>=</span> <span class='fl'>0</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Cauchy</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>location <span class='op'>=</span> <span class='cn'>NULL</span>, scale <span class='op'>=</span> <span class='cn'>NULL</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

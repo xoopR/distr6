@@ -87,7 +87,7 @@ is commonly used to model the number of trials (or number of failures) before th
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -236,13 +236,34 @@ is commonly used to model the number of trials (or number of failures) before th
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an R6 object inheriting from class SDistribution.</p>
+    <p>Returns an R6 object inheriting from class <a href='SDistribution.html'>SDistribution</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Geometric distribution parameterised with  probability of success, \(p\), is defined by the pmf, $$f(x) = (1 - p)^{k-1}p$$ for probability \(p\).</p>
-<p>The distribution is supported on the Naturals (zero is included if modelling number of failures before success).</p>
 <p>The Geometric distribution is used to either refer to modelling the number of trials or number
 of failures before the first success.</p>
+    <h2 class="hasAnchor" id="distribution-support"><a class="anchor" href="#distribution-support"></a>Distribution support</h2>
+
+    
+
+<p>The distribution is supported on the Naturals (zero is included if modelling number of failures before success).</p>
+    <h2 class="hasAnchor" id="default-parameterisation"><a class="anchor" href="#default-parameterisation"></a>Default Parameterisation</h2>
+
+    
+
+<p>Geom(prob = 0.5, trials = FALSE)</p>
+    <h2 class="hasAnchor" id="omitted-methods"><a class="anchor" href="#omitted-methods"></a>Omitted Methods</h2>
+
+    
+
+
+<p>N/A</p>
+    <h2 class="hasAnchor" id="also-known-as"><a class="anchor" href="#also-known-as"></a>Also known as</h2>
+
+    
+
+
+<p>N/A</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -334,7 +355,6 @@ Michael P. McLaughlin.</p>
 <li><p><a href='#method-mgf'><code>Geometric$mgf()</code></a></p></li>
 <li><p><a href='#method-cf'><code>Geometric$cf()</code></a></p></li>
 <li><p><a href='#method-pgf'><code>Geometric$pgf()</code></a></p></li>
-<li><p><a href='#method-setParameterValue'><code>Geometric$setParameterValue()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Geometric$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
@@ -352,6 +372,7 @@ Michael P. McLaughlin.</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
@@ -362,7 +383,7 @@ Michael P. McLaughlin.</p>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Geometric</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fl'>0.5</span>, qprob <span class='op'>=</span> <span class='cn'>NULL</span>, trials <span class='op'>=</span> <span class='cn'>FALSE</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Geometric</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>prob <span class='op'>=</span> <span class='cn'>NULL</span>, qprob <span class='op'>=</span> <span class='cn'>NULL</span>, trials <span class='op'>=</span> <span class='cn'>NULL</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -509,24 +530,6 @@ where X is the distribution and \(E_X\) is the expectation of the distribution X
 z integer to evaluate probability generating function at.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Unused.</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
-<p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Geometric</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
-Named arguments of parameters to set values for. See examples.</p></dd>
-
-<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.</p></dd>
-
-<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
-If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

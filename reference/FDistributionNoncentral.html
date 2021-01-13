@@ -87,7 +87,7 @@ is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distrib
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -236,11 +236,32 @@ is commonly used in ANOVA testing and is the ratio of scaled Chi-Squared distrib
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an R6 object inheriting from class SDistribution.</p>
+    <p>Returns an R6 object inheriting from class <a href='SDistribution.html'>SDistribution</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Noncentral F distribution parameterised with  two degrees of freedom parameters, \(\mu, \nu\), and location, \(\lambda\), # nolint is defined by the pdf, $$f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}$$ for \(\mu, \nu &gt; 0, \lambda \ge 0\).</p>
+    <h2 class="hasAnchor" id="distribution-support"><a class="anchor" href="#distribution-support"></a>Distribution support</h2>
+
+    
+
 <p>The distribution is supported on the Positive Reals.</p>
+    <h2 class="hasAnchor" id="default-parameterisation"><a class="anchor" href="#default-parameterisation"></a>Default Parameterisation</h2>
+
+    
+
+<p>FNC(df1 = 1, df2 = 1, location = 0)</p>
+    <h2 class="hasAnchor" id="omitted-methods"><a class="anchor" href="#omitted-methods"></a>Omitted Methods</h2>
+
+    
+
+
+<p>N/A</p>
+    <h2 class="hasAnchor" id="also-known-as"><a class="anchor" href="#also-known-as"></a>Also known as</h2>
+
+    
+
+
+<p>N/A</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -375,7 +396,12 @@ Michael P. McLaughlin.</p>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FDistributionNoncentral</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>df1 <span class='op'>=</span> <span class='fl'>1</span>, df2 <span class='op'>=</span> <span class='fl'>1</span>, location <span class='op'>=</span> <span class='fl'>0</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FDistributionNoncentral</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  df1 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  df2 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  location <span class='op'>=</span> <span class='cn'>NULL</span>,
+  decorators <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -420,7 +446,12 @@ covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class=
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FDistributionNoncentral</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FDistributionNoncentral</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  error <span class='op'>=</span> <span class='st'>"warn"</span>,
+  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -433,6 +464,10 @@ are the new values to set.</p></dd>
 
 <dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
 If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

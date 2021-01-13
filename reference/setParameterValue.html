@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -230,7 +230,7 @@
     <p>Sets the value of the given parameter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span>, resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -250,6 +250,12 @@
     <tr>
       <th>error</th>
       <td><p>character, value to pass to <code>stopwarn</code>.</p></td>
+    </tr>
+    <tr>
+      <th>resolveConflicts</th>
+      <td><p><code>(logical(1))</code><br />
+If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.</p></td>
     </tr>
     </table>
 

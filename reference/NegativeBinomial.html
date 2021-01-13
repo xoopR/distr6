@@ -87,7 +87,7 @@ is commonly used to model the number of successes, trials or failures before a g
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -236,11 +236,10 @@ is commonly used to model the number of successes, trials or failures before a g
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an R6 object inheriting from class SDistribution.</p>
+    <p>Returns an R6 object inheriting from class <a href='SDistribution.html'>SDistribution</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The Negative Binomial distribution parameterised with  number of failures before successes, \(n\), and probability of success, \(p\), is defined by the pmf, $$f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x$$ for \(n = {0,1,2,\ldots}\) and probability \(p\), where \(C(a,b)\) is the combination (or binomial coefficient) function.</p>
-<p>The distribution is supported on \({0,1,2,\ldots}\) (for fbs and sbf) or \({n,n+1,n+2,\ldots}\) (for tbf and tbs) (see below).</p>
 <p>The Negative Binomial distribution can refer to one of four distributions (forms):</p><ol>
 <li><p>The number of failures before K successes (fbs)</p></li>
 <li><p>The number of successes before K failures (sbf)</p></li>
@@ -250,6 +249,28 @@ is commonly used to model the number of successes, trials or failures before a g
 
 <p>For each we refer to the number of K successes/failures as the <code>size</code> parameter.</p>
 <p>Note that the <code>size</code> parameter is not currently vectorised in <a href='VectorDistribution.html'>VectorDistribution</a>s.</p>
+    <h2 class="hasAnchor" id="distribution-support"><a class="anchor" href="#distribution-support"></a>Distribution support</h2>
+
+    
+
+<p>The distribution is supported on \({0,1,2,\ldots}\) (for fbs and sbf) or \({n,n+1,n+2,\ldots}\) (for tbf and tbs) (see below).</p>
+    <h2 class="hasAnchor" id="default-parameterisation"><a class="anchor" href="#default-parameterisation"></a>Default Parameterisation</h2>
+
+    
+
+<p>NBinom(size = 10, prob = 0.5, form = "fbs")</p>
+    <h2 class="hasAnchor" id="omitted-methods"><a class="anchor" href="#omitted-methods"></a>Omitted Methods</h2>
+
+    
+
+
+<p>N/A</p>
+    <h2 class="hasAnchor" id="also-known-as"><a class="anchor" href="#also-known-as"></a>Also known as</h2>
+
+    
+
+
+<p>N/A</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -369,11 +390,11 @@ Michael P. McLaughlin.</p>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>NegativeBinomial</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  size <span class='op'>=</span> <span class='fl'>10</span>,
-  prob <span class='op'>=</span> <span class='fl'>0.5</span>,
+  size <span class='op'>=</span> <span class='cn'>NULL</span>,
+  prob <span class='op'>=</span> <span class='cn'>NULL</span>,
   qprob <span class='op'>=</span> <span class='cn'>NULL</span>,
   mean <span class='op'>=</span> <span class='cn'>NULL</span>,
-  form <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fbs"</span>, <span class='st'>"sbf"</span>, <span class='st'>"tbf"</span>, <span class='st'>"tbs"</span><span class='op'>)</span>,
+  form <span class='op'>=</span> <span class='cn'>NULL</span>,
   decorators <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre><p></div></p>
 
@@ -523,7 +544,12 @@ z integer to evaluate probability generating function at.</p></dd>
 <p><hr>
 <a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>NegativeBinomial</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span><span class='va'>...</span>, lst <span class='op'>=</span> <span class='cn'>NULL</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>NegativeBinomial</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  error <span class='op'>=</span> <span class='st'>"warn"</span>,
+  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -536,6 +562,10 @@ are the new values to set.</p></dd>
 
 <dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
 If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
+
+<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
+If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

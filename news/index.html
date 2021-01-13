@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -224,6 +224,63 @@
       <small>Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="distr6-150" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0">
+<a href="#distr6-150" class="anchor"></a>distr6 1.5.0<small> Unreleased </small>
+</h1>
+<div id="minor-updates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-updates" class="anchor"></a>Minor Updates</h3>
+<div id="added-functionality" class="section level4">
+<h4 class="hasAnchor">
+<a href="#added-functionality" class="anchor"></a>Added Functionality</h4>
+<ul>
+<li>Added sugar function <code>dstr</code> to construct distributions more easily, e.g. <code><a href="../reference/dstr.html">dstr("Binom", size = 4)</a></code> instead of <code>Binomial$new(size = 4)</code>.</li>
+<li>Added sugar function <code>dstrs</code> to construct a <code>VectorDistribution</code> of distributions.</li>
+<li>
+<code>ParameterSet</code> method <code>setParameterValue</code> now includes <code>resolveConflicts</code> parameter for resolving conflicts between conflicting parameters (see below). This should primarily only be used internally and is useful for transforming composite distributions.</li>
+</ul>
+</div>
+<div id="edited-functionality" class="section level4">
+<h4 class="hasAnchor">
+<a href="#edited-functionality" class="anchor"></a>Edited Functionality</h4>
+<ul>
+<li>Construction and setting of parameters is now changed. Previously this relied on knowing a confusing hierarchy in parameters which would take priority over one another. Now if conflicting parameters are supplied in construction or on setting an error is returned, e.g. <code>Binomial$new(prob = 0.1, qprob = 0.2)</code> would cause an error. This may affect bacwards compatibility however should not do so if distributions are correctly constructed/updated without conflicts.</li>
+<li>
+<code>setParameterValue</code> in <code>ParameterSet</code> no longer errors if a non-settable parameter is updated, instead a <code>warning</code> is given and the parameter is ignored.</li>
+<li>Multivariate distributions no longer error if constructed with a single variate, though this is still advised against.</li>
+<li>Internal changes to how <code>SDistribution</code> parameter defaults are set. Previously these were set in the constructor with function defaults, now they are set in the <code>ParameterSet</code>. This should not affect backwards compatibility. This should improve speed of distribution construction.</li>
+</ul>
+</div>
+<div id="deprecatedremoved-functionality" class="section level4">
+<h4 class="hasAnchor">
+<a href="#deprecatedremoved-functionality" class="anchor"></a>Deprecated/Removed Functionality</h4>
+<ul>
+<li>Data parameter in <code>WeightedDiscrete</code> distribution has now been removed.</li>
+</ul>
+</div>
+</div>
+<div id="bug-fixesunder-the-hood-edits" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fixesunder-the-hood-edits" class="anchor"></a>Bug fixes/Under the Hood Edits</h3>
+<ul>
+<li>Minor bug fixes in some distribution properties.</li>
+<li>
+<code>MixtureDistribution</code> now uses <code><a href="https://rdrr.io/pkg/extraDistr/man/Multinomial.html">extraDistr::rmnom</a></code> for speed improvements.</li>
+<li>Slight improvement to error messages in <code>ParameterSet</code> but these will be improved further in a future update.</li>
+<li>Minor internal changes to storage method of <code>SDistribution</code> <code>ParameterSet</code> objects.</li>
+<li>Fixed typos in parameter sets</li>
+</ul>
+</div>
+<div id="documentation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h3>
+<ul>
+<li>Documentation for <code>SDistribution</code> objects has been restructured for easier reading, the distribution default is now included.</li>
+<li>Fixed typos</li>
+</ul>
+</div>
+</div>
     <div id="distr6-148" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.8">
 <a href="#distr6-148" class="anchor"></a>distr6 1.4.8<small> 2020-12-12 </small>
@@ -309,9 +366,9 @@
 <h1 class="page-header" data-toc-text="1.4.0">
 <a href="#distr6-140" class="anchor"></a>distr6 1.4.0<small> 2020-07-20 </small>
 </h1>
-<div id="minor-updates" class="section level2">
+<div id="minor-updates-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-1" class="anchor"></a>Minor Updates</h2>
 <div id="addededited-functionality" class="section level3">
 <h3 class="hasAnchor">
 <a href="#addededited-functionality" class="anchor"></a>Added/Edited Functionality</h3>
@@ -487,9 +544,9 @@
 <h1 class="page-header" data-toc-text="1.3.0">
 <a href="#distr6-130" class="anchor"></a>distr6 1.3.0<small> 2019-10-31 </small>
 </h1>
-<div id="minor-updates-1" class="section level2">
+<div id="minor-updates-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates-1" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-2" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes" class="anchor"></a>Added Functions and Classes</h3>
@@ -534,9 +591,9 @@
 <h1 class="page-header" data-toc-text="1.2.0">
 <a href="#distr6-120" class="anchor"></a>distr6 1.2.0<small> 2019-10-02 </small>
 </h1>
-<div id="minor-updates-2" class="section level2">
+<div id="minor-updates-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates-2" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-3" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes-1" class="anchor"></a>Added Functions and Classes</h3>
@@ -571,9 +628,9 @@
 <h1 class="page-header" data-toc-text="1.1.0">
 <a href="#distr6-110" class="anchor"></a>distr6 1.1.0<small> 2019-08-27 </small>
 </h1>
-<div id="minor-updates-3" class="section level2">
+<div id="minor-updates-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-updates-3" class="anchor"></a>Minor Updates</h2>
+<a href="#minor-updates-4" class="anchor"></a>Minor Updates</h2>
 <div id="added-functions-and-classes-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added-functions-and-classes-2" class="anchor"></a>Added Functions and Classes</h3>

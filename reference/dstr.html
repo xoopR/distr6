@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hazard Function — hazard • distr6</title>
+<title>Helper Functionality for Constructing Distributions — dstr • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,9 @@
 
 
 
-<meta property="og:title" content="Hazard Function — hazard" />
-<meta property="og:description" content="See ExoticStatistics$hazard." />
+<meta property="og:title" content="Helper Functionality for Constructing Distributions — dstr" />
+<meta property="og:description" content="Helper functions for constructing an SDistribution (with dstr)
+or VectorDistribution (with dstrs)." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -221,56 +222,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Hazard Function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_ExoticStatistics.R'><code>R/DistributionDecorator_ExoticStatistics.R</code></a></small>
-    <div class="hidden name"><code>hazard.Rd</code></div>
+    <h1>Helper Functionality for Constructing Distributions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/sugar.R'><code>R/sugar.R</code></a></small>
+    <div class="hidden name"><code>dstr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <a href='ExoticStatistics.html'>ExoticStatistics</a><code>$hazard</code>.</p>
+    <p>Helper functions for constructing an <a href='SDistribution.html'>SDistribution</a> (with <code>dstr</code>)
+or <a href='VectorDistribution.html'>VectorDistribution</a> (with <code>dstrs</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hazard</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span>, data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>dstr</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>...</span>, pars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>dstrs</span><span class='op'>(</span><span class='va'>d</span>, pars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>(<a href='Distribution.html'>Distribution</a>).</p></td>
+      <th>d</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) <br />
+Distribution. Can be the <code>ShortName</code> or <code>ClassName</code> from <code><a href='listDistributions.html'>listDistributions()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p><code>(numeric())</code> <br />
-Points to evaluate the probability density function of the distribution. Arguments do not need
-to be named. The length of each argument corresponds to the number of points to evaluate,
-the number of arguments corresponds to the number of variables in the distribution.
-See examples.</p></td>
+      <td><p>(<code>ANY</code>) <br />
+Passed to the distribution constructor, should be parameters or <code>decorators</code>.</p></td>
     </tr>
     <tr>
-      <th>log</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br /> If <code>TRUE</code> returns log-Hazard Default is <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>simplify</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> <br />
-If <code>TRUE</code> (default) simplifies the pdf if possible to a <code>numeric</code>, otherwise returns a
-data.table::data.table.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p><a href='https://rdrr.io/r/base/array.html'>array</a> <br />
-Alternative method to specify points to evaluate. If univariate then rows correspond with number
-of points to evaluate and columns correspond with number of variables to evaluate. In the special
-case of <a href='VectorDistribution.html'>VectorDistribution</a>s of multivariate distributions, then the third dimension corresponds
-to the distribution in the vector to evaluate.</p></td>
+      <th>pars</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>) <br />
+List of parameters of same length as <code>d</code> corresponding to distribution parameters.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Hazard function as a numeric, natural logarithm returned if <code>log</code> is TRUE.</p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Construct standard Normal and  distribution</span>
+<span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Norm"</span><span class='op'>)</span> <span class='co'># ShortName</span>
+</div><div class='output co'>#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1) </div><div class='input'><span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Normal"</span><span class='op'>)</span> <span class='co'># ClassName</span>
+</div><div class='output co'>#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1) </div><div class='input'>
+<span class='co'># Construct Binomial(5, 0.1)</span>
+<span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Binomial"</span>, size <span class='op'>=</span> <span class='fl'>5</span>, prob <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Binom(prob = 0.1, qprob = 0.9, size = 5) </div><div class='input'>
+<span class='co'># Construct decorated Gamma(2, 1)</span>
+<span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Gamma"</span>, shape <span class='op'>=</span> <span class='fl'>2</span>, rate <span class='op'>=</span> <span class='fl'>1</span>,
+     decorators <span class='op'>=</span> <span class='st'>"ExoticStatistics"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Gamma(shape = 2, rate = 1, scale = 1, mean = 2) </div><div class='input'>
+<span class='co'># Or with a list</span>
+<span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Gamma"</span>, pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shape <span class='op'>=</span> <span class='fl'>2</span>, rate <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Gamma(shape = 2, rate = 4, scale = 0.25, mean = 0.5) </div><div class='input'>
+<span class='co'># Construct vector with dstrs</span>
 
+<span class='co'># Binomial and Gamma with default parameters</span>
+<span class='fu'>dstrs</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Binom"</span>, <span class='st'>"Gamma"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Binom Gamma </div><div class='input'>
+<span class='co'># Binomial with set parameters and Gamma with</span>
+<span class='co'>#  default parameters</span>
+<span class='fu'>dstrs</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Binom"</span>, <span class='st'>"Gamma"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>, <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Binom Gamma </div><div class='input'>
+<span class='co'># Binomial and Gamma with set parameters</span>
+<span class='fu'>dstrs</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Binom"</span>, <span class='st'>"Gamma"</span><span class='op'>)</span>,
+     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rate <span class='op'>=</span> <span class='fl'>2</span>, shape <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Binom Gamma </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
