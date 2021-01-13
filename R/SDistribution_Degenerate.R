@@ -10,6 +10,8 @@
 #' @templateVar paramsupport \eqn{\mu \epsilon R}
 #' @templateVar distsupport \eqn{{\mu}}
 #' @templateVar aka Dirac
+#' @templateVar default mean = 0
+#'
 #' @aliases Dirac Delta
 # nolint end
 #' @template class_distribution
@@ -40,14 +42,10 @@ Degenerate <- R6Class("Degenerate",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param mean `numeric(1)` \cr
     #' Mean of the distribution, defined on the Reals.
-    initialize = function(mean = 0, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mean)
-      self$setParameterValue(mean = mean)
-
+    initialize = function(mean = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Set$new(mean, class = "numeric"),
+        support = Set$new(0, class = "numeric"),
         symmetry = "sym",
         type = Reals$new()
       )
@@ -132,8 +130,8 @@ Degenerate <- R6Class("Degenerate",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       private$.properties$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
       invisible(self)
     }

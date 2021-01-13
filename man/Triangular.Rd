@@ -5,7 +5,7 @@
 \alias{SymmetricTriangular}
 \title{Triangular Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Triangular distribution, which
@@ -13,9 +13,29 @@ is commonly used to model population data where only the minimum, mode and maxim
 }
 \details{
 The Triangular distribution parameterised with  lower limit, \eqn{a}, upper limit, \eqn{b}, and mode, \eqn{c}, is defined by the pdf, \cr\cr \eqn{f(x) = 0, x < a} \cr \eqn{f(x) = 2(x-a)/((b-a)(c-a)), a \le x < c} \cr \eqn{f(x) = 2/(b-a), x = c} \cr \eqn{f(x) = 2(b-x)/((b-a)(b-c)), c < x \le b} \cr \eqn{f(x) = 0, x > b} for \eqn{a,b,c \ \in \ R}{a,b,c \epsilon R}, \eqn{a \le c \le b}.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{[a, b]}.
 }
+
+\section{Default Parameterisation}{
+
+Tri(lower = 0, upper = 1, mode = 0.5, symmetric = FALSE)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \examples{
 
 ## ------------------------------------------------
@@ -175,10 +195,10 @@ Other univariate distributions:
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Triangular$new(
-  lower = 0,
-  upper = 1,
-  mode = (lower + upper)/2,
-  symmetric = FALSE,
+  lower = NULL,
+  upper = NULL,
+  mode = NULL,
+  symmetric = NULL,
   decorators = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -431,7 +451,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Triangular$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Triangular$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -446,6 +471,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

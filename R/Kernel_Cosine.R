@@ -24,14 +24,14 @@ Cosine <- R6Class("Cosine",
     #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0, upper = Inf) {
 
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (abs(xi >= 2)) {
           ret[i] <- 0
         } else if (xi >= 0 & xi <= 2) {
@@ -67,14 +67,14 @@ Cosine <- R6Class("Cosine",
     #' are the distribution support limits.
     cdfSquared2Norm = function(x = 0, upper = 0) {
 
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
         if (xi >= 0 & xi <= 2) {
           if (ui <= -1) {
             ret[i] <- 0

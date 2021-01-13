@@ -4,7 +4,7 @@
 \alias{setParameterValue}
 \title{Parameter Value Setter}
 \usage{
-setParameterValue(object, ..., lst = NULL, error = "warn")
+setParameterValue(object, ..., lst = NULL, error = "warn", resolveConflicts = FALSE)
 }
 \arguments{
 \item{object}{Distribution or ParameterSet.}
@@ -14,6 +14,10 @@ setParameterValue(object, ..., lst = NULL, error = "warn")
 \item{lst}{optional list, see details.}
 
 \item{error}{character, value to pass to \code{stopwarn}.}
+
+\item{resolveConflicts}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \value{
 An R6 object of class ParameterSet.

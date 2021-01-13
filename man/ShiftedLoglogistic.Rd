@@ -4,7 +4,7 @@
 \alias{ShiftedLoglogistic}
 \title{Shifted Log-Logistic Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Shifted Log-Logistic distribution, which
@@ -12,9 +12,29 @@ is commonly used in survival analysis for its non-monotonic hazard as well as in
 }
 \details{
 The Shifted Log-Logistic distribution parameterised with  shape, \eqn{\beta}, scale, \eqn{\alpha}, and location, \eqn{\gamma}, is defined by the pdf, \deqn{f(x) = (\beta/\alpha)((x-\gamma)/\alpha)^{\beta-1}(1 + ((x-\gamma)/\alpha)^\beta)^{-2}} for \eqn{\alpha, \beta > 0} and \eqn{\gamma >= 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the non-negative Reals.
 }
+
+\section{Default Parameterisation}{
+
+ShiftLLogis(scale = 1, shape = 1, location = 0)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -155,9 +175,9 @@ Other univariate distributions:
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$new(
-  scale = 1,
-  shape = 1,
-  location = 0,
+  scale = NULL,
+  shape = NULL,
+  location = NULL,
   rate = NULL,
   decorators = NULL
 )}\if{html}{\out{</div>}}
@@ -285,7 +305,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ShiftedLoglogistic$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -300,6 +325,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

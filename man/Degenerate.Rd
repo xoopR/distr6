@@ -6,7 +6,7 @@
 \alias{Delta}
 \title{Degenerate Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Degenerate distribution, which
@@ -14,11 +14,28 @@ is commonly used to model deterministic events or as a representation of the del
 }
 \details{
 The Degenerate distribution parameterised with  mean, \eqn{\mu} is defined by the pmf, \deqn{f(x) = 1, \ if \ x = \mu}{f(x) = 1, if x = \mu}\deqn{f(x) = 0, \ if \ x \neq \mu}{f(x) = 0, if x != \mu} for \eqn{\mu \epsilon R}.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{{\mu}}.
+}
+
+\section{Default Parameterisation}{
+
+Degen(mean = 0)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
 
 Also known as the Dirac distribution.
 }
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -141,7 +158,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$new(mean = 0, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$new(mean = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -333,7 +350,12 @@ t integer to evaluate function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Degenerate$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Degenerate$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -348,6 +370,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

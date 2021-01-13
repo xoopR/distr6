@@ -180,15 +180,15 @@ Tricube <- R6Class("Tricube",
         return(ret6)
       }
 
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
 
         if (xi >= 0 & xi <= 1) {
           if (ui == Inf | ui > 1) {
@@ -598,15 +598,15 @@ Tricube <- R6Class("Tricube",
       }
 
 
-      xl = length(x)
-      ul = length(upper)
-      len = max(xl, ul)
+      xl <- length(x)
+      ul <- length(upper)
+      len <- max(xl, ul)
 
       ret <- numeric(len)
       for (i in seq(len)) {
 
-        xi = x[ifelse(i %% xl == 0, xl, i %% xl)]
-        ui = upper[ifelse(i %% ul == 0, ul, i %% ul)]
+        xi <- x[ifelse(i %% xl == 0, xl, i %% xl)]
+        ui <- upper[ifelse(i %% ul == 0, ul, i %% ul)]
 
         if (xi >= 0 & xi <= 1) {
           if (ui <= xi - 1) {

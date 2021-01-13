@@ -54,6 +54,7 @@ Other contributors:
 \itemize{
   \item Peter Ruckdeschel \email{peter.ruckdeschel@uni-oldenburg.de} (Author of distr) [contributor]
   \item Matthias Kohl \email{Matthias.Kohl@stamats.de} (Author of distr) [contributor]
+  \item Nurul Ain Toha \email{nurul.toha.15@ucl.ac.uk} [contributor]
   \item Shen Chen \email{seanchen9832@icloud.com} [contributor]
   \item Jordan Deenichin \email{d.deenichin@gmail.com} [contributor]
   \item Chengyang Gao \email{garoc371@gmail.com} [contributor]

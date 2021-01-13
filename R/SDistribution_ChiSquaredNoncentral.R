@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-\lambda/2) \sum_{r=0}^\infty ((\lambda/2)^r/r!) (x^{(\nu+2r)/2-1}exp(-x/2))/(2^{(\nu+2r)/2}\Gamma((\nu+2r)/2))}
 #' @templateVar paramsupport \eqn{\nu \ge 0}, \eqn{\lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default df = 1, location = 0
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -41,20 +42,10 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, location = 0, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df, location)
-      self$setParameterValue(df = df, location = location)
-
-      if (df == 1) {
-        support <- PosReals$new(zero = F)
-      } else {
-        support <- PosReals$new(zero = T)
-      }
-
+    initialize = function(df = NULL, location = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = PosReals$new(zero = F),
         type = PosReals$new(zero = TRUE)
       )
     },
@@ -138,8 +129,8 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$getParameterValue("df") <= 1) {
         private$.properties$support <- PosReals$new(zero = F)
       } else {
@@ -208,6 +199,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
         vec = test_list(df)
       )
     },
+
 
     # traits
     .traits = list(valueSupport = "continuous", variateForm = "univariate")

@@ -10,6 +10,7 @@
 #' @templateVar paramsupport \eqn{p_i, i = {1,\ldots,k}; \sum p_i = 1} and \eqn{n = {1,2,\ldots}}
 #' @templateVar distsupport \eqn{\sum x_i = N}
 #' @templateVar omittedDPQR \code{cdf} and \code{quantile}
+#' @templateVar default size = 10, probs = c(0.5, 0.5)
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -44,19 +45,11 @@ Multinomial <- R6Class("Multinomial",
     #' @param probs `(numeric())`\cr
     #' Vector of probabilities. Automatically normalised by
     #' `probs = probs/sum(probs)`.
-    initialize = function(size = 10, probs = c(0.5, 0.5), decorators = NULL) {
-
-      if (length(probs) == 1) stop("Length of probs is '1', use Binomial distribution instead.")
-
-      private$.parameters <- getParameterSet(self, size, probs)
-      self$setParameterValue(size = size, probs = probs)
-
-      private$.variates <- length(probs)
-
+    initialize = function(size = NULL, probs = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = setpower(Set$new(0:size, class = "integer"), length(probs)),
-        type = setpower(Naturals$new(), length(probs))
+        support = setpower(Set$new(0:10, class = "integer"), 2),
+        type = setpower(Naturals$new(), "n")
       )
     },
 
@@ -199,6 +192,20 @@ Multinomial <- R6Class("Multinomial",
       probs <- self$getParameterValue("probs")
       checkmate::assert(length(z) == length(probs))
       return(sum(probs * z)^self$getParameterValue("size"))
+    },
+
+    # optional setParameterValue
+    #' @description
+    #' Sets the value(s) of the given parameter(s).
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      if (is.null(lst)) lst <- list(...)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+      probs <- self$getParameterValue("probs")
+      private$.variates <- length(probs)
+      private$.properties$support <- setpower(Set$new(0:self$getParameterValue("size"),
+                                                      class = "integer"),
+                                              length(probs))
+      invisible(self)
     }
   ),
 
@@ -239,6 +246,8 @@ Multinomial <- R6Class("Multinomial",
         )
       }
     },
+
+    .variates = 2,
 
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "multivariate"),

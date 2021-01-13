@@ -4,7 +4,7 @@
 \alias{MultivariateNormal}
 \title{Multivariate Normal Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Multivariate Normal distribution, which
@@ -13,16 +13,33 @@ is commonly used to generalise the Normal distribution to higher dimensions, and
 \details{
 The Multivariate Normal distribution parameterised with  mean, \eqn{\mu}, and covariance matrix, \eqn{\Sigma}, is defined by the pdf, \deqn{f(x_1,...,x_k) = (2 * \pi)^{-k/2}det(\Sigma)^{-1/2}exp(-1/2(x-\mu)^T\Sigma^{-1}(x-\mu))} for \eqn{\mu \epsilon R^{k}} and \eqn{\Sigma \epsilon R^{k x k}}.
 
-The distribution is supported on the Reals and only when the covariance matrix is positive-definite.
-
-\code{cdf} and \code{quantile}
-are
-omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
-
 Sampling is performed via the Cholesky decomposition using \link{chol}.
 
 Number of variables cannot be changed after construction.
 }
+\section{Distribution support}{
+
+The distribution is supported on the Reals and only when the covariance matrix is positive-definite.
+}
+
+\section{Default Parameterisation}{
+
+MultiNorm(mean = rep(0, 2), cov = c(1, 0, 0, 1))
+}
+
+\section{Omitted Methods}{
+
+\code{cdf} and \code{quantile}
+are
+omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -337,7 +354,12 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MultivariateNormal$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MultivariateNormal$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -352,6 +374,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

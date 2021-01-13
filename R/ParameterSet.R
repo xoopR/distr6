@@ -206,7 +206,8 @@ ParameterSet <- R6Class("ParameterSet",
     #' )
     #' ps$setParameterValue(rate = 2)
     #' ps$getParameterValue("rate")
-    setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE) {
+    setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE,
+                                 resolveConflicts = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
       } else {
@@ -215,46 +216,86 @@ ParameterSet <- R6Class("ParameterSet",
 
       lst <- lst[!sapply(lst, is.null)]
 
+      if (length(private$.deps)) {
+        if (resolveConflicts) {
+          conflicts <- lapply(names(lst), function(.x) {
+            check <- self$deps$x %in% .x
+            if (any(check)) {
+              if (any(names(lst) %in% self$deps$y[[which(check)]])) {
+                return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
+              }
+            }
+          })
+          names(conflicts) <- names(lst)
+          # FIXME - In future this will be resolved in param6 with tags
+          #  Temp hacky fix to remove conflicts by iteratively deleting params that are in
+          #  both x and y of deps
+          for (i in seq.int(length(conflicts), 1, -1)) {
+            if (names(conflicts)[i] %in% unlist(conflicts)) {
+              conflicts <- conflicts[i]
+            }
+          }
+        } else {
+
+          lapply(names(lst), function(.x) {
+            check <- self$deps$x %in% .x
+            if (any(check)) {
+              if (any(names(lst) %in% self$deps$y[[which(check)]])) {
+                if (resolveConflicts) {
+                  return(names(lst)[names(lst) %in% self$deps$y[[which(check)]]])
+                } else {
+                  stop(sprintf("Conflicting parametrisations detected. Only one of %s should be given.", # nolint
+                               strCollapse(c(.x, self$deps$y[[which(check)]]))))
+                }
+              }
+            }
+          })
+        }
+      }
+
       orig <- data.table::copy(private$.parameters) # FIXME - Hacky fix for checks
 
       checkmate::assertSubset(names(lst), as.character(unlist(orig$id)))
       dt <- subset(private$.parameters, id %in% names(lst))
 
       if (!all(dt$settable)) {
-        stop(sprintf("%s is not settable after construction.",
+        warning(sprintf("%s is not settable after construction, parameter(s) ignored.",
                      strCollapse(unlist(subset(dt, !settable)$id))))
+        dt <- subset(dt, settable)
       }
 
-      dt$value <- lst[match(dt$id, names(lst))]
-      dt[, value := Map(private$.trafo, id = id, value = value)]
+      if (nrow(dt)) {
+        dt$value <- lst[match(dt$id, names(lst))]
+        dt[, value := Map(private$.trafo, id = id, value = value)]
 
-      if (!.suppressCheck) {
-        apply(dt, 1, function(.x) {
-          value <- .x[[2]]
-          support <- .x[[3]]
-          if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
-            value <- Tuple$new(value)
+        if (!.suppressCheck) {
+          apply(dt, 1, function(.x) {
+            value <- .x[[2]]
+            support <- .x[[3]]
+            if (length(value) > 1 || (inherits(support, "ExponentSet") && support$power == "n")) {
+              value <- Tuple$new(value)
+            }
+            assertContains(support, value,
+                           sprintf("%s does not lie in the support of %s.",
+                                   strCollapse(value, "()"), .x[[1]]))
+          })
+        }
+
+        data.table::set(
+          private$.parameters,
+          which(private$.parameters$id %in% dt$id),
+          "value",
+          dt$value
+        )
+
+        sapply(unlist(dt$id), private$.update)
+
+        if (!is.null(self$checks) && !.suppressCheck) {
+          x <- try(private$.check(), silent = TRUE)
+          if (class(x) == "try-error") {
+            private$.parameters <- orig
+            stop("ParameterSet checks failed.")
           }
-          assertContains(support, value,
-                         sprintf("%s does not lie in the support of %s.",
-                                 strCollapse(value, "()"), .x[[1]]))
-        })
-      }
-
-      data.table::set(
-        private$.parameters,
-        which(private$.parameters$id %in% dt$id),
-        "value",
-        dt$value
-      )
-
-      sapply(unlist(dt$id), private$.update)
-
-      if (!is.null(self$checks) && !.suppressCheck) {
-        x <- try(private$.check(), silent = TRUE)
-        if (class(x) == "try-error") {
-          private$.parameters <- orig
-          stop(x)
         }
       }
 
@@ -434,13 +475,14 @@ ParameterSet <- R6Class("ParameterSet",
     #' @description
     #' Returns parameter set values as a named list.
     #' @param settable `(logical(1))`\cr
-    #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
+    #' If `TRUE` (default) only returns values of settable parameters.
     values = function(settable = TRUE) {
       if (settable) {
         pars <- subset(private$.parameters, settable == TRUE)
       } else {
         pars <- private$.parameters
       }
+
       values <- pars$value
       names(values) <- pars$id
       return(values)
@@ -604,12 +646,15 @@ NULL
 #' @title Parameter Value Setter
 #' @description Sets the value of the given parameter.
 #'
-#' @usage setParameterValue(object, ..., lst = NULL, error = "warn")
+#' @usage setParameterValue(object, ..., lst = NULL, error = "warn", resolveConflicts = FALSE)
 #'
 #' @param object Distribution or ParameterSet.
 #' @param ... named parameters and values to update, see details.
 #' @param lst optional list, see details.
 #' @param error character, value to pass to \code{stopwarn}.
+#' @param resolveConflicts `(logical(1))`\cr
+#' If `FALSE` (default) throws error if conflicting parameterisations are provided, otherwise
+#' automatically resolves them by removing all conflicting parameters.
 #'
 #' @return An R6 object of class ParameterSet.
 #'

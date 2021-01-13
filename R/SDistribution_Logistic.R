@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-(x-\mu)/s) / (s(1+exp(-(x-\mu)/s))^2)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{s > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default mean = 0, scale = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -44,12 +45,7 @@ Logistic <- R6Class("Logistic",
     #' @param sd `(numeric(1))`\cr
     #' Standard deviation of the distribution as an alternate scale parameter,
     #'  `sd = scale*pi/sqrt(3)`. If given then `scale` is ignored.
-    initialize = function(mean = 0, scale = 1, sd = NULL,
-                          decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mean, scale, sd)
-      self$setParameterValue(mean = mean, scale = scale, sd = sd)
-
+    initialize = function(mean = NULL, scale = NULL, sd = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
@@ -152,16 +148,6 @@ Logistic <- R6Class("Logistic",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$sd)) lst$scale <- NULL
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

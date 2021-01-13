@@ -4,7 +4,7 @@
 \alias{Weibull}
 \title{Weibull Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Weibull distribution, which
@@ -12,9 +12,29 @@ is commonly used in survival analysis as it satisfies both PH and AFT requiremen
 }
 \details{
 The Weibull distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}exp(-x/\beta)^\alpha} for \eqn{\alpha, \beta > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Positive Reals.
 }
+
+\section{Default Parameterisation}{
+
+Weibull(shape = 1, scale = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -125,7 +145,6 @@ Other univariate distributions:
 \item \href{#method-kurtosis}{\code{Weibull$kurtosis()}}
 \item \href{#method-entropy}{\code{Weibull$entropy()}}
 \item \href{#method-pgf}{\code{Weibull$pgf()}}
-\item \href{#method-setParameterValue}{\code{Weibull$setParameterValue()}}
 \item \href{#method-clone}{\code{Weibull$clone()}}
 }
 }
@@ -144,6 +163,7 @@ Other univariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -157,7 +177,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Weibull$new(shape = 1, scale = 1, altscale = NULL, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Weibull$new(shape = NULL, scale = NULL, altscale = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -336,31 +356,6 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 z integer to evaluate probability generating function at.}
 
 \item{\code{...}}{Unused.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
-\subsection{Method \code{setParameterValue()}}{
-Sets the value(s) of the given parameter(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Weibull$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{ANY} \cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{lst}}{\code{(list(1))} \cr
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }

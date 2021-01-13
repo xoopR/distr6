@@ -8,6 +8,7 @@
 #' @templateVar pdfpmfeq \deqn{p(x) = \sum I(x = x_i) / k}
 #' @templateVar paramsupport \eqn{x_i \epsilon R, i = 1,...,k}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
+#' @templateVar default samples = 1
 #' @details
 #' Sampling from this distribution is performed with the [sample] function with the elements given
 #' as the support set and uniform probabilities. Sampling is performed with replacement, which is
@@ -47,7 +48,9 @@ Empirical <- R6Class("Empirical",
     #' Vector of observed samples, see examples.
     #' @examples
     #' Empirical$new(runif(1000))
-    initialize = function(samples = 1, decorators = NULL) {
+    initialize = function(samples = NULL, decorators = NULL) {
+
+      if (is.null(samples)) samples <- 1
 
       samples <- sort(as.numeric(samples))
 
@@ -202,7 +205,7 @@ Empirical <- R6Class("Empirical",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       warning("Data cannot be updated after construction.")
       return(NULL)
     }

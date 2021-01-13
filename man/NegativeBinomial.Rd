@@ -4,7 +4,7 @@
 \alias{NegativeBinomial}
 \title{Negative Binomial Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Negative Binomial distribution, which
@@ -12,8 +12,6 @@ is commonly used to model the number of successes, trials or failures before a g
 }
 \details{
 The Negative Binomial distribution parameterised with  number of failures before successes, \eqn{n}, and probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x} for \eqn{n = {0,1,2,\ldots}} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
-
-The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
 
 The Negative Binomial distribution can refer to one of four distributions (forms):
 \enumerate{
@@ -27,6 +25,28 @@ For each we refer to the number of K successes/failures as the \code{size} param
 
 Note that the \code{size} parameter is not currently vectorised in \link{VectorDistribution}s.
 }
+\section{Distribution support}{
+
+The distribution is supported on \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below).
+}
+
+\section{Default Parameterisation}{
+
+NBinom(size = 10, prob = 0.5, form = "fbs")
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -152,11 +172,11 @@ Other univariate distributions:
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$new(
-  size = 10,
-  prob = 0.5,
+  size = NULL,
+  prob = NULL,
   qprob = NULL,
   mean = NULL,
-  form = c("fbs", "sbf", "tbf", "tbs"),
+  form = NULL,
   decorators = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -369,7 +389,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{NegativeBinomial$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -384,6 +409,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

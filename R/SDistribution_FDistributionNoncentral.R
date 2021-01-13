@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \sum_{r=0}^{\infty} ((exp(-\lambda/2)(\lambda/2)^r)/(B(\nu/2, \mu/2+r)r!))(\mu/\nu)^{\mu/2+r}(\nu/(\nu+x\mu))^{(\mu+\nu)/2+r}x^{\mu/2-1+r}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0, \lambda \ge 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default df1 = 1, df2 = 1, location = 0
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -44,20 +45,10 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     #' First degree of freedom of the distribution defined on the positive Reals.
     #' @param df2 `(numeric(1))`\cr
     #' Second degree of freedom of the distribution defined on the positive Reals.
-    initialize = function(df1 = 1, df2 = 1, location = 0, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df1, df2, location)
-      self$setParameterValue(df1 = df1, df2 = df2, location = location)
-
-      if (df1 == 1) {
-        support <- PosReals$new(zero = FALSE)
-      } else {
-        support <- PosReals$new(zero = TRUE)
-      }
-
+    initialize = function(df1 = NULL, df2 = NULL, location = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = PosReals$new(zero = FALSE),
         type = PosReals$new(zero = TRUE)
       )
     },
@@ -100,8 +91,8 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$getParameterValue("df1") == 1) {
         private$.properties$support <- PosReals$new(zero = FALSE)
       } else {

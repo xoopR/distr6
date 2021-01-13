@@ -210,10 +210,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         weights <- rep(1 / lng, lng)
       }
 
-      x <- Multinomial$new(
-        probs = weights,
-        size = n
-      )$rand(1)
+      x <- extraDistr::rmnom(
+        n = 1,
+        size = n,
+        prob = weights)
 
       if (private$.univariate) {
         y <- c()

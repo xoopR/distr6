@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = exp(-|x-\mu|/\beta)/(2\beta)}
 #' @templateVar paramsupport \eqn{\mu \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default mean = 0, scale = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -44,11 +45,7 @@ Laplace <- R6Class("Laplace",
     #' @param var `(numeric(1))`\cr
     #' Variance of the distribution, defined on the positive Reals. `var = 2*scale^2`.
     #' If `var` is provided then `scale` is ignored.
-    initialize = function(mean = 0, scale = 1, var = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, mean, scale, var)
-      self$setParameterValue(mean = mean, scale = scale, var = var)
-
+    initialize = function(mean = NULL, scale = NULL, var = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
@@ -149,16 +146,6 @@ Laplace <- R6Class("Laplace",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$var)) lst$scale <- NULL
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

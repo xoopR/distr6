@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = \Gamma((\mu + \nu)/2) / (\Gamma(\mu/2) \Gamma(\nu/2)) (\mu/\nu)^{\mu/2} x^{\mu/2 - 1} (1 + (\mu/\nu) x)^{-(\mu + \nu)/2}}
 #' @templateVar paramsupport \eqn{\mu, \nu > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default df1 = 1, df2 = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -42,20 +43,10 @@ FDistribution <- R6Class("FDistribution",
     #' First degree of freedom of the distribution defined on the positive Reals.
     #' @param df2 `(numeric(1))`\cr
     #' Second degree of freedom of the distribution defined on the positive Reals.
-    initialize = function(df1 = 1, df2 = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df1, df2)
-      self$setParameterValue(df1 = df1, df2 = df2)
-
-      if (df1 == 1) {
-        support <- PosReals$new(zero = FALSE)
-      } else {
-        support <- PosReals$new(zero = TRUE)
-      }
-
+    initialize = function(df1 = NULL, df2 = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = support,
+        support = PosReals$new(zero = FALSE),
         type = PosReals$new(zero = TRUE)
       )
     },
@@ -175,8 +166,8 @@ FDistribution <- R6Class("FDistribution",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$getParameterValue("df1") == 1) {
         private$.properties$support <- PosReals$new(zero = FALSE)
       } else {

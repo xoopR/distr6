@@ -4,7 +4,7 @@
 \alias{Hypergeometric}
 \title{Hypergeometric Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Hypergeometric distribution, which
@@ -12,9 +12,29 @@ is commonly used to model the number of successes out of a population containing
 }
 \details{
 The Hypergeometric distribution parameterised with  population size, \eqn{N}, number of possible successes, \eqn{K}, and number of draws from the distribution, \eqn{n}, is defined by the pmf, \deqn{f(x) = C(K, x)C(N-K,n-x)/C(N,n)} for \eqn{N = \{0,1,2,\ldots\}}{N = {0,1,2,\ldots}}, \eqn{n, K = \{0,1,2,\ldots,N\}}{n, K = {0,1,2,\ldots,N}} and \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{\{max(0, n + K - N),...,min(n,K)\}}{{max(0, n + K - N),...,min(n,K)}}.
 }
+
+\section{Default Parameterisation}{
+
+Hyper(size = 50, successes = 5, draws = 10)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -137,10 +157,10 @@ Other univariate distributions:
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Hypergeometric$new(
-  size = 50,
-  successes = 5,
+  size = NULL,
+  successes = NULL,
   failures = NULL,
-  draws = 10,
+  draws = NULL,
   decorators = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -277,7 +297,12 @@ If \code{TRUE} (default) excess kurtosis returned.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Hypergeometric$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Hypergeometric$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -292,6 +317,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

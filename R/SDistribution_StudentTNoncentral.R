@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\nu^{\nu/2}exp(-(\nu\lambda^2)/(2(x^2+\nu)))/(\sqrt{\pi} \Gamma(\nu/2) 2^{(\nu-1)/2} (x^2+\nu)^{(\nu+1)/2}))\int_{0}^{\infty} y^\nu exp(-1/2(y-x\lambda/\sqrt{x^2+\nu})^2)}
 #' @templateVar paramsupport \eqn{\nu > 0}, \eqn{\lambda \epsilon R}
 #' @templateVar distsupport the Reals
+#' @templateVar default df = 1, location = 0
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -41,11 +42,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(df = 1, location = 0, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, df, location)
-      self$setParameterValue(df = df, location = location)
-
+    initialize = function(df = NULL, location = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),

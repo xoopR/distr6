@@ -5,7 +5,7 @@
 \alias{Gaussian}
 \title{Normal Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Normal distribution, which
@@ -13,11 +13,28 @@ is commonly used in significance testing, for representing models with a bell cu
 }
 \details{
 The Normal distribution parameterised with  variance, \eqn{\sigma^2}, and mean, \eqn{\mu}, is defined by the pdf, \deqn{f(x) = exp(-(x-\mu)^2/(2\sigma^2)) / \sqrt{2\pi\sigma^2}} for \eqn{\mu \epsilon R} and \eqn{\sigma^2 > 0}.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Reals.
+}
+
+\section{Default Parameterisation}{
+
+Norm(mean = 0, var = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
 
 Also known as the Gaussian distribution.
 }
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -129,7 +146,6 @@ Other univariate distributions:
 \item \href{#method-mgf}{\code{Normal$mgf()}}
 \item \href{#method-cf}{\code{Normal$cf()}}
 \item \href{#method-pgf}{\code{Normal$pgf()}}
-\item \href{#method-setParameterValue}{\code{Normal$setParameterValue()}}
 \item \href{#method-clone}{\code{Normal$clone()}}
 }
 }
@@ -149,6 +165,7 @@ Other univariate distributions:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -162,7 +179,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Normal$new(mean = 0, var = 1, sd = NULL, prec = NULL, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Normal$new(mean = NULL, var = NULL, sd = NULL, prec = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -377,31 +394,6 @@ where X is the distribution and \eqn{E_X} is the expectation of the distribution
 z integer to evaluate probability generating function at.}
 
 \item{\code{...}}{Unused.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
-\subsection{Method \code{setParameterValue()}}{
-Sets the value(s) of the given parameter(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Normal$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{ANY} \cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{lst}}{\code{(list(1))} \cr
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
 }
 \if{html}{\out{</div>}}
 }

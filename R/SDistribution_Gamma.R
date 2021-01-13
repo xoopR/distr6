@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)/\Gamma(\alpha)x^{\alpha-1}exp(-x\beta)}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default shape = 1, rate = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -43,11 +44,7 @@ Gamma <- R6Class("Gamma",
     #' @param mean `(numeric(1))`\cr
     #' Alternative parameterisation of the distribution, defined on the positive Reals.
     #' If given then `rate` and `scale` are ignored. Related by `mean = shape/rate`.
-    initialize = function(shape = 1, rate = 1, scale = NULL, mean = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.Gamma(self, shape, rate, scale, mean)
-      self$setParameterValue(shape = shape, rate = rate, scale = scale, mean = mean)
-
+    initialize = function(shape = NULL, rate = NULL, scale = NULL, mean = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = F),
@@ -153,21 +150,6 @@ Gamma <- R6Class("Gamma",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$mean)) {
-        lst$rate <- NULL
-        lst$scale <- NULL
-      } else if (!is.null(lst$scale)) {
-        lst$rate <- NULL
-      }
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

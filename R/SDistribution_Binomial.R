@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}}
 #' @templateVar paramsupport \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0, 1,...,n}}
+#' @templateVar default size = 10, prob = 0.5
 # nolint end
 #' @template param_prob
 #' @template param_qprob
@@ -42,16 +43,12 @@ Binomial <- R6Class("Binomial",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param size `(integer(1))`\cr
     #' Number of trials, defined on the positive Naturals.
-    initialize = function(size = 10, prob = 0.5, qprob = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, size, prob, qprob)
-      self$setParameterValue(size = size, prob = prob, qprob = qprob)
-
+    initialize = function(size = NULL, prob = NULL, qprob = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Set$new(0:size, class = "integer"),
+        support = Set$new(0:10, class = "integer"),
         type = Naturals$new(),
-        symmetry = if (prob == 0.5) "symm" else "asym"
+        symmetry = "sym"
       )
     },
 
@@ -155,15 +152,14 @@ Binomial <- R6Class("Binomial",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$qprob)) lst$prob <- NULL
-      super$setParameterValue(lst = lst, error = error)
-      private$.properties$support <- Set$new(0:self$getParameterValue("size"))
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+      private$.properties$support <- Set$new(0:self$getParameterValue("size"), class = "integer")
       if (self$getParameterValue("prob") == 0.5) {
-        private$.properties$symmetry <- "asymmetric"
-      } else {
         private$.properties$symmetry <- "symmetric"
+      } else {
+        private$.properties$symmetry <- "asymmetric"
       }
       invisible(self)
     }

@@ -4,7 +4,7 @@
 \alias{Pareto}
 \title{Pareto Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Pareto distribution, which
@@ -13,12 +13,32 @@ is commonly used in Economics to model the distribution of wealth and the 80-20 
 \details{
 The Pareto distribution parameterised with  shape, \eqn{\alpha}, and scale, \eqn{\beta}, is defined by the pdf, \deqn{f(x) = (\alpha\beta^\alpha)/(x^{\alpha+1})} for \eqn{\alpha, \beta > 0}.
 
-The distribution is supported on \eqn{[\beta, \infty)}.
-
 Currently this is implemented as the Type I Pareto distribution, other types
 will be added in the future. Characteristic function is omitted as no suitable incomplete
 gamma function with complex inputs implementation could be found.
 }
+\section{Distribution support}{
+
+The distribution is supported on \eqn{[\beta, \infty)}.
+}
+
+\section{Default Parameterisation}{
+
+Pare(shape = 1, scale = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -162,7 +182,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Pareto$new(shape = 1, scale = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Pareto$new(shape = NULL, scale = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -369,7 +389,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Pareto$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Pareto$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -384,6 +409,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

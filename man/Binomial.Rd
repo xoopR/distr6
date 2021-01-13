@@ -4,7 +4,7 @@
 \alias{Binomial}
 \title{Binomial Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Binomial distribution, which
@@ -12,9 +12,29 @@ is commonly used to model the number of successes out of a number of independent
 }
 \details{
 The Binomial distribution parameterised with  number of trials, n, and probability of success, p, is defined by the pmf, \deqn{f(x) = C(n, x)p^x(1-p)^{n-x}} for \eqn{n = 0,1,2,\ldots} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function.
+}
+\section{Distribution support}{
 
 The distribution is supported on \eqn{{0, 1,...,n}}.
 }
+
+\section{Default Parameterisation}{
+
+Binom(size = 10, prob = 0.5)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -140,7 +160,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Binomial$new(size = 10, prob = 0.5, qprob = NULL, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Binomial$new(size = NULL, prob = NULL, qprob = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -360,7 +380,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Binomial$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Binomial$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -375,6 +400,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

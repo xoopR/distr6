@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1/(b - a + 1)}
 #' @templateVar paramsupport \eqn{a, b \ \in \ Z; \ b \ge a}{a, b \epsilon Z; b \ge a}
 #' @templateVar distsupport \eqn{\{a, a + 1,..., b\}}{{a, a + 1,..., b}}
+#' @templateVar default lower = 0, upper = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -42,14 +43,10 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     #' Lower limit of the [Distribution], defined on the Naturals.
     #' @param upper `(integer(1))`\cr
     #' Upper limit of the [Distribution], defined on the Naturals.
-    initialize = function(lower = 0, upper = 1, decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, lower, upper)
-      self$setParameterValue(lower = lower, upper = upper)
-
+    initialize = function(lower = NULL, upper = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Interval$new(lower, upper, class = "integer"),
+        support = Interval$new(0, 1, class = "integer"),
         symmetry = "sym",
         type = Integers$new()
       )
@@ -192,10 +189,11 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       private$.properties$support <-
-        Set$new(self$getParameterValue("lower"):self$getParameterValue("upper"))
+        Interval$new(self$getParameterValue("lower"), self$getParameterValue("upper"),
+                     class = "integer")
       invisible(self)
     }
   ),

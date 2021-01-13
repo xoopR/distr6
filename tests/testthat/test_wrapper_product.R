@@ -2,8 +2,11 @@ library(testthat)
 
 test_that("constructor", {
   expect_silent(ProductDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6))))
-  expect_equal(ProductDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6))),
-               Binomial$new() * Binomial$new(size = 20, prob = 0.6))
+  p <- Binomial$new() * Binomial$new(size = 20, prob = 0.6)
+  expect_equal(getR6Class(p), "ProductDistribution")
+  expect_equal(p$strprint(), "Binom1 X Binom2")
+  expect_equal(p[1]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+
   expect_silent(ProductDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
                                         name = "A", short_name = "a"))
   expect_silent(ProductDistribution$new(

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta^\alpha)(x^{\alpha-1})(exp(-x\beta)) /(\alpha-1)!}
 #' @templateVar paramsupport \eqn{\alpha = 1,2,3,\ldots} and \eqn{\beta > 0}
 #' @templateVar distsupport the Positive Reals
+#' @templateVar default shape = 1, rate = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -41,11 +42,7 @@ Erlang <- R6Class("Erlang",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param shape `(integer(1))`\cr
     #' Shape parameter, defined on the positive Naturals.
-    initialize = function(shape = 1, rate = 1, scale = NULL, decorators = NULL) {
-
-      private$.parameters <- getParameterSet.Erlang(self, shape, rate, scale)
-      self$setParameterValue(shape = shape, rate = rate, scale = scale)
-
+    initialize = function(shape = NULL, rate = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = T),
@@ -146,16 +143,6 @@ Erlang <- R6Class("Erlang",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$scale)) lst$rate <- NULL
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

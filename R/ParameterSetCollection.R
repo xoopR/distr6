@@ -99,12 +99,12 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
       sep <- gregexpr("_", id0)[[1]][[1]]
 
       if (sep == -1) {
-        dt = dt[grepl(paste0("_", id0, "$"), dt$id), c("id", "value")]
+        dt <- dt[grepl(paste0("_", id0, "$"), dt$id), c("id", "value")]
         if (!nrow(dt)) {
           stopf("%s is not in this ParameterSetCollection.", id)
         } else {
-          lst = as.list(dt$value)
-          names(lst) = unlist(strsplit(dt$id, split = paste0("_", id0)))
+          lst <- as.list(dt$value)
+          names(lst) <- unlist(strsplit(dt$id, split = paste0("_", id0)))
           return(lst)
         }
       } else {
@@ -153,7 +153,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' # both updated
     #' psc$getParameterValue("Geom_prob")
     #' g$getParameterValue("prob")
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) {
         lst <- list(...)
       } else {
@@ -169,7 +169,8 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
         bool <- dist == i
         newlst <- lst[bool]
         names(newlst) <- param[bool]
-        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck)
+        private$.parametersets[[i]]$setParameterValue(lst = newlst, .suppressCheck = .suppressCheck,
+                                                      resolveConflicts = resolveConflicts)
       })
 
       if (!is.null(self$checks)) {
@@ -267,7 +268,7 @@ as.data.table.ParameterSetCollection <- function(x, ...) {
 
   if (length(paramsets)) {
     lst <- unlist(lapply(paramsets, function(.x) {
-      r = as.data.table(.x)
+      r <- as.data.table(.x)
       list(r, nrow(r))
     }), recursive = FALSE)
 
@@ -276,7 +277,7 @@ as.data.table.ParameterSetCollection <- function(x, ...) {
                        times = as.numeric(lst[seq.int(2, length(lst), 2)])),
                    dt$id, sep = "_")
   } else {
-    dt <- data.table::data.table(id = character(), value = numeric(), support= list(),
+    dt <- data.table::data.table(id = character(), value = numeric(), support = list(),
                                  description = character())
   }
 

@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = C(x + n - 1, n - 1) p^n (1 - p)^x}
 #' @templateVar paramsupport \eqn{n = {0,1,2,\ldots}} and probability \eqn{p}, where \eqn{C(a,b)} is the combination (or binomial coefficient) function
 #' @templateVar distsupport \eqn{{0,1,2,\ldots}} (for fbs and sbf) or \eqn{{n,n+1,n+2,\ldots}} (for tbf and tbs) (see below)
+#' @templateVar default size = 10, prob = 0.5, form = "fbs"
 # nolint end
 #' @details
 #' The Negative Binomial distribution can refer to one of four distributions (forms):
@@ -64,34 +65,32 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     #' * `"tbf"` - Trials before failures.
     #' * `"tbs"` - Trials before successes.
     #' Use `$description` to see the Negative Binomial form.
-    initialize = function(size = 10, prob = 0.5, qprob = NULL, mean = NULL,
-                          form = c("fbs", "sbf", "tbf", "tbs"),
-                          decorators = NULL) {
+    initialize = function(size = NULL, prob = NULL, qprob = NULL, mean = NULL,
+                          form = NULL, decorators = NULL) {
+      super$initialize(
+        decorators = decorators,
+        support = Set$new(), # temp, see below
+        type = Naturals$new()
+      )
 
-      form <- match.arg(form)
-
-      private$.parameters <- getParameterSet(self, size, prob, qprob, mean, form)
-      self$setParameterValue(size = size, prob = prob, qprob = qprob, mean = mean)
-
+      form <- self$getParameterValue("form")
       if (form == "fbs") {
-        support <- Naturals$new()
+        private$.properties$support <- Naturals$new()
         self$description <- "Negative Binomial (fbs) Probability Distribution."
       } else if (form == "sbf") {
-        support <- Naturals$new()
+        private$.properties$support <- Naturals$new()
         self$description <- "Negative Binomial (sbf) Probability Distribution."
       } else if (form == "tbf") {
-        support <- Interval$new(size, Inf, type = "[)", class = "integer")
+        private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf,
+                                                    type = "[)", class = "integer")
         self$description <- "Negative Binomial (tbf) Probability Distribution."
       } else {
-        support <- Interval$new(size, Inf, type = "[)", class = "integer")
+        private$.properties$support <- Interval$new(self$getParameterValue("size"), Inf,
+                                                    type = "[)", class = "integer")
         self$description <- "Negative Binomial (tbs) Probability Distribution."
       }
 
-      super$initialize(
-        decorators = decorators,
-        support = support,
-        type = Naturals$new()
-      )
+      invisible(self)
     },
 
     # stats
@@ -262,16 +261,9 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$mean)) {
-        lst$prob <- NULL
-        lst$qprob <- NULL
-      } else if (!is.null(lst$qprob)) {
-        lst$prob <- NULL
-      }
-      super$setParameterValue(lst = lst, error = error)
-
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
       form <- self$getParameterValue("form")[[1]]
       if (form == "tbf" | form == "tbs") {
         private$.properties$support <- Interval$new(self$getParameterValue("size"),

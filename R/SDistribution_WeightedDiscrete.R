@@ -8,6 +8,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x_i) = p_i}
 #' @templateVar paramsupport \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}
 #' @templateVar distsupport \eqn{x_1,...,x_k}
+#' @templateVar default x = 1, pdf = 1
 #' @details
 #' Sampling from this distribution is performed with the [sample] function with the elements given
 #' as the x values and the pdf as the probabilities. The cdf and quantile assume that the
@@ -56,48 +57,18 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param data `([data.frame])`\cr
-    #' Deprecated. Use `x, pdf, cdf`.
     #' @param x `numeric()`\cr
-    #' Data samples.
+    #' Data samples, *must be ordered in ascending order*.
     #' @param pdf `numeric()`\cr
     #' Probability mass function for corresponding samples, should be same length `x`.
     #' If `cdf` is not given then calculated as `cumsum(pdf)`.
     #' @param cdf `numeric()`\cr
     #' Cumulative distribution function for corresponding samples, should be same length `x`. If
     #' given then `pdf` is ignored and calculated as difference of `cdf`s.
-    initialize = function(data = NULL, x = 1, pdf = 1,
-                          cdf = NULL, decorators = NULL) {
-
-      if (any(duplicated(x))) {
-        stop("Values in 'x' must be unique.")
-      }
-
-      if (!is.null(data)) {
-        warning("'data' constructor now deprecated, use 'x', 'pdf', 'cdf' instead.")
-        x <- data$x
-        pdf <- data$pdf
-        cdf <- data$cdf
-      }
-
-      ord <- order(x)
-      x <- x[ord]
-
-      if (!is.null(pdf)) {
-        pdf <- pdf[ord]
-      }
-      if (!is.null(cdf)) {
-        cdf <- cdf[ord]
-      }
-
-
-      private$.parameters <- getParameterSet(self, x = x, pdf = pdf, cdf = cdf)
-      if (!is.null(cdf)) pdf <- rep(1, length(x))
-      self$setParameterValue(pdf = pdf, cdf = cdf)
-
+    initialize = function(x = NULL, pdf = NULL, cdf = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
-        support = Set$new(x, class = "numeric"),
+        support = Set$new(1, class = "numeric"),
         type = Reals$new()
       )
     },
@@ -307,10 +278,10 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$cdf)) lst$pdf <- NULL
-      super$setParameterValue(lst = lst, error = error)
+      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+      private$.properties$support <- Set$new(self$getParameterValue("x"), class = "numeric")
       invisible(self)
     }
   ),

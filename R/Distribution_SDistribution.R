@@ -24,15 +24,30 @@ SDistribution <- R6Class("SDistribution",
 
       abstract(self, "SDistribution", "listDistributions()")
 
+      # check required packages are loaded
       assert_pkgload(self$packages)
+
+      # decorate if requested
       if (!is.null(decorators)) {
         suppressMessages(decorate(self, decorators))
       }
+
       private$.traits$type <- assertSet(type)
       private$.properties <- list(
         support = assertSet(support),
         symmetry = match.arg(symmetry)
       )
+
+      if (!grepl("Empirical", getR6Class(self))) {
+        # get call
+        args <- getR6Call()
+        # get ParameterSet
+        private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
+        if (length(args)) {
+          # set non-default parameters
+          suppressWarnings(do.call(self$setParameterValue, args))
+        }
+      }
 
       invisible(self)
     }

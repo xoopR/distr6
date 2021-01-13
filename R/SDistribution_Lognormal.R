@@ -11,6 +11,7 @@
 #' @templateVar distsupport the Positive Reals
 #' @templateVar aka Log-Gaussian
 #' @aliases Loggaussian
+#' @templateVar default meanlog = 0, varlog = 1
 # nolint end
 #' @template class_distribution
 #' @template method_mode
@@ -66,25 +67,9 @@ Lognormal <- R6Class("Lognormal",
     #' @examples
     #' Lognormal$new(var = 2, mean = 1)
     #' Lognormal$new(meanlog = 2, preclog = 5)
-    initialize = function(meanlog = 0, varlog = 1, sdlog = NULL, preclog = NULL,
+    initialize = function(meanlog = NULL, varlog = NULL, sdlog = NULL, preclog = NULL,
                           mean = NULL, var = NULL, sd = NULL, prec = NULL,
                           decorators = NULL) {
-
-      if (!is.null(mean) && (is.null(var) & is.null(sd) & is.null(prec))) {
-        var <- 1
-      }
-      if (!is.null(mean) || !is.null(var) || !is.null(sd) || !is.null(prec)) {
-        meanlog <- varlog <- sdlog <- preclog <- NULL
-      }
-
-      private$.parameters <- getParameterSet(self, meanlog, varlog, sdlog, preclog,
-                                             mean, var, sd, prec)
-
-      self$setParameterValue(
-        meanlog = meanlog, varlog = varlog, sdlog = sdlog, preclog = preclog,
-        mean = mean, var = var, sd = sd, prec = prec
-      )
-
       super$initialize(
         decorators = decorators,
         support = PosReals$new(),
@@ -182,34 +167,6 @@ Lognormal <- R6Class("Lognormal",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-
-      if (!is.null(lst[["mean"]]))
-        lst[["meanlog"]] <- NULL
-      else if (!is.null(lst[["meanlog"]]))
-        lst[["mean"]] <- NULL
-
-      if (!is.null(lst[["prec"]]))
-        lst[["sd"]] <- lst[["var"]] <- lst[["sdlog"]] <- lst[["varlog"]] <- lst[["preclog"]] <- NULL
-      else if (!is.null(lst[["sd"]]))
-        lst[["var"]] <- lst[["varlog"]] <- lst[["sdlog"]] <- NULL
-      else if (!is.null(lst[["var"]]))
-        lst[["varlog"]] <- NULL
-      else if (!is.null(lst[["preclog"]]))
-        lst[["sd"]] <- lst[["var"]] <- lst[["sdlog"]] <- lst[["varlog"]] <- lst[["prec"]] <- NULL
-      else if (!is.null(lst[["sdlog"]]))
-        lst[["var"]] <- lst[["varlog"]] <- lst[["sd"]] <- NULL
-      else if (!is.null(lst[["varlog"]]))
-        lst[["var"]] <- NULL
-
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

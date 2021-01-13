@@ -4,7 +4,7 @@
 \alias{Poisson}
 \title{Poisson Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Poisson distribution, which
@@ -12,9 +12,29 @@ is commonly used to model the number of events occurring in at a constant, indep
 }
 \details{
 The Poisson distribution parameterised with  arrival rate, \eqn{\lambda}, is defined by the pmf, \deqn{f(x) = (\lambda^x * exp(-\lambda))/x!} for \eqn{\lambda} > 0.
+}
+\section{Distribution support}{
 
 The distribution is supported on the Naturals.
 }
+
+\section{Default Parameterisation}{
+
+Pois(rate = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -158,7 +178,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Poisson$new(rate = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Poisson$new(rate = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

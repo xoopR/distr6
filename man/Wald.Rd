@@ -6,7 +6,7 @@
 \alias{InverseGaussian}
 \title{Wald Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Wald distribution, which
@@ -15,16 +15,30 @@ is commonly used for modelling the first passage time for Brownian motion.
 \details{
 The Wald distribution parameterised with  mean, \eqn{\mu}, and shape, \eqn{\lambda}, is defined by the pdf, \deqn{f(x) = (\lambda/(2x^3\pi))^{1/2} exp((-\lambda(x-\mu)^2)/(2\mu^2x))} for \eqn{\lambda > 0} and \eqn{\mu > 0}.
 
+Sampling is performed as per Michael, Schucany, Haas (1976).
+}
+\section{Distribution support}{
+
 The distribution is supported on the Positive Reals.
+}
+
+\section{Default Parameterisation}{
+
+Wald(mean = 1, shape = 1)
+}
+
+\section{Omitted Methods}{
 
 \code{quantile}
 is
 omitted as no closed form analytic expression could be found, decorate with \code{\link{FunctionImputation}} for a numerical imputation.
+}
+
+\section{Also known as}{
 
 Also known as the Inverse Normal distribution.
-
-Sampling is performed as per Michael, Schucany, Haas (1976).
 }
+
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
 Michael P. McLaughlin.
@@ -172,7 +186,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Wald$new(mean = 1, shape = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Wald$new(mean = NULL, shape = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

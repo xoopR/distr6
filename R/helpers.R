@@ -209,3 +209,13 @@ v_genfun <- function(x, fun) {
     return(sapply(x, fun))
   }
 }
+
+getR6Call <- function() {
+  # get call
+  calls <- as.list(match.call(definition = sys.function(sys.parent(2L)),
+                 call = sys.call(sys.parent(3L)),
+                 envir = parent.frame(4L)))[-1]
+  calls <- calls[!(names(calls) %in% "decorators")]
+  # prevent lazy evaluation
+  lapply(calls, eval.parent, n = 5)
+}

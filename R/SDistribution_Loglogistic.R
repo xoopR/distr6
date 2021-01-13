@@ -9,6 +9,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = (\beta/\alpha)(x/\alpha)^{\beta-1}(1 + (x/\alpha)^\beta)^{-2}}
 #' @templateVar paramsupport \eqn{\alpha, \beta > 0}
 #' @templateVar distsupport the non-negative Reals
+#' @templateVar default scale = 1, shape = 1
 #' @templateVar aka Fisk
 #' @aliases Fisk
 #'
@@ -44,12 +45,8 @@ Loglogistic <- R6Class("Loglogistic",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param rate `(numeric(1))`\cr
     #' Alternate scale parameter, `rate = 1/scale`. If given then `scale` is ignored.
-    initialize = function(scale = 1, shape = 1, rate = NULL,
+    initialize = function(scale = NULL, shape = NULL, rate = NULL,
                           decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, scale, shape, rate)
-      self$setParameterValue(scale = scale, shape = shape, rate = rate)
-
       super$initialize(
         decorators = decorators,
         support = PosReals$new(zero = T),
@@ -161,16 +158,6 @@ Loglogistic <- R6Class("Loglogistic",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      if (is.null(lst)) lst <- list(...)
-      if (!is.null(lst$rate)) lst$scale <- NULL
-      super$setParameterValue(lst = lst, error = error)
-      invisible(self)
     }
   ),
 

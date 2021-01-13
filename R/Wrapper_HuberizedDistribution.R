@@ -94,8 +94,8 @@ Try decorate(distribution, FunctionImputation) first.")
 
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn") {
-      super$setParameterValue(..., lst = lst, error = error)
+    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$properties$support$class == "integer") {
         private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
           self$getParameterValue("hub_upper"),

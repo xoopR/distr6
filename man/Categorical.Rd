@@ -4,7 +4,7 @@
 \alias{Categorical}
 \title{Categorical Distribution Class}
 \value{
-Returns an R6 object inheriting from class SDistribution.
+Returns an R6 object inheriting from class \link{SDistribution}.
 }
 \description{
 Mathematical and statistical functions for the Categorical distribution, which
@@ -13,14 +13,34 @@ is commonly used in classification supervised learning.
 \details{
 The Categorical distribution parameterised with  a given support set, \eqn{x_1,...,x_k}, and respective probabilities, \eqn{p_1,...,p_k}, is defined by the pmf, \deqn{f(x_i) = p_i} for \eqn{p_i, i = 1,\ldots,k; \sum p_i = 1}.
 
-The distribution is supported on \eqn{x_1,...,x_k}.
-
 Sampling from this distribution is performed with the \link{sample} function with the elements given
 as the support set and the probabilities from the \code{probs} parameter. The cdf and quantile assumes
 that the elements are supplied in an indexed order (otherwise the results are meaningless).
 
 The number of points in the distribution cannot be changed after construction.
 }
+\section{Distribution support}{
+
+The distribution is supported on \eqn{x_1,...,x_k}.
+}
+
+\section{Default Parameterisation}{
+
+Cat(elements = 1, probs = 1)
+}
+
+\section{Omitted Methods}{
+
+
+N/A
+}
+
+\section{Also known as}{
+
+
+N/A
+}
+
 \examples{
 
 ## ------------------------------------------------
@@ -167,7 +187,7 @@ Other univariate distributions:
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Categorical$new(elements = 1, probs = 1, decorators = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Categorical$new(elements = NULL, probs = NULL, decorators = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -407,7 +427,12 @@ z integer to evaluate probability generating function at.}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Categorical$setParameterValue(..., lst = NULL, error = "warn")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Categorical$setParameterValue(
+  ...,
+  lst = NULL,
+  error = "warn",
+  resolveConflicts = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -422,6 +447,10 @@ are the new values to set.}
 
 \item{\code{error}}{\code{(character(1))} \cr
 If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
+
+\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
+If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
+automatically resolves them by removing all conflicting parameters.}
 }
 \if{html}{\out{</div>}}
 }

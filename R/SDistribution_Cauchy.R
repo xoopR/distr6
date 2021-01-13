@@ -10,6 +10,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x) = 1 / (\pi\beta(1 + ((x - \alpha) / \beta)^2))}
 #' @templateVar paramsupport \eqn{\alpha \epsilon R} and \eqn{\beta > 0}
 #' @templateVar distsupport the Reals
+#' @templateVar default location = 0, scale = 1
 #'
 #' @template class_distribution
 #' @template method_mode
@@ -40,12 +41,7 @@ Cauchy <- R6Class("Cauchy",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(location = 0, scale = 1,
-                          decorators = NULL) {
-
-      private$.parameters <- getParameterSet(self, location, scale)
-      self$setParameterValue(location = location, scale = scale)
-
+    initialize = function(location = NULL, scale = NULL, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new(),
