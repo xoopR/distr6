@@ -36,6 +36,9 @@
 #' dstrs(c("Binom", "Gamma"),
 #'      list(list(size = 4), list(rate = 2, shape = 3)))
 #'
+#' # Multiple Binomials
+#' dstrs("Binom", data.frame(size = 1:5))
+#'
 #' @export
 dstr <- function(d, ..., pars = NULL) {
   choices <- listDistributions()
@@ -57,6 +60,17 @@ dstr <- function(d, ..., pars = NULL) {
 #' @rdname dstr
 #' @export
 dstrs <- function(d, pars = NULL) {
-  if (is.null(pars)) pars <- vector("list", length(d))
-  VectorDistribution$new(mapply(dstr, d, pars = pars))
+
+  if (length(d) == 1) {
+    if (is.null(pars)) {
+      stop("pars' cannot be NULL if 'd' is length 1.")
+    } else {
+      VectorDistribution$new(distribution = d, params = pars)
+    }
+  } else {
+    if (is.null(pars)) {
+      pars <- vector("list", length(d))
+    }
+    VectorDistribution$new(mapply(dstr, d, pars = pars))
+  }
 }

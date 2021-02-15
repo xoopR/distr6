@@ -17,4 +17,7 @@ test_that("dstrs", {
   v <- dstrs(c("Binom", "Gamma"), list(list(size = 4), list(rate = 2, shape = 3)))
   expect_equal(v[1]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 4)")
   expect_equal(v[2]$strprint(), "Gamma(shape = 3, rate = 2, scale = 0.5, mean = 1.5)")
+  v <- dstrs("Binom", data.frame(size = 1:2))
+  expect_equal(v[1]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 1)")
+  expect_equal(v[2]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 2)")
 })

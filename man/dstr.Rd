@@ -51,4 +51,7 @@ dstrs(c("Binom", "Gamma"), list(list(size = 4), NULL))
 dstrs(c("Binom", "Gamma"),
      list(list(size = 4), list(rate = 2, shape = 3)))
 
+# Multiple Binomials
+dstrs("Binom", data.frame(size = 1:5))
+
 }
