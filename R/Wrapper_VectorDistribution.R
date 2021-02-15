@@ -1110,7 +1110,7 @@ or `distlist` should be used.")
 #' @examples
 #' v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
 #' v[1]
-#' v["a"]
+#' v["Binom1"]
 #'
 #' @export
 "[.VectorDistribution" <- function(vecdist, i) {

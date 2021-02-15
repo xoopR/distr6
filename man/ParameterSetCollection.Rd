@@ -30,7 +30,7 @@ ParameterSetCollection$new(lst = list(Binom1 = b$parameters(),
 psc <- ParameterSetCollection$new(Binom1 = Binomial$new()$parameters(),
                                   Binom2 = Binomial$new()$parameters(),
                                   Geom = Geometric$new()$parameters())
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 psc$getParameterValue("prob")
 
 ## ------------------------------------------------
@@ -42,7 +42,7 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-psc$getParameterSupport("Binom1_prob")
+psc$getParameterSupport("Binom1__prob")
 
 ## ------------------------------------------------
 ## Method `ParameterSetCollection$setParameterValue`
@@ -220,7 +220,7 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 \preformatted{psc <- ParameterSetCollection$new(Binom1 = Binomial$new()$parameters(),
                                   Binom2 = Binomial$new()$parameters(),
                                   Geom = Geometric$new()$parameters())
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 psc$getParameterValue("prob")
 }
 \if{html}{\out{</div>}}
@@ -258,7 +258,7 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-psc$getParameterSupport("Binom1_prob")
+psc$getParameterSupport("Binom1__prob")
 }
 \if{html}{\out{</div>}}
 

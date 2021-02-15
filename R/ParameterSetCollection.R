@@ -91,7 +91,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc <- ParameterSetCollection$new(Binom1 = Binomial$new()$parameters(),
     #'                                   Binom2 = Binomial$new()$parameters(),
     #'                                   Geom = Geometric$new()$parameters())
-    #' psc$getParameterValue("Binom1_prob")
+    #' psc$getParameterValue("Binom1__prob")
     #' psc$getParameterValue("prob")
     getParameterValue = function(id, error = "warn") {
       dt <- as.data.table(self)
@@ -125,7 +125,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     #' psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
     #'                                   Binom2 = b$parameters(),
     #'                                   Geom = g$parameters())
-    #' psc$getParameterSupport("Binom1_prob")
+    #' psc$getParameterSupport("Binom1__prob")
     getParameterSupport = function(id, error = "warn") {
       param <- strsplit(id, "__", fixed = TRUE)[[1]]
       private$.parametersets[[param[1]]]$getParameterSupport(param[2], error = error)
