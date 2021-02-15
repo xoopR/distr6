@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -220,7 +220,7 @@
 <p>Or finally just look at the new distribution name</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/huberize.html">huberize</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; HubTruncNorm(TruncNorm_Norm_mean = 0, TruncNorm_Norm_var = 1,...,hub_lower = -2, hub_upper = 2)</span></code></pre></div>
+<span class="co">#&gt; HubTruncNorm(TruncNorm__Norm__mean = 0, TruncNorm__Norm__var = 1,...,hub__lower = -2, hub__upper = 2)</span></code></pre></div>
 </div>
 <div id="wrappers-in-distr6" class="section level2">
 <h2 class="hasAnchor">
@@ -234,9 +234,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va"><a href="../../reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; TruncNorm(Norm_mean = 0, Norm_var = 1,...,trunc_lower = -2, trunc_upper = 2)</span>
+<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1,...,trunc__lower = -2, trunc__upper = 2)</span>
 <span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; TruncNorm(Norm_mean = 0, Norm_var = 1,...,trunc_lower = -2, trunc_upper = 2)</span></code></pre></div>
+<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1,...,trunc__lower = -2, trunc__upper = 2)</span></code></pre></div>
 <p>In both cases, the result has to be saved to truncate the distribution as these are not methods in the Normal distribution class, i.e. to use the truncated normal distribution:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This is a good example of when piping is clean and effective</span>

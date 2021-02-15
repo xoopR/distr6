@@ -87,7 +87,7 @@ ParameterSetCollection." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -246,15 +246,15 @@ ParameterSetCollection." />
     <tr>
       <th>ids</th>
       <td><p><code>(character())</code> <br />
-ids of parameters to extract, if <code>id</code> ends with <code>_</code> then all parameters starting
-with <code>ids_</code> are extracted and the prefix is ignored, <code>prefix</code> can be left <code>NULL</code>.
+ids of parameters to extract, if <code>id</code> ends with <code>__</code> then all parameters starting
+with <code>ids__</code> are extracted and the prefix is ignored, <code>prefix</code> can be left <code>NULL</code>.
 See examples.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
       <td><p><code>(character(1))</code> <br />
-An optional prefix to remove from ids after extraction, assumes <code>_</code> follows the
-prefix name, i.e. <code>prefix_ids</code>.</p></td>
+An optional prefix to remove from ids after extraction, assumes <code>__</code> follows the
+prefix name, i.e. <code>prefix__ids</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -270,11 +270,11 @@ Ignored, added for consistency.</p></td>
   params <span class='op'>=</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>prob <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.6</span>, <span class='fl'>0.2</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span><span class='op'>$</span><span class='fu'>parameters</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1_prob"</span><span class='op'>]</span> <span class='co'># extracts just Binom1_prob</span>
-</div><div class='output co'>#&gt;             id value support            description
-#&gt; 1: Binom1_prob   0.1   [0,1] Probability of Success</div><div class='input'><span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1_prob"</span>, prefix <span class='op'>=</span> <span class='st'>"Binom1"</span><span class='op'>]</span> <span class='co'># extracts Binom1_prob and removes prefix</span>
+<span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1__prob"</span><span class='op'>]</span> <span class='co'># extracts just Binom1__prob</span>
+</div><div class='output co'>#&gt;              id value support            description
+#&gt; 1: Binom1__prob   0.1   [0,1] Probability of Success</div><div class='input'><span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1__prob"</span>, prefix <span class='op'>=</span> <span class='st'>"Binom1"</span><span class='op'>]</span> <span class='co'># extracts Binom1__prob and removes prefix</span>
 </div><div class='output co'>#&gt;      id value support            description
-#&gt; 1: prob   0.1   [0,1] Probability of Success</div><div class='input'><span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1_"</span><span class='op'>]</span> <span class='co'># extracts all Binom1 parameters and removes prefix</span>
+#&gt; 1: prob   0.1   [0,1] Probability of Success</div><div class='input'><span class='va'>ps</span><span class='op'>[</span><span class='st'>"Binom1__"</span><span class='op'>]</span> <span class='co'># extracts all Binom1 parameters and removes prefix</span>
 </div><div class='output co'>#&gt;       id value support            description
 #&gt; 1:  prob   0.1   [0,1] Probability of Success
 #&gt; 2: qprob   0.9   [0,1] Probability of failure

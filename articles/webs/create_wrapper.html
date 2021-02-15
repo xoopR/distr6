@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -198,32 +198,32 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">M</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;              id   value               support            description</span>
-<span class="co">#&gt; 1:  Binom1_prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 2: Binom1_qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 3:  Binom1_size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 4:  Binom2_prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 5: Binom2_qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 6:  Binom2_size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 7:  mix_weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span></code></pre></div>
+<span class="co">#&gt;               id   value               support            description</span>
+<span class="co">#&gt; 1:  Binom1__prob     0.5                 [0,1] Probability of Success</span>
+<span class="co">#&gt; 2: Binom1__qprob     0.5                 [0,1] Probability of failure</span>
+<span class="co">#&gt; 3:  Binom1__size      10                    ℕ+       Number of trials</span>
+<span class="co">#&gt; 4:  Binom2__prob     0.5                 [0,1] Probability of Success</span>
+<span class="co">#&gt; 5: Binom2__qprob     0.5                 [0,1] Probability of failure</span>
+<span class="co">#&gt; 6:  Binom2__size      10                    ℕ+       Number of trials</span>
+<span class="co">#&gt; 7:  mix__weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span></code></pre></div>
 </div>
 <div id="setparametervalue" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setparametervalue" class="anchor"></a>setParameterValue</h3>
 <p>As the constructor may change the names of parameters, the <code>setParameterValue</code> is overloaded to ensure the correct <code>ParameterSet</code> from the corresponding distribution is updated. So given the example above, if a user wants to update the first Binomial distribution</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">M</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>Binom1_prob <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">M</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>Binom1__prob <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
 <p>And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined <code>ParameterSet</code> is updated as well as the one in the internal model</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;              id   value               support            description</span>
-<span class="co">#&gt; 1:  Binom1_prob     0.2                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 2: Binom1_qprob     0.8                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 3:  Binom1_size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 4:  Binom2_prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 5: Binom2_qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 6:  Binom2_size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 7:  mix_weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span>
+<span class="co">#&gt;               id   value               support            description</span>
+<span class="co">#&gt; 1:  Binom1__prob     0.2                 [0,1] Probability of Success</span>
+<span class="co">#&gt; 2: Binom1__qprob     0.8                 [0,1] Probability of failure</span>
+<span class="co">#&gt; 3:  Binom1__size      10                    ℕ+       Number of trials</span>
+<span class="co">#&gt; 4:  Binom2__prob     0.5                 [0,1] Probability of Success</span>
+<span class="co">#&gt; 5: Binom2__qprob     0.5                 [0,1] Probability of failure</span>
+<span class="co">#&gt; 6:  Binom2__size      10                    ℕ+       Number of trials</span>
+<span class="co">#&gt; 7:  mix__weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span>
 <span class="va">M</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Binom1"</span><span class="op">)</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;       id value support            description</span>
 <span class="co">#&gt; 1:  prob   0.2   [0,1] Probability of Success</span>

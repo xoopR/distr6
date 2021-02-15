@@ -87,7 +87,7 @@ distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -315,7 +315,8 @@ independent distributions.</p>
   name <span class='op'>=</span> <span class='cn'>NULL</span>,
   short_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   decorators <span class='op'>=</span> <span class='cn'>NULL</span>,
-  vecdist <span class='op'>=</span> <span class='cn'>NULL</span>
+  vecdist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ids <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -351,6 +352,10 @@ Decorators to add to the distribution during construction.</p></dd>
 <dt><code>vecdist</code></dt><dd><p><a href='VectorDistribution.html'>VectorDistribution</a> <br />
 Alternative constructor to directly create this object from an object inheriting from
 <a href='VectorDistribution.html'>VectorDistribution</a>.</p></dd>
+
+<dt><code>ids</code></dt><dd><p><code>(character())</code> <br />
+Optional ids for wrapped distributions in vector, should be unique and of same length as
+the number of distributions.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>

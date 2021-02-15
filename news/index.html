@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -224,15 +224,6 @@
       <small>Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="distr6-151" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.1">
-<a href="#distr6-151" class="anchor"></a>distr6 1.5.1<small> Unreleased </small>
-</h1>
-<ul>
-<li>Added <code>length.VectorDistribution</code>
-</li>
-</ul>
-</div>
     <div id="distr6-150" class="section level1">
 <h1 class="page-header" data-toc-text="1.5.0">
 <a href="#distr6-150" class="anchor"></a>distr6 1.5.0<small> Unreleased </small>
@@ -244,6 +235,9 @@
 <h4 class="hasAnchor">
 <a href="#added-functionality" class="anchor"></a>Added Functionality</h4>
 <ul>
+<li>Added <code>length.VectorDistribution</code>
+</li>
+<li>Added <code>ids</code> parameter to <code>VectorDistribution</code> to allow specifying names for wrapped distributions. Extended <code>extract.VectorDistribution</code> so these ids can be used for extraction.</li>
 <li>Added sugar function <code>dstr</code> to construct distributions more easily, e.g. <code><a href="../reference/dstr.html">dstr("Binom", size = 4)</a></code> instead of <code>Binomial$new(size = 4)</code>.</li>
 <li>Added sugar function <code>dstrs</code> to construct a <code>VectorDistribution</code> of distributions.</li>
 <li>
@@ -254,6 +248,7 @@
 <h4 class="hasAnchor">
 <a href="#edited-functionality" class="anchor"></a>Edited Functionality</h4>
 <ul>
+<li>The separator for composite (wrapped) distributions is now <code>__</code> (before <code>_</code>). This may affect backwards compatibility in rare cases.</li>
 <li>Construction and setting of parameters is now changed. Previously this relied on knowing a confusing hierarchy in parameters which would take priority over one another. Now if conflicting parameters are supplied in construction or on setting an error is returned, e.g. <code>Binomial$new(prob = 0.1, qprob = 0.2)</code> would cause an error. This may affect bacwards compatibility however should not do so if distributions are correctly constructed/updated without conflicts.</li>
 <li>
 <code>setParameterValue</code> in <code>ParameterSet</code> no longer errors if a non-settable parameter is updated, instead a <code>warning</code> is given and the parameter is ignored.</li>
