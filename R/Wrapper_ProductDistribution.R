@@ -9,6 +9,7 @@
 #' @template param_data
 #' @template param_lowertail
 #' @template param_decorators
+#' @template param_ids
 #'
 #' @details A product distribution is defined by
 #'
@@ -49,7 +50,7 @@ ProductDistribution <- R6Class("ProductDistribution",
                           shared_params = NULL,
                           name = NULL, short_name = NULL,
                           decorators = NULL,
-                          vecdist = NULL) {
+                          vecdist = NULL, ids = NULL) {
 
       if (!is.null(vecdist)) {
         checkmate::assertClass(vecdist, "VectorDistribution")
@@ -92,7 +93,8 @@ ProductDistribution <- R6Class("ProductDistribution",
           shared_params = shared_params,
           decorators = decorators,
           name = name,
-          short_name = short_name
+          short_name = short_name,
+          ids = ids
         )
       }
 

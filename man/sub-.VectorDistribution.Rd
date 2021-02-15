@@ -9,9 +9,15 @@
 \arguments{
 \item{vecdist}{VectorDistribution from which to extract Distributions.}
 
-\item{i}{indices specifying distributions to extract.}
+\item{i}{indices specifying distributions to extract or ids of wrapped distributions.}
 }
 \description{
 Once a \code{VectorDistribution} has been constructed, use \code{[}
 to extract one or more \code{Distribution}s from inside it.
+}
+\examples{
+v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+v[1]
+v["a"]
+
 }

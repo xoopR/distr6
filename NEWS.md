@@ -1,6 +1,7 @@
 # distr6 1.5.1
 
 * Added `length.VectorDistribution`
+* Added `ids` parameter to `VectorDistribution` to allow specifying names for wrapped distributions. Extended `extract.VectorDistribution` so these ids can be used for extraction.
 
 # distr6 1.5.0
 

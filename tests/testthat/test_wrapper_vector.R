@@ -425,3 +425,28 @@ test_that("length", {
   expect_equal(length(VectorDistribution$new(distribution = "WeightedDiscrete", params =
                data.frame(x = 1:2, pdf = rep(1, 2)))), 2)
 })
+
+
+test_that("ids", {
+  v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  v <- VectorDistribution$new(vecdist = list(v1), ids = letters[1:2])
+  expect_equal(v$modelTable$shortname, letters[1:2])
+  expect_equal(names(v$wrappedModels()), letters[1:2])
+  expect_equal(v["b"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 2)")
+
+  v <- VectorDistribution$new(distribution = "WeightedDiscrete",
+                              params = data.frame(x = 1:2, pdf = rep(1, 2)),
+                              ids = letters[1:2])
+  expect_equal(v$modelTable$shortname, letters[1:2])
+  expect_equal(names(v$wrappedModels()), letters[1:2])
+  expect_equal(v["b"]$strprint(), "WeightDisc()")
+  expect_error(v["c"]$strprint(), "subset")
+
+
+  v <- VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
+                              ids = letters[1:2])
+  expect_equal(v$modelTable$shortname, letters[1:2])
+  expect_equal(names(v$wrappedModels()), letters[1:2])
+  expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+
+})

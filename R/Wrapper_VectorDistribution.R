@@ -16,6 +16,7 @@
 #' @template param_lowertail
 #' @template param_n
 #' @template param_decorators
+#' @template param_ids
 #'
 #' @details A vector distribution is intented to vectorize distributions more efficiently than
 #' storing a list of distributions. To improve speed and reduce memory usage, distributions are
@@ -57,7 +58,7 @@ VectorDistribution <- R6Class("VectorDistribution",
     #' }
     initialize = function(distlist = NULL, distribution = NULL, params = NULL,
                           shared_params = NULL, name = NULL, short_name = NULL,
-                          decorators = NULL, vecdist = NULL, ...) {
+                          decorators = NULL, vecdist = NULL, ids = NULL, ...) {
 
       #-----------------
       # Decorate wrapper
@@ -71,8 +72,13 @@ VectorDistribution <- R6Class("VectorDistribution",
         if (checkmate::testList(vecdist)) {
 
           dist <- as.character(unlist(vecdist[[1]]$modelTable$Distribution[[1]]))
-          ids <- paste0(get(dist)$public_fields$short_name,
+          if (is.null(ids)) {
+            ids <- paste0(get(dist)$public_fields$short_name,
                        seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
+          } else {
+            checkmate::assertCharacter(ids, unique = TRUE)
+          }
+
           private$.modelTable <- as.data.table(data.frame(Distribution = dist, shortname = ids))
           private$.distlist <- FALSE
           private$.univariate <- vecdist[[1]]$.__enclos_env__$private$.univariate
@@ -195,7 +201,13 @@ or `distlist` should be used.")
               paramlst[[i]] <- p$clone(deep = TRUE)
             }
 
-            names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+            if (is.null(ids)) {
+              names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name,
+                                                 length(params)))
+            } else {
+              names(paramlst) <- checkmate::assertCharacter(ids, unique = TRUE)
+            }
+
             names(params) <- names(paramlst)
             params <- unlist(params, recursive = FALSE)
             names(params) <- gsub(".", "_", names(params), fixed = TRUE)
@@ -377,7 +389,13 @@ or `distlist` should be used.")
         } else {
           # set flag to TRUE
           private$.distlist <- TRUE
-          shortname <- distribution <- c()
+          distribution <- c()
+
+          if (is.null(ids)) {
+            shortname <- character(0)
+          } else {
+            shortname <- checkmate::assertCharacter(ids, unique = TRUE)
+          }
 
           # get all parameters in a list
           # assert all variateForm the same
@@ -387,14 +405,19 @@ or `distlist` should be used.")
           vs <- distlist[[1]]$traits$valueSupport
           for (i in seq_along(distlist)) {
             stopifnot(distlist[[i]]$traits$variateForm == vf)
-            shortname <- c(shortname, distlist[[i]]$short_name)
+            if (is.null(ids)) {
+              shortname <- c(shortname, distlist[[i]]$short_name)
+            }
             distribution <- c(distribution, distlist[[i]]$name)
             if (!is.null(distlist[[i]]$parameters()))
               paramlst[[i]] <- distlist[[i]]$parameters()
             vs <- c(vs, distlist[[i]]$traits$valueSupport)
           }
           valueSupport <- if (length(unique(vs)) == 1) vs[[1]] else "mixture"
-          shortname <- makeUniqueNames(shortname)
+          if (is.null(ids)) {
+            shortname <- makeUniqueNames(shortname)
+          }
+
 
           if (is.null(unlist(paramlst))) {
             parameters <- ParameterSetCollection$new()
@@ -1076,10 +1099,19 @@ or `distlist` should be used.")
 #' @description Once a \code{VectorDistribution} has been constructed, use \code{[}
 #' to extract one or more \code{Distribution}s from inside it.
 #' @param vecdist VectorDistribution from which to extract Distributions.
-#' @param i indices specifying distributions to extract.
+#' @param i indices specifying distributions to extract or ids of wrapped distributions.
 #' @usage \method{[}{VectorDistribution}(vecdist, i)
+#' @examples
+#' v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+#' v[1]
+#' v["a"]
+#'
 #' @export
 "[.VectorDistribution" <- function(vecdist, i) {
+  if (checkmate::testCharacter(i)) {
+    checkmate::assertSubset(i, unlist(vecdist$modelTable$shortname))
+    i <- match(i, vecdist$modelTable$shortname, 0)
+  }
   i <- i[i %in% (seq_len(nrow(vecdist$modelTable)))]
   if (length(i) == 0) {
     stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable))
