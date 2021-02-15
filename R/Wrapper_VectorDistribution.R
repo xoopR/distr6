@@ -61,7 +61,7 @@ VectorDistribution <- R6Class("VectorDistribution",
                           decorators = NULL, vecdist = NULL, ids = NULL, ...) {
 
       if (!is.null(ids)) {
-        if (any(grepl("__", ids, fixed = TRUE)) {
+        if (any(grepl("__", ids, fixed = TRUE))) {
           stop("'__' is a reserved symbol in VectorDistributions and cannot be used in 'ids'.")
         } else {
           # 3.6 fix
