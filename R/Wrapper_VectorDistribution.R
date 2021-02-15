@@ -60,6 +60,11 @@ VectorDistribution <- R6Class("VectorDistribution",
                           shared_params = NULL, name = NULL, short_name = NULL,
                           decorators = NULL, vecdist = NULL, ids = NULL, ...) {
 
+      # FIXME - TEMP SOLUTION
+      if (!is.null(ids) && any(grepl("_", ids))) {
+        stop("'_' is a reserved symbol in VectorDistributions and cannot be used in 'ids'.")
+      }
+
       #-----------------
       # Decorate wrapper
       #-----------------

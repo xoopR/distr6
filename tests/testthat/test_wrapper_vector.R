@@ -449,4 +449,7 @@ test_that("ids", {
   expect_equal(names(v$wrappedModels()), letters[1:2])
   expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
 
+  expect_error(VectorDistribution$new(distribution = "WeightedDiscrete",
+                              params = data.frame(x = 1:2, pdf = rep(1, 2)),
+                              ids = c("a", "a_b")), "reserved")
 })
