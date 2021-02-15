@@ -233,7 +233,7 @@ test_that("extract", {
     list(prob = 0.2, size = 6)
   ))
   expect_equal(a[1]$pdf(1:10), Binomial$new(prob = 0.1, size = 2)$pdf(1:10))
-  expect_equal(names(a[1:2]$wrappedModels()), c("Binom1", "Binom2"))
+  expect_equal(as.character(names(a[1:2]$wrappedModels())), c("Binom1", "Binom2"))
   expect_error(a[4], "Index i too large")
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
@@ -256,7 +256,7 @@ test_that("decorators", {
   )
   expect_equal(a$decorators, c("CoreStatistics", "ExoticStatistics"))
   expect_equal(a[1]$decorators, c("CoreStatistics", "ExoticStatistics"))
-  expect_equal(a[1:2]$decorators, c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(as.character(a[1:2]$decorators), c("CoreStatistics", "ExoticStatistics"))
 
   a <- VectorDistribution$new(list(
     Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
@@ -432,7 +432,7 @@ test_that("ids", {
   v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a"))
   expect_equal(v$modelTable$shortname, c("a", "b_a"))
   expect_equal(names(v$wrappedModels()), c("a", "b_a"))
-  expect_equal(v["b_a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 2)")
+  expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 1)")
 
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
