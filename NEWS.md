@@ -1,3 +1,7 @@
+# distr6 1.5.1
+
+* Added `length.VectorDistribution`
+
 # distr6 1.5.0
 
 ### Minor Updates
@@ -128,7 +132,7 @@
 * `Degenerate`, `ShiftedLoglogistic` now Rcpp
 * Removed redundant `K` parameter from `MultivariateNormal`
 * Bugfix in `Wald`, symmetry was incorrectly flagged as "symmetric"
-* Fixed bug in `TruncatedDistribution` support - previously support interval type was `"[]"` instead of `"(]"`. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open. 
+* Fixed bug in `TruncatedDistribution` support - previously support interval type was `"[]"` instead of `"(]"`. An important implication is that even if truncating at or outside of the distribution limits, the support will still be changed if the distribution was left-closed to become left-open.
 * Improved speed of assertions by using package `{checkmate}`
 * Bugfix in `listDistributions` which was overriding filtering with `simplify`
 
@@ -203,7 +207,7 @@
 ## Patches
 
 - Bug fix in `WeightedDiscrete` distribution `variance` calculation
-- Fixed bug in `Empirical` that was stopping the cdf of the first point in the distribution being evaluated 
+- Fixed bug in `Empirical` that was stopping the cdf of the first point in the distribution being evaluated
 - Fixed bug that allowed invalid parameter values to be set for non-reference parameters
 - Updated parameter error messages to be more informative
 - Improved speed and efficiency in `Distribution` constructor for wrappers
@@ -228,7 +232,7 @@
 - Added `errormsg` argument to assertions so a custom error message can be provided
 - Fixed error in quantile function in `Empirical` that was causing results to be dropped
 - Fixed bug in `TruncatedDistribution` that prevented multivariate distributions being truncated
-- Fixed error in variance of `Empirical` that was calculating sample not population 
+- Fixed error in variance of `Empirical` that was calculating sample not population
 - Moved rare imports to suggests
 
 # distr6 1.1.0
@@ -261,7 +265,7 @@
 
 - Bug fix in quantile function of huberization wrapper
 - Fixed the `rand` return of a Vector Distribution (transposed data.table and added column names)
-- Fixed spelling mistakes in extension guidelines and removed calls to redundant parameters 
+- Fixed spelling mistakes in extension guidelines and removed calls to redundant parameters
 - Removed redundant `crayon` dependency
 - Fixed bug in `MixtureDistribution` that was causing `rand` to erroneously return integers
 - Removed error in `Categorical` documentation

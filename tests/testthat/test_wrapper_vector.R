@@ -419,3 +419,9 @@ test_that("vecdist constructor", {
   expect_equal(as.VectorDistribution(p)$pdf(1:10), v$pdf(1:10))
   expect_equal(as.VectorDistribution(m)$cdf(1:10), v$cdf(1:10))
 })
+
+test_that("length", {
+  expect_equal(length(VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)))), 2)
+  expect_equal(length(VectorDistribution$new(distribution = "WeightedDiscrete", params =
+               data.frame(x = 1:2, pdf = rep(1, 2)))), 2)
+})

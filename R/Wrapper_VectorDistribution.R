@@ -1137,3 +1137,12 @@ as.VectorDistribution <- function(object) {
     stop("Object must inherit from VectorDistribution.")
   }
 }
+
+#' @title Get Number of Distributions in Vector Distribution
+#' @description Gets the number of distributions in an object inheriting from
+#' [VectorDistribution].
+#' @param x [VectorDistribution]
+#' @export
+length.VectorDistribution <- function(x) {
+  nrow(x$modelTable)
+}
