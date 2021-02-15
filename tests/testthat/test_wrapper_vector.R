@@ -430,7 +430,7 @@ test_that("length", {
 test_that("ids", {
   v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
   v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a"))
-  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(as.character(unlist(v$modelTable$shortname)), c("a", "b_a"))
   expect_equal(names(v$wrappedModels()), c("a", "b_a"))
   expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 1)")
 
