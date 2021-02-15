@@ -1116,7 +1116,7 @@ or `distlist` should be used.")
 "[.VectorDistribution" <- function(vecdist, i) {
   if (checkmate::testCharacter(i)) {
     checkmate::assertSubset(i, unlist(vecdist$modelTable$shortname))
-    i <- match(i, vecdist$modelTable$shortname, 0)
+    i <- match(i, as.character(unlist(vecdist$modelTable$shortname)), 0)
   }
   i <- i[i %in% (seq_len(nrow(vecdist$modelTable)))]
   if (length(i) == 0) {
