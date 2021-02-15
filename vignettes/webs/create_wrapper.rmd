@@ -33,7 +33,7 @@ M$parameters()
 As the constructor may change the names of parameters, the `setParameterValue` is overloaded to ensure the correct `ParameterSet` from the corresponding distribution is updated. So given the example above, if a user wants to update the first Binomial distribution
 
 ```{r}
-M$setParameterValue(Binom1_prob = 0.2)
+M$setParameterValue(Binom1__prob = 0.2)
 ```
 
 And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined `ParameterSet` is updated as well as the one in the internal model
