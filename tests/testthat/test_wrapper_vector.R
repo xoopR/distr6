@@ -437,7 +437,7 @@ test_that("ids", {
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
                               ids = c("a", "b_a"))
-  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(as.character(unlist(v$modelTable$shortname)), c("a", "b_a"))
   expect_equal(names(v$wrappedModels()), c("a", "b_a"))
   expect_equal(v["a"]$strprint(), "WeightDisc()")
   expect_error(v["c"]$strprint(), "subset")
@@ -449,7 +449,7 @@ test_that("ids", {
 
   v <- VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
                               ids = c("a", "b_a"))
-  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(as.character(unlist(v$modelTable$shortname)), c("a", "b_a"))
   expect_equal(names(v$wrappedModels()), c("a", "b_a"))
   expect_equal(v["b_a"]$strprint(), "Exp(rate = 1, scale = 1)")
 
