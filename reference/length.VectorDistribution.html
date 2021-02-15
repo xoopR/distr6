@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Survival Function P-Norm — survivalPNorm • distr6</title>
+<title>Get Number of Distributions in Vector Distribution — length.VectorDistribution • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,9 +52,9 @@
 
 
 
-<meta property="og:title" content="Survival Function P-Norm — survivalPNorm" />
-<meta property="og:description" content="The p-norm of the survival function evaluated between given limits or over the
-whole support." />
+<meta property="og:title" content="Get Number of Distributions in Vector Distribution — length.VectorDistribution" />
+<meta property="og:description" content="Gets the number of distributions in an object inheriting from
+VectorDistribution." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -222,42 +222,28 @@ whole support." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Survival Function P-Norm</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/DistributionDecorator_ExoticStatistics.R'><code>R/DistributionDecorator_ExoticStatistics.R</code></a></small>
-    <div class="hidden name"><code>survivalPNorm.Rd</code></div>
+    <h1>Get Number of Distributions in Vector Distribution</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/Wrapper_VectorDistribution.R'><code>R/Wrapper_VectorDistribution.R</code></a></small>
+    <div class="hidden name"><code>length.VectorDistribution.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The p-norm of the survival function evaluated between given limits or over the
-whole support.</p>
+    <p>Gets the number of distributions in an object inheriting from
+<a href='VectorDistribution.html'>VectorDistribution</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>survivalPNorm</span><span class='op'>(</span><span class='va'>object</span>, p <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='cn'>NULL</span>, upper <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for VectorDistribution</span>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Distribution.</p></td>
-    </tr>
-    <tr>
-      <th>p</th>
-      <td><p>p-norm to calculate.</p></td>
-    </tr>
-    <tr>
-      <th>lower</th>
-      <td><p>lower limit for integration, default is infimum.</p></td>
-    </tr>
-    <tr>
-      <th>upper</th>
-      <td><p>upper limit for integration, default is supremum.</p></td>
+      <th>x</th>
+      <td><p><a href='VectorDistribution.html'>VectorDistribution</a></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Given p-norm of survival function evaluated between limits as a numeric.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
