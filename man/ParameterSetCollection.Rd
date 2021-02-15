@@ -53,16 +53,16 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 b$getParameterValue("prob")
-psc$setParameterValue(Binom1_prob = 0.4)
+psc$setParameterValue(Binom1__prob = 0.4)
 # both updated
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 b$getParameterValue("prob")
 
 g$setParameterValue(prob = 0.1)
 # both updated
-psc$getParameterValue("Geom_prob")
+psc$getParameterValue("Geom__prob")
 g$getParameterValue("prob")
 
 ## ------------------------------------------------
@@ -307,16 +307,16 @@ g <- Geometric$new()
 psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
                                   Binom2 = b$parameters(),
                                   Geom = g$parameters())
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 b$getParameterValue("prob")
-psc$setParameterValue(Binom1_prob = 0.4)
+psc$setParameterValue(Binom1__prob = 0.4)
 # both updated
-psc$getParameterValue("Binom1_prob")
+psc$getParameterValue("Binom1__prob")
 b$getParameterValue("prob")
 
 g$setParameterValue(prob = 0.1)
 # both updated
-psc$getParameterValue("Geom_prob")
+psc$getParameterValue("Geom__prob")
 g$getParameterValue("prob")
 }
 \if{html}{\out{</div>}}

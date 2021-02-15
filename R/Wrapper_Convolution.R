@@ -58,7 +58,7 @@ Convolution <- R6Class("Convolution",
     .pdf = function(x, log = FALSE) {
       d1 <- self$wrappedModels()[[1]]
       d2 <- self$wrappedModels()[[2]]
-      add <- self$getParameterValue("conv_add")
+      add <- self$getParameterValue("conv__add")
       min <- max(d1$traits$type$lower, d2$traits$type$lower)
       max <- min(d1$traits$type$upper, d2$traits$type$upper)
 

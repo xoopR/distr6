@@ -429,27 +429,33 @@ test_that("length", {
 
 test_that("ids", {
   v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  v <- VectorDistribution$new(vecdist = list(v1), ids = letters[1:2])
-  expect_equal(v$modelTable$shortname, letters[1:2])
-  expect_equal(names(v$wrappedModels()), letters[1:2])
-  expect_equal(v["b"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 2)")
+  v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a"))
+  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
+  expect_equal(v["b_a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 2)")
 
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
-                              ids = letters[1:2])
-  expect_equal(v$modelTable$shortname, letters[1:2])
-  expect_equal(names(v$wrappedModels()), letters[1:2])
-  expect_equal(v["b"]$strprint(), "WeightDisc()")
+                              ids = c("a", "b_a"))
+  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
+  expect_equal(v["a"]$strprint(), "WeightDisc()")
   expect_error(v["c"]$strprint(), "subset")
 
+  v <- VectorDistribution$new(distribution = "WeightedDiscrete",
+                              params = data.frame(x = 1:3, pdf = rep(1, 3)),
+                              ids = c("a", "b_a", "c"))
+  expect_equal(v[c("a", "b_a")]$strprint(), c("a", "b_a"))
 
   v <- VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
-                              ids = letters[1:2])
-  expect_equal(v$modelTable$shortname, letters[1:2])
-  expect_equal(names(v$wrappedModels()), letters[1:2])
-  expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+                              ids = c("a", "b_a"))
+  expect_equal(v$modelTable$shortname, c("a", "b_a"))
+  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
+  expect_equal(v["b_a"]$strprint(), "Exp(rate = 1, scale = 1)")
+
+  expect_equal(v[c("a", "b_a")]$strprint(), c("a", "b_a"))
 
   expect_error(VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
-                              ids = c("a", "a_b")), "reserved")
+                              ids = c("a", "a__b")), "reserved")
 })

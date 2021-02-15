@@ -61,8 +61,8 @@ VectorDistribution <- R6Class("VectorDistribution",
                           decorators = NULL, vecdist = NULL, ids = NULL, ...) {
 
       # FIXME - TEMP SOLUTION
-      if (!is.null(ids) && any(grepl("_", ids))) {
-        stop("'_' is a reserved symbol in VectorDistributions and cannot be used in 'ids'.")
+      if (!is.null(ids) && any(grepl("__", ids, fixed = TRUE))) {
+        stop("'__' is a reserved symbol in VectorDistributions and cannot be used in 'ids'.")
       }
 
       #-----------------
@@ -212,10 +212,11 @@ or `distlist` should be used.")
             } else {
               names(paramlst) <- checkmate::assertCharacter(ids, unique = TRUE)
             }
-
             names(params) <- names(paramlst)
             params <- unlist(params, recursive = FALSE)
-            names(params) <- gsub(".", "_", names(params), fixed = TRUE)
+            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+
+
             if (!is.null(shared_params)) {
               if (distribution == "Geometric") {
                 shared_params <- shared_params[!(names(shared_params) %in% "trials")]
@@ -226,7 +227,7 @@ or `distlist` should be used.")
               shared_params <- rep(list(shared_params), length(params))
               names(shared_params) <- names(paramlst)
               shared_params <- unlist(shared_params, recursive = FALSE)
-              names(shared_params) <- gsub(".", "_", names(shared_params), fixed = TRUE)
+              names(shared_params) <- gsub(".", "__", names(shared_params), fixed = TRUE)
               params <- c(params, shared_params)
             }
 
@@ -568,7 +569,7 @@ or `distlist` should be used.")
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
             do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
-                                              self$parameters()[paste0(x, "_")]$values()))
+                                              self$parameters()[paste0(x, "__")]$values()))
             return(dist)
           })
         }
@@ -586,7 +587,7 @@ or `distlist` should be used.")
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
             do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
-                                              self$parameters()[paste0(x, "_")]$values()))
+                                              self$parameters()[paste0(x, "__")]$values()))
             return(dist)
           })
         }
@@ -1128,7 +1129,7 @@ or `distlist` should be used.")
     distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()[paste0(id, "_")]$values()
+      pars <- vecdist$parameters()[paste0(id, "__")]$values()
       shared_pars <-  vecdist$.__enclos_env__$private$.sharedparams
       pars <- pars[!(names(pars) %in% names(shared_pars))]
       # construct with shared parameters (no conflicts should be possible here)
@@ -1143,7 +1144,8 @@ or `distlist` should be used.")
       return(VectorDistribution$new(
         distribution = distribution, params = pars,
         decorators = decorators,
-        shared_params = vecdist$.__enclos_env__$private$.sharedparams
+        shared_params = vecdist$.__enclos_env__$private$.sharedparams,
+        ids = vecdist$modelTable$shortname[i]
       ))
     }
   } else {
@@ -1156,7 +1158,8 @@ or `distlist` should be used.")
     } else {
       return(VectorDistribution$new(
         distlist = vecdist$wrappedModels()[i],
-        decorators = decorators
+        decorators = decorators,
+        ids = vecdist$modelTable$shortname[i]
       ))
     }
   }

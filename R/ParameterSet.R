@@ -580,7 +580,7 @@ c.ParameterSet <- function(..., prefix.names = NULL) {
   for (i in seq(...length())) {
     dt <- as.data.table(...elt(i))
     if (!is.null(prefix.names)) {
-      dt$id <- paste(prefix.names[[i]], dt$id, sep = "_")
+      dt$id <- paste(prefix.names[[i]], dt$id, sep = "__")
     }
     ps <- rbind(ps, dt)
   }
@@ -735,12 +735,12 @@ as.ParameterSet.list <- function(x, ...) {
 #' @param ps [ParameterSet]\cr
 #' [ParameterSet] from which to extract parameters.
 #' @param ids `(character())` \cr
-#' ids of parameters to extract, if `id` ends with `_` then all parameters starting
-#' with `ids_` are extracted and the prefix is ignored, `prefix` can be left `NULL`.
+#' ids of parameters to extract, if `id` ends with `__` then all parameters starting
+#' with `ids__` are extracted and the prefix is ignored, `prefix` can be left `NULL`.
 #' See examples.
 #' @param prefix `(character(1))` \cr
-#' An optional prefix to remove from ids after extraction, assumes `_` follows the
-#' prefix name, i.e. `prefix_ids`.
+#' An optional prefix to remove from ids after extraction, assumes `__` follows the
+#' prefix name, i.e. `prefix__ids`.
 #' @param ... `ANY` \cr
 #' Ignored, added for consistency.
 #'
@@ -752,20 +752,20 @@ as.ParameterSet.list <- function(x, ...) {
 #'   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 #' )$parameters()
 #'
-#' ps["Binom1_prob"] # extracts just Binom1_prob
-#' ps["Binom1_prob", prefix = "Binom1"] # extracts Binom1_prob and removes prefix
-#' ps["Binom1_"] # extracts all Binom1 parameters and removes prefix
+#' ps["Binom1__prob"] # extracts just Binom1__prob
+#' ps["Binom1__prob", prefix = "Binom1"] # extracts Binom1__prob and removes prefix
+#' ps["Binom1__"] # extracts all Binom1 parameters and removes prefix
 #' @export
 "[.ParameterSet" <- function(ps, ids, prefix = NULL, ...) {
   id <- NULL # added to remove the NOTE, is overwritten immediately
   dt <- as.data.table(ps)
-  if (grepl("_$", ids)) {
-    dt <- subset(dt, grepl(ids, id))
+  if (grepl("__$", ids)) {
+    dt <- subset(dt, grepl(paste0("^", ids), id))
     dt$id <- gsub(ids, "", dt$id)
   } else {
     dt <- subset(dt, id %in% ids)
     if (!is.null(prefix)) {
-      dt$id <- gsub(paste0(prefix, "_"), "", dt$id)
+      dt$id <- gsub(paste0(prefix, "__"), "", dt$id, fixed = TRUE)
     }
   }
 

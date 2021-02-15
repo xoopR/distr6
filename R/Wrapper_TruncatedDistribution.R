@@ -98,13 +98,13 @@ Try decorate(distribution, FunctionImputation) first.")
       super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
 
       if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower") + 1,
-          self$getParameterValue("trunc_upper"),
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc__lower") + 1,
+          self$getParameterValue("trunc__upper"),
           class = "integer"
         )
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc_lower"),
-          self$getParameterValue("trunc_upper"),
+        private$.properties$support <- Interval$new(self$getParameterValue("trunc__lower"),
+          self$getParameterValue("trunc__upper"),
           type = "(]"
         )
       }
@@ -116,8 +116,8 @@ Try decorate(distribution, FunctionImputation) first.")
   private = list(
     .pdf = function(x, log = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- self$getParameterValue("trunc_lower")
-      upper <- self$getParameterValue("trunc_upper")
+      lower <- self$getParameterValue("trunc__lower")
+      upper <- self$getParameterValue("trunc__upper")
 
       if (log) {
         pdf <- rep(-Inf, length(x))
@@ -133,8 +133,8 @@ Try decorate(distribution, FunctionImputation) first.")
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- self$getParameterValue("trunc_lower")
-      upper <- self$getParameterValue("trunc_upper")
+      lower <- self$getParameterValue("trunc__lower")
+      upper <- self$getParameterValue("trunc__upper")
       Flower <- dist$cdf(lower)
       Fupper <- dist$cdf(upper)
       Fx <- dist$cdf(x)
@@ -165,8 +165,8 @@ Try decorate(distribution, FunctionImputation) first.")
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- self$getParameterValue("trunc_lower")
-      upper <- self$getParameterValue("trunc_upper")
+      lower <- self$getParameterValue("trunc__lower")
+      upper <- self$getParameterValue("trunc__upper")
 
       Fupper <- dist$cdf(upper)
       Flower <- dist$cdf(lower)

@@ -2,7 +2,8 @@ library(testthat)
 
 test_that("check weights", {
   expect_equal(
-    MixtureDistribution$new(list(Exponential$new(), Normal$new()))$getParameterValue("mix_weights"),
+    MixtureDistribution$new(list(Exponential$new(), Normal$new()))$
+    getParameterValue("mix__weights"),
     "uniform"
   )
   expect_error(
@@ -13,7 +14,7 @@ test_that("check weights", {
   expect_equal(
     MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
       weights = c(0.1, 0.6, 0.3)
-    )$getParameterValue("mix_weights"),
+    )$getParameterValue("mix__weights"),
     c(0.1, 0.6, 0.3)
   )
 })
@@ -23,9 +24,9 @@ M <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new(
 M2 <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()))
 
 test_that("update weights", {
-  expect_equal(M$setParameterValue(mix_weights = c(1, 2, 3))$getParameterValue("mix_weights"),
+  expect_equal(M$setParameterValue(mix__weights = c(1, 2, 3))$getParameterValue("mix__weights"),
                (1:3) / sum(1:3))
-  expect_silent(M$setParameterValue(mix_weights = c(0.1, 0.6, 0.3)))
+  expect_silent(M$setParameterValue(mix__weights = c(0.1, 0.6, 0.3)))
 })
 
 test_that("check pdf", {

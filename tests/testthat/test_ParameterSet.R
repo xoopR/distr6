@@ -158,13 +158,13 @@ test_that("extract", {
   expect_equal(ps["prob"], ParameterSet$new(id = "prob", value = 0.5, support = Interval$new(0, 1),
                                             description = "Probability of Success"))
   ps2 <- expect_silent(c(ps, ps, prefix.names = c("Binom1", "Binom2")))
-  expect_equal(ps2["Binom1_prob"], ParameterSet$new(id = "Binom1_prob", value = 0.5,
+  expect_equal(ps2["Binom1__prob"], ParameterSet$new(id = "Binom1__prob", value = 0.5,
                                                     support = Interval$new(0, 1),
                                             description = "Probability of Success"))
-  expect_equal(ps2["Binom1_prob", prefix = "Binom1"], ParameterSet$new(id = "prob", value = 0.5,
+  expect_equal(ps2["Binom1__prob", prefix = "Binom1"], ParameterSet$new(id = "prob", value = 0.5,
                                                     support = Interval$new(0, 1),
                                                     description = "Probability of Success"))
   exp <- getParameterSet.Binomial()
   exp$.__enclos_env__$private$.deps <- data.table(x = character(), y = character(), fun = list())
-  expect_equal(ps2["Binom1_"], exp)
+  expect_equal(ps2["Binom1__"], exp)
 })

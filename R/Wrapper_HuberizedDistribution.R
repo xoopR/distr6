@@ -97,14 +97,14 @@ Try decorate(distribution, FunctionImputation) first.")
     setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
       super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
       if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub_lower"),
-          self$getParameterValue("hub_upper"),
+        private$.properties$support <- Interval$new(self$getParameterValue("hub__lower"),
+          self$getParameterValue("hub__upper"),
           class = "integer"
         )
       } else {
         private$.properties$support <- Interval$new(
-          self$getParameterValue("hub_lower"),
-          self$getParameterValue("hub_upper")
+          self$getParameterValue("hub__lower"),
+          self$getParameterValue("hub__upper")
         )
       }
 
@@ -117,8 +117,8 @@ Try decorate(distribution, FunctionImputation) first.")
       dist <- self$wrappedModels()[[1]]
 
       if (testDiscrete(dist)) {
-        lower <- self$getParameterValue("hub_lower")
-        upper <- self$getParameterValue("hub_upper")
+        lower <- self$getParameterValue("hub__lower")
+        upper <- self$getParameterValue("hub__upper")
 
         pdf <- x
         pdf[x < lower | x > upper] <- 0
@@ -131,8 +131,8 @@ Try decorate(distribution, FunctionImputation) first.")
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- self$getParameterValue("hub_lower")
-      upper <- self$getParameterValue("hub_upper")
+      lower <- self$getParameterValue("hub__lower")
+      upper <- self$getParameterValue("hub__upper")
 
       cdf <- x
       cdf[x < lower] <- 0
@@ -143,8 +143,8 @@ Try decorate(distribution, FunctionImputation) first.")
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       dist <- self$wrappedModels()[[1]]
-      lower <- self$getParameterValue("hub_lower")
-      upper <- self$getParameterValue("hub_upper")
+      lower <- self$getParameterValue("hub__lower")
+      upper <- self$getParameterValue("hub__upper")
 
       quantile <- dist$quantile(p, lower.tail = lower.tail, log.p = log.p)
 

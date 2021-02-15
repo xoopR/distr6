@@ -49,7 +49,7 @@ mixturiseVector <- function(vecdists, weights = "uniform") {
   for (i in seq_along(mlst)) {
     dlst <- lapply(vecdists, function(.y) {
       .y$parameters()[paste0(
-        as.character(unlist(.y$modelTable[i, 2])), "_")]$values(settable = FALSE)
+        as.character(unlist(.y$modelTable[i, 2])), "__")]$values(settable = FALSE)
     })
 
     mlst[[i]] <- MixtureDistribution$new(distribution = dist,

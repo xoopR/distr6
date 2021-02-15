@@ -15,10 +15,10 @@ test_that("getters", {
     Geom = getParameterSet.Geometric(),
     Binom = getParameterSet.Binomial()
   )
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.5)
-  expect_equal(pc$getParameterValue("Geom_prob"), 0.5)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.5)
+  expect_equal(pc$getParameterValue("Geom__prob"), 0.5)
   expect_equal(
-    pc$getParameterSupport("Binom_prob"),
+    pc$getParameterSupport("Binom__prob"),
     Binomial$new()$parameters()$getParameterSupport("prob")
   )
 
@@ -29,8 +29,8 @@ test_that("getters", {
 
   expect_error(pc$getParameterValue("Norm"), "not in this")
   expect_error(pc$parameters("Norm"), "is not a")
-  expect_equal(pc$parameters("Geom_prob"),
-               data.table::data.table(id = "Geom_prob", value = list(0.5),
+  expect_equal(pc$parameters("Geom__prob"),
+               data.table::data.table(id = "Geom__prob", value = list(0.5),
                                       support = list(Interval$new(0, 1, type = "(]")),
                                       settable = TRUE, description = "Probability of success"))
 })
@@ -40,10 +40,10 @@ test_that("setters", {
     Geom = Geometric$new()$parameters(),
     Binom = Binomial$new()$parameters()
   )
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.5)
-  expect_silent(pc$setParameterValue(Binom_prob = 1))
-  expect_equal(pc$getParameterValue("Binom_prob"), 1)
-  expect_equal(pc$getParameterValue("Binom_qprob"), 0)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.5)
+  expect_silent(pc$setParameterValue(Binom__prob = 1))
+  expect_equal(pc$getParameterValue("Binom__prob"), 1)
+  expect_equal(pc$getParameterValue("Binom__qprob"), 0)
 })
 
 test_that("clone_shallow", {
@@ -52,13 +52,13 @@ test_that("clone_shallow", {
     Binom = Binomial$new()$parameters()
   )
   pc2 <- pc$clone()
-  expect_equal(pc$getParameterValue("Binom_prob"), pc2$getParameterValue("Binom_prob"))
-  pc$setParameterValue(Binom_prob = 0.2)
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.2)
-  expect_equal(pc2$getParameterValue("Binom_prob"), 0.2)
-  pc2$setParameterValue(Binom_prob = 0.4)
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.4)
-  expect_equal(pc2$getParameterValue("Binom_prob"), 0.4)
+  expect_equal(pc$getParameterValue("Binom__prob"), pc2$getParameterValue("Binom__prob"))
+  pc$setParameterValue(Binom__prob = 0.2)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.2)
+  expect_equal(pc2$getParameterValue("Binom__prob"), 0.2)
+  pc2$setParameterValue(Binom__prob = 0.4)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.4)
+  expect_equal(pc2$getParameterValue("Binom__prob"), 0.4)
 })
 
 test_that("clone_deep", {
@@ -67,13 +67,13 @@ test_that("clone_deep", {
     Binom = Binomial$new()$parameters()
   )
   pc2 <- pc$clone(deep = TRUE)
-  expect_equal(pc$getParameterValue("Binom_prob"), pc2$getParameterValue("Binom_prob"))
-  pc$setParameterValue(Binom_prob = 0.2)
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.2)
-  expect_equal(pc2$getParameterValue("Binom_prob"), 0.5)
-  pc2$setParameterValue(Binom_prob = 0.4)
-  expect_equal(pc$getParameterValue("Binom_prob"), 0.2)
-  expect_equal(pc2$getParameterValue("Binom_prob"), 0.4)
+  expect_equal(pc$getParameterValue("Binom__prob"), pc2$getParameterValue("Binom__prob"))
+  pc$setParameterValue(Binom__prob = 0.2)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.2)
+  expect_equal(pc2$getParameterValue("Binom__prob"), 0.5)
+  pc2$setParameterValue(Binom__prob = 0.4)
+  expect_equal(pc$getParameterValue("Binom__prob"), 0.2)
+  expect_equal(pc2$getParameterValue("Binom__prob"), 0.4)
 })
 
 test_that("deps", {

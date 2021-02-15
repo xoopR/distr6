@@ -1,4 +1,10 @@
-# distr6 1.5.1
+# distr6 1.6.0
+
+### Edited Functionality
+
+* The separator for composite (wrapped) distributions is now `__` (before `_`). This may affect backwards compatibility in rare cases.
+
+### Added Functionality
 
 * Added `length.VectorDistribution`
 * Added `ids` parameter to `VectorDistribution` to allow specifying names for wrapped distributions. Extended `extract.VectorDistribution` so these ids can be used for extraction.

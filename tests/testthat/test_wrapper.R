@@ -5,9 +5,9 @@ test_that("constructors", {
 test_that("parameters", {
   truncbin <- truncate(Binomial$new(), 1, 5)
   expect_condition(truncbin$getParameterValue())
-  expect_silent(truncbin$getParameterValue("Binom_prob"))
-  expect_equal(truncbin$getParameterValue("Binom_prob"), 0.5)
-  expect_silent(truncbin$setParameterValue(Binom_prob = 0.8))
+  expect_silent(truncbin$getParameterValue("Binom__prob"))
+  expect_equal(truncbin$getParameterValue("Binom__prob"), 0.5)
+  expect_silent(truncbin$setParameterValue(Binom__prob = 0.8))
 })
 
 test_that("wrapped models", {
@@ -35,12 +35,12 @@ test_that("wrap a wrapper", {
   ))
   expect_silent(x$parameters())
   expect_silent(x$cdf(2:3, 3:4))
-  expect_silent(x$setParameterValue(Exp_rate = 2))
-  expect_equal(x$getParameterValue("Exp_rate"), 2)
-  expect_silent(x$setParameterValue(HubTruncNorm_TruncNorm_trunc_upper = 6))
-  expect_equal(x$getParameterValue("HubTruncNorm_TruncNorm_trunc_upper"), 6)
+  expect_silent(x$setParameterValue(Exp__rate = 2))
+  expect_equal(x$getParameterValue("Exp__rate"), 2)
+  expect_silent(x$setParameterValue(HubTruncNorm__TruncNorm__trunc__upper = 6))
+  expect_equal(x$getParameterValue("HubTruncNorm__TruncNorm__trunc__upper"), 6)
   expect_equal(x$getParameterValue("upper"), list(
-    HubTruncNorm_TruncNorm_trunc = 6,
-    HubTruncNorm_hub = 5
+    HubTruncNorm__TruncNorm__trunc = 6,
+    HubTruncNorm__hub = 5
   ))
 })

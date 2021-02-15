@@ -11,13 +11,13 @@
 \link{ParameterSet} from which to extract parameters.}
 
 \item{ids}{\code{(character())} \cr
-ids of parameters to extract, if \code{id} ends with \verb{_} then all parameters starting
-with \code{ids_} are extracted and the prefix is ignored, \code{prefix} can be left \code{NULL}.
+ids of parameters to extract, if \code{id} ends with \verb{__} then all parameters starting
+with \code{ids__} are extracted and the prefix is ignored, \code{prefix} can be left \code{NULL}.
 See examples.}
 
 \item{prefix}{\code{(character(1))} \cr
-An optional prefix to remove from ids after extraction, assumes \verb{_} follows the
-prefix name, i.e. \code{prefix_ids}.}
+An optional prefix to remove from ids after extraction, assumes \verb{__} follows the
+prefix name, i.e. \code{prefix__ids}.}
 
 \item{...}{\code{ANY} \cr
 Ignored, added for consistency.}
@@ -32,7 +32,7 @@ ps <- VectorDistribution$new(
   params = data.table::data.table(prob = c(0.1, 0.6, 0.2), size = c(2, 4, 6))
 )$parameters()
 
-ps["Binom1_prob"] # extracts just Binom1_prob
-ps["Binom1_prob", prefix = "Binom1"] # extracts Binom1_prob and removes prefix
-ps["Binom1_"] # extracts all Binom1 parameters and removes prefix
+ps["Binom1__prob"] # extracts just Binom1__prob
+ps["Binom1__prob", prefix = "Binom1"] # extracts Binom1__prob and removes prefix
+ps["Binom1__"] # extracts all Binom1 parameters and removes prefix
 }
