@@ -1089,6 +1089,11 @@ or `distlist` should be used.")
     #' Returns list of constructed wrapped [Distribution]s.
     distlist = function() {
       return(private$.distlist)
+    },
+    #' @field ids
+    #' Returns ids of constructed wrapped [Distribution]s.
+    ids = function() {
+      as.character(unlist(private$.modelTable$shortname))
     }
   ),
 
