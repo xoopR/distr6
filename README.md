@@ -135,7 +135,7 @@ for manipulation and composition of distributions.
 ``` r
 B <- Binomial$new()
 TruncatedDistribution$new(B, lower = 2, upper = 5) #Or: truncate(B,2,5)
-#> TruncBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,trunc_lower = 2, trunc_upper = 5)
+#> TruncBinom(Binom__prob = 0.5, Binom__qprob = 0.5,...,trunc__lower = 2, trunc__upper = 5)
 N <- Normal$new()
 MixtureDistribution$new(list(B,N), weights = c(0.1, 0.9))
 #> Binom wX Norm
