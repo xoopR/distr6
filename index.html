@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -257,7 +257,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va"><a href="reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">B</span>, lower <span class="op">=</span> <span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co">#Or: truncate(B,2,5)</span>
-<span class="co">#&gt; TruncBinom(Binom_prob = 0.5, Binom_qprob = 0.5,...,trunc_lower = 2, trunc_upper = 5)</span>
+<span class="co">#&gt; TruncBinom(Binom__prob = 0.5, Binom__qprob = 0.5,...,trunc__lower = 2, trunc__upper = 5)</span>
 <span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va"><a href="reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">B</span>,<span class="va">N</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Binom wX Norm</span>
