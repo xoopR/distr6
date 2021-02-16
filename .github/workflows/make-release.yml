@@ -1,0 +1,155 @@
+on:
+  push:
+    branches:
+      - master
+
+name: make-release
+
+jobs:
+  build-binaries:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest,   r: 'oldrel'}
+          - {os: windows-latest, r: 'oldrel'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes"))
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("pkgbuild")
+          remotes::install_cran("covr")
+        shell: Rscript {0}
+
+      # Properly, should build source first!
+      - name: Build binary
+        shell: Rscript {0}
+        run: |
+          src <- pkgbuild::build(".", dest_path = tempdir())
+          bin <- pkgbuild::build(".", dest_path = tempdir(), binary = TRUE)
+          dir.create("build")
+          file.copy(c(src, bin), "build")
+
+      - name: Upload package
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg-${{ matrix.config.os }}-${{ matrix.config.r }}
+          path: build
+
+  create-release:
+    runs-on: ubuntu-20.04
+
+    needs: build-binaries
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Extract version
+        run: |
+          echo "PACKAGE_VERSION=$(grep '^Version' DESCRIPTION  | sed 's/.*: *//')" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$(grep '^Package' DESCRIPTION  | sed 's/.*: *//')" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v2
+        with:
+          path: pkg
+
+      - name: Show directory
+        shell: bash
+        run: |
+          ls -R
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.PACKAGE_VERSION }}
+          release_name: Release ${{ env.PACKAGE_NAME }} ${{ env.PACKAGE_VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload source
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkg/pkg-macOS-latest-release/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.tar.gz
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload macOS binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkg/pkg-macOS-latest-release/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.tgz
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.tgz
+          asset_content_type: application/gzip
+
+      - name: Upload Windows binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkg/pkg-windows-latest-release/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.zip
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload macOS binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkg/pkg-macOS-latest-oldrel/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.tgz
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_oldrel.tgz
+          asset_content_type: application/gzip
+
+      - name: Upload Windows binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkg/pkg-windows-latest-oldrel/${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}.zip
+          asset_name: ${{ env.PACKAGE_NAME }}_${{ env.PACKAGE_VERSION }}_oldrel.zip
+          asset_content_type: application/zip
