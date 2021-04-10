@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators, Analytical and Numerical Methods</h1>
             
-            <h4 class="date">2021-04-09</h4>
+            <h4 class="date">2021-04-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/analytic_and_numeric_methods.rmd"><code>vignettes/webs/analytic_and_numeric_methods.rmd</code></a></small>
       <div class="hidden name"><code>analytic_and_numeric_methods.rmd</code></div>
@@ -219,7 +219,7 @@
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     unlist(self$getParameterValue("mean"))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;environment: 0x7f91820bda88&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;environment: 0x7f97d1587a88&gt;</span></code></pre></div>
 <p>Similarly where possible an analytical method is always preferred. For example, if an analytical <code>cdf</code> expression is available, then the <code>survival</code> function in <code>ExoticStatistics</code> is defined as <code>1 - cdf</code> otherwise a numerical integration is calculated.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"ExoticStatistics"</span><span class="op">)</span>
