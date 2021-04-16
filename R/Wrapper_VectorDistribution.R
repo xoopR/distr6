@@ -1139,8 +1139,7 @@ or `distlist` should be used.")
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
       pars <- vecdist$parameters()[paste0(id, "__")]$values()
-      shared_pars <-  vecdist$.__enclos_env__$private$.sharedparams
-      pars <- pars[!(names(pars) %in% names(shared_pars))]
+      shared_pars <- vecdist$.__enclos_env__$private$.sharedparams
       # construct with shared parameters (no conflicts should be possible here)
       dist <- do.call(get(distribution)$new, c(shared_pars, list(decorators = decorators)))
       do.call(dist$setParameterValue, c(resolveConflicts = TRUE, pars))
