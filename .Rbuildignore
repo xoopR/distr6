@@ -5,6 +5,7 @@
 cran-comments\.md
 ^CRAN-RELEASE$
 docs
+scripts
 Licensing
 CODE\_OF\_CONDUCT\.md
 CONTRIBUTING\.md
