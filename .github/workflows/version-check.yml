@@ -1,0 +1,25 @@
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+
+name: Version Check
+
+jobs:
+  all:
+    runs-on: ubuntu-20.04
+
+    name: Version Check
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Check version format and availability
+        run: ./scripts/version_check
+        
