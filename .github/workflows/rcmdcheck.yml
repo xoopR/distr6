@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 4 * * *"
 
-name: Check/Codecov/Update Table
+name: Check/Codecov/Render
 
 jobs:
   R-CMD-check:
