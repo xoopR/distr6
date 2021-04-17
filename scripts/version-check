@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -e
+# Usage:
+#   check_version [<version>]
+#
+# If version is not given as a positional argument, then we'll read it
+# from the DESCRIPTION file.
+#
+# We assume that a version already exists as a tag.
+VERSION=${1:-$(grep '^Version' DESCRIPTION  | sed 's/.*: *//')}
+TAG="v${VERSION}"
+
+echo "Proposed version number '$VERSION'"
+
+if echo "$VERSION" | grep -Eq "[0-9]+[.][0-9]+[.][0-9]+"; then
+    echo "Version number in correct format"
+else
+    echo "Invalid format version number '$VERSION' must be in format 'x.y.z'"
+    exit 1
+    echo "not found"
+fi
+
+echo "Updating remote git data"
+git fetch
+
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+    echo "Tag $TAG already exists - update version number"
+    exit 1
+else
+    echo "Version number not yet present as git tag"
+fi
+
+MAJOR=$(echo $VERSION | cut -d. -f1)
+MINOR=$(echo $VERSION | cut -d. -f2)
+PATCH=$(echo $VERSION | cut -d. -f3)
+
+BRANCH_DEFAULT=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
+LAST_TAG=$(git describe --tags --abbrev=0 "origin/${BRANCH_DEFAULT}")
+LAST_VERSION=$(echo "$LAST_TAG" | sed 's/^v//')
+LAST_MAJOR=$(echo $LAST_VERSION | cut -d. -f1)
+LAST_MINOR=$(echo $LAST_VERSION | cut -d. -f2)
+LAST_PATCH=$(echo $LAST_VERSION | cut -d. -f3)
+
+if (( $MAJOR > $LAST_MAJOR )); then
+    echo "Increasing MAJOR version"
+    exit 0
+elif (( $MINOR > $LAST_MINOR )); then
+    echo "Increasing MINOR version"
+    exit 0
+elif (( $PATCH > $LAST_PATCH )); then
+    echo "Increasing PATCH version"
+    exit 0
+else
+    echo "Version number has not increased relative to $LAST_VERSION"
+    exit 1
+fi
