@@ -36,7 +36,7 @@ jobs:
 
       - name: Query dependencies
         run: |
-          install.packages('remotes')
+          install.packages(c("remotes", "devtools"))
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
@@ -50,7 +50,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
@@ -80,7 +79,9 @@ jobs:
 
       - name: Render rmd
         if: ${{ github.event_name == 'pull_request' && runner.os == 'macOS' }}
-        run: rmarkdown::render('README.Rmd')
+        run: |
+          devtools::install()
+          rmarkdown::render('README.Rmd')
         shell: Rscript {0}
         
       - name: Commit changes
