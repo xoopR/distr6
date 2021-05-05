@@ -188,13 +188,13 @@ remotes::install_github("alan-turing-institute/distr6")
 
 Our plans for the next update include
 
--   A generalised `qqplot` for comparing any distributions
--   A finalised `FunctionImputation` decorator with different imputation
+  - A generalised `qqplot` for comparing any distributions
+  - A finalised `FunctionImputation` decorator with different imputation
     strategies
--   Discrete distribution subtraction (negative convolution)
--   A wrapper for scaling distributions to a given mean and variance
--   More probability distributions
--   Any other good suggestions made between now and then!
+  - Discrete distribution subtraction (negative convolution)
+  - A wrapper for scaling distributions to a given mean and variance
+  - More probability distributions
+  - Any other good suggestions made between now and then\!
 
 ## Package Development and Contributing
 
