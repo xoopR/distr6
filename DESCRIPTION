@@ -1,11 +1,11 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.5.2
+Version: 1.5.3
 Authors@R:
       c(person(given = "Raphael",
              family = "Sonabend",
              role = c("aut","cre"),
-             email = "raphael.sonabend.15@ucl.ac.uk",
+             email = "raphaelsonabend@gmail.com",
              comment = c(ORCID = "0000-0001-9225-4654")),
       person(given = "Franz",
              family = "Kiraly",
@@ -87,7 +87,6 @@ Suggests:
   plotly,
   pracma
 License: MIT + file LICENSE
-LazyData: true
 URL: https://alan-turing-institute.github.io/distr6/, https://github.com/alan-turing-institute/distr6/
 BugReports: https://github.com/alan-turing-institute/distr6/issues
 VignetteBuilder:
