@@ -63,19 +63,19 @@ lines.Distribution <- function(x, fun, npoints = 3000, ...) {
   if ("cdf" %in% fun & is.null(x$.__enclos_env__$private$.cdf)) {
     message("This distribution does not have a cdf expression. Use the
             FunctionImputation decorator to impute a numerical cdf.")
-    fun <- fun[!(fun %in% c("cdf", "survival", "hazard", "cumhazard"))]
+    fun <- fun[fun %nin% c("cdf", "survival", "hazard", "cumhazard")]
   }
 
   if ("pdf" %in% fun & is.null(x$.__enclos_env__$private$.pdf)) {
     message("This distribution does not have a pdf expression. Use the
             FunctionImputation decorator to impute a numerical pdf.")
-    fun <- fun[!(fun %in% c("pdf", "hazard"))]
+    fun <- fun[fun %nin% c("pdf", "hazard")]
   }
 
   if ("quantile" %in% fun & is.null(x$.__enclos_env__$private$.quantile)) {
     message("This distribution does not have a quantile expression. Use the
             FunctionImputation decorator to impute a numerical quantile.")
-    fun <- fun[!(fun %in% c("quantile"))]
+    fun <- fun[fun %nin% c("quantile")]
   }
 
   if (length(fun) == 0) {

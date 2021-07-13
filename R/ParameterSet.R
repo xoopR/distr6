@@ -128,7 +128,7 @@ ParameterSet <- R6Class("ParameterSet",
     print = function(hide_cols = c("settable"), ...) {
       ps <- private$.parameters
       ps$support <- lapply(ps$support, function(x) x$strprint())
-      print(subset(ps, select = !(names(ps) %in% hide_cols)))
+      print(subset(ps, select = names(ps) %nin% hide_cols))
     },
 
     #' @description

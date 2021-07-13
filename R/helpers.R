@@ -1,3 +1,7 @@
+`%nin%` <- function(x, table) {
+  !(x %in% table)
+}
+
 assertThat <- function(x, cond, errormsg) {
   if (cond) {
     invisible(x)
@@ -215,7 +219,7 @@ getR6Call <- function() {
   calls <- as.list(match.call(definition = sys.function(sys.parent(2L)),
                  call = sys.call(sys.parent(3L)),
                  envir = parent.frame(4L)))[-1]
-  calls <- calls[!(names(calls) %in% "decorators")]
+  calls <- calls[names(calls) %nin% "decorators"]
   # prevent lazy evaluation
   lapply(calls, eval.parent, n = 5)
 }

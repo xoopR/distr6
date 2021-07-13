@@ -58,7 +58,7 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     print = function(hide_cols = c("settable"), ...) {
       psc <- as.data.table(self)
       psc$support <- lapply(psc$support, function(x) x$strprint())
-      print(subset(psc, select = !(names(psc) %in% hide_cols)))
+      print(subset(psc, select = names(psc) %nin% hide_cols))
     },
 
     #' @description

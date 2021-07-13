@@ -1,3 +1,12 @@
+# distr6 1.5.4
+
+* Added `as.Distribution.matrix` for converting matrices to a `VectorDistribution` of `WeightedDiscrete` distributions
+* Added `...` to `dstrs` to allow decorator argument to be passed through
+
+# distr6 1.5.3
+
+* Internal changes only
+
 # distr6 1.5.2
 
 * Fixed bug in extracting distributions from vector distributions

@@ -59,18 +59,18 @@ dstr <- function(d, ..., pars = NULL) {
 
 #' @rdname dstr
 #' @export
-dstrs <- function(d, pars = NULL) {
+dstrs <- function(d, pars = NULL, ...) {
 
   if (length(d) == 1) {
     if (is.null(pars)) {
       stop("pars' cannot be NULL if 'd' is length 1.")
     } else {
-      VectorDistribution$new(distribution = d, params = pars)
+      VectorDistribution$new(distribution = d, params = pars, ...)
     }
   } else {
     if (is.null(pars)) {
       pars <- vector("list", length(d))
     }
-    VectorDistribution$new(mapply(dstr, d, pars = pars))
+    VectorDistribution$new(mapply(dstr, d, pars = pars, ...))
   }
 }
