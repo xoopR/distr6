@@ -223,10 +223,10 @@ or `distlist` should be used.")
 
             if (!is.null(shared_params)) {
               if (distribution == "Geometric") {
-                shared_params <- shared_params[!(names(shared_params) %in% "trials")]
+                shared_params <- shared_params[names(shared_params) %nin% "trials"]
               }
               if (distribution == "NegativeBinomial") {
-                shared_params <- shared_params[!(names(shared_params) %in% "form")]
+                shared_params <- shared_params[names(shared_params) %nin% "form"]
               }
               shared_params <- rep(list(shared_params), length(params))
               names(shared_params) <- names(paramlst)

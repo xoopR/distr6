@@ -258,11 +258,11 @@ autotest_vec_sdistribution <- function(sdist, pars) {
   } else {
     if (sdist$name == "Geometric" & !is.null(pars$trials)) {
       vdist <- VectorDistribution$new(distribution = sdist$name,
-                                      params = rep(list(pars[!(names(pars) %in% "trials")]), 3),
+                                      params = rep(list(pars[names(pars) %nin% "trials"]), 3),
                                       shared_params = list(trials = pars$trials))
     } else if (sdist$name == "NegativeBinomial" & !is.null(pars$form)) {
       vdist <- VectorDistribution$new(distribution = sdist$name,
-                                      params = rep(list(pars[!(names(pars) %in% "form")]), 3),
+                                      params = rep(list(pars[names(pars) %nin% "form"]), 3),
                                       shared_params = list(form = pars$form))
     } else {
       vdist <- VectorDistribution$new(distribution = sdist$name,
@@ -475,4 +475,9 @@ expect_equal_distribution <- function(d1, d2) {
   p2 <- as.data.table(d2$parameters())
   p2$support <- rsapply(p2$support, "strprint")
   expect_equal(p1, p2)
+}
+
+expect_distribution <- function(d, class) {
+  expect_is(d, "Distribution")
+  expect_is(d, "Distribution")
 }
