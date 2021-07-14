@@ -7,7 +7,7 @@
 \usage{
 dstr(d, ..., pars = NULL)
 
-dstrs(d, pars = NULL)
+dstrs(d, pars = NULL, ...)
 }
 \arguments{
 \item{d}{(\code{character(1)}) \cr
