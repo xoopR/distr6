@@ -70,6 +70,7 @@ Description: An R6 object oriented distributions package. Unified interface for 
 Imports:
     checkmate,
     data.table,
+    param6,
     R6,
     R62S3 (>= 1.4.0),
     set6 (>= 0.2.0),
