@@ -19,7 +19,7 @@
 #' @export
 simulateEmpiricalDistribution <- function(EmpiricalDist, n, seed = NULL) {
 
-  if (!(getR6Class(EmpiricalDist) %in% c("Empirical", "EmpiricalMV"))) {
+  if (getR6Class(EmpiricalDist) %nin% c("Empirical", "EmpiricalMV")) {
     stop("For Distributions that are not Empirical use $rand.")
   }
 

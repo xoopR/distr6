@@ -64,7 +64,7 @@ pdqr_returner <- function(pdqr, simplify, name) {
 call_C_base_pdqr <- function(fun, x, args, lower.tail = TRUE, log = FALSE, vec) {
   type <- substr(fun, 1, 1)
 
-  if (!(type %in% c("d", "p", "q", "r"))) {
+  if (type %nin% c("d", "p", "q", "r")) {
     stop("Function must start with one of: {d, p, q, r}.")
   }
 

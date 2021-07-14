@@ -451,7 +451,7 @@ Distribution <- R6Class("Distribution",
         if (private$.log) {
           pdqr <- private$.pdf(data, log = log)
         } else {
-          if (!("CoreStatistics" %in% self$decorators)) {
+          if ("CoreStatistics" %nin% self$decorators) {
             stop("No analytical method for log available.
 Use CoreStatistics decorator to numerically estimate this.")
           } else {
@@ -522,7 +522,7 @@ Use CoreStatistics decorator to numerically estimate this.")
         if (private$.log) {
           pdqr <- private$.cdf(data, log.p = log.p, lower.tail = lower.tail)
         } else {
-          if (!("CoreStatistics" %in% self$decorators)) {
+          if ("CoreStatistics" %nin% self$decorators) {
             stop("No analytical method for log.p or lower.tail available. Use CoreStatistics
 decorator to numerically estimate this.")
           } else {
@@ -589,7 +589,7 @@ decorator to numerically estimate this.")
         if (private$.log) {
           pdqr <- private$.quantile(data, log.p = log.p, lower.tail = lower.tail)
         } else {
-          if (!("CoreStatistics" %in% self$decorators)) {
+          if ("CoreStatistics" %nin% self$decorators) {
             stop("No analytical method for log.p or lower.tail available. Use CoreStatistics
 decorator to numerically estimate this.")
           } else {

@@ -10,3 +10,7 @@ Meta
 docs/
 revdep/
 CRAN-RELEASE
+.vscode/
+*.o
+*.so
+*.dll

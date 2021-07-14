@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.5.3
+Version: 1.5.4
 Authors@R:
       c(person(given = "Raphael",
              family = "Sonabend",
@@ -172,6 +172,7 @@ Collate:
     'Wrapper_Scale.R'
     'Wrapper_TruncatedDistribution.R'
     'Wrapper_VectorDistribution.R'
+    'as.Distribution.R'
     'assertions.R'
     'c.Distribution.R'
     'decomposeMixture.R'
