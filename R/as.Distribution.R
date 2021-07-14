@@ -12,6 +12,7 @@
 #' the distribution.
 #' @param decorators Passed to [VectorDistribution].
 #' @return A [VectorDistribution]
+#' @export
 #' @examples
 #' pdf <- runif(200)
 #' mat <- matrix(pdf, 20, 10)
@@ -22,6 +23,8 @@ as.Distribution <- function(obj, fun, decorators = NULL) {
   UseMethod("as.Distribution")
 }
 
+#' @rdname as.Distribution
+#' @export
 as.Distribution.matrix <- function(obj, fun, decorators = NULL) {
   if (is.null(colnames(obj))) {
     stop("'obj' must have column names")

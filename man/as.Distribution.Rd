@@ -2,9 +2,12 @@
 % Please edit documentation in R/as.Distribution.R
 \name{as.Distribution}
 \alias{as.Distribution}
+\alias{as.Distribution.matrix}
 \title{Coerce matrix to vector of WeightedDiscrete}
 \usage{
 as.Distribution(obj, fun, decorators = NULL)
+
+\method{as.Distribution}{matrix}(obj, fun, decorators = NULL)
 }
 \arguments{
 \item{obj}{\link{matrix}. Column names correspond to \code{x} in \link{WeightedDiscrete},
