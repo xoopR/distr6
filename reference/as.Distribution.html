@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Huberize a Distribution — huberize • distr6</title>
+<title>Coerce matrix to vector of WeightedDiscrete — as.Distribution • distr6</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,11 @@
 
 
 
-<meta property="og:title" content="Huberize a Distribution — huberize" />
-<meta property="og:description" content="S3 functionality to huberize an R6 distribution." />
+<meta property="og:title" content="Coerce matrix to vector of WeightedDiscrete — as.Distribution" />
+<meta property="og:description" content="Coerces matrices to a VectorDistribution containing
+WeightedDiscrete distributions. Number of distributions are the number
+of rows in the matrix, number of x points are number of columns in the
+matrix." />
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png" />
 
 
@@ -221,38 +224,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Huberize a Distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/Wrapper_HuberizedDistribution.R'><code>R/Wrapper_HuberizedDistribution.R</code></a></small>
-    <div class="hidden name"><code>huberize.Rd</code></div>
+    <h1>Coerce matrix to vector of WeightedDiscrete</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/R/as.Distribution.R'><code>R/as.Distribution.R</code></a></small>
+    <div class="hidden name"><code>as.Distribution.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>S3 functionality to huberize an R6 distribution.</p>
+    <p>Coerces matrices to a <a href='VectorDistribution.html'>VectorDistribution</a> containing
+<a href='WeightedDiscrete.html'>WeightedDiscrete</a> distributions. Number of distributions are the number
+of rows in the matrix, number of <code>x</code> points are number of columns in the
+matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>huberize</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lower</span>, <span class='va'>upper</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>as.Distribution</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>fun</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>as.Distribution</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>fun</span>, decorators <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>distribution to huberize.</p></td>
+      <th>obj</th>
+      <td><p><a href='https://rdrr.io/r/base/matrix.html'>matrix</a>. Column names correspond to <code>x</code> in <a href='WeightedDiscrete.html'>WeightedDiscrete</a>,
+so this method only works if all distributions (rows in the matrix) have the
+same points to be evaluated on. Elements correspond to either the pdf
+or cdf of the distribution (see below).</p></td>
     </tr>
     <tr>
-      <th>lower</th>
-      <td><p>lower limit for huberization.</p></td>
+      <th>fun</th>
+      <td><p>Either <code>"pdf"</code> or <code>"cdf"</code>, passed to <a href='WeightedDiscrete.html'>WeightedDiscrete</a> and tells
+the constructor if the elements in <code>obj</code> correspond to the pdf or cdf of
+the distribution.</p></td>
     </tr>
     <tr>
-      <th>upper</th>
-      <td><p>upper limit for huberization.</p></td>
+      <th>decorators</th>
+      <td><p>Passed to <a href='VectorDistribution.html'>VectorDistribution</a>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p><a href='HuberizedDistribution.html'>HuberizedDistribution</a></p></div>
+    <p>A <a href='VectorDistribution.html'>VectorDistribution</a></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>pdf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span>
+<span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='va'>pdf</span>, <span class='fl'>20</span>, <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>mat</span>, <span class='fl'>1</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
+<span class='fu'>as.Distribution</span><span class='op'>(</span><span class='va'>mat</span>, fun <span class='op'>=</span> <span class='st'>"pdf"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; WeightDisc1 WeightDisc2 ... WeightDisc19 WeightDisc20 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
