@@ -4,8 +4,8 @@ getParameterSet <- function(object, ...) {
 
 getParameterSet.Arcsine <- function(object, ...) {
   pset(
-    prm("lower", "reals", 0),
-    prm("upper", "reals", 1),
+    prm("lower", "reals", 0, "required"),
+    prm("upper", "reals", 1, "required"),
     deps = list(
       list(id = "lower", on = "upper", cnd = cnd("leq", id = "upper"))
     )
@@ -14,9 +14,8 @@ getParameterSet.Arcsine <- function(object, ...) {
 
 getParameterSet.Bernoulli <- function(object, ...) {
   pset(
-    prm("prob", Interval$new(0, 1), 0.5, "probs"),
-    prm("qprob", Interval$new(0, 1), tags = "probs"),
-    tag_properties = list(linked = "probs"),
+    prm("prob", Interval$new(0, 1), 0.5, c("linked", "required")),
+    prm("qprob", Interval$new(0, 1), tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$qprob)) {
         x$prob <- 1 - x$qprob
@@ -246,12 +245,14 @@ getParameterSet.Gompertz <- function(object, ...) {
   )
 }
 
+
 getParameterSet.Gumbel <- function(object, ...) {
   pset(
     prm("location", "reals", 0),
     prm("scale", "posreals", 1)
   )
 }
+
 
 getParameterSet.Hypergeometric <- function(object, ...) {
 
@@ -297,20 +298,20 @@ getParameterSet.InverseGamma <- function(object, ...) {
 }
 
 getParameterSet.Laplace <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("mean", "scale", "var"), value = list(0, 1, 2),
-    support = list(reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Scale - Scale Parameter",
-      "Variance - Alternate Scale Parameter"
-    )
+  pset(
+    prm("mean", "reals", 0),
+    prm("scale", "posreals", 1, tags = "scales"),
+    prm("var", "posreals", tags = "scales"),
+    tag_properties = list(linked = "scales"),
+    trafo = function(x, self) {
+      if (!is.null(x$scale)) {
+        x$var <- 2 * x$scale^2
+      } else if (!is.null(x$var)) {
+        x$scale <- sqrt(x$var / 2)
+      }
+      x
+    }
   )
-  ps$addDeps("scale", "var", function(self) list(var = 2 * self$getParameterValue("scale")^2))
-  ps$addDeps("var", "scale", function(self) list(scale = sqrt(self$getParameterValue("var") / 2)))
-
-  return(ps)
 }
 
 getParameterSet.Logarithmic <- function(object, ...) {
@@ -320,22 +321,20 @@ getParameterSet.Logarithmic <- function(object, ...) {
 }
 
 getParameterSet.Logistic <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("mean", "scale", "sd"), value = list(0, 1, pi / sqrt(3)),
-    support = list(reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Scale - Scale Parameter",
-      "Standard Deviation - Alternative Scale Parameter"
-    )
+  pset(
+    prm("mean", "reals", 0),
+    prm("scale", "posreals", 1, tags = "scales"),
+    prm("sd", "posreals", pi / sqrt(3), tags = "scales"),
+    tag_properties = list(linked = "scales"),
+    trafo = function(x, self) {
+      if (!is.null(x$scale)) {
+        x$sd <- x$scale * pi / sqrt(3)
+      } else if (!is.null(x$sd)) {
+        x$scale <- x$sd * sqrt(3) / pi
+      }
+      x
+    }
   )
-  ps$addDeps("scale", "sd",
-             function(self) list(sd = self$getParameterValue("scale") * pi / sqrt(3)))
-  ps$addDeps("sd", "scale",
-             function(self) list(scale = self$getParameterValue("sd") * sqrt(3) / pi))
-
-  return(ps)
 }
 
 getParameterSet.Loglogistic <- function(object, ...) {
@@ -680,40 +679,26 @@ getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # noli
 }
 
 getParameterSet.Normal <- function(object, ...) {
-  ps <- ParameterSet$new(
-    id = list("mean", "var", "sd", "prec"),
-    value = list(0, 1, 1, 1),
-    support = list(reals, pos_reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Variance - Squared Scale Parameter",
-      "Standard Deviation - Scale Parameter",
-      "Precision - Inverse Squared Scale Parameter"
-    )
+  pset(
+    prm("mean", "reals", 0),
+    prm("var", "posreals", 1, tags = "scales"),
+    prm("sd", "posreals", tags = "scales"),
+    prm("prec", "posreals", tags = "scales"),
+    tag_properties = list(linked = "scales"),
+    trafo = function(x, self) {
+      if (!is.null(x$var)) {
+        x$sd <- sqrt(x$var)
+        x$prec <- 1 / x$var
+      } else if (!is.null(x$sd)) {
+        x$var <- x$sd^2
+        x$prec <- x$sd^-2
+      } else if (!is.null(x$prec)) {
+        x$var <- 1 / x$prec
+        x$sd <- x$prec^-0.5
+      }
+      x
+    }
   )
-  ps$addDeps("var", c("sd", "prec"), function(self) {
-    var <- self$getParameterValue("var")
-    list(
-      sd = sqrt(var),
-      prec = 1 / var
-    )
-  })
-  ps$addDeps("sd", c("var", "prec"), function(self) {
-    sd <- self$getParameterValue("sd")
-    list(
-      var = sd^2,
-      prec = sd^-2
-    )
-  })
-  ps$addDeps("prec", c("var", "sd"), function(self) {
-    prec <- self$getParameterValue("prec")
-    list(
-      var = 1 / prec,
-      sd = prec^-0.5
-    )
-  })
-
-  return(ps)
 }
 
 getParameterSet.Pareto <- function(object, ...) {
@@ -814,22 +799,20 @@ getParameterSet.Wald <- function(object, ...) {
 }
 
 getParameterSet.Weibull <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("shape", "scale", "altscale"), value = list(1, 1, 1),
-    support = list(pos_reals, pos_reals, pos_reals),
-    description = list("Shape parameter", "Scale parameter", "Alternate scale parameter")
+  pset(
+    prm("shape", "posreals", 1),
+    prm("scale", "posreals", 1, tags = "scales"),
+    prm("altscale", "posreals", tags = "scales"),
+    tag_properties = list(linked = "scales"),
+    trafo = function(x, self) {
+      if (!is.null(x$scale)) {
+        x$altscale <- x$scale^-x$shape
+      } else if (!is.null(x$altscale)) {
+        x$scale <- exp(log(x$altscale) / -x$shape)
+      }
+      x
+    }
   )
-
-  ps$addDeps("scale", "altscale", function(self) {
-    list(altscale = self$getParameterValue("scale")^-self$getParameterValue("shape"))
-  })
-  ps$addDeps("altscale", "scale", function(self) {
-    list(scale = exp(log(self$getParameterValue("altscale")) /
-      (-self$getParameterValue("shape"))))
-  })
-
-  return(ps)
 }
 
 getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
