@@ -47,7 +47,6 @@ getParameterSet.Binomial <- function(object, ...) {
     prm("prob", Interval$new(0, 1), 0.5, "probs", tags = c("linked", "required")),
     prm("qprob", Interval$new(0, 1), tags = "probs", tags = c("linked", "required")),
     prm("size", "posnaturals", 10, tags = "required"),
-    tag_properties = list(linked = "probs"),
     trafo = function(x, self) {
       if (!is.null(x$qprob)) {
         x$prob <- 1 - x$qprob
@@ -703,33 +702,30 @@ getParameterSet.StudentTNoncentral <- function(object, ...) { # nolint
 }
 
 getParameterSet.Triangular <- function(object, symmetric = FALSE, ...) {
+  mode_tag <- if (symmetric) "immutable" else "required"
+  mode_val <- if (symmetric) NULL else 0.5
 
-  ps <- ParameterSet$new(
-    id = list("lower", "upper", "mode", "symmetric"),
-    value = list(0, 1, 0.5, symmetric),
-    support = list(reals, reals, reals, Logicals$new()),
-    settable = list(TRUE, TRUE, !symmetric, FALSE),
-    description = list(
-      "Lower distribution limit.", "Upper distribution limit.",
-      "Distribution mode.", "Type of distribution."
+  ps <- pset(
+    prm("lower", "reals", 0, tags = "required"),
+    prm("upper", "reals", 1, tags = "required"),
+    prm("mode", "reals", mode_val, tags = mode_tag),
+    prm("symmetric", "logicals", symmetric, tags = "immutable"),
+    deps = list(
+      list(id = "mode", on = "lower", cnd = cnd("gt", id = "lower")),
+      list(id = "mode", on = "upper", cnd = cnd("lt", id = "upper"))
     )
   )
 
   if (symmetric) {
-    ps$addDeps("lower", "mode", function(self) {
-      list(mode = (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2)
-    })
-    ps$addDeps("upper", "mode", function(self) {
-      list(mode = (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2)
-    })
+    ps$trafo <- function(x, self) {
+      lower <- ifelse(!is.null(x$lower), x$lower, self$values$lower)
+      upper <- ifelse(!is.null(x$upper), x$upper, self$values$upper)
+      x$mode <- (lower + upper) / 2
+      x
+    }
   }
 
-  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
-                 unlist(self$getParameterValue("upper"))))
-
-  return(ps)
+  ps
 }
 
 getParameterSet.Uniform <- function(object, ...) {
