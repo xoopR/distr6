@@ -1,17 +1,12 @@
 test_that("as.Distribution errors when expected", {
-  pdf <- runif(200)
-  mat <- matrix(pdf, 20, 10)
-  mat <- t(apply(mat, 1, function(x) x / sum(x)))
-
+  mat <- matrix(rep(0.1, 200), 20, 10)
   expect_error(as.Distribution(mat), "'obj' must have")
   colnames(mat) <- 1:10
   expect_error(as.Distribution(mat, "surv"), "'fun' should be one of")
 })
 
 test_that("as.Distribution works with pdf expected", {
-  pdf <- runif(200)
-  mat <- matrix(pdf, 20, 10)
-  mat <- t(apply(mat, 1, function(x) x / sum(x)))
+  mat <- matrix(rep(0.1, 200), 20, 10)
   colnames(mat) <- 1:10
 
   wd <- as.Distribution(mat, fun = "pdf")
@@ -31,9 +26,7 @@ test_that("as.Distribution works with pdf expected", {
 })
 
 test_that("as.Distribution works with pdf expected", {
-  pdf <- runif(200)
-  mat <- matrix(pdf, 20, 10)
-  mat <- t(apply(mat, 1, function(x) x / sum(x)))
+  mat <- matrix(rep(0.1, 200), 20, 10)
   colnames(mat) <- 1:10
 
   mat <- t(apply(mat, 1, function(x) cumsum(x)))
