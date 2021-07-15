@@ -29,24 +29,24 @@ getParameterSet.Bernoulli <- function(object, ...) {
 
 getParameterSet.Beta <- function(object, ...) {
   pset(
-    prm("shape1", "posreals", 1),
-    prm("shape2", "posreals", 1)
+    prm("shape1", "posreals", 1, tags = "required"),
+    prm("shape2", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.BetaNoncentral <- function(object, ...) {
   pset(
-    prm("shape1", "posreals", 1),
-    prm("shape2", "posreals", 1),
-    prm("location", "posreals0", 1)
+    prm("shape1", "posreals", 1, tags = "required"),
+    prm("shape2", "posreals", 1, tags = "required"),
+    prm("location", "posreals0", 1, tags = "required")
   )
 }
 
 getParameterSet.Binomial <- function(object, ...) {
   pset(
-    prm("prob", Interval$new(0, 1), 0.5, "probs"),
-    prm("qprob", Interval$new(0, 1), tags = "probs"),
-    prm("size", "posnaturals", 10),
+    prm("prob", Interval$new(0, 1), 0.5, "probs", tags = c("linked", "required")),
+    prm("qprob", Interval$new(0, 1), tags = "probs", tags = c("linked", "required")),
+    prm("size", "posnaturals", 10, tags = "required"),
     tag_properties = list(linked = "probs"),
     trafo = function(x, self) {
       if (!is.null(x$qprob)) {
@@ -61,8 +61,8 @@ getParameterSet.Binomial <- function(object, ...) {
 
 getParameterSet.Categorical <- function(object, ...) {
   pset(
-    prm("elements", "universal", 1),
-    prm("probs", Interval$new(0, 1)^"n", 1),
+    prm("elements", "universal", 1, tags = "required"),
+    prm("probs", Interval$new(0, 1)^"n", 1, tags = "required"),
     deps = list(
       list(id = "probs", on = "elements", cnd = cnd("len", id = "elements"))
     ),
@@ -77,40 +77,40 @@ getParameterSet.Categorical <- function(object, ...) {
 
 getParameterSet.Cauchy <- function(object, ...) {
   pset(
-    prm("location", "reals", 0),
-    prm("scale", "posreals", 1)
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.ChiSquared <- function(object, ...) {
   pset(
-    prm("df", "posreals0", 1)
+    prm("df", "posreals0", 1, tags = "required")
   )
 }
 
 getParameterSet.ChiSquaredNoncentral <- function(object, ...) { # nolint
   pset(
-    prm("df", "posreals0", 1),
-    prm("location", "posreals0", 0)
+    prm("df", "posreals0", 1, tags = "required"),
+    prm("location", "posreals0", 0, tags = "required")
   )
 }
 
 getParameterSet.Degenerate <- function(object, ...) {
   pset(
-    prm("mean", "reals", 0)
+    prm("mean", "reals", 0, tags = "required")
   )
 }
 
 getParameterSet.Dirichlet <- function(object, ...) {
   pset(
-    prm("params", "nposreals", rep(1, 2))
+    prm("params", "nposreals", rep(1, 2), tags = "required")
   )
 }
 
 getParameterSet.DiscreteUniform <- function(object, ...) { # nolint
   pset(
-    prm("lower", "integers", 0),
-    prm("upper", "integers", 1),
+    prm("lower", "integers", 0, tags = "required"),
+    prm("upper", "integers", 1, tags = "required"),
     deps = list(
       list(id = "lower", on = "upper", cnd = cnd("lt", id = "upper"))
     )
@@ -119,10 +119,9 @@ getParameterSet.DiscreteUniform <- function(object, ...) { # nolint
 
 getParameterSet.Erlang <- function(object, ...) {
   pset(
-    prm("shape", "posintegers", 1),
-    prm("rate", "posreals", 1, "scales"),
-    prm("scale", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("shape", "posintegers", 1, tags = "required"),
+    prm("rate", "posreals", 1, , tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$rate <- 1 / x$scale
@@ -136,9 +135,8 @@ getParameterSet.Erlang <- function(object, ...) {
 
 getParameterSet.Exponential <- function(object, ...) {
   pset(
-    prm("rate", "posreals", 1, "scales"),
-    prm("scale", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$rate <- 1 / x$scale
@@ -152,34 +150,33 @@ getParameterSet.Exponential <- function(object, ...) {
 
 getParameterSet.FDistribution <- function(object, ...) {
   pset(
-    prm("df1", "posreals", 1),
-    prm("df2", "posreals", 1)
+    prm("df1", "posreals", 1, tags = "required"),
+    prm("df2", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.FDistributionNoncentral <- function(object, ...) { # nolint
   pset(
-    prm("df1", "posreals", 1),
-    prm("df2", "posreals", 1),
-    prm("location", "posreals0", 0)
+    prm("df1", "posreals", 1, tags = "required"),
+    prm("df2", "posreals", 1, tags = "required"),
+    prm("location", "posreals0", 0, tags = "required")
   )
 }
 
 getParameterSet.Frechet <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("scale", "posreals", 1),
-    prm("minimum", "reals", 0)
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required"),
+    prm("minimum", "reals", 0, tags = "required")
   )
 }
 
 getParameterSet.Gamma <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("rate", "posreals", 1, "scales"),
-    prm("scale", "posreals", tags = "scales"),
-    prm("mean", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("rate", "posreals", 1, , tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    prm("mean", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$rate)) {
         x$scale <- 1 / x$rate
@@ -197,112 +194,70 @@ getParameterSet.Gamma <- function(object, ...) {
 }
 
 getParameterSet.Geometric <- function(object, trials = FALSE, ...) {
+  type <- ifelse(trials, "()", "(]")
 
-  if (trials) {
-    ps <- ParameterSet$new(
-      id = list("prob", "qprob", "trials"),
-      value = list(0.5, 0.5, TRUE),
-      support = list(
-        Interval$new(0, 1, type = "()"),
-        Interval$new(0, 1, type = "()"),
-        Logicals$new()
-      ),
-      settable = list(TRUE, TRUE, FALSE),
-      description = list(
-        "Probability of success",
-        "Probability of failure",
-        "Form: number of trials before first success"
-      )
-    )
-  } else {
-    ps <- ParameterSet$new(
-      id = list("prob", "qprob", "trials"),
-      value = list(0.5, 0.5, FALSE),
-      support = list(
-        Interval$new(0, 1, type = "(]"),
-        Interval$new(0, 1, type = "(]"),
-        Logicals$new()
-      ),
-      settable = list(TRUE, TRUE, FALSE),
-      description = list(
-        "Probability of success",
-        "Probability of failure",
-        "Form: number of failures before first success"
-      )
-    )
+  ps <- pset(
+    prm("prob", Interval$new(0, 1, type = type), 0.5, tags = c("linked", "required")),
+    prm("qprob", Interval$new(0, 1, type = type), tags = c("linked", "required")),
+    prm("trials", "logicals", trials, tags = "immutable")
+  )
+
+  ps$trafo <- function(x, self) {
+    if (!is.null(x$qprob)) {
+      x$prob <- 1 - x$qprob
+    } else if (!is.null(x$prob)) {
+      x$qprob <- 1 - x$prob
+    }
+    x
   }
 
-  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
-  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
-
-  return(ps)
+  ps
 }
 
 getParameterSet.Gompertz <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("scale", "posreals", 1)
+    prm("shape", "posreals", tags = "required"),
+    prm("scale", "posreals", tags = "required")
   )
 }
-
 
 getParameterSet.Gumbel <- function(object, ...) {
   pset(
-    prm("location", "reals", 0),
-    prm("scale", "posreals", 1)
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
-
 getParameterSet.Hypergeometric <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("size", "successes", "failures", "draws"),
-    value = list(50, 5, 45, 10),
-    support = list(naturals,
-                  Set$new(0:50, class = "integer"),
-                  Set$new(0:50, class = "integer"),
-                  Set$new(0:50, class = "integer")),
-    description = list(
-      "Population size",
-      "Number of successes in the population.",
-      "Number of failures in the population.",
-      "Number of draws."
-    )
+  pset(
+    prm("size", "naturals", 50, tags = "required"),
+    prm("successes", Set$new(0:50, class = "integer"), tags = c("linked", "required")),
+    prm("failures", Set$new(0:50, class = "integer"), 45, tags = c("linked", "required")),
+    prm("draws", Set$new(0:50, class = "integer"), 10, tags = "required"),
+    trafo = function(x, self) {
+      size <- ifelse(is.null(x$size), self$values$size, x$size)
+      if (!is.null(x$successes)) {
+        x$failures <- size - x$successes
+      } else if (!is.null(x$failures)) {
+        x$successes <- size - x$failures
+      }
+      x
+    }
   )
-
-  ps$addDeps(
-    "successes", "failures", function(self) {
-      list(failures = self$getParameterValue("size") - self$getParameterValue("successes"))
-    })
-  ps$addDeps(
-    "failures", "successes", function(self) {
-      list(successes = self$getParameterValue("size") - self$getParameterValue("failures"))
-    })
-  ps$addChecks(function(self) {
-    successes <- unlist(self$getParameterValue("successes"))
-    failures <- unlist(self$getParameterValue("failures"))
-    size <- unlist(self$getParameterValue("size"))
-    all(successes <= size) && all(failures <= size)
-  })
-
-  return(ps)
-
 }
 
 getParameterSet.InverseGamma <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("scale", "posreals", 1)
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Laplace <- function(object, ...) {
   pset(
-    prm("mean", "reals", 0),
-    prm("scale", "posreals", 1, tags = "scales"),
-    prm("var", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("mean", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("var", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$var <- 2 * x$scale^2
@@ -316,16 +271,15 @@ getParameterSet.Laplace <- function(object, ...) {
 
 getParameterSet.Logarithmic <- function(object, ...) {
   pset(
-    prm("theta", Interval$new(0, 1, type = "()"), 0.5)
+    prm("theta", Interval$new(0, 1, type = "()"), 0.5, tags = "required")
   )
 }
 
 getParameterSet.Logistic <- function(object, ...) {
   pset(
-    prm("mean", "reals", 0),
-    prm("scale", "posreals", 1, tags = "scales"),
-    prm("sd", "posreals", pi / sqrt(3), tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("mean", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("sd", "posreals", pi / sqrt(3), tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$sd <- x$scale * pi / sqrt(3)
@@ -339,10 +293,9 @@ getParameterSet.Logistic <- function(object, ...) {
 
 getParameterSet.Loglogistic <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("rate", "posreals", 1, "scales"),
-    prm("scale", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$rate <- 1 / x$scale
@@ -484,8 +437,8 @@ getParameterSet.Lognormal <- function(object, ...) {
 
 getParameterSet.Multinomial <- function(object, ...) {
   pset(
-    prm("size", "posnaturals", 10),
-    prm("probs", Interval$new(0, 1)^"n", rep(0.5, 2)),
+    prm("size", "posnaturals", 10, tags = "required"),
+    prm("probs", Interval$new(0, 1)^"n", rep(0.5, 2), tags = "required"),
     trafo = function(x, self) {
       if (!is.null(x$probs)) {
         x$probs <- x$probs / sum(x$probs)
@@ -680,11 +633,10 @@ getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # noli
 
 getParameterSet.Normal <- function(object, ...) {
   pset(
-    prm("mean", "reals", 0),
-    prm("var", "posreals", 1, tags = "scales"),
-    prm("sd", "posreals", tags = "scales"),
-    prm("prec", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("mean", "reals", 0, tags = "required"),
+    prm("var", "posreals", 1, tags = c("linked", "required")),
+    prm("sd", "posreals", tags = c("linked", "required")),
+    prm("prec", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$var)) {
         x$sd <- sqrt(x$var)
@@ -703,30 +655,29 @@ getParameterSet.Normal <- function(object, ...) {
 
 getParameterSet.Pareto <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("scale", "posreals", 1)
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Poisson <- function(object, ...) {
   pset(
-    prm("rate", "posreals", 1)
+    prm("rate", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Rayleigh <- function(object, ...) {
   pset(
-    prm("mode", "posreals", 1)
+    prm("mode", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.ShiftedLoglogistic <- function(object, ...) { # nolint
   pset(
-    prm("shape", "reals", 1),
-    prm("location", "reals", 0),
-    prm("scale", "posreals", tags = "scales"),
-    prm("rate", "posreals", 1, "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("shape", "reals", 1, tags = "required"),
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$rate <- 1 / x$scale
@@ -740,14 +691,14 @@ getParameterSet.ShiftedLoglogistic <- function(object, ...) { # nolint
 
 getParameterSet.StudentT <- function(object, ...) {
   pset(
-    prm("df", "posreals", 1)
+    prm("df", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.StudentTNoncentral <- function(object, ...) { # nolint
   pset(
-    prm("df", "posreals", 1),
-    prm("location", "reals", 0)
+    prm("df", "posreals", 1, tags = "required"),
+    prm("location", "reals", 0, tags = "required")
   )
 }
 
@@ -783,8 +734,8 @@ getParameterSet.Triangular <- function(object, symmetric = FALSE, ...) {
 
 getParameterSet.Uniform <- function(object, ...) {
   pset(
-    prm("lower", "reals", 0),
-    prm("upper", "reals", 1),
+    prm("lower", "reals", 0, tags = "required"),
+    prm("upper", "reals", 1, tags = "required"),
     deps = list(
       list(id = "lower", on = "upper", cnd = cnd("lt", id = "upper"))
     )
@@ -793,17 +744,16 @@ getParameterSet.Uniform <- function(object, ...) {
 
 getParameterSet.Wald <- function(object, ...) {
   pset(
-    prm("mean", "posreals", 1),
-    prm("shape", "posreals", 1)
+    prm("mean", "posreals", 1, tags = "required"),
+    prm("shape", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Weibull <- function(object, ...) {
   pset(
-    prm("shape", "posreals", 1),
-    prm("scale", "posreals", 1, tags = "scales"),
-    prm("altscale", "posreals", tags = "scales"),
-    tag_properties = list(linked = "scales"),
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("altscale", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
       if (!is.null(x$scale)) {
         x$altscale <- x$scale^-x$shape

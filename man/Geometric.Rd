@@ -13,8 +13,8 @@ is commonly used to model the number of trials (or number of failures) before th
 \details{
 The Geometric distribution parameterised with  probability of success, \eqn{p}, is defined by the pmf, \deqn{f(x) = (1 - p)^{k-1}p} for probability \eqn{p}.
 
-The Geometric distribution is used to either refer to modelling the number of trials or number
-of failures before the first success.
+The Geometric distribution is used to either model the number of trials
+(\code{trials = TRUE}) or number of failures (\code{trials = FALSE}) before the first success.
 }
 \section{Distribution support}{
 
