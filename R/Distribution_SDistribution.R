@@ -39,13 +39,25 @@ SDistribution <- R6Class("SDistribution",
       )
 
       if (!grepl("Empirical", getR6Class(self))) {
-        # get call
         args <- getR6Call()
-        # get ParameterSet
-        private$.parameters <- do.call(getParameterSet, c(list(object = self), args))
+        private$.parameters <- do.call(getParameterSet,
+                                        c(list(object = self), args))
         if (length(args)) {
-          # set non-default parameters
-          suppressWarnings(do.call(self$setParameterValue, args))
+          linked <- private$.parameters$tag_properties$linked
+          if (length(linked)) {
+            vals <- unlist(lapply(linked, function(.x) {
+              which <- names(private$.parameters$get_values(tags = .x, simplify = FALSE))
+              if (any(names(args) %in% which)) {
+                expand_list(which, args[names(args) %in% which])
+              } else {
+                private$.parameters$get_values(tags = .x, simplify = FALSE)[1]
+              }
+            }), recursive = FALSE)
+
+            self$setParameterValue(lst = vals)
+          } else {
+            self$setParameterValue(lst = args)
+          }
         }
       }
 

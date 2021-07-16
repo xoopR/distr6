@@ -1,7 +1,3 @@
-library(testthat)
-
-context("helpers")
-
 test_that("assertThat", {
   expect_silent(assertThat(Binomial$new(), Binomial$new()$short_name == "Binom", "Not True"))
   expect_error(assertThat(Binomial$new(), Binomial$new()$short_name == "Dinom", "Not True"))
@@ -42,10 +38,10 @@ test_that("testmessage", {
 })
 
 test_that("ifnerror", {
-  expect_equal(ifnerror(stop("Error"), "Success", "Failure", silent = T), "Failure")
-  expect_equal(ifnerror("Nerror", "Success", "Failure", silent = T), "Success")
-  expect_warning(ifnerror(stop("Error"), "Success", "warn", silent = T))
-  expect_error(ifnerror(stop("Error"), "Success", "stop", silent = T))
+  expect_equal(ifnerror(stop("Error"), "Success", "Failure"), "Failure")
+  expect_equal(ifnerror("Nerror", "Success", "Failure"), "Success")
+  expect_warning(ifnerror(stop("Error"), "Success", "warn"))
+  expect_error(ifnerror(stop("Error"), "Success", "stop"))
 })
 
 test_that("modal", {

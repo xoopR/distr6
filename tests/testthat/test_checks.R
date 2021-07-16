@@ -42,8 +42,8 @@ test_that("check support", {
 })
 
 ps <- pset(
-  prm("prob", Interval$new(0, 1), 0.5, "probs", tags = c("linked", "required")),
-  prm("qprob", Interval$new(0, 1), tags = "probs", tags = c("linked", "required")),
+  prm("prob", Interval$new(0, 1), 0.5, tags = c("linked", "required")),
+  prm("qprob", Interval$new(0, 1),tags = c("linked", "required")),
   prm("size", "posnaturals", 10, tags = "required"),
   trafo = function(x, self) {
     if (!is.null(x$qprob)) {
@@ -101,9 +101,6 @@ test_that("working_support", {
   expect_equal(Exponential$new()$workingSupport(), Interval$new(0, 100))
   expect_equal(Binomial$new()$workingSupport(), Set$new(elements = 0:10, class = "integer"))
   expect_equal(Normal$new()$workingSupport(), Interval$new(-100, 10))
-  expect_equal(Distribution$new("Test", pdf = dbin, parameters = ps,
-                                type = Integers$new())$workingSupport(),
-               Interval$new(-10, 1000, class = "integer"))
 })
 
 test_that("print/summary", {
