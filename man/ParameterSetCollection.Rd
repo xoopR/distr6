@@ -34,17 +34,6 @@ psc$getParameterValue("Binom1__prob")
 psc$getParameterValue("prob")
 
 ## ------------------------------------------------
-## Method `ParameterSetCollection$getParameterSupport`
-## ------------------------------------------------
-
-b <- Binomial$new()
-g <- Geometric$new()
-psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
-                                  Binom2 = b$parameters(),
-                                  Geom = g$parameters())
-psc$getParameterSupport("Binom1__prob")
-
-## ------------------------------------------------
 ## Method `ParameterSetCollection$setParameterValue`
 ## ------------------------------------------------
 
@@ -77,7 +66,7 @@ psc$merge(psc2)$parameters()
 
 }
 \section{Super class}{
-\code{\link[distr6:ParameterSet]{distr6::ParameterSet}} -> \code{ParameterSetCollection}
+\code{\link[param6:ParameterSet]{param6::ParameterSet}} -> \code{ParameterSetCollection}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -95,10 +84,8 @@ psc$merge(psc2)$parameters()
 \item \href{#method-print}{\code{ParameterSetCollection$print()}}
 \item \href{#method-parameters}{\code{ParameterSetCollection$parameters()}}
 \item \href{#method-getParameterValue}{\code{ParameterSetCollection$getParameterValue()}}
-\item \href{#method-getParameterSupport}{\code{ParameterSetCollection$getParameterSupport()}}
 \item \href{#method-setParameterValue}{\code{ParameterSetCollection$setParameterValue()}}
 \item \href{#method-merge}{\code{ParameterSetCollection$merge()}}
-\item \href{#method-addDeps}{\code{ParameterSetCollection$addDeps()}}
 \item \href{#method-values}{\code{ParameterSetCollection$values()}}
 \item \href{#method-clone}{\code{ParameterSetCollection$clone()}}
 }
@@ -106,8 +93,10 @@ psc$merge(psc2)$parameters()
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="addChecks">}\href{../../distr6/html/ParameterSet.html#method-addChecks}{\code{distr6::ParameterSet$addChecks()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="ParameterSet" data-id="addTrafos">}\href{../../distr6/html/ParameterSet.html#method-addTrafos}{\code{distr6::ParameterSet$addTrafos()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="param6" data-topic="ParameterSet" data-id="add_dep">}\href{../../param6/html/ParameterSet.html#method-add_dep}{\code{param6::ParameterSet$add_dep()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="param6" data-topic="ParameterSet" data-id="extract">}\href{../../param6/html/ParameterSet.html#method-extract}{\code{param6::ParameterSet$extract()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="param6" data-topic="ParameterSet" data-id="get_values">}\href{../../param6/html/ParameterSet.html#method-get_values}{\code{param6::ParameterSet$get_values()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="param6" data-topic="ParameterSet" data-id="rep">}\href{../../param6/html/ParameterSet.html#method-rep}{\code{param6::ParameterSet$rep()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -229,43 +218,6 @@ psc$getParameterValue("prob")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getParameterSupport"></a>}}
-\if{latex}{\out{\hypertarget{method-getParameterSupport}{}}}
-\subsection{Method \code{getParameterSupport()}}{
-Returns the support of the supplied parameter.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$getParameterSupport(id, error = "warn")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{\code{character()} \cr
-id of parameter support to return.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \link[set6:Set]{set6::Set} object.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{b <- Binomial$new()
-g <- Geometric$new()
-psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
-                                  Binom2 = b$parameters(),
-                                  Geom = g$parameters())
-psc$getParameterSupport("Binom1__prob")
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setParameterValue"></a>}}
 \if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
 \subsection{Method \code{setParameterValue()}}{
@@ -360,23 +312,6 @@ psc$merge(psc2)$parameters()
 
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDeps"></a>}}
-\if{latex}{\out{\hypertarget{method-addDeps}{}}}
-\subsection{Method \code{addDeps()}}{
-Dependencies should be added to internal \link{ParameterSet}s.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterSetCollection$addDeps(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{ANY} \cr Ignored.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-values"></a>}}

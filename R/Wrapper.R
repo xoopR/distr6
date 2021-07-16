@@ -144,18 +144,3 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     .log = TRUE
   )
 )
-
-#' @name wrappedModels
-#' @title Gets Internally Wrapped Models
-#' @description Returns either a list of all the wrapped models or the models named by parameters.
-#'
-#' @usage wrappedModels(object, model = NULL)
-#'
-#' @param object Distribution.
-#' @param model character, see details.
-#'
-#' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper.
-#' Otherwise returns model given in \code{model}.
-#'
-#' @export
-NULL

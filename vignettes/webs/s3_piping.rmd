@@ -45,6 +45,16 @@ The next set of tutorials focuses on more advanced functionality in distr6. This
 
 Using the R62S3 package [@r62s3] most R6 methods in distr6 can instead be called as an S3 method. Even if you're not aware of it, you've probably used S3 every time you've opened R. For example the `plot` function produces a different plot depending on what object it's called on, a numeric, a linear regression model, or something more complicated, this is because of the S3 dispatch system. Every distribution, kernel, parameter set, wrapper and decorator method is available through S3. Note that constructors always use R6 syntax, i.e. `$new()`. Below are some examples, see the documentation help pages for the different S3 and R6 syntax but remember these are almost identical except that the first argument in S3 will be the object whereas this is omitted in the R6 usage.
 
+You can select which classes to create methods for with R62S3, below we are
+just interested in methods associated with the `Distribution` class, but this
+will work with any R6 class in {distr6}.
+
+```{r}
+## generate methods from the public methods and active bindings of `Distribution`
+R62S3::R62Fun(Distribution, assignEnvir = topenv(), scope = c("public", "active"))
+```
+
+
 ```{r}
 N <- Normal$new()
 
@@ -64,7 +74,7 @@ getParameterValue(N, "var")
 
 ## Piping
 
-We won't go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, `%>%` notation, from the magrittr package [@magrittr]. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the [introduction to R6 tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html). Below are some examples of how piping can be used in distr6. 
+We won't go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, `%>%` notation, from the magrittr package [@magrittr]. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the [introduction to R6 tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html). Below are some examples of how piping can be used in distr6.
 
 ```{r}
 library(magrittr)
