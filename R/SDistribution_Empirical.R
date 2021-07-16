@@ -58,13 +58,8 @@ Empirical <- R6Class("Empirical",
       data$samples <- as.numeric(data$samples)
       data <- cbind(data, cumN = cumsum(data$N))
 
-      private$.parameters <- ParameterSet$new(
-        id = "data",
-        value = list(data),
-        support = Universal$new(),
-        settable = FALSE,
-        description = "Data"
-      )
+      private$.parameters <-
+        pset(prm("data", "universals", list(data), "immutable"))
 
       super$initialize(
         decorators = decorators,

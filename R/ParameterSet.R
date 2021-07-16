@@ -29,23 +29,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' Deprecated, please use `$addDeps` instead.
     #' @param description `(character(1)|list())`\cr
     #' Optional description for the parameter(s).
-    #'
-    #' @examples
-    #' id <- list("prob", "size")
-    #' value <- list(0.2, 5)
-    #' support <- list(set6::Interval$new(0, 1), set6::PosNaturals$new())
-    #' description <- list("Probability of success", NULL)
-    #' ParameterSet$new(id = id,
-    #'                  value = value,
-    #'                  support = support,
-    #'                  description = description
-    #'  )
-    #'
-    #' ParameterSet$new(id = "prob",
-    #'                  value = 0.2,
-    #'                  support = set6::Interval$new(0, 1),
-    #'                  description = "Probability of success"
-    #'  )
     initialize = function(id, value, support, settable = TRUE,
                           updateFunc = NULL,
                           description = NULL) {
@@ -148,42 +131,10 @@ ParameterSet <- R6Class("ParameterSet",
       } else {
         return(self)
       }
-    },
-
-    #' @description
-    #' Returns the support of the supplied parameter.
-    #' @param id `character()` \cr
-    #' id of parameter support to return.
-    #' @return
-    #' A [set6::Set] object.
-    #'
-    #' @examples
-    #' ps <- ParameterSet$new(id = "prob",
-    #'                  value = 0.2,
-    #'                  support = set6::Interval$new(0, 1),
-    #'                  settable = TRUE,
-    #'                  description = "Probability of success"
-    #'  )
-    #' ps$getParameterSupport("prob")
-    getParameterSupport = function(id, error = "warn") {
-      if (missing(id)) {
-        return(stopwarn(error, "Argument 'id' is missing, with no default."))
-      }
-
-      self$parameters(id)[["support"]][[1]]
-    },
+    }
 
     #' @description
     #' Returns the value of the supplied parameter.
-    #'
-    #' @examples
-    #' ps <- ParameterSet$new(id = "prob",
-    #'                  value = 0.2,
-    #'                  support = set6::Interval$new(0, 1),
-    #'                  settable = TRUE,
-    #'                  description = "Probability of success"
-    #'  )
-    #' ps$getParameterValue("prob")
     getParameterValue = function(id, error = "warn") {
       if (missing(id)) {
         return(stopwarn(error, "Argument 'id' is missing, with no default."))
@@ -196,16 +147,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' Sets the value(s) of the given parameter(s).
     #' @param .suppressCheck `(logical(1))`\cr
     #' Should be set internally only.
-    #'
-    #' @examples
-    #' id <- list("rate")
-    #' value <- list(1)
-    #' support <- list(set6::PosReals$new())
-    #' ps <- ParameterSet$new(
-    #'   id, value, support
-    #' )
-    #' ps$setParameterValue(rate = 2)
-    #' ps$getParameterValue("rate")
     setParameterValue = function(..., lst = NULL, error = "warn", .suppressCheck = FALSE,
                                  resolveConflicts = FALSE) {
       if (is.null(lst)) {
@@ -306,23 +247,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' Merges multiple parameter sets.
     #' @param y `([ParameterSet])`
     #' @param ... `([ParameterSet]s)`
-    #' @examples
-    #' \dontrun{
-    #' ps1 <- ParameterSet$new(id = c("prob", "qprob"),
-    #'                  value = c(0.2, 0.8),
-    #'                  support = list(set6::Interval$new(0, 1), set6::Interval$new(0, 1))
-    #'  )
-    #'  ps1$addChecks(function(self) self$getParameterValue("x") > 0)
-    #'  ps1$addDeps("prob", "qprob", function(self)
-    #'      list(qprob = 1 - self$getParameterValue("prob")))
-    #'  ps2 <- ParameterSet$new(id = "size",
-    #'                  value = 10,
-    #'                  support = set6::Interval$new(0, 10, class = "integer"),
-    #'  )
-    #'  ps2$addTrafos("size", function(x, self) x + 1)
-    #'  ps1$merge(ps2)
-    #'  ps1$print()
-    #'  }
     merge = function(y, ...) {
       newsets <- c(list(y), list(...))
       lapply(newsets, function(x) {
@@ -366,19 +290,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' @param fun `(function(1))`\cr
     #' Function used to update `y`, must include `self` in formal arguments and should return a
     #' named list with names identical to, and in the same order, as `y`.
-    #' @examples
-    #' \dontrun{
-    #' ps <- ParameterSet$new(
-    #'   id = list("a", "b", "c"),
-    #'   value = list(2, 3, 1/2),
-    #'   support = list(set6::Reals$new(), set6::Reals$new(), set6::Reals$new())
-    #' )
-    #' ps$addDeps("a", c("b", "c"),
-    #'    function(self) {
-    #'        list(b = self$getParameterValue("a") + 1,
-    #'             c = 1/self$getParameterValue("a"))
-    #'  })
-    #' }
     addDeps = function(x, y, fun) {
       checkmate::assertFunction(fun, "self")
       checkmate::assertSubset(c(x, y), unlist(private$.parameters$id))
@@ -392,17 +303,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' @param fun `(function(1))`\cr
     #' Function used to check `ParameterSet`, must include `self` in formal arguments and
     #' result in a logical.
-    #' @examples
-    #' \dontrun{
-    #' id <- list("lower", "upper")
-    #' value <- list(1, 3)
-    #' support <- list(set6::PosReals$new(), set6::PosReals$new())
-    #' ps <- ParameterSet$new(
-    #'   id, value, support
-    #' )
-    #' ps$addChecks(function(self)
-    #'   self$getParameterValue("lower") < self$getParameterValue("upper"))
-    #' }
     addChecks = function(fun) {
       if (is.null(self$checks)) {
         private$.checks <- checkmate::assertFunction(fun, "self")
@@ -429,25 +329,6 @@ ParameterSet <- R6Class("ParameterSet",
     #' @param dt `([data.table::data.table])`\cr
     #' Alternate method to directly construct `data.table` of transformations to add.
     #' See second example.
-    #' @examples
-    #' \dontrun{
-    #' ps <- ParameterSet$new(
-    #'   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
-    #' )
-    #' ps$addTrafos("probs", function(x, self) return(x / sum(x)))
-    #' ps$trafos
-    #' ps$setParameterValue(probs = c(1, 2))
-    #' ps$getParameterValue("probs")
-    #'
-    #' # Alternate method (better with more parameters)
-    #' ps <- ParameterSet$new(
-    #'   "probs", list(c(1, 1)), set6::Interval$new(0,1)^2
-    #' )
-    #' ps$addTrafos(dt = data.table::data.table(
-    #'                           x = "probs",
-    #'                           fun = function(x, self) return(x / sum(x))
-    #'            ))
-    #' }
     addTrafos = function(x, fun, dt = NULL) {
       if (is.null(dt)) {
         dt <- data.table(x = x, fun = fun)
@@ -614,20 +495,6 @@ print.ParameterSet <- function(x, hide_cols, ...) {}
 #' @export
 NULL
 
-#' @name getParameterSupport
-#' @title Parameter Support Accessor
-#' @description Returns the support of the given parameter.
-#' @usage getParameterSupport(object, id, error = "warn")
-#'
-#' @param object Distribution or ParameterSet.
-#' @param id character, id of the parameter to return.
-#' @param error character, value to pass to \code{stopwarn}.
-#'
-#' @return An R6 object of class inheriting from [set6::Set]
-#'
-#' @export
-NULL
-
 #' @name getParameterValue
 #' @title Parameter Value Accessor
 #' @description Returns the value of the given parameter.
@@ -688,44 +555,6 @@ as.data.table.ParameterSet <- function(x, ...) {
   x$.__enclos_env__$private$.parameters
 }
 
-#' @name as.ParameterSet
-#' @title Coerce to a ParameterSet
-#' @description Coerces objects to ParameterSet.
-#' @usage as.ParameterSet(x,...)
-#' @param x object
-#' @param ... additional arguments
-#' @details Currently supported coercions are from data tables and lists. Function assumes
-#' that the data table columns are the correct inputs to a ParameterSet, see the constructor
-#' for details. Similarly for lists, names are taken to be ParameterSet parameters and values taken
-#' to be arguments.
-#' @seealso \code{\link{ParameterSet}}
-#'
-#' @return An R6 object of class ParameterSet.
-#'
-#' @export
-as.ParameterSet <- function(x, ...) {
-  UseMethod("as.ParameterSet", x)
-}
-
-#' @rdname as.ParameterSet
-#' @export
-as.ParameterSet.data.table <- function(x, ...) {
-  return(ParameterSet$new(
-    id = x$id, value = x$value, support = x$support,
-    settable = x$settable,
-    description = x$description
-  ))
-}
-
-#' @rdname as.ParameterSet
-#' @export
-as.ParameterSet.list <- function(x, ...) {
-  return(ParameterSet$new(
-    id = x$id, value = x$value, support = x$support,
-    settable = x$settable,
-    description = x$description
-  ))
-}
 
 
 #' @title Extract one or more parameters from a ParameterSet

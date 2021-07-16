@@ -35,10 +35,7 @@ Convolution <- R6Class("Convolution",
         stop("Convolution not supported for mixed distributions.")
       }
 
-      private$.outerParameters <- ParameterSet$new(
-        id = "add", value = add, support = Logicals$new(),
-        description = "Type of convolution."
-      )
+      private$.outerParameters <- pset(prm("add", "logicals", add))
 
       super$initialize(
         distlist = distlist,

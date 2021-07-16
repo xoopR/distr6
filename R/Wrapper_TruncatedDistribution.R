@@ -60,16 +60,13 @@ Try decorate(distribution, FunctionImputation) first.")
       distlist <- list(distribution)
       names(distlist) <- distribution$short_name
 
-      private$.outerParameters <- ParameterSet$new(
-        id = list("lower", "upper"), value = list(lower, upper),
-        support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
-        description = list(
-          "Lower limit of truncation",
-          "Upper limit of truncation"
+      private$.outerParameters <- pset(
+        prm("lower", "extreals", lower, "required"),
+        prm("upper", "extreals", upper, "required"),
+        deps = list(
+          list(id = "lower", on = "upper", cnd = cnd("lt", id = "upper"))
         )
       )
-      private$.outerParameters$addChecks(function(self) self$getParameterValue("lower") <
-                                           self$getParameterValue("upper"))
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower + 1, upper, class = "integer", type = "(]")

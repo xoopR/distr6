@@ -307,7 +307,7 @@ getParameterSet.Loglogistic <- function(object, ...) {
 }
 
 getParameterSet.Lognormal <- function(object, ...) {
-  pset(
+  p=pset(
     prm("meanlog", "reals", 0, tags = c("required", "means")),
     prm("varlog", "posreals", 1, tags = c("required", "vars")),
     prm("sdlog", "posreals", tags = c("required", "vars")),
@@ -318,7 +318,7 @@ getParameterSet.Lognormal <- function(object, ...) {
     prm("prec", "posreals", tags = c("required", "vars")),
     tag_properties = list(linked = c("means", "vars")),
     trafo = function(x, self) {
-
+browser()
       log_vals <- sum(grepl("log", names(x)))
       if (length(x) == 2 && log_vals %nin% c(0, 2)) {
         stop("Can't change one log and non-log parameter simultaneously")

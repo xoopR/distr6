@@ -57,16 +57,13 @@ MixtureDistribution <- R6Class("MixtureDistribution",
         stop(sprintf("weights should either be a numeric of length %s, or 'uniform'", lng))
       }
 
-      private$.outerParameters <- ParameterSet$new(
-        id = "weights",
-        value = weights,
-        support = Interval$new(0, 1)^lng + Set$new("uniform"),
-        description = "Mixture weights"
-      )
-      private$.outerParameters$addTrafos(
-        "weights",
-        function(x, self) {
-          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform" # nocov
+      private$.outerParameters <- pset(
+        prm("weights", Interval$new(0, 1)^lng + Set$new("uniform"), weights, "required"),
+        trafo = function(x, self) {
+          if (checkmate::testNumeric(x$weights)) {
+            x$weights <- x$weights / sum(x$weights)
+          }
+          x
         }
       )
 

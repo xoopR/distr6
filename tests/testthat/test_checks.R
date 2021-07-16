@@ -41,17 +41,19 @@ test_that("check support", {
                "discrete")
 })
 
-ps <- ParameterSet$new(
-  id = list("prob", "size", "qprob"), value = list(0.2, 100, 0.8),
-  support = list(Interval$new(0, 1), PosNaturals$new(), Interval$new(0, 1)),
-  settable = list(TRUE, TRUE, FALSE),
-  description = list(
-    "Probability of Success", "Number of trials",
-    "Probability of failure"
-  )
+ps <- pset(
+  prm("prob", Interval$new(0, 1), 0.5, "probs", tags = c("linked", "required")),
+  prm("qprob", Interval$new(0, 1), tags = "probs", tags = c("linked", "required")),
+  prm("size", "posnaturals", 10, tags = "required"),
+  trafo = function(x, self) {
+    if (!is.null(x$qprob)) {
+      x$prob <- 1 - x$qprob
+    } else if (!is.null(x$prob)) {
+      x$qprob <- 1 - x$prob
+    }
+    x
+  }
 )
-ps$addDeps("prob", "qprob", function(self) 1 - self$getParameterValue("prob"))
-ps$addDeps("qprob", "prob", function(self) 1 - self$getParameterValue("qprob"))
 
 test_that("check r/d/p/q", {
   expect_silent(Distribution$new("Test", pdf = dbin, parameters = ps, type = Naturals$new())$pdf(1))

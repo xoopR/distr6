@@ -113,25 +113,6 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     },
 
     #' @description
-    #' Returns the support of the supplied parameter.
-    #' @param id `character()` \cr
-    #' id of parameter support to return.
-    #' @return
-    #' A [set6::Set] object.
-    #'
-    #' @examples
-    #' b <- Binomial$new()
-    #' g <- Geometric$new()
-    #' psc <- ParameterSetCollection$new(Binom1 = b$parameters(),
-    #'                                   Binom2 = b$parameters(),
-    #'                                   Geom = g$parameters())
-    #' psc$getParameterSupport("Binom1__prob")
-    getParameterSupport = function(id, error = "warn") {
-      param <- strsplit(id, "__", fixed = TRUE)[[1]]
-      private$.parametersets[[param[1]]]$getParameterSupport(param[2], error = error)
-    },
-
-    #' @description
     #' Sets the value(s) of the given parameter(s). Because of R6 reference semantics
     #' this also updates the [ParameterSet] of the wrapped distibution, and vice versa.
     #' See examples.

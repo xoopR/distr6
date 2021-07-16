@@ -21,7 +21,6 @@ test_that("kernel", {
 
 p <- b$parameters()
 test_that("ParameterSet", {
-  expect_equal(getParameterSupport(p, "size"), p$getParameterSupport("size"))
   expect_silent(setParameterValue(p, size = 10))
   expect_equal(getParameterValue(p, "size"), 10)
 })

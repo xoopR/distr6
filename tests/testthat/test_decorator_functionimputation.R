@@ -11,14 +11,20 @@ dexpo <- function(x) {
 cexpo <- function(x) {
   return(1 - exp(-self$getParameterValue("rate") * x))
 }
-ps <- ParameterSet$new(
-  id = list("rate", "scale", "test"), value = list(1, 1, 0),
-  support = list(PosReals$new(zero = T), PosReals$new(zero = T), Interval$new(0, 5)),
-  settable = list(TRUE, FALSE, FALSE),
-  description = list("Arrival rate", "Scale parameter", "testpar")
-)
-ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
-ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
+
+ps <- pset(
+    prm("rate", "posreals0", 1, tags = c("linked", "required")),
+    prm("scale", "posreals0", tags = c("linked", "required")),
+    prm("test", Interval$new(0, 5), 0, tags = c("immutable", "required")),
+    trafo = function(x, self) {
+      if (!is.null(x$scale)) {
+        x$rate <- 1 / x$scale
+      } else if (!is.null(x$rate)) {
+        x$scale <- 1 / x$rate
+      }
+      x
+    }
+  )
 
 cont_pdf <- Distribution$new("Continuous Test", "ContTest",
   support = PosReals$new(),

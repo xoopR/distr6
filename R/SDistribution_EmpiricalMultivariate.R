@@ -56,13 +56,8 @@ EmpiricalMV <- R6Class("EmpiricalMV",
       data <- data.table::as.data.table(data)
       private$.variates <- ncol(data)
 
-      private$.parameters <- ParameterSet$new(
-        id = "data",
-        value = list(data),
-        support = Universal$new(),
-        settable = FALSE,
-        description = "Data"
-      )
+      private$.parameters <-
+        pset(prm("data", "universals", list(data), "immutable"))
 
       super$initialize(
         decorators = decorators,
