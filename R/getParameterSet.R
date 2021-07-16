@@ -307,131 +307,65 @@ getParameterSet.Loglogistic <- function(object, ...) {
 }
 
 getParameterSet.Lognormal <- function(object, ...) {
+  pset(
+    prm("meanlog", "reals", 0, tags = c("required", "means")),
+    prm("varlog", "posreals", 1, tags = c("required", "vars")),
+    prm("sdlog", "posreals", tags = c("required", "vars")),
+    prm("preclog", "posreals", tags = c("required", "vars")),
+    prm("mean", "posreals", tags = c("required", "means")),
+    prm("var", "posreals", tags = c("required", "vars")),
+    prm("sd", "posreals", tags = c("required", "vars")),
+    prm("prec", "posreals", tags = c("required", "vars")),
+    tag_properties = list(linked = c("means", "vars")),
+    trafo = function(x, self) {
 
-    ps <- ParameterSet$new(
-      id = list("meanlog", "varlog", "sdlog", "preclog", "mean", "var", "sd", "prec"),
-      value = list(
-        0, 1, 1, 1, exp(0.5), (exp(1) - 1) * exp(1), sqrt((exp(1) - 1) * exp(1)),
-        ((exp(1) - 1) * exp(1))^-1
-      ),
-      support = list(
-        reals, pos_reals, pos_reals, pos_reals, pos_reals,
-        pos_reals, pos_reals, pos_reals
-      ),
-      description = list(
-        "meanlog - Location Parameter on log scale",
-        "varlog - Squared Scale Parameter on log scale",
-        "sdlog - Scale Parameter on log scale",
-        "preclog - Inverse Squared Scale Parameter on logscale",
-        "mean - Location Parameter",
-        "var - Squared Scale Parameter",
-        "sd - Scale Parameter",
-        "prec - Inverse Squared Scale Parameter"
-      )
-    )
+      log_vals <- sum(grepl("log", names(x)))
+      if (length(x) == 2 && log_vals %nin% c(0, 2)) {
+        stop("Can't change one log and non-log parameter simultaneously")
+      }
 
+      # first compute var or varlog if other scale params given
+      if (!is.null(x$sdlog)) {
+        x$varlog <- x$sdlog^2
+      } else if (!is.null(x$preclog)) {
+        x$varlog <- 1 / x$preclog
+      } else if (!is.null(x$sd)) {
+        x$var <- x$sd^2
+      } else if (!is.null(x$prec)) {
+        x$var <- 1 / x$prec
+      }
 
-    ps$addDeps("varlog", c("sdlog", "preclog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 varlog <- self$getParameterValue("varlog")
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   sdlog = varlog^0.5,
-                   preclog =  varlog^-1,
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
+      if (log_vals > 0) {
+        # only meanlog updated, use current varlog value
+        if (is.null(x$varlog)) {
+          x$varlog <- self$values$varlog
+        }
+        # only varlog updated, use current meanlog value
+        if (is.null(x$meanlog)) {
+          x$meanlog <- self$values$meanlog
+        }
+        # calculate mean and var
+        x$mean <- exp(x$meanlog + x$varlog / 2)
+        x$var <- (exp(x$varlog) - 1) * exp(2 * x$meanlog + x$varlog)
+      } else {
+        if (is.null(x$var)) {
+          x$var <- self$values$var
+        }
+        if (is.null(x$mean)) {
+          x$mean <- self$values$mean
+        }
+        x$meanlog <- log(x$mean / sqrt(1 + x$var / x$mean^2))
+        x$varlog <- log(1 + x$var / x$mean^2)
+      }
 
-    ps$addDeps("sdlog", c("varlog", "preclog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 sdlog <- self$getParameterValue("sdlog")
-                 varlog <- sdlog^2
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   varlog = varlog,
-                   preclog =  varlog^-1,
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-    ps$addDeps("preclog", c("varlog", "sdlog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 preclog <- self$getParameterValue("preclog")
-                 varlog <- 1 / preclog
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   varlog = varlog,
-                   sdlog =  sqrt(varlog),
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-    ps$addDeps("var", c("meanlog", "varlog", "sdlog", "preclog", "sd", "prec"),
-               function(self) {
-                 var <- self$getParameterValue("var")
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   sd = sqrt(var),
-                   prec = 1 / var
-                 )
-               })
+      x$sdlog <- sqrt(x$varlog)
+      x$preclog <- 1 / x$varlog
+      x$sd <- sqrt(x$var)
+      x$prec <- 1 / x$var
 
-    ps$addDeps("sd", c("var", "meanlog", "varlog", "sdlog", "preclog", "prec"),
-               function(self) {
-                 sd <- self$getParameterValue("sd")
-                 var <- sd^2
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   var = var,
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   prec = 1 / var
-                 )
-               })
-
-    ps$addDeps("prec", c("var", "meanlog", "varlog", "sdlog", "preclog", "sd"),
-               function(self) {
-                 prec <- self$getParameterValue("prec")
-                 var <- 1 / prec
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   var = var,
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   sd = sqrt(var)
-                 )
-               })
-    ps$addDeps("mean", "meanlog", function(self) {
-      mean <- self$getParameterValue("mean")
-      list(meanlog = log(mean / sqrt(1 + self$getParameterValue("var") / mean^2)))
-    })
-    ps$addDeps("meanlog", "mean", function(self) {
-      list(mean = exp(self$getParameterValue("meanlog") +
-            self$getParameterValue("varlog") / 2))
-    })
-
-  return(ps)
+      x
+    }
+  )
 }
 
 getParameterSet.Multinomial <- function(object, ...) {
@@ -448,186 +382,64 @@ getParameterSet.Multinomial <- function(object, ...) {
 }
 
 getParameterSet.MultivariateNormal <- function(object, ...) { # nolint
-
-  ps <- ParameterSet$new(
-    id = list("mean", "cov", "prec"),
-    value = list(
-      rep(0, 2),
-      matrix(c(1, 0, 0, 1), nrow = 2),
-      matrix(c(1, 0, 0, 1), nrow = 2)
-    ),
-    support = list(
-      setpower(reals, "n"),
-      setpower(reals, "n"),
-      setpower(reals, "n")
-    ),
-    description = list(
-      "Vector of means - Location Parameter.",
-      "Covariance matrix - Scale Parameter.",
-      "Precision matrix - Scale Parameter."
-    )
-  )
-
-  ps$addDeps("cov", "prec", function(self) {
-    list(prec = list(solve(matrix(self$getParameterValue("cov"),
-      nrow = length(self$getParameterValue("mean"))
-    ))))
-  })
-  ps$addDeps("prec", "cov", function(self) {
-   list(cov = list(solve(matrix(self$getParameterValue("prec"),
-      nrow = length(self$getParameterValue("mean"))
-    ))))
-  })
-  ps$addChecks(function(self) {
-    mean <- self$getParameterValue("mean")
-    if (checkmate::testList(mean)) {
-      n <- length(mean[[1]])^2 * length(mean)
-    } else {
-      n <- length(mean)^2
+  pset(
+    prm("mean", "nreals", rep(0, 2), tags = "required"),
+    prm("cov", "nreals", matrix(c(1, 0, 0, 1), nrow = 2), tags = c("required", "linked")),
+    prm("prec", "nreals", tags = c("required", "linked")),
+    trafo = function(x, self) {
+      mean <- if (!is.null(x$mean)) x$mean else self$values$mean
+      if (!is.null(x$cov)) {
+        x$cov <- matrix(x$cov, nrow = length(mean))
+        x$prec <- solve(x$cov)
+      } else if (!is.null(x$prec)) {
+        x$prec <- matrix(x$cov, nrow = length(mean))
+        x$cov <- solve(matrix(x$prec, nrow = length(mean)))
+      }
+      x
     }
-    n == length(unlist(self$getParameterValue("cov")))
-    })
-
-  return(ps)
+  )
 }
 
 getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # nolint
-
-  if (form == "sbf") {
-    desc <- "Number of failures"
-  } else if (form == "tbf") {
-    desc <- "Number of failures"
-  } else if (form == "tbs") {
-    desc <- "Number of successes"
-  } else {
-    desc <- "Number of successes"
-  }
-
-  ps <- ParameterSet$new(
-    id = list("prob", "qprob", "mean", "size", "form"),
-    value = list(0.5, 0.5, 10, 10, form),
-    support = list(
-      Interval$new(0, 1, type = "()"),
-      Interval$new(0, 1, type = "()"),
-      pos_reals,
-      pos_naturals,
-      Set$new("sbf", "tbf", "tbs", "fbs")
-    ),
-    settable = list(TRUE, TRUE, TRUE, TRUE, FALSE),
-    description = list(
-      "Probability of Success",
-      "Probability of failure",
-      "Mean - Location Parameter", desc, "Distribution form"
-    )
+  ps <- pset(
+    prm("prob", Interval$new(0, 1, type = "()"), 0.5, tags = c("required", "linked")),
+    prm("qprob", Interval$new(0, 1, type = "()"), tags = c("required", "linked")),
+    prm("mean", "posreals", tags = c("required", "linked")),
+    prm("size", "posnaturals", 10, tags = "required"),
+    prm("form", Set$new("sbf", "tbf", "tbs", "fbs"), form, tags = c("required", "immutable")),
+    trafo <- function(x, self) {
+      form <- self$values$form
+      if (is.null(x$size)) {
+        x$size <- self$values$size
+      }
+      if (is.null(x$prob) && is.null(x$qprob) && is.null(x$mean)) {
+        x$prob <- self$values$prob # hold prob constant
+      } else if (!is.null(x$qprob)) {
+        x$prob <- 1 - x$qprob
+      } else if (!is.null(x$mean)) {
+        x$prob <- switch(form,
+          "sbf" = x$mean / (x$size + x$mean),
+          "tbf" = (x$mean - x$size) / x$mean,
+          "tbs" = x$size / x$mean,
+          "fbs" = x$size / (x$mean + x$size)
+        )
+      }
+      x$qprob <- 1 - x$prob
+      x$mean <- switch(form,
+          "sbf" = x$size * (x$prob / x$qprob),
+          "tbf" = x$size / x$qprob,
+          "tbs" = x$size / x$prob,
+          "fbs" = x$size * (x$qprob / x$prob)
+      )
+      x
+    }
   )
 
-  if (form == "sbf") {
-    ps$addDeps("size", "mean", function(self) {
-      prob <- self$getParameterValue("prob")
-      list(mean = self$getParameterValue("size") * prob / (1 - prob))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") * prob / (1 - prob))
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") * (1 - qprob) / qprob)
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      mean <- self$getParameterValue("mean")
-      prob <- mean / (self$getParameterValue("size") + mean)
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-  } else if (form == "tbf") {
-    ps$addDeps("size", "mean", function(self) {
-      list(mean = self$getParameterValue("size") / (1 - self$getParameterValue("prob")))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") / (1 - prob)
-        )
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") / qprob)
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      mean <- self$getParameterValue("mean")
-      prob <- (mean - self$getParameterValue("size")) / mean
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
-                   unlist(self$getParameterValue("size"))))
-  } else if (form == "tbs") {
-    ps$addDeps("size", "mean", function(self) {
-      list(mean = self$getParameterValue("size") /
-        self$getParameterValue("prob"))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") / prob
-        )
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") / (1 - qprob))
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      prob <- self$getParameterValue("size") / self$getParameterValue("mean")
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
-                                      unlist(self$getParameterValue("size"))))
-  } else {
-    ps$addDeps("size", "mean", function(self) {
-      prob <- self$getParameterValue("prob")
-      list(mean = self$getParameterValue("size") * (1 - prob) / prob)
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") * (1 - prob) / prob)
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") * qprob / (1 - qprob))
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      size <- self$getParameterValue("size")
-      prob <- size / (self$getParameterValue("mean") + size)
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
+  if (form %in% c("tbf", "tbs")) {
+    ps$add_dep("mean", "size", cnd("geq", id = "size"))
   }
 
-  return(ps)
+  ps
 }
 
 getParameterSet.Normal <- function(object, ...) {
@@ -762,25 +574,20 @@ getParameterSet.Weibull <- function(object, ...) {
 }
 
 getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
-
-  ps <- ParameterSet$new(
-    id = list("x", "pdf", "cdf"),
-    value = list(1, 1, 1),
-    support = list(reals^"n", Interval$new(0, 1)^"n", Interval$new(0, 1)^"n"),
-    description = list(
-      "Data.", "Probability density function.",
-      "Cumulative distribution function."
-    )
+  pset(
+    prm("x", "nreals", 1, tags = c("required", "unique")),
+    prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
+    prm("cdf", Interval$new(0, 1)^"n", 1, tags = c("required", "linked")),
+    deps = list(
+      list(id = "cdf", on = "x", cnd = cnd("len", id = "x"))
+    ),
+    trafo = function(x, self) {
+      if (!is.null(x$pdf)) {
+        x$cdf <- cumsum(x$pdf)
+      } else if (!is.null(x$cdf)) {
+        x$pdf <- c(x$cdf[1], diff(x$cdf))
+      }
+      x
+    }
   )
-  ps$addDeps("pdf", "cdf", function(self) list(cdf = cumsum(self$getParameterValue("pdf"))))
-  ps$addDeps("cdf", "pdf", function(self) {
-    list(pdf = c(self$getParameterValue("cdf")[1], diff(self$getParameterValue("cdf"))))
-  })
-  ps$addChecks(function(self) {
-    x <- unlist(self$getParameterValue("x"))
-    all(length(unlist(self$getParameterValue("cdf"))) == length(x)) &&
-      all(vapply(self$getParameterValue("x"), function(.x) !any(duplicated(.x)), logical(1)))
-  })
-
-  return(ps)
 }
