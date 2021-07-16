@@ -63,8 +63,9 @@ getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1) {
     return(class(object))
   }
 }
-ifnerror <- function(expr, noerror, error = NULL, silent = T) {
-  x <- try(expr, silent)
+ifnerror <- function(expr, noerror, error = NULL) {
+
+  x <- try(expr, silent = TRUE)
   if (inherits(x, "try-error")) {
     if (is.null(error) | error == "warn") {
       stopwarn("warn", "Error not Nerror!")
@@ -222,4 +223,24 @@ getR6Call <- function() {
   calls <- calls[names(calls) %nin% "decorators"]
   # prevent lazy evaluation
   lapply(calls, eval.parent, n = 5)
+}
+
+
+unique_nlist <- function(x) {
+  x[!duplicated(names(x))]
+}
+
+
+expand_list <- function(names, named_var) {
+  checkmate::assert_character(names)
+  checkmate::assert_list(named_var)
+
+  mtc <- match(names(named_var), names)
+  if (any(is.na(mtc))) {
+    stop("ids in 'names' not in 'named_var'")
+  }
+
+  x <- setNames(vector("list", length(names)), names)
+  x[mtc] <- named_var
+  x
 }
