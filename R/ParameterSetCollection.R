@@ -192,13 +192,6 @@ ParameterSetCollection <- R6Class("ParameterSetCollection",
     },
 
     #' @description
-    #' Dependencies should be added to internal [ParameterSet]s.
-    #' @param ... `ANY` \cr Ignored.
-    addDeps = function(...) {
-      stop("Dependencies should be added to internal ParameterSets with $parameterSets.")
-    },
-
-    #' @description
     #' Returns parameter set values as a named list.
     #' @param settable `(logical(1))`\cr
     #' If `TRUE` (default) only returns values of settable parameters, otherwise returns all.
