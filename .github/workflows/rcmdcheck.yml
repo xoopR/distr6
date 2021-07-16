@@ -16,9 +16,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, r: "release" }
-          - { os: windows-latest, r: "3.6" }
-          - { os: windows-latest, r: "devel" }
+          - { os: macOS-latest, r: "3.6" }
+          - { os: macOS-latest, r: "devel" }
           - { os: macOS-latest, r: "release" }
 
     env:
@@ -83,7 +82,7 @@ jobs:
           devtools::install()
           rmarkdown::render('README.Rmd')
         shell: Rscript {0}
-        
+
       - name: Commit changes
         if: ${{ github.event_name == 'pull_request' && runner.os == 'macOS' }}
         uses: EndBug/add-and-commit@v7
@@ -92,4 +91,3 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'Update README.md'
           add: 'README.md'
-          
