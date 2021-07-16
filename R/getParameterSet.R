@@ -44,8 +44,8 @@ getParameterSet.BetaNoncentral <- function(object, ...) {
 
 getParameterSet.Binomial <- function(object, ...) {
   pset(
-    prm("prob", Interval$new(0, 1), 0.5, "probs", tags = c("linked", "required")),
-    prm("qprob", Interval$new(0, 1), tags = "probs", tags = c("linked", "required")),
+    prm("prob", Interval$new(0, 1), 0.5, tags = c("linked", "required")),
+    prm("qprob", Interval$new(0, 1), tags = c("linked", "required")),
     prm("size", "posnaturals", 10, tags = "required"),
     trafo = function(x, self) {
       if (!is.null(x$qprob)) {
@@ -307,7 +307,7 @@ getParameterSet.Loglogistic <- function(object, ...) {
 }
 
 getParameterSet.Lognormal <- function(object, ...) {
-  p=pset(
+  pset(
     prm("meanlog", "reals", 0, tags = c("required", "means")),
     prm("varlog", "posreals", 1, tags = c("required", "vars")),
     prm("sdlog", "posreals", tags = c("required", "vars")),
@@ -318,7 +318,6 @@ getParameterSet.Lognormal <- function(object, ...) {
     prm("prec", "posreals", tags = c("required", "vars")),
     tag_properties = list(linked = c("means", "vars")),
     trafo = function(x, self) {
-browser()
       log_vals <- sum(grepl("log", names(x)))
       if (length(x) == 2 && log_vals %nin% c(0, 2)) {
         stop("Can't change one log and non-log parameter simultaneously")
@@ -407,7 +406,7 @@ getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # noli
     prm("mean", "posreals", tags = c("required", "linked")),
     prm("size", "posnaturals", 10, tags = "required"),
     prm("form", Set$new("sbf", "tbf", "tbs", "fbs"), form, tags = c("required", "immutable")),
-    trafo <- function(x, self) {
+    trafo = function(x, self) {
       form <- self$values$form
       if (is.null(x$size)) {
         x$size <- self$values$size
