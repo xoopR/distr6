@@ -202,56 +202,65 @@ or `distlist` should be used.")
           # create wrapper parameters by cloning distribution parameters and setting by given params
           # skip if no parameters
           pdist <- get(distribution)
-          p <- try(do.call(paste0("getParameterSet.", distribution), c(params[[1]], shared_params)),
-                   silent = TRUE)
-          if (class(p)[[1]] != "try-error") {
-            paramlst <- vector("list", length(params))
-            for (i in seq_along(params)) {
-              paramlst[[i]] <- p$clone(deep = TRUE)
-            }
+          shortname <- pdist$public_fields$short_name
 
-            if (is.null(ids)) {
-              names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name,
-                                                 length(params)))
-            } else {
-              names(paramlst) <- checkmate::assertCharacter(ids, unique = TRUE)
-            }
-            names(params) <- names(paramlst)
-            params <- unlist(params, recursive = FALSE)
-            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+          parameters <- do.call(paste0("getParameterSet.", distribution),
+                                c(params[[1]], shared_params))
+          parameters$rep(length(params), prefix = shortname)
+          names(params) <- sprintf("%s%d", shortname, seq(length(params)))
+          params <- unlist(params, recursive = FALSE)
+          names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+          parameters$setParameterValue(lst = params)
+
+          # if (class(p)[[1]] != "try-error") {
+          #   paramlst <- vector("list", length(params))
+          #   for (i in seq_along(params)) {
+          #     paramlst[[i]] <- p$clone(deep = TRUE)
+          #   }
+
+          #   if (is.null(ids)) {
+          #     names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name,
+          #                                        length(params)))
+          #   } else {
+          #     names(paramlst) <- checkmate::assertCharacter(ids, unique = TRUE)
+          #   }
+          #   names(params) <- names(paramlst)
+          #   params <- unlist(params, recursive = FALSE)
+          #   names(params) <- gsub(".", "__", names(params), fixed = TRUE)
 
 
-            if (!is.null(shared_params)) {
-              if (distribution == "Geometric") {
-                shared_params <- shared_params[names(shared_params) %nin% "trials"]
-              }
-              if (distribution == "NegativeBinomial") {
-                shared_params <- shared_params[names(shared_params) %nin% "form"]
-              }
-              shared_params <- rep(list(shared_params), length(params))
-              names(shared_params) <- names(paramlst)
-              shared_params <- unlist(shared_params, recursive = FALSE)
-              names(shared_params) <- gsub(".", "__", names(shared_params), fixed = TRUE)
-              params <- c(params, shared_params)
-            }
+          #   if (!is.null(shared_params)) {
+          #     if (distribution == "Geometric") {
+          #       shared_params <- shared_params[names(shared_params) %nin% "trials"]
+          #     }
+          #     if (distribution == "NegativeBinomial") {
+          #       shared_params <- shared_params[names(shared_params) %nin% "form"]
+          #     }
+          #     shared_params <- rep(list(shared_params), length(params))
+          #     names(shared_params) <- names(paramlst)
+          #     shared_params <- unlist(shared_params, recursive = FALSE)
+          #     names(shared_params) <- gsub(".", "__", names(shared_params), fixed = TRUE)
+          #     params <- c(params, shared_params)
+          #   }
 
-            support <- subset(as.data.table(p), select = c(id, support))
-            support[, support := sapply(support, set6::setpower, power = length(paramlst))]
-            parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
-                                                     .supports = support)$
-              setParameterValue(lst = params, resolveConflicts = TRUE)
-          } else {
-            paramlst <- vector("list", length(params))
-            names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
-            parameters <- ParameterSetCollection$new()
-          }
-
-          shortname <- get(distribution)$public_fields$short_name
+          #   support <- subset(as.data.table(p), select = c(id, support))
+          #   support[, support := sapply(support, set6::setpower, power = length(paramlst))]
+          #   parameters <- ParameterSetCollection$new(lst = paramlst, .checks = p$checks,
+          #                                            .supports = support)$
+          #     setParameterValue(lst = params, resolveConflicts = TRUE)
+          # } else {
+          #   paramlst <- vector("list", length(params))
+          #   names(paramlst) <- makeUniqueNames(rep(pdist$public_fields$short_name, length(params)))
+          #   parameters <- pset()
+          # }
 
           # modelTable is for reference and later
           # construction; coercion to table from frame due to recycling
           private$.modelTable <- as.data.table(
-            data.frame(Distribution = distribution, shortname = names(paramlst))
+            data.frame(
+              Distribution = distribution,
+              shortname = sprintf("%s%d", shortname, seq_along(params))
+            )
           )
 
           # set univariate flag for calling d/p/q/r

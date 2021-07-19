@@ -66,7 +66,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
         variateForm = variateForm,
         type = assertSet(type)
       )
-
+browser()
       paramlst <- list()
       if (!is.null(distlist)) {
         assertDistributionList(distlist)
@@ -88,7 +88,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
       }
 
       if (!is.null(parameters) & is.null(distlist)) {
-        assertParameterSetCollection(parameters)
+        checkmate::assertClass(parameters, "ParameterSet")
         if (is.null(private$.parameters)) {
           private$.parameters <- parameters
         } else {
@@ -120,17 +120,9 @@ DistributionWrapper <- R6Class("DistributionWrapper",
 
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      # This case is highly unlikely to ever be seen.
-      # if (length(private$.parameters) == 0) {
-      #   return(NULL)
-      # } else {
-        if (is.null(lst)) {
-          lst <- list(...)
-        }
-        self$parameters()$setParameterValue(lst = lst, error = error,
-                                            resolveConflicts = resolveConflicts)
-      # }
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      self$parameters()$setParameterValue(lst = lst, error = error,
+                                          resolveConflicts = resolveConflicts)
     }
   ),
 
