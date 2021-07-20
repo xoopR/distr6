@@ -1,7 +1,7 @@
 p <- 0.2
 r <- 10
 
-test_that("autotest", {
+test_that("autotest - fbs", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
     pars = list(prob = 0.2, form = "fbs"),
@@ -29,7 +29,7 @@ test_that("autotest", {
 
 p <- 1 - p
 
-test_that("autotest", {
+test_that("autotest - sbf", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
     pars = list(prob = 0.2, form = "sbf"),
@@ -58,7 +58,7 @@ test_that("autotest", {
 
 p <- 1 - p
 
-test_that("autotest", {
+test_that("autotest - tbs", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
     pars = list(prob = 0.2, form = "tbs"),
@@ -86,7 +86,7 @@ test_that("autotest", {
 
 p <- 1 - p
 
-test_that("autotest", {
+test_that("autotest - tbf", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
     pars = list(prob = 0.2, form = "tbf"),

@@ -57,7 +57,7 @@ getParameterSet.Arcsine <- function(object, ...) {
     prm("lower", "reals", 0, "required"),
     prm("upper", "reals", 1, "required"),
     deps = list(
-      list(id = "lower", on = "upper", cond = cond("leq", id = "upper"))
+      list(id = "lower", on = "upper", cond = cnd("leq", id = "upper"))
     )
   )
 }
@@ -99,7 +99,7 @@ getParameterSet.Categorical <- function(object, ...) {
     prm("elements", "universal", 1, tags = "required"),
     prm("probs", Interval$new(0, 1)^"n", 1, tags = "required"),
     deps = list(
-      list(id = "probs", on = "elements", cond = cond("len", id = "elements"))
+      list(id = "probs", on = "elements", cond = cnd("len", id = "elements"))
     ),
     trafo = trafo_normalise
   )
@@ -142,7 +142,7 @@ getParameterSet.DiscreteUniform <- function(object, ...) { # nolint
     prm("lower", "integers", 0, tags = "required"),
     prm("upper", "integers", 1, tags = "required"),
     deps = list(
-      list(id = "lower", on = "upper", cond = cond("lt", id = "upper"))
+      list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
     )
   )
 }
@@ -222,7 +222,7 @@ getParameterSet.Gamma <- function(object, ...) {
                           gsub("rate", "mean", names(rates)))
       }
 
-      c(shapes, rates, scales, means)
+      unique_nlist(c(shapes, rates, scales, means, x))
     }
   )
 }
@@ -307,7 +307,7 @@ getParameterSet.Laplace <- function(object, ...) {
                              gsub("var", "scale", names(vars)))
         }
 
-        c(list_element(x, "mean"), vars, scales)
+        unique_nlist(c(vars, scales, x))
     }
   )
 }
@@ -337,7 +337,7 @@ getParameterSet.Logistic <- function(object, ...) {
                         gsub("scale", "sd", names(scales)))
       }
 
-      c(scales, sds, list_element(x, "mean"))
+      unique_nlist(c(scales, sds, x))
     }
   )
 }
@@ -421,7 +421,9 @@ getParameterSet.Lognormal <- function(object, ...) {
                              gsub("var", "prec", names(vars)))
 
 
-      c(meanlogs, varlogs, sdlogs, preclogs, means, vars, sds, precs)
+      unique_nlist(
+        c(meanlogs, varlogs, sdlogs, preclogs, means, vars, sds, precs), x
+      )
     }
   )
 }
@@ -459,7 +461,7 @@ getParameterSet.MultivariateNormal <- function(object, ...) { # nolint
       old <- Map(function(.x, .y) matrix(.x, length(.y), length(.y)),
                  covs, mean)
       new <- setNames(lapply(old, solve), gsub(old_name, new_name, names(old)))
-      c(mean, old, new)
+      unique_nlist(c(mean, old, new, x))
     }
   )
 }
@@ -508,12 +510,12 @@ getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # noli
         ), gsub("prob", "mean", names(probs)))
       }
 
-      c(forms, sizes, probs, qprobs, means)
+      unique_nlist(c(forms, sizes, probs, qprobs, means, x))
     }
   )
 
   if (form %in% c("tbf", "tbs")) {
-    ps$add_dep("mean", "size", cond("geq", id = "size"))
+    ps$add_dep("mean", "size", cnd("geq", id = "size"))
   }
 
   ps
@@ -526,6 +528,7 @@ getParameterSet.Normal <- function(object, ...) {
     prm("sd", "posreals", tags = c("linked", "required")),
     prm("prec", "posreals", tags = c("linked", "required")),
     trafo = function(x, self) {
+
       vars <- sds <- precs <- NULL
 
       if (any(grepl("sd", names(x)))) {
@@ -552,7 +555,7 @@ getParameterSet.Normal <- function(object, ...) {
                           gsub("var", "prec", names(vars)))
       }
 
-      c(vars, sds, precs, list_element(x, "mean"))
+      unique_nlist(c(vars, sds, precs, x))
     }
   )
 }
@@ -609,8 +612,8 @@ getParameterSet.Triangular <- function(object, symmetric = FALSE, ...) {
     prm("mode", "reals", mode_val, tags = mode_tag),
     prm("symmetric", "logicals", symmetric, tags = "immutable"),
     deps = list(
-      list(id = "mode", on = "lower", cond = cond("gt", id = "lower")),
-      list(id = "mode", on = "upper", cond = cond("lt", id = "upper"))
+      list(id = "mode", on = "lower", cond = cnd("gt", id = "lower")),
+      list(id = "mode", on = "upper", cond = cnd("lt", id = "upper"))
     )
   )
 
@@ -631,7 +634,7 @@ getParameterSet.Uniform <- function(object, ...) {
     prm("lower", "reals", 0, tags = "required"),
     prm("upper", "reals", 1, tags = "required"),
     deps = list(
-      list(id = "lower", on = "upper", cond = cond("lt", id = "upper"))
+      list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
     )
   )
 }
@@ -663,7 +666,7 @@ getParameterSet.Weibull <- function(object, ...) {
                    gsub("scale", "altscale", names(scales)))
       }
 
-      c(scales, altscales, shapes)
+      unique_nlist(c(scales, altscales, shapes, x))
     }
   )
 }
@@ -674,7 +677,7 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
     prm("cdf", Interval$new(0, 1)^"n", 1, tags = c("required", "linked")),
     deps = list(
-      list(id = "cdf", on = "x", cond = cond("len", id = "x"))
+      list(id = "cdf", on = "x", cond = cnd("len", id = "x"))
     ),
     trafo = function(x, self) {
       pdfs <- list_element(x, "pdf")
@@ -690,7 +693,7 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
                          gsub("cdf", "pdf", names(cdfs)))
       }
 
-      c(pdfs, cdfs, list_element(x, "x"))
+      unique_nlist(c(pdfs, cdfs, x))
     }
   )
 }

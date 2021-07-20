@@ -2,7 +2,6 @@
 #' @title Vectorise Distributions
 #' @description A wrapper for creating a vector of distributions.
 #' @template class_vecdist
-#' @template method_setParameterValue
 #' @template method_wrappedModels
 #' @template method_mode
 #' @template method_kurtosis
@@ -211,7 +210,7 @@ or `distlist` should be used.")
           names(params) <- shortnames
           params <- unlist(params, recursive = FALSE)
           names(params) <- gsub(".", "__", names(params), fixed = TRUE)
-          parameters$set_values(lst = params)
+          parameters$values <- params
 
           # if (class(p)[[1]] != "try-error") {
           #   paramlst <- vector("list", length(params))
@@ -437,15 +436,7 @@ or `distlist` should be used.")
           if (is.null(ids)) {
             shortname <- makeUniqueNames(shortname)
           }
-
-
-          if (is.null(unlist(paramlst))) {
-            parameters <- ParameterSetCollection$new()
-            paramlst <- NULL
-          } else {
-            names(paramlst) <- shortname
-            parameters <- ParameterSetCollection$new(lst = paramlst)
-          }
+          parameters <- NULL
 
           names(distlist) <- shortname
 
@@ -582,8 +573,7 @@ or `distlist` should be used.")
           distlist <- lapply(private$.modelTable$shortname, function(x) {
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
-            do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
-                                              self$parameters()[paste0(x, "__")]$values()))
+            dist$set_values(self$parameters()[prefix = paste0(x, "__")]$values)
             return(dist)
           })
         }
@@ -600,8 +590,7 @@ or `distlist` should be used.")
           distlist <- lapply(models, function(x) {
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
-            do.call(dist$setParameterValue, c(resolveConflicts = TRUE,
-                                              self$parameters()[paste0(x, "__")]$values()))
+            dist$set_values(self$parameters()[prefix = paste0(x, "__")]$values)
             return(dist)
           })
         }

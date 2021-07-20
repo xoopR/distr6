@@ -106,63 +106,6 @@ makeChecks(
   pos = environment()
 )
 
-#' @title assert/check/test/ParameterSetCollection
-#' @description Validation checks to test if a given object is a [ParameterSetCollection].
-#' @param object object to test
-#' @param errormsg custom error message to return if assert/check fails
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' # FALSE
-#' testParameterSetCollection(5)
-#' # TRUE
-#' testParameterSetCollection(ParameterSetCollection$new(Binom = Binomial$new()$parameters()))
-#' @export
-testParameterSetCollection <- function() {}
-#' @rdname testParameterSetCollection
-#' @export
-checkParameterSetCollection <- function() {}
-#' @rdname testParameterSetCollection
-#' @export
-assertParameterSetCollection <- function() {}
-
-makeChecks(
-  assertionName = "ParameterSetCollection",
-  cond = inherits(object, "ParameterSetCollection"),
-  defaulterrormsg = paste(object, "is not an R6 ParameterSetCollection object"),
-  pos = environment()
-)
-
-#' @title assert/check/test/ParameterSetCollectionList
-#' @description Validation checks to test if a given object is a list of [ParameterSetCollection]s.
-#' @param object object to test
-#' @param errormsg custom error message to return if assert/check fails
-#' @return If check passes then \code{assert} returns invisibly and \code{test}/\code{check}
-#'   return \code{TRUE}. If check fails, \code{assert} stops code with error, \code{check} returns
-#'   an error message as string, \code{test} returns \code{FALSE}.
-#'
-#' @examples
-#' testParameterSetCollectionList(list(Binomial$new(), 5)) # FALSE
-#' testParameterSetCollectionList(list(ParameterSetCollection$new(
-#'   Binom = Binomial$new()$parameters()
-#' ))) # TRUE
-#' @export
-testParameterSetCollectionList <- function() {} # nolint
-#' @rdname testParameterSetCollectionList
-#' @export
-checkParameterSetCollectionList <- function() {} # nolint
-#' @rdname testParameterSetCollectionList
-#' @export
-assertParameterSetCollectionList <- function() {} # nolint
-
-makeChecks(
-  assertionName = "ParameterSetCollectionList",
-  cond = checkmate::testList(object, "ParameterSetCollection"),
-  defaulterrormsg = "One or more items in the list are not ParameterSetCollections",
-  pos = environment()
-)
 
 #' @title assert/check/test/Univariate
 #' @name testUnivariate

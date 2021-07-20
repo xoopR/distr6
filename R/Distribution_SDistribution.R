@@ -54,9 +54,9 @@ SDistribution <- R6Class("SDistribution",
               }
             }), recursive = FALSE)
 
-            self$setParameterValue(lst = vals)
+            self$set_values(lst = vals)
           } else {
-            self$setParameterValue(lst = args)
+            self$set_values(lst = args)
           }
         }
       }

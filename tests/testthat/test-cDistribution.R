@@ -3,7 +3,7 @@ test_that("non-distlist", {
 })
 
 test_that("SDistributions", {
-  expect_equal(Binomial$new(), Binomial$new(),
+  expect_equal(c(Binomial$new(), Binomial$new()),
                VectorDistribution$new(distribution = "Binomial",
                                       params = data.table(prob = 0.5, size = c(10, 10))))
   expect_silent(c(Binomial$new(), Normal$new()))

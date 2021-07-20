@@ -144,7 +144,7 @@ test_that("discrete pdf2quantile", {
 # pdf2rand
 #----------
 
-test_that("continuous pdf2quantile", {
+test_that("continuous pdf2rand", {
   set.seed(2)
   r <- cont_pdf$rand(1000)
   t <- round(rexp(1000), 1)
@@ -154,7 +154,7 @@ test_that("continuous pdf2quantile", {
   expect_true(all(r <= cont_pdf$sup))
 })
 
-test_that("discrete pdf2quantile", {
+test_that("discrete pdf2rand", {
   set.seed(1)
   r <- disc_pdf$rand(10000)
   t <- rgeom(10000, 0.5)
