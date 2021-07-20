@@ -39,7 +39,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     #' Wrapped distribution value support.
     #' @param variateForm `(character(1))`\cr
     #' Wrapped distribution variate form.
-    #' @param parameters `([ParameterSetCollection])`\cr
+    #' @param parameters `([param6::ParameterSet])`\cr
     #' Optional parameters to add to the internal collection, ignored if `distlist` is given.
     #' @param outerID `([ParameterSet])`\cr
     #' Parameters added by the wrapper.
@@ -66,7 +66,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
         variateForm = variateForm,
         type = assertSet(type)
       )
-browser()
+
       paramlst <- list()
       if (!is.null(distlist)) {
         assertDistributionList(distlist)

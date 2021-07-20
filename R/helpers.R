@@ -244,3 +244,28 @@ expand_list <- function(names, named_var) {
   x[mtc] <- named_var
   x
 }
+
+list_element <- function(x, name) {
+  x[grepl(name, names(x))]
+}
+
+named_list <- function(values, names) {
+  if (missing(values) && missing(names)) {
+    setNames(list(), character())
+  } else {
+    setNames(list(values), names)
+  }
+}
+
+as_named_list <- function(values, names) {
+  if (missing(values) && missing(names)) {
+    setNames(list(), character())
+  } else {
+    setNames(as.list(values), names)
+  }
+}
+
+
+get_private <- function(x) {
+  x$.__enclos_env__$private
+}

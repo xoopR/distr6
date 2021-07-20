@@ -285,8 +285,7 @@ Returns the full parameter details for the supplied parameter.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\code{character()} \cr
-id of parameter value to return.}
+\item{\code{id}}{Deprecated.}
 }
 \if{html}{\out{</div>}}
 }

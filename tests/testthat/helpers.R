@@ -81,10 +81,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (!is.null(sdist$private_methods$.rand))
     expect_equal(formals(sdist$private_methods$.rand), as.pairlist(alist(n = ))) # nolint
 
-  sdist <- expect_silent({
-    do.call(sdist$new, pars)
-  })
-
+  sdist <- do.call(sdist$new, pars)
 
   if (vectorise) {
     autotest_vec_sdistribution(sdist, pars)

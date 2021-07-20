@@ -203,14 +203,15 @@ or `distlist` should be used.")
           # skip if no parameters
           pdist <- get(distribution)
           shortname <- pdist$public_fields$short_name
+          shortnames <- sprintf("%s%d", shortname, seq(length(params)))
 
           parameters <- do.call(paste0("getParameterSet.", distribution),
                                 c(params[[1]], shared_params))
           parameters$rep(length(params), prefix = shortname)
-          names(params) <- sprintf("%s%d", shortname, seq(length(params)))
+          names(params) <- shortnames
           params <- unlist(params, recursive = FALSE)
           names(params) <- gsub(".", "__", names(params), fixed = TRUE)
-          parameters$setParameterValue(lst = params)
+          parameters$set_values(lst = params)
 
           # if (class(p)[[1]] != "try-error") {
           #   paramlst <- vector("list", length(params))
@@ -259,7 +260,7 @@ or `distlist` should be used.")
           private$.modelTable <- as.data.table(
             data.frame(
               Distribution = distribution,
-              shortname = sprintf("%s%d", shortname, seq_along(params))
+              shortname = shortnames
             )
           )
 
@@ -1132,6 +1133,7 @@ or `distlist` should be used.")
 #'
 #' @export
 "[.VectorDistribution" <- function(vecdist, i) {
+
   if (checkmate::testCharacter(i)) {
     checkmate::assertSubset(i, as.character(unlist(vecdist$modelTable$shortname)))
     i <- match(i, as.character(unlist(vecdist$modelTable$shortname)), 0)
@@ -1147,16 +1149,13 @@ or `distlist` should be used.")
     distribution <- as.character(unlist(vecdist$modelTable[1, 1]))
     if (length(i) == 1) {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()[paste0(id, "__")]$values()
-      shared_pars <- vecdist$.__enclos_env__$private$.sharedparams
-      # construct with shared parameters (no conflicts should be possible here)
-      dist <- do.call(get(distribution)$new, c(shared_pars, list(decorators = decorators)))
-      do.call(dist$setParameterValue, c(resolveConflicts = TRUE, pars))
+      dist <- get(distribution)$new(decorators = decorators)
+      pri <- get_private(dist)
+      pri$.parameters <- vecdist$parameters()[prefix = id]
       return(dist)
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()$values()
-      pars <- pars[names(pars) %in% id]
+      pars <- vecdist$parameters()$values
 
       return(VectorDistribution$new(
         distribution = distribution, params = pars,

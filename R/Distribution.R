@@ -243,18 +243,14 @@ Distribution <- R6Class("Distribution",
     summary = function(full = TRUE, ...) {
 
       if (full) {
-
-        settable <- as.data.table(self$parameters())$settable
+        pars <- self$parameters()
         name <- ifelse(is.null(self$description), self$name, self$description)
-        if (!any(settable)) {
+        if (!length(pars)) {
           cat(name)
         } else {
-          cat(name, "Parameterised with:\n")
-
-          cat(" ", paste(unlist(as.data.table(self$parameters())[settable, "id"]),
-                         unlist(as.data.table(self$parameters())[settable, "value"]),
-                         sep = " = ", collapse = ", "
-          ))
+          vals <- pars$values
+          cat(name, "\nParameterised with:\n\n")
+          print(self$parameters())
         }
 
         a_exp <- suppressMessages(try(self$mean(), silent = T))
@@ -264,7 +260,7 @@ Distribution <- R6Class("Distribution",
 
         if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
           !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
-          cat("\n\n ", "Quick Statistics", "\n")
+          cat("\n\n", "Quick Statistics", "\n", sep = "")
         }
 
         if (!inherits(a_exp, "try-error")) {
@@ -299,12 +295,11 @@ Distribution <- R6Class("Distribution",
         }
         cat("\n")
 
-        cat(
-          " Support:", self$properties$support$strprint(), "\tScientific Type:",
-          self$traits$type$strprint(), "\n"
-        )
-        cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
-        cat("\n Properties:\t", self$properties$symmetry, sep = "")
+        cat("Support:", self$properties$support$strprint(),
+            "\tScientific Type:", self$traits$type$strprint(), "\n")
+        cat("\nTraits:\t\t", self$traits$valueSupport, "; ",
+            self$traits$variateForm, sep = "")
+        cat("\nProperties:\t", self$properties$symmetry, sep = "")
         if (!inherits(a_kurt, "try-error")) cat(";", exkurtosisType(a_kurt))
         if (!inherits(a_skew, "try-error")) cat(";", skewType(a_skew))
 
@@ -327,21 +322,22 @@ Distribution <- R6Class("Distribution",
 
     #' @description
     #' Returns the full parameter details for the supplied parameter.
+    #' @param id Deprecated.
     parameters = function(id = NULL) {
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
-        return(private$.parameters$parameters(id))
+      if (!is.null(id)) {
+        warning("'id' argument is deprecated and currently unused")
+      }
+
+      if (length(private$.parameters)) {
+        private$.parameters
       }
     },
 
     #' @description
     #' Returns the value of the supplied parameter.
     getParameterValue = function(id, error = "warn") {
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
-        return(private$.parameters$getParameterValue(id, error))
+      if (length(private$.parameters)) {
+        private$.parameters$get_values(id)
       }
     },
 

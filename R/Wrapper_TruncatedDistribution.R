@@ -64,7 +64,7 @@ Try decorate(distribution, FunctionImputation) first.")
         prm("lower", "extreals", lower, "required"),
         prm("upper", "extreals", upper, "required"),
         deps = list(
-          list(id = "lower", on = "upper", cnd = cnd("lt", id = "upper"))
+          list(id = "lower", on = "upper", cond = cond("lt", id = "upper"))
         )
       )
 

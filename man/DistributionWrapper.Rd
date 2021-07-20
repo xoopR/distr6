@@ -112,7 +112,7 @@ Wrapped distribution value support.}
 \item{\code{variateForm}}{\code{(character(1))}\cr
 Wrapped distribution variate form.}
 
-\item{\code{parameters}}{\verb{([ParameterSetCollection])}\cr
+\item{\code{parameters}}{\verb{([param6::ParameterSet])}\cr
 Optional parameters to add to the internal collection, ignored if \code{distlist} is given.}
 
 \item{\code{outerID}}{\verb{([ParameterSet])}\cr
@@ -149,7 +149,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DistributionWrapper$setParameterValue(
   ...,
-  lst = NULL,
+  lst = list(...),
   error = "warn",
   resolveConflicts = FALSE
 )}\if{html}{\out{</div>}}

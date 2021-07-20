@@ -22,13 +22,3 @@ test_that("autottest", {
     quantile = qbinom(c(0.24, 0.42, 0.5), size = 10, prob = 0.5)
   )
 })
-
-# test_that("manual test - alternate constructor", {
-#   expect_silent(Binomial$new(qprob = 0.2))
-#   expect_equal(Binomial$new(prob = 0.2)$getParameterValue("qprob"), 0.8)
-#   expect_equal(Binomial$new(qprob = 0.2)$getParameterValue("prob"), 0.8)
-# })
-#
-# test_that("manual test - symmetry", {
-#   expect_equal(Binomial$new(prob = 0.1)$symmetry, "asymmetric")
-# })
