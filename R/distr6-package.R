@@ -1,9 +1,3 @@
-## usethis namespace: start
-#' @importFrom Rcpp sourceCpp
-#' @useDynLib distr6, .registration = TRUE
-## usethis namespace: end
-NULL
-
 #' distr6: Object Oriented Distributions in R
 #'
 #' distr6 is an object oriented (OO) interface, primarily used for interacting with probability
