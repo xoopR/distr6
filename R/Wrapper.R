@@ -120,13 +120,9 @@ DistributionWrapper <- R6Class("DistributionWrapper",
 
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
       if (error != "warn" || resolveConflicts) {
         warning("'error' and 'resolveConflicts' are deprecated.")
-      }
-
-      if (is.null(lst)) {
-        lst <- list(...)
       }
 
       self$parameters()$set_values(lst = lst)

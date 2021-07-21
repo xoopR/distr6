@@ -246,7 +246,7 @@ expand_list <- function(names, named_var) {
 }
 
 list_element <- function(x, name) {
-  x[grepl(name, names(x))]
+  x[grepl(sprintf("(__%s$)|(^%s$)", name, name), names(x))]
 }
 
 named_list <- function(values, names) {
@@ -268,4 +268,9 @@ as_named_list <- function(values, names) {
 
 get_private <- function(x) {
   x$.__enclos_env__$private
+}
+
+
+sort_named_list <- function(x, ...) {
+  x[order(names(x), ...)]
 }

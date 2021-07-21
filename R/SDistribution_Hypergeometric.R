@@ -135,9 +135,8 @@ Hypergeometric <- R6Class("Hypergeometric",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(lst = lst)
       size <- self$getParameterValue("size")
 
       private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
@@ -146,10 +145,13 @@ Hypergeometric <- R6Class("Hypergeometric",
         self$getParameterValue("successes")),
         class = "integer")
 
-      pparams <- self$parameters()$.__enclos_env__$private
-      pparams$.setParameterSupport(list(successes = Set$new(0:size, class = "integer")))
-      pparams$.setParameterSupport(list(draws = Set$new(0:size, class = "integer")))
-      pparams$.setParameterSupport(list(failures = Set$new(0:size, class = "integer")))
+      pparams <- get_private(self$parameters())
+      pparams$.update_support(
+        successes = Set$new(0:size, class = "integer"),
+        draws = Set$new(0:size, class = "integer"),
+        failures = Set$new(0:size, class = "integer")
+      )
+
       invisible(self)
     }
   ),

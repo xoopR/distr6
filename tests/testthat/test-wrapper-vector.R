@@ -459,3 +459,11 @@ test_that("ids", {
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
                               ids = c("a", "a__b")), "reserved")
 })
+
+
+test_that("can extract required linked parameters", {
+  v <- dstrs("Binom", data.frame(size = 1:2))
+  expect_equal(v$parameters()$values,
+               list(Binom1__size = 1, Binom2__size = 2,
+                    Binom1__prob = 0.5, Binom2__prob = 0.5))
+})

@@ -1,6 +1,7 @@
 trafo_probs <- function(x, self) {
   probs <- list_element(x, "prob")
   qprobs <- list_element(x, "qprob")
+
   if (length(probs) && length(qprobs)) {
     stop("Can't update 'prob' and 'qprob' parameters simultaneously")
   }
@@ -239,8 +240,8 @@ getParameterSet.Geometric <- function(object, trials = FALSE, ...) {
 
 getParameterSet.Gompertz <- function(object, ...) {
   pset(
-    prm("shape", "posreals", tags = "required"),
-    prm("scale", "posreals", tags = "required")
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
@@ -422,7 +423,7 @@ getParameterSet.Lognormal <- function(object, ...) {
 
 
       unique_nlist(
-        c(meanlogs, varlogs, sdlogs, preclogs, means, vars, sds, precs), x
+        c(meanlogs, varlogs, sdlogs, preclogs, means, vars, sds, precs, x)
       )
     }
   )

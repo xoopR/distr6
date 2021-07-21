@@ -39,6 +39,7 @@ SDistribution <- R6Class("SDistribution",
       )
 
       if (!grepl("Empirical", getR6Class(self))) {
+
         args <- getR6Call()
         private$.parameters <- do.call(getParameterSet,
                                         c(list(object = self), args))
@@ -50,13 +51,14 @@ SDistribution <- R6Class("SDistribution",
               if (any(names(args) %in% which)) {
                 expand_list(which, args[names(args) %in% which])
               } else {
-                private$.parameters$get_values(tags = .x, simplify = FALSE)[1]
+                private$.parameters$get_values(tags = .x, simplify = FALSE, transform = FALSE)
               }
             }), recursive = FALSE)
 
-            self$set_values(lst = vals)
+            vals <- c(args[setdiff(names(args), names(vals))], vals)
+            self$setParameterValue(lst = vals)
           } else {
-            self$set_values(lst = args)
+            self$setParameterValue(lst = args)
           }
         }
       }

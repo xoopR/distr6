@@ -248,7 +248,6 @@ Distribution <- R6Class("Distribution",
         if (!length(pars)) {
           cat(name)
         } else {
-          vals <- pars$values
           cat(name, "\nParameterised with:\n\n")
           print(self$parameters())
         }
@@ -348,14 +347,16 @@ Distribution <- R6Class("Distribution",
     #' b = Binomial$new()
     #' b$setParameterValue(size = 4, prob = 0.4)
     #' b$setParameterValue(lst = list(size = 4, prob = 0.4))
-    setParameterValue = function(..., lst = (...), error = "warn",
+    setParameterValue = function(..., lst = list(...), error = "warn",
                                  resolveConflicts = FALSE) {
       if (resolveConflicts) {
         warning("'resolveConflicts' is redundant and deprecated")
       }
+
       if (private$.parameters$length && length(lst)) {
         private$.parameters$values <- unique_nlist(c(lst, private$.parameters$values))
       }
+
       invisible(self)
     },
 
@@ -852,7 +853,7 @@ decorator to numerically estimate this.")
 
 as.character.Distribution <- function(x, n, ...) {
   if (length(x$parameters()) != 0) {
-    p <- x$parameters()$values
+    p <- sort_named_list(x$parameters()$values)
     lng <- length(p)
     if (lng > (2 * n)) {
       string <- paste0(

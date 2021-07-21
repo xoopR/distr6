@@ -130,8 +130,8 @@ Degenerate <- R6Class("Degenerate",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(lst = lst)
       private$.properties$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
       invisible(self)
     }

@@ -197,9 +197,8 @@ Multinomial <- R6Class("Multinomial",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(lst = lst)
       probs <- self$getParameterValue("probs")
       private$.variates <- length(probs)
       private$.properties$support <- setpower(Set$new(0:self$getParameterValue("size"),

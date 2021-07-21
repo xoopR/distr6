@@ -18,7 +18,7 @@ test_that("check constructor", {
   expect_silent(Distribution$new(short_name = "TestDistr", pdf = dbin, type = Naturals$new()))
   expect_silent(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new()))
   expect_equal(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$strprint(),
-               "TestDistr")
+               "TestDistr()")
   expect_null(Distribution$new(name = "Test Distr", pdf = dbin, type = Naturals$new())$parameters())
   expect_equal(Distribution$new(short_name = "TestDistr", pdf = dbin, type = Naturals$new(),
                                 variateForm = "multi")$traits$variateForm, "multivariate")

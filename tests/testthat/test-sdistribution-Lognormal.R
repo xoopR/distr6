@@ -1,6 +1,6 @@
 library(testthat)
 
-test_that("autotest", {
+test_that("autotest - log", {
   autotest_sdistribution(
     sdist = Lognormal,
     pars = list(meanlog = 0, varlog = 1),
@@ -53,12 +53,12 @@ test_that("autotest", {
 })
 
 test_that("manual", {
-  l <- Lognormal$new(meanlog = 1)$setParameterValue(sdlog = 2)
+  l <- Lognormal$new(meanlog = 1)$setParameterValue(sdlog = 2, varlog = NULL)
   expect_equal(l$getParameterValue("mean"), exp(3))
   expect_equal(l$getParameterValue("var"), (exp(4) - 1) * exp(6))
   expect_equal(l$getParameterValue("sd"), sqrt((exp(4) - 1) * exp(6)))
   expect_equal(l$getParameterValue("prec"), ((exp(4) - 1) * exp(6))^-1)
-  l$setParameterValue(preclog = 0.25)
+  l$setParameterValue(preclog = 0.25, sdlog = NULL)
   expect_equal(l$getParameterValue("mean"), exp(3))
   expect_equal(l$getParameterValue("var"), (exp(4) - 1) * exp(6))
   expect_equal(l$getParameterValue("sd"), sqrt((exp(4) - 1) * exp(6)))

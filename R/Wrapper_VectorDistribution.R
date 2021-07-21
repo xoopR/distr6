@@ -210,7 +210,7 @@ or `distlist` should be used.")
           names(params) <- shortnames
           params <- unlist(params, recursive = FALSE)
           names(params) <- gsub(".", "__", names(params), fixed = TRUE)
-          parameters$values <- params
+          parameters$set_values(lst = params)
 
           # if (class(p)[[1]] != "try-error") {
           #   paramlst <- vector("list", length(params))
@@ -573,7 +573,7 @@ or `distlist` should be used.")
           distlist <- lapply(private$.modelTable$shortname, function(x) {
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
-            dist$set_values(self$parameters()[prefix = paste0(x, "__")]$values)
+            dist$setParameterValue(lst = self$parameters()[prefix = paste0(x, "__")]$values)
             return(dist)
           })
         }
@@ -590,7 +590,7 @@ or `distlist` should be used.")
           distlist <- lapply(models, function(x) {
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
-            dist$set_values(self$parameters()[prefix = paste0(x, "__")]$values)
+            dist$setParameterValue(lst = self$parameters()[prefix = paste0(x, "__")]$values)
             return(dist)
           })
         }
