@@ -26,6 +26,7 @@ as.Distribution <- function(obj, fun, decorators = NULL) {
 #' @rdname as.Distribution
 #' @export
 as.Distribution.matrix <- function(obj, fun, decorators = NULL) {
+
   if (is.null(colnames(obj))) {
     stop("'obj' must have column names")
   }
@@ -47,4 +48,5 @@ as.Distribution.matrix <- function(obj, fun, decorators = NULL) {
     shared_params = list(x = x),
     decorators = decorators
   )
+
 }
