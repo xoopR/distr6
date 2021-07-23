@@ -165,8 +165,17 @@ Dirichlet <- R6Class("Dirichlet",
       super$setParameterValue(lst = lst)
       len <- length(self$getParameterValue("params"))
       private$.variates <- len
-      private$.properties$support <- setpower(Interval$new(0, 1, type = "()"), len)
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- setpower(Interval$new(0, 1, type = "()"), len)
+      prop
     }
   ),
 

@@ -188,8 +188,17 @@ MultivariateNormal <- R6Class("MultivariateNormal",
       super$setParameterValue(lst = lst)
       mean <- self$getParameterValue("mean")
       private$.variates <- length(mean)
-      private$.properties$support <- setpower(Reals$new(), length(mean))
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- setpower(Reals$new(), length(mean))
+      prop
     }
   ),
 

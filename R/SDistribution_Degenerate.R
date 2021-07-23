@@ -125,15 +125,16 @@ Degenerate <- R6Class("Degenerate",
     #' @param ... Unused.
     cf = function(t, ...) {
       return(exp(self$getParameterValue("mean") * t * 1i))
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      private$.properties$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
-      invisible(self)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Set$new(self$getParameterValue("mean"), class = "numeric")
+      prop
     }
   ),
 

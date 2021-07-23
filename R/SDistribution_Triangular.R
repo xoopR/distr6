@@ -210,24 +210,26 @@ Triangular <- R6Class("Triangular",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
       lower <- self$getParameterValue("lower")
       upper <- self$getParameterValue("upper")
-      private$.properties$support <- Interval$new(lower, upper)
+      prop <- super$properties
+      prop$support <- Interval$new(lower, upper)
       if (private$.type != "symmetric") {
         if (self$getParameterValue("mode") == (lower + upper) / 2) {
-          private$.properties$symmetry <- "symmetric"
+          prop$symmetry <- "symmetric"
         } else {
-          private$.properties$symmetry <- "asymmetric"
+          prop$symmetry <- "asymmetric"
         }
       }
-      invisible(self)
+
+      prop
     }
   ),
 

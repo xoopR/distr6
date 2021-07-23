@@ -209,23 +209,21 @@ Categorical <- R6Class("Categorical",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-
-      if (length(unique(self$getParameterValue("probs"))) == 1) {
-        private$.properties$symmetry <- "symmetric"
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$symmetry <- if (length(unique(self$getParameterValue("probs"))) == 1) {
+        "symmetric"
       } else {
-        private$.properties$symmetry <- "asymmetric"
+        "asymmetric"
       }
-
-      private$.properties$support <- Set$new(elements = self$getParameterValue("elements"))
-
-      invisible(self)
+      prop$support <- Set$new(elements = self$getParameterValue("elements"))
+      prop
     }
   ),
 

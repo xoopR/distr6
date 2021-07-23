@@ -87,25 +87,27 @@ Try decorate(distribution, FunctionImputation) first.")
         valueSupport = "mixture", variateForm = "univariate",
         outerID = "hub"
       )
-    },
+    }
+  ),
 
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub__lower"),
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (self$properties$support$class == "integer") {
+        Interval$new(
+          self$getParameterValue("hub__lower"),
           self$getParameterValue("hub__upper"),
           class = "integer"
         )
       } else {
-        private$.properties$support <- Interval$new(
+        Interval$new(
           self$getParameterValue("hub__lower"),
           self$getParameterValue("hub__upper")
         )
       }
-
-      invisible(self)
+      prop
     }
   ),
 

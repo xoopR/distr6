@@ -273,15 +273,16 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
             matrix(pdf, nrow = nc, ncol = 1)
         ))
       }
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      private$.properties$support <- Set$new(self$getParameterValue("x"), class = "numeric")
-      invisible(self)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Set$new(self$getParameterValue("x"), class = "numeric")
+      prop
     }
   ),
 

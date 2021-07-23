@@ -253,6 +253,7 @@ autotest_vec_sdistribution <- function(sdist, pars) {
   if (testMultivariate(sdist)) {
     autotest_vec_mv_sdistribution(sdist, pars)
   } else {
+    browser()
     if (sdist$name == "Geometric" & !is.null(pars$trials)) {
       vdist <- VectorDistribution$new(distribution = sdist$name,
                                       params = rep(list(pars[names(pars) %nin% "trials"]), 3),
@@ -465,7 +466,7 @@ expect_equal_distribution <- function(d1, d2) {
   expect_equal(d1$cdf(1:5), d2$cdf(1:5))
   q <- try(d1$quantile(0.1), silent = TRUE)
   if (class(q)[1] != "try-error")
-    expect_equal(d1$quantile(c(0.1, 0.2, 0.3)), d2$pdf(c(0.1, 0.2, 0.3)))
+    expect_equal(d1$quantile(c(0.1, 0.2, 0.3)), d2$quantile(c(0.1, 0.2, 0.3)))
 
   p1 <- as.data.table(d1$parameters())
   p1$support <- rsapply(p1$support, "strprint")

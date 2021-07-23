@@ -401,7 +401,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Uniform$setParameterValue(
   ...,
-  lst = NULL,
+  lst = list(...),
   error = "warn",
   resolveConflicts = FALSE
 )}\if{html}{\out{</div>}}

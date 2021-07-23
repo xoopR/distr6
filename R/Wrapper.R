@@ -116,18 +116,6 @@ DistributionWrapper <- R6Class("DistributionWrapper",
       } else {
         private$.wrappedModels
       }
-    },
-
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      if (error != "warn" || resolveConflicts) {
-        warning("'error' and 'resolveConflicts' are deprecated.")
-      }
-
-      self$parameters()$set_values(lst = lst)
-
-      invisible(self)
     }
   ),
 

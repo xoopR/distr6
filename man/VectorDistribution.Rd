@@ -199,9 +199,6 @@ Alternative constructor to directly create this object from an object inheriting
 \item{\code{ids}}{\code{(character())} \cr
 Optional ids for wrapped distributions in vector, should be unique and of same length as
 the number of distributions.}
-
-\item{\code{...}}{\code{ANY} \cr
-Named arguments of parameters to set values for. See examples.}
 }
 \if{html}{\out{</div>}}
 }

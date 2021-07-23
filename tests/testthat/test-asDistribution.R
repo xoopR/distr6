@@ -25,7 +25,7 @@ test_that("as.Distribution works with pdf expected", {
   )
 })
 
-test_that("as.Distribution works with pdf expected", {
+test_that("as.Distribution works with cdf expected", {
   mat <- matrix(rep(0.1, 200), 20, 10)
   colnames(mat) <- 1:10
 

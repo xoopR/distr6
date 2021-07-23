@@ -139,12 +139,6 @@ Hypergeometric <- R6Class("Hypergeometric",
       super$setParameterValue(lst = lst)
       size <- self$getParameterValue("size")
 
-      private$.properties$support <- Set$new(max(0, self$getParameterValue("draws") +
-        self$getParameterValue("successes") - size):min(
-        self$getParameterValue("draws"),
-        self$getParameterValue("successes")),
-        class = "integer")
-
       pparams <- get_private(self$parameters())
       pparams$.update_support(
         successes = Set$new(0:size, class = "integer"),
@@ -153,6 +147,23 @@ Hypergeometric <- R6Class("Hypergeometric",
       )
 
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <-
+        Set$new(seq(
+                  max(0,
+                      self$getParameterValue("draws") +
+                        self$getParameterValue("successes") - size),
+                  min(self$getParameterValue("draws"),
+                      self$getParameterValue("successes"))
+          ), class = "integer")
+      prop
     }
   ),
 

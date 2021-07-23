@@ -1,27 +1,31 @@
 library(testthat)
 
+exp <- Exponential$new()
+norm <- Normal$new()
+bin <- Binomial$new()
+
 test_that("check weights", {
   expect_equal(
-    MixtureDistribution$new(list(Exponential$new(), Normal$new()))$
+    MixtureDistribution$new(list(exp, norm))$
     getParameterValue("mix__weights"),
     "uniform"
   )
   expect_error(
-    MixtureDistribution$new(list(Exponential$new(), Normal$new()), weights = "sdsd"),
+    MixtureDistribution$new(list(exp, norm), weights = "sdsd"),
     "either be a"
   )
 
   expect_equal(
-    MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
+    MixtureDistribution$new(list(bin, exp, norm),
       weights = c(0.1, 0.6, 0.3)
     )$getParameterValue("mix__weights"),
     c(0.1, 0.6, 0.3)
   )
 })
 
-M <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()),
+M <- MixtureDistribution$new(list(bin, exp, norm),
                              weights = c(0.1, 0.6, 0.3), name = "A", short_name = "a")
-M2 <- MixtureDistribution$new(list(Binomial$new(), Exponential$new(), Normal$new()))
+M2 <- MixtureDistribution$new(list(bin, exp, norm))
 
 test_that("update weights", {
   expect_equal(M$setParameterValue(mix__weights = c(1, 2, 3))$getParameterValue("mix__weights"),
@@ -31,40 +35,40 @@ test_that("update weights", {
 
 test_that("check pdf", {
   expect_equal(
-    MixtureDistribution$new(list(Binomial$new(), Exponential$new()))$pdf(1:2),
+    MixtureDistribution$new(list(bin, exp))$pdf(1:2),
     c(
-      mean(c(Binomial$new()$pdf(1), Exponential$new()$pdf(1))),
-      mean(c(Binomial$new()$pdf(2), Exponential$new()$pdf(2)))
+      mean(c(bin$pdf(1), exp$pdf(1))),
+      mean(c(bin$pdf(2), exp$pdf(2)))
     )
   )
-  expect_equal(M$pdf(1), Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 +
-                 Normal$new()$pdf(1) * 0.3)
+  expect_equal(M$pdf(1), bin$pdf(1) * 0.1 + exp$pdf(1) * 0.6 +
+                 norm$pdf(1) * 0.3)
   expect_equal(M$pdf(1:2), c(
-    Binomial$new()$pdf(1) * 0.1 + Exponential$new()$pdf(1) * 0.6 + Normal$new()$pdf(1) * 0.3,
-    Binomial$new()$pdf(2) * 0.1 + Exponential$new()$pdf(2) * 0.6 + Normal$new()$pdf(2) * 0.3
+    bin$pdf(1) * 0.1 + exp$pdf(1) * 0.6 + norm$pdf(1) * 0.3,
+    bin$pdf(2) * 0.1 + exp$pdf(2) * 0.6 + norm$pdf(2) * 0.3
   ))
 
-  expect_equal(M2$pdf(1), Binomial$new()$pdf(1) / 3 + Exponential$new()$pdf(1) / 3 +
-                 Normal$new()$pdf(1) / 3)
+  expect_equal(M2$pdf(1), bin$pdf(1) / 3 + exp$pdf(1) / 3 +
+                 norm$pdf(1) / 3)
 })
 
 test_that("check cdf", {
   expect_equal(
-    MixtureDistribution$new(list(Binomial$new(), Exponential$new()))$cdf(1:2),
+    MixtureDistribution$new(list(bin, exp))$cdf(1:2),
     c(
-      mean(c(Binomial$new()$cdf(1), Exponential$new()$cdf(1))),
-      mean(c(Binomial$new()$cdf(2), Exponential$new()$cdf(2)))
+      mean(c(bin$cdf(1), exp$cdf(1))),
+      mean(c(bin$cdf(2), exp$cdf(2)))
     )
   )
-  expect_equal(M$cdf(1), Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 +
-                 Normal$new()$cdf(1) * 0.3)
+  expect_equal(M$cdf(1), bin$cdf(1) * 0.1 + exp$cdf(1) * 0.6 +
+                 norm$cdf(1) * 0.3)
   expect_equal(M$cdf(1:2), c(
-    Binomial$new()$cdf(1) * 0.1 + Exponential$new()$cdf(1) * 0.6 + Normal$new()$cdf(1) * 0.3,
-    Binomial$new()$cdf(2) * 0.1 + Exponential$new()$cdf(2) * 0.6 + Normal$new()$cdf(2) * 0.3
+    bin$cdf(1) * 0.1 + exp$cdf(1) * 0.6 + norm$cdf(1) * 0.3,
+    bin$cdf(2) * 0.1 + exp$cdf(2) * 0.6 + norm$cdf(2) * 0.3
   ))
 
-  expect_equal(M2$cdf(1), Binomial$new()$cdf(1) / 3 + Exponential$new()$cdf(1) / 3 +
-                 Normal$new()$cdf(1) / 3)
+  expect_equal(M2$cdf(1), bin$cdf(1) / 3 + exp$cdf(1) / 3 +
+                 norm$cdf(1) / 3)
 })
 
 test_that("quantile", {
@@ -74,7 +78,7 @@ test_that("quantile", {
 test_that("check rand", {
   expect_equal(length(M$rand(10)), 10)
   expect_equal(length(M$rand(1)), 1)
-  expect_equal(length(MixtureDistribution$new(list(Exponential$new(), Normal$new()))$rand(2)), 2)
+  expect_equal(length(MixtureDistribution$new(list(exp, norm))$rand(2)), 2)
   expect_equal(dim(MixtureDistribution$new(distribution = "Multinomial",
                           params = list(list(size = 4, probs = c(0.1, 0.2)),
                                         list(size = 5, probs = c(0.1, 0.2))))$rand(2)),

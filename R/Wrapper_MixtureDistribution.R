@@ -52,7 +52,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
 
       if (checkmate::testNumeric(weights)) {
         stopifnot(length(weights) == lng)
-        weights <- list(weights / sum(weights))
+        weights <- weights / sum(weights)
       } else if (weights != "uniform") {
         stop(sprintf("weights should either be a numeric of length %s, or 'uniform'", lng))
       }
@@ -60,10 +60,14 @@ MixtureDistribution <- R6Class("MixtureDistribution",
       private$.outerParameters <- pset(
         prm("weights", Interval$new(0, 1)^lng + Set$new("uniform"), weights, "required"),
         trafo = function(x, self) {
-          if (checkmate::testNumeric(x$weights)) {
-            x$weights <- x$weights / sum(x$weights)
-          }
-          x
+          weights <- lapply(list_element(x, "weights"), function(.x) {
+            if (checkmate::testNumeric(.x)) {
+              .x <- .x / sum(.x)
+            } else {
+              .x
+            }
+          })
+          unique_nlist(c(weights, x))
         }
       )
 

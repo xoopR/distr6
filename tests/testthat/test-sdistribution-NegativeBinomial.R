@@ -123,5 +123,4 @@ test_that("manual", {
                "should be used")
   expect_equal(dist$mgf(10), NaN)
   expect_equal(dist$pgf(10), NaN)
-  expect_warning(dist$setParameterValue(form = "tbf"), "settable after")
 })

@@ -256,19 +256,20 @@ NegativeBinomial <- R6Class("NegativeBinomial",
       } else {
         return(NaN)
       }
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
       form <- self$getParameterValue("form")[[1]]
+      prop <- super$properties
       if (form == "tbf" | form == "tbs") {
-        private$.properties$support <- Interval$new(self$getParameterValue("size"),
-                                                    Inf, type = "[)", class = "integer")
+        prop$support <- Interval$new(self$getParameterValue("size"),
+                                     Inf, type = "[)", class = "integer")
       }
-      invisible(self)
+      prop
     }
   ),
 

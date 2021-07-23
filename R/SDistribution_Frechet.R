@@ -169,16 +169,17 @@ Frechet <- R6Class("Frechet",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      private$.properties$support <- Interval$new(self$getParameterValue("minimum"),
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Interval$new(self$getParameterValue("minimum"),
                                                   Inf, type = "()")
-      invisible(self)
+      prop
     }
   ),
 

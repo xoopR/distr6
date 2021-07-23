@@ -106,28 +106,29 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      if (self$getParameterValue("shape") == 0) {
-        private$.properties$support <- Reals$new()
-      } else if (self$getParameterValue("shape") < 0) {
-        private$.properties$support <- Interval$new(-Inf, self$getParameterValue("location") -
-          self$getParameterValue("scale") / self$getParameterValue("shape"),
-        type = "(]"
-        )
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      shape <- self$getParameterValue("shape")
+      location <- self$getParameterValue("location")
+      scale <- self$getParameterValue("scale")
+
+      prop$support <- if (shape == 0) {
+        Reals$new()
+      } else if (shape < 0) {
+        prop$support <- Interval$new(-Inf, location - scale / shape,
+                                     type = "(]")
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("location") -
-          self$getParameterValue("scale") / self$getParameterValue("shape"),
-        Inf,
-        type = "[)"
-        )
+        prop$support <- Interval$new(location - scale / shape, Inf,
+                                     type = "[)")
       }
-      invisible(self)
+
+      prop
     }
   ),
 

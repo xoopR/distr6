@@ -19,7 +19,6 @@
 #' @template method_kurtosis
 #' @template method_pgf
 #' @template method_mgfcf
-#' @template method_setParameterValue
 #' @template param_decorators
 #' @template field_packages
 #'
@@ -147,20 +146,21 @@ Binomial <- R6Class("Binomial",
     pgf = function(z, ...) {
       (self$getParameterValue("qprob") +
         (self$getParameterValue("prob") * z))^self$getParameterValue("size")
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(lst = lst)
-      private$.properties$support <- Set$new(0:self$getParameterValue("size"), class = "integer")
-      if (self$getParameterValue("prob") == 0.5) {
-        private$.properties$symmetry <- "symmetric"
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Set$new(0:self$getParameterValue("size"), class = "integer")
+      prop$symmetry <- if (self$getParameterValue("prob") == 0.5) {
+        "symmetric"
       } else {
-        private$.properties$symmetry <- "asymmetric"
+        "asymmetric"
       }
-      invisible(self)
+      prop
     }
   ),
 
