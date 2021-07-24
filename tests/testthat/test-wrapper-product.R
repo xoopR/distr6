@@ -1,11 +1,13 @@
 library(testthat)
 
 test_that("constructor", {
-  expect_silent(ProductDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6))))
+  expect_silent(
+    ProductDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6)))
+  )
   p <- Binomial$new() * Binomial$new(size = 20, prob = 0.6)
   expect_equal(getR6Class(p), "ProductDistribution")
   expect_equal(p$strprint(), "Binom1 X Binom2")
-  expect_equal(p[1]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
+  expect_equal(p[1]$strprint(), "Binom(prob = 0.5, size = 10)")
 
   expect_silent(ProductDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
                                         name = "A", short_name = "a"))
@@ -69,17 +71,24 @@ test_that("multivariate", {
 })
 
 test_that("vecdist constructor", {
-  v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  params <- data.frame(size = 1:2, prob = 0.5)
+  v <- VectorDistribution$new(distribution = "Binom", params = params)
+  m <- MixtureDistribution$new(distribution = "Binom", params = params)
+  p <- ProductDistribution$new(distribution = "Binom", params = params)
 
-  expect_equal_distribution(as.ProductDistribution(v), p)
-  expect_equal_distribution(as.ProductDistribution(m), p)
+  pv <- as.ProductDistribution(v)
+  mv <- as.ProductDistribution(m)
+
+  expect_equal_distribution(pv, p)
+  expect_equal_distribution(mv, p)
 
   v <- VectorDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
   m <- MixtureDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
   p <- ProductDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
 
-  expect_equal_distribution(as.ProductDistribution(v), p)
-  expect_equal_distribution(as.ProductDistribution(m), p)
+  pv <- as.ProductDistribution(v)
+  mv <- as.ProductDistribution(m)
+
+  expect_equal_distribution(pv, p)
+  expect_equal_distribution(mv, p)
 })

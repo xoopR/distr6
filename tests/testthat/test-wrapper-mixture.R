@@ -123,16 +123,20 @@ test_that("multivariate", {
 })
 
 test_that("vecdist constructor", {
-  v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  params <- data.frame(size = 1:2, prob = 0.5)
+  v <- VectorDistribution$new(distribution = "Binom", params = params)
+  m <- MixtureDistribution$new(distribution = "Binom", params = params)
+  p <- ProductDistribution$new(distribution = "Binom", params = params)
 
   expect_equal_distribution(as.MixtureDistribution(v), m)
   expect_equal_distribution(as.MixtureDistribution(p), m)
 
-  v <- VectorDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
-  m <- MixtureDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
-  p <- ProductDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
+  b1 <- Binomial$new(size = 1)
+  b2 <- Binomial$new(size = 2)
+
+  v <- VectorDistribution$new(list(b1, b2))
+  m <- MixtureDistribution$new(list(b1, b2))
+  p <- ProductDistribution$new(list(b1, b2))
 
   expect_equal_distribution(as.MixtureDistribution(v), m)
   expect_equal_distribution(as.MixtureDistribution(p), m)

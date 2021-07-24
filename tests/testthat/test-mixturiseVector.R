@@ -1,6 +1,6 @@
-v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
-v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
-v3 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:5))
+v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2, prob = 0.5))
+v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4, prob = 0.5))
+v3 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:5, prob = 0.5))
 v4 <- VectorDistribution$new(distribution = "Geometric", params = data.frame(prob = c(0.1, 0.2)))
 v5 <- VectorDistribution$new(list(Binomial$new(prob = 0.1), Binomial$new(size = 20)))
 v6 <- VectorDistribution$new(list(Binomial$new(), Geometric$new()))
@@ -12,10 +12,10 @@ test_that("errors", {
 })
 
 test_that("silent", {
-  expect_silent({mv1 <- mixturiseVector(list(v1, v2))})
+  mv1 <- mixturiseVector(list(v1, v2))
   mv2 <- VectorDistribution$new(list(
-      MixtureDistribution$new(distribution = "Binomial", params = data.frame(size = c(1, 3))),
-      MixtureDistribution$new(distribution = "Binomial", params = data.frame(size = c(2, 4)))
+      MixtureDistribution$new(distribution = "Binomial", params = data.frame(size = c(1, 3), prob = 0.5)),
+      MixtureDistribution$new(distribution = "Binomial", params = data.frame(size = c(2, 4), prob = 0.5))
     ))
   expect_rounded_equal(mv1$cdf(1:10), mv2$cdf(1:10), 6)
 

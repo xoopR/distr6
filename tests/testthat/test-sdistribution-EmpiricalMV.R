@@ -20,7 +20,7 @@ test_that("autotest", {
 
 test_that("manual", {
   dist <- EmpiricalMV$new(data.frame(1:10, 1:10))
-  expect_null(expect_warning(dist$setParameterValue(sd = 2), "Data cannot"))
+  expect_warning(dist$setParameterValue(sd = 2), "Data cannot")
 })
 
 test_that("multivariate pdf", {
@@ -39,9 +39,9 @@ test_that("multivariate cdf", {
     EmpiricalMV$new(matrix(1:20, ncol = 2))$cdf(c(3, 7), c(12, 14)),
     c(2 / 10, 4 / 10)
   )
+  emp <- EmpiricalMV$new(matrix(1:20, ncol = 2))
   expect_equal(
-    EmpiricalMV$new(matrix(1:20, ncol = 2))$cdf(c(3, 7), c(12, 14),
-                                                lower.tail = FALSE, log.p = TRUE),
-    log(1 - c(2 / 10, 4 / 10))
+    round(emp$cdf(c(3, 7), c(12, 14), lower.tail = FALSE, log.p = TRUE), 6),
+    round(log(1 - c(2 / 10, 4 / 10)), 6)
   )
 })

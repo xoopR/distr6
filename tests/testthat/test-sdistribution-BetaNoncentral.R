@@ -3,7 +3,7 @@ library(testthat)
 test_that("autotest", {
   autotest_sdistribution(
     sdist = BetaNoncentral,
-    pars = list(shape1 = 1, shape2 = 1),
+    pars = list(shape1 = 1, shape2 = 1, location = 0),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

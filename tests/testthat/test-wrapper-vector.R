@@ -276,16 +276,16 @@ test_that("decorators", {
 })
 
 test_that("shared params", {
-  shared_params <- data.table::data.table(prob = 0.2)
-  params <- data.table::data.table(size = 1:2)
+  shared_params <- list(trials = TRUE)
+  params <- data.frame(prob = c(0.1, 0.2))
 
   vd <- VectorDistribution$new(
-    distribution = "Binomial",
+    distribution = "Geo",
     params = params,
     shared_params = shared_params
   )
-  expect_equal(vd$parameters()$getParameterValue("prob"), list(Binom1 = 0.2, Binom2 = 0.2))
-  expect_equal(vd$parameters()$getParameterValue("size"), list(Binom1 = 1, Binom2 = 2))
+  expect_equal(vd$getParameterValue("prob"), list(Geom1__prob = 0.1, Geom2__prob = 0.2))
+  expect_equal(vd$getParameterValue("trials"), list(Geom1__trials = TRUE, Geom2__trials = TRUE))
 })
 
 test_that("shared d/p/q/r", {
@@ -328,7 +328,7 @@ test_that("weighted discrete", {
       distribution = "WeightedDiscrete",
       params = list(
         list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
-        list(x = 11:15, cdf = pgeom(1:5, 0.5))
+        list(x = 11:15, pdf = dgeom(1:5, 0.5))
       )
     )
   })
@@ -337,7 +337,7 @@ test_that("weighted discrete", {
     VectorDistribution$new(
       distribution = "WeightedDiscrete",
       params = list(
-        list(x = 1:5, pdf = dbinom(1:5, 10, 0.5)),
+        list(x = 1:5, cdf = pbinom(1:5, 10, 0.5)),
         list(x = 11:15, cdf = pgeom(1:5, 0.5))
       )
     )
@@ -391,10 +391,10 @@ test_that("multivariate", {
                           EmpMV2 = e2$cdf(12, 16)))
 
   rand <- expect_silent(vd$rand(1))
-  expect_is(rand, "array")
+  expect_type(rand, "array")
   expect_equal(dim(rand), c(1, 2, 2))
   rand <- expect_silent(vd$rand(3))
-  expect_is(rand, "array")
+  expect_type(rand, "array")
   expect_equal(dim(rand), c(3, 2, 2))
 })
 
@@ -405,16 +405,17 @@ test_that("median", {
 })
 
 test_that("custom single row", {
-  v <- VectorDistribution$new(distribution = "Arcsine", params = data.frame(upper = (1:10) + 10))
+  v <- VectorDistribution$new(distribution = "Arcsine", params = data.frame(upper = (1:10) + 10, lower = 0))
   p1 <- v$pdf(data = matrix(1:10, nrow = 1))
   p2 <- sapply((1:10) + 10, function(x) Arcsine$new(upper = x)$pdf(x - 10))
   expect_equal(as.numeric(unlist(p1)), p2)
 })
 
 test_that("vecdist constructor", {
-  v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  m <- MixtureDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
-  p <- ProductDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  params <- data.frame(size = 1:2, prob = 0.5)
+  v <- VectorDistribution$new(distribution = "Binom", params = params)
+  m <- MixtureDistribution$new(distribution = "Binom", params = params)
+  p <- ProductDistribution$new(distribution = "Binom", params = params)
 
   expect_equal(as.VectorDistribution(p)$pdf(1:10), v$pdf(1:10))
   expect_equal(as.VectorDistribution(m)$cdf(1:10), v$cdf(1:10))
@@ -428,7 +429,7 @@ test_that("length", {
 
 
 test_that("ids", {
-  v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+  v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2, prob = 0.5))
   v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a"))
   expect_equal(v$ids, c("a", "b_a"))
   expect_equal(names(v$wrappedModels()), c("a", "b_a"))

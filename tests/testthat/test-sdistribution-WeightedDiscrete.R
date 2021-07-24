@@ -29,7 +29,7 @@ test_that("setting", {
   x <- WeightedDiscrete$new(x = 0:5, pdf = dgeom(0:5, 0.5))
   expect_equal(x$getParameterValue("pdf"), dgeom(0:5, 0.5))
   expect_equal(x$getParameterValue("cdf"), pgeom(0:5, 0.5))
-  expect_silent(x$setParameterValue(cdf = pbinom(0:5, 10, 0.5)))
+  expect_silent(x$setParameterValue(pdf = dbinom(0:5, 10, 0.5)))
   expect_equal(x$getParameterValue("pdf"), dbinom(0:5, 10, 0.5))
   expect_equal(x$getParameterValue("cdf"), pbinom(0:5, 10, 0.5))
 })

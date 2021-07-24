@@ -11,7 +11,7 @@ test_that("as.Distribution works with pdf expected", {
 
   wd <- as.Distribution(mat, fun = "pdf")
 
-  expect_is(wd, "VectorDistribution")
+  expect_R6_class(wd, "VectorDistribution")
   expect_equal(unique(wd$modelTable$Distribution), "WeightedDiscrete")
 
   expect_equal(
@@ -33,7 +33,7 @@ test_that("as.Distribution works with cdf expected", {
 
   wd <- as.Distribution(mat, fun = "cdf")
 
-  expect_is(wd, "VectorDistribution")
+  expect_R6_class(wd, "VectorDistribution")
   expect_equal(unique(wd$modelTable$Distribution), "WeightedDiscrete")
 
   expect_equal(
