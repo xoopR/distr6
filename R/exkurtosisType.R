@@ -20,16 +20,16 @@
 #'
 #' @export
 exkurtosisType <- function(kurtosis) {
-
-  if (is.nan(kurtosis)) {
-    return("undefined")
-  }
-
-  if (kurtosis < 0) {
-    return("platykurtic")
-  } else if (kurtosis == 0) {
-    return("mesokurtic")
-  } else {
-    return("leptokurtic")
-  }
+  vapply(kurtosis,
+         function(.x) {
+           if (is.nan(.x)) {
+             "undefined"
+           } else if (.x < 0) {
+             "platykurtic"
+           } else if (.x == 0) {
+             "mesokurtic"
+           } else {
+             "leptokurtic"
+           }
+         }, character(1))
 }

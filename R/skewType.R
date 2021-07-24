@@ -17,16 +17,16 @@
 #' skewType(-1)
 #' @export
 skewType <- function(skew) {
-
-  if (is.nan(skew)) {
-    return("undefined")
-  }
-
-  if (skew < 0) {
-    return("negative skew")
-  } else if (skew == 0) {
-    return("no skew")
-  } else {
-    return("positive skew")
-  }
+  vapply(skew,
+         function(.x) {
+           if (is.nan(.x)) {
+             "undefined"
+           } else if (.x < 0) {
+             "negative skew"
+           } else if (.x == 0) {
+             "no skew"
+           } else {
+             "positive skew"
+           }
+         }, character(1))
 }
