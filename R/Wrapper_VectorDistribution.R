@@ -131,7 +131,7 @@ VectorDistribution <- R6Class("VectorDistribution",
           parameters  <- vecdist$parameters()
 
           if (checkmate::testClass(vecdist, "MixtureDistribution")) {
-            parameters$.__enclos_env__$private$.parametersets$mix <- NULL
+            parameters$remove(prefix = "mix")
           }
 
           super$initialize(
@@ -204,13 +204,17 @@ or `distlist` should be used.")
           shortname <- pdist$public_fields$short_name
           shortnames <- sprintf("%s%d", shortname, seq(length(params)))
 
-          parameters <- do.call(paste0("getParameterSet.", distribution),
-                                c(params[[1]], shared_params))
-          parameters$rep(length(params), prefix = shortname)
-          names(params) <- shortnames
-          params <- unlist(params, recursive = FALSE)
-          names(params) <- gsub(".", "__", names(params), fixed = TRUE)
-          parameters$set_values(lst = params)
+          parameters <- tryCatch(get(paste0("getParameterSet.", distribution)),
+                                 error = function(e) NULL)
+          if (!is.null(parameters)) {
+            parameters <- do.call(parameters, c(params[[1]], shared_params))
+            parameters$rep(length(params), prefix = shortname)
+            names(params) <- shortnames
+            params <- unlist(params, recursive = FALSE)
+            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+            parameters$values <- params
+          }
+
 
           # if (class(p)[[1]] != "try-error") {
           #   paramlst <- vector("list", length(params))

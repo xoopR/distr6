@@ -95,7 +95,7 @@ Try decorate(distribution, FunctionImputation) first.")
     #' Returns distribution properties, including skewness type and symmetry.
     properties = function() {
       prop <- super$properties
-      prop$support <- if (self$properties$support$class == "integer") {
+      prop$support <- if (prop$support$class == "integer") {
         Interval$new(
           self$getParameterValue("trunc__lower") + 1,
           self$getParameterValue("trunc__upper"),

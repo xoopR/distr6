@@ -92,7 +92,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
         if (is.null(private$.parameters)) {
           private$.parameters <- parameters
         } else {
-          private$.parameters$merge(parameters)
+          private$.parameters <- c(private$.parameters, parameters)
         }
       }
 

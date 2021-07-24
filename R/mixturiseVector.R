@@ -33,7 +33,7 @@ mixturiseVector <- function(vecdists, weights = "uniform") {
   nr <- nrow(vecdists[[1]]$modelTable)
   dist <- as.character(unlist(vecdists[[1]]$modelTable$Distribution[[1]]))
 
-  sapply(vecdists, function(.x) {
+  lapply(vecdists, function(.x) {
     if (nrow(.x$modelTable) != nr) {
       stop("All vector distributions must be of same length.")
     }
@@ -48,12 +48,11 @@ mixturiseVector <- function(vecdists, weights = "uniform") {
   mlst <- vector("list", nr)
   for (i in seq_along(mlst)) {
     dlst <- lapply(vecdists, function(.y) {
-      .y$parameters()[paste0(
-        as.character(unlist(.y$modelTable[i, 2])), "__")]$values(settable = FALSE)
+      .y$parameters()[prefix = as.character(unlist(.y$modelTable[i, 2]))]$values
     })
 
     mlst[[i]] <- MixtureDistribution$new(distribution = dist,
-                            params = dlst, weights = weights)
+                                         params = dlst, weights = weights)
   }
 
   VectorDistribution$new(mlst)

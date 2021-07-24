@@ -158,7 +158,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
-        weights = private$.outerParameters$getParameterValue("weights"),
+        weights = private$.outerParameters$values$weights,
         univariate = private$.univariate
       )
     },
@@ -181,7 +181,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
-        weights = private$.outerParameters$getParameterValue("weights"),
+        weights = private$.outerParameters$values$weights,
         univariate = private$.univariate
       )
     },
@@ -206,7 +206,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
     #' m$rand(5)
     rand = function(n, simplify = TRUE) {
-      weights <- private$.outerParameters$getParameterValue("weights")
+      weights <- private$.outerParameters$values$weights
 
       lng <- nrow(self$modelTable)
       if (checkmate::testCharacter(weights)) {
