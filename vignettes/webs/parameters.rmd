@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In our [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them.
+In our [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them. Parameters are handled by [param6](https://cran.r-project.org/package=param6), full documentation can be found at the package [website](https://xoopr.github.io/param6/).
 
 ## Accessing Parameters
 
@@ -28,12 +28,8 @@ To view all parameters in the distribution we use the `parameters` method
 N$parameters()
 ```
 
-Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. To filter this table for a specific parameter, add the parameter name as an argument
-```{r}
-N$parameters("var")
-```
+Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. Individual values can be obtained with `getParameterValue`, which is a wrapper around `get_values`.
 
-Or to only see the value of the parameter
 ```{r}
 N$getParameterValue("prec")
 ```
@@ -41,31 +37,38 @@ N$getParameterValue("prec")
 ## Updating Parameters
 
 Any parameter can be updated in distr6 using the `setParameterValue` method and all others are updated accordingly. For example,
+
 ```{r}
 N$setParameterValue(var = 2)
 N$parameters()
 ```
 
-Not only has the variance been updated, but so too have the precision and standard deviation parameters. To see the function used for updating you can run `N$parameters("prec", update = TRUE)` but the output is given in a form that your computer can read, so it may not be straightforward to follow for more complicated functions. See the distribution help page, `?Normal` for a more readable version.
+Not only has the variance been updated, but so too have the precision and standard deviation parameters. But be careful not to set conflicting parameterisations.
 
-Internal checks ensure that only valid parameter values are allowed, for example setting the variance to a negative number will throw an error. Finally, multiple parameters can be updated at the same time
+The wrong way:
+
+```{r, error=TRUE}
+N$setParameterValue(prec = 2)
+```
+
+The right way:
 
 ```{r}
-N$setParameterValue(mean = 4, sd = 2)
+N$setParameterValue(prec = 2, var = NULL)
+```
+
+Internal checks ensure that only valid parameter values are allowed, for example setting the precision to a negative number will throw an error.
+
+```{r,error=TRUE}
+N$setParameterValue(prec = -1)
+```
+
+Finally, multiple parameters can be updated at the same time
+
+```{r}
+N$setParameterValue(mean = 4, prec = 2)
 N$parameters()
 ```
-
-But be careful not to try and update conflicting parameters, for example trying to update the variance and precision in the Normal distribution will cause an error:
-```{r, error = TRUE}
-N$setParameterValue(var = 2, prec = 3)
-```
-In rare cases you may want to allow the method to resolve conflicts automatically, but this should be used with care and only with very good reason:
-```{r}
-N$setParameterValue(var = 2, prec = 3, resolveConflicts = TRUE)
-N$print()
-```
-
-
 
 ## Summary
 

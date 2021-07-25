@@ -14,3 +14,5 @@ CRAN-RELEASE
 *.o
 *.so
 *.dll
+/doc/
+/Meta/

@@ -31,7 +31,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/s3_piping.html) introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.
+In this tutorial we take a look at a big feature of distr6, decorators.
 
 Note: Decorators in distr6 are still maturing, this means the API is still subject to minor changes and the internal computations may be improved, therefore we are aware performance may be sub-optimal.
 
@@ -56,7 +56,7 @@ In the example above we:
 
 ### CoreStatistics
 
-The CoreStatistics decorator includes methods for numeric calculations, a generalised moments `kthmoment` function and a generalised expectation method `genExp`. All methods can be viewed using `?CoreStatistics`. In distr6 we have a strict design principle that only analytic results should be provided as methods in distributions, i.e. we only return results for which we know the output is 100% accurate. The `CoreStatistics` decorator allows you to return numeric results when analytic ones aren't available. For example, 
+The CoreStatistics decorator includes methods for numeric calculations, a generalised moments `kthmoment` function and a generalised expectation method `genExp`. All methods can be viewed using `?CoreStatistics`. In distr6 we have a strict design principle that only analytic results should be provided as methods in distributions, i.e. we only return results for which we know the output is 100% accurate. The `CoreStatistics` decorator allows you to return numeric results when analytic ones aren't available. For example,
 
 ```{r, error=TRUE}
 w <- Weibull$new()
@@ -73,7 +73,7 @@ The decorator also introduces generalised moment and expectation methods. The he
 
 ### ExoticStatistics
 
-The ExoticStatistics decorator includes more complex numeric methods as well as survival, hazard and cumulative hazard that may or may not be analytic expressions (depending what is available in the distribution object). Once again all the methods added by this decorator can be viewed using `?ExoticStatistics`. For example, 
+The ExoticStatistics decorator includes more complex numeric methods as well as survival, hazard and cumulative hazard that may or may not be analytic expressions (depending what is available in the distribution object). Once again all the methods added by this decorator can be viewed using `?ExoticStatistics`. For example,
 
 ```{r, error=TRUE}
 N <- Normal$new()
@@ -107,10 +107,6 @@ After Construction
 ```{r}
 N <- Normal$new()
 decorate(N, "CoreStatistics")
-
-# Or piping as in the last tutorial
-library(magrittr)
-Normal$new() %>% decorate(c("CoreStatistics", "ExoticStatistics"))
 ```
 
 And that's all there is to it! If you forget which decorators are available, just run `listDecorators()`, or `listDecorators(simplify = FALSE)` if you want to see which methods they include at the same time.

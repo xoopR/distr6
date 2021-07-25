@@ -460,7 +460,7 @@ getParameterSet.MultivariateNormal <- function(object, ...) { # nolint
       }
 
       old <- Map(function(.x, .y) matrix(.x, length(.y), length(.y)),
-                 covs, mean)
+                 old, mean)
       new <- setNames(lapply(old, solve), gsub(old_name, new_name, names(old)))
       unique_nlist(c(mean, old, new, x))
     }

@@ -21,6 +21,7 @@ test_that("autotest", {
 })
 
 test_that("manual", {
+  expect_silent(MultivariateNormal$new(mean = c(1, 1), prec = c(1, 0, 0, 1)))
   expect_equal(MultivariateNormal$new()$getParameterValue("prec"), matrix(c(1, 0, 0, 1), 2, 2))
   expect_equal(MultivariateNormal$new(cov = c(1, 2, 2, 2))$pdf(2, 2), NaN)
 })

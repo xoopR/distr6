@@ -46,24 +46,13 @@ N$parameters()
 ### Parameters in distr6
 Parameters are accessed with getParameterValue and edited with setParameterValue
 ```{r}
-N$setParameterValue(prec = 2)
+N$setParameterValue(var = 2)
 N$getParameterValue("prec")
 ```
 
 Note how all parameters that are related also update
 ```{r}
 N$parameters()
-```
-
-To view the functions that relate these parameters add the following
-```{r}
-N$parameters()$print(hide_cols = NULL)
-```
-
-The line above introduces 'method chaining', this occurs when one method is added to another.
-As another example, let's edit and then access another parameter in the Normal distribution
-```{r}
-N$setParameterValue(var = 3)$getParameterValue("var")
 ```
 
 ### Representing a distribution
@@ -115,7 +104,7 @@ B$rand(2) # rbeta(2, 0.582, 1.2490)
 Finally distr6 includes log/log.p and lower.tail arguments to be consistent with R stats.
 
 ```{r}
-N$cdf(3, lower.tail = FALSE, log.p = TRUE) == pnorm(3, lower.tail = FALSE, log.p = TRUE)
+N$cdf(3, lower.tail = FALSE, log.p = TRUE)
 ```
 
 ### Mathematical and Statistical Results
@@ -150,19 +139,6 @@ head(listDistributions(filter = list(valuesupport = "discrete")))
 head(listDistributions(filter = list(VaLueSupport = "continuous", package = "extraDistr")))
 ```
 
-### R6, S3 and Magrittr
-As a final point, distr6 allows the use of R6 or S3 to call methods, which means that the package
-magrittr can also be used for 'piping'. Returning to the Normal distribution
-```{r}
-library(magrittr)
-N$print()
-print(N)
-N %>% print()
-
-N$pdf(2)
-pdf(N, 2)
-N %>% pdf(2)
-```
 
 ## Further Documentation
 

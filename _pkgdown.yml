@@ -27,8 +27,6 @@ navbar:
         href: articles/webs/listing.html
   - text: Advanced
     menu:
-      - text: S3 and Piping
-        href: articles/webs/s3_piping.html
       - text: Decorators
         href: articles/webs/decorators.html
       - text: Wrappers
@@ -67,11 +65,11 @@ navbar:
     href: https://github.com/RaphaelS1/distr6
  # - icon: fa-stack-overflow
  #   href: https://stackoverflow.com/questions/tagged/distr6
-      
+
 reference:
   - title: "Distributions"
     desc: "Functions for Distribution constructor and helpers."
-    contents: 
+    contents:
       - Distribution
       - SDistribution
       - Kernel
@@ -81,7 +79,7 @@ reference:
       - liesInType
   - title: "Mathematical and Statistical"
     desc: "Mathematical and statistical functions acting on Distribution objects."
-    contents: 
+    contents:
       - cdf
       - cdfAntiDeriv
       - cdfPNorm
@@ -115,7 +113,7 @@ reference:
       - variance
   - title: "Distribution Accessors"
     desc: "Accessor methods for Distribution objects."
-    contents: 
+    contents:
       - decorators
       - dmax
       - dmin
@@ -136,7 +134,7 @@ reference:
       - workingSupport
   - title: "Decorators"
     desc: "Decorators for extending functionality of distributions with numerical calculations."
-    contents: 
+    contents:
       - DistributionDecorator
       - CoreStatistics
       - ExoticStatistics
@@ -234,7 +232,7 @@ reference:
       - starts_with("assert")
   - title: "Helper Functions"
     desc: "Miscellaneous functions for use in distr6."
-    contents: 
+    contents:
       - makeUniqueDistributions
       - listDistributions
       - listKernels
@@ -244,7 +242,7 @@ reference:
       - distrSimulate
   - title: "Parameter Sets"
     desc: "Functions and classes for creating Parameter Sets for use in Distributions."
-    contents: 
+    contents:
       - ParameterSet
       - ParameterSetCollection
       - as.data.table.ParameterSet
