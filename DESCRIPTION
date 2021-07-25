@@ -87,7 +87,7 @@ Imports:
     param6 (>= 0.2.0),
     R6,
     Rcpp,
-    set6 (>= 0.2.2.9000),
+    set6 (>= 0.2.3),
     stats
 Suggests:
     actuar,
@@ -102,8 +102,8 @@ Suggests:
     rmarkdown,
     testthat
 Remotes:
-    param6,
-    set6
+    xoopR/param6,
+    xoopR/set6
 LinkingTo:
     Rcpp
 VignetteBuilder:
