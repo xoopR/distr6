@@ -79,8 +79,8 @@ test_that("vecdist constructor", {
   pv <- as.ProductDistribution(v)
   mv <- as.ProductDistribution(m)
 
-  expect_equal_distribution(pv, p)
-  expect_equal_distribution(mv, p)
+  expect_equal_distr(pv, p)
+  expect_equal_distr(mv, p)
 
   v <- VectorDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
   m <- MixtureDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2)))
@@ -89,6 +89,6 @@ test_that("vecdist constructor", {
   pv <- as.ProductDistribution(v)
   mv <- as.ProductDistribution(m)
 
-  expect_equal_distribution(pv, p)
-  expect_equal_distribution(mv, p)
+  expect_equal_distr(pv, p)
+  expect_equal_distr(mv, p)
 })

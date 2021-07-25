@@ -449,7 +449,11 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
 }
 
-expect_equal_distribution <- function(d1, d2) {
+expect_equal_distr_lst <- function(l1, l2) {
+  Map(expect_equal_distr, l1, l2)
+}
+
+expect_equal_distr <- function(d1, d2) {
   expect_equal(class(d1), class(d2))
 
   expect_equal(d1$traits$variateForm, d2$traits$variateForm)

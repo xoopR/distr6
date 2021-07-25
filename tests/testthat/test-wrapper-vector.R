@@ -1,6 +1,9 @@
+bin <- Binomial$new()
+norm <- Normal$new()
+
 test_that("constructor", {
-  expect_silent(VectorDistribution$new(list(Binomial$new(), Binomial$new(size = 20, prob = 0.6))))
-  expect_silent(VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1))))
+  expect_silent(VectorDistribution$new(list(bin, Binomial$new(size = 20, prob = 0.6))))
+  expect_silent(VectorDistribution$new(list(bin, Exponential$new(rate = 1))))
   expect_silent(VectorDistribution$new(distribution = "WeightedDiscrete", params = list(
     list(x = 1, pdf = 1)
   )))
@@ -100,7 +103,7 @@ test_that("one row", {
 })
 
 test_that("distlist rand", {
-  vd <- VectorDistribution$new(list(Binomial$new(), Geometric$new()))
+  vd <- VectorDistribution$new(list(bin, Geometric$new()))
   checkmate::expect_data_table(vd$rand(1), nrows = 1, ncols = 2)
   expect_equal(colnames(vd$rand(1)), c("Binom", "Geom"))
   checkmate::expect_data_table(vd$rand(3), nrows = 3, ncols = 2)
@@ -160,10 +163,10 @@ test_that("stats", {
   expect_equal(vecDist$variance(), c(Binom = 2.5, Gomp = NaN))
   expect_equal(vecDist$skewness(), c(Binom = 0, Gomp = NaN))
   expect_equal(vecDist$kurtosis(), c(Binom = -0.2, Gomp = NaN))
-  expect_equal(vecDist$entropy(), c(Binom = Binomial$new()$entropy(), Gomp = NaN))
-  expect_equal(vecDist$mgf(2), c(Binom = Binomial$new()$mgf(2), Gomp = NaN))
-  expect_equal(vecDist$cf(2), c(Binom = Binomial$new()$cf(2), Gomp = NaN + 0i))
-  expect_equal(vecDist$pgf(2), c(Binom = Binomial$new()$pgf(2), Gomp = NaN))
+  expect_equal(vecDist$entropy(), c(Binom = bin$entropy(), Gomp = NaN))
+  expect_equal(vecDist$mgf(2), c(Binom = bin$mgf(2), Gomp = NaN))
+  expect_equal(vecDist$cf(2), c(Binom = bin$cf(2), Gomp = NaN + 0i))
+  expect_equal(vecDist$pgf(2), c(Binom = bin$pgf(2), Gomp = NaN))
 
   vecDist <- VectorDistribution$new(
     distribution = "Binomial",
@@ -190,25 +193,22 @@ test_that("wrapped models", {
   expect_equal(a$wrappedModels()[2][[1]]$cdf(1:10), Binomial$new(prob = 0.6, size = 4)$cdf(1:10))
   expect_equal(a$wrappedModels()[3][[1]]$cdf(1:10), Binomial$new(prob = 0.2, size = 6)$cdf(1:10))
 
-  a <- VectorDistribution$new(list(Binomial$new(prob = 0.5, size = 10), Gompertz$new()))
+  a <- VectorDistribution$new(list(bin, Gompertz$new()))
   w <- a$wrappedModels()
   expect_equal(length(w), 2)
-  expect_equal(names(w), c("Binom", "Gomp"))
-  expect_equal(w[1][[1]]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
-  expect_equal(w[2][[1]]$strprint(), "Gomp(shape = 1, scale = 1)")
+  expect_equal_distr_lst(w[1], list(Binom = bin))
+  expect_equal_distr_lst(w[2], list(Gomp = Gompertz$new()))
 
   w <- a$wrappedModels(c("Binom", "Gomp"))
-  expect_equal(length(w), 2)
-  expect_equal(names(w), c("Binom", "Gomp"))
-  expect_equal(w[1][[1]]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 10)")
-  expect_equal(w[2][[1]]$strprint(), "Gomp(shape = 1, scale = 1)")
+  expect_equal(a$wrappedModels(c("Binom", "Gomp")), a$wrappedModels())
 
-  mix <- MixtureDistribution$new(list(Binomial$new(), Normal$new()))
-  expect_equal(mix$wrappedModels("Binom"), Binomial$new())
-  expect_equal(mix$wrappedModels(), list(Binom = Binomial$new(), Norm = Normal$new()))
+  mix <- MixtureDistribution$new(list(bin, norm))
+  expect_equal_distr(mix$wrappedModels("Binom"), bin)
+  expect_equal_distr_lst(mix$wrappedModels()[1], list(Binom = bin))
+  expect_equal_distr_lst(mix$wrappedModels()[2], list(Norm = norm))
   expect_error(mix$wrappedModels("sdsd"), "No distribution called")
-  expect_equal(mix$wrappedModels(c("Binom", "Norm")), list(Binom = Binomial$new(),
-                                                           Norm = Normal$new()))
+  expect_equal_distr_lst(mix$wrappedModels(c("Binom", "Norm")),
+                         list(Binom = bin, Norm = norm))
 
   a <- VectorDistribution$new(distribution = "Binomial", params = list(
     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
@@ -228,21 +228,22 @@ test_that("wrapped models", {
 # })
 
 test_that("extract", {
+  bin01 <- Binomial$new(prob = 0.1, size = 2)
   a <- VectorDistribution$new(distribution = "Binomial", params = list(
     list(prob = 0.1, size = 2), list(prob = 0.6, size = 4),
     list(prob = 0.2, size = 6)
   ))
-  expect_equal(a[1]$pdf(1:10), Binomial$new(prob = 0.1, size = 2)$pdf(1:10))
+  expect_equal(a[1]$pdf(1:10), bin01$pdf(1:10))
   expect_equal(as.character(names(a[1:2]$wrappedModels())), c("Binom1", "Binom2"))
   expect_error(a[4], "Index i too large")
   a <- VectorDistribution$new(list(
-    Binomial$new(prob = 0.1, size = 2), Binomial$new(prob = 0.6, size = 4),
+    bin01, Binomial$new(prob = 0.6, size = 4),
     Binomial$new(prob = 0.2, size = 6)
   ))
-  expect_equal(a[1]$strprint(), "Binom(prob = 0.1, qprob = 0.9, size = 2)")
+  expect_equal_distr(a[1], bin01)
   av <- a[1:2]
   expect_equal(getR6Class(av), "VectorDistribution")
-  expect_equal(a[1]$strprint(), "Binom(prob = 0.1, qprob = 0.9, size = 2)")
+  expect_equal_distr(a[1], bin01)
   expect_error(a[4], "Index i too large")
 })
 
@@ -284,8 +285,8 @@ test_that("shared params", {
     params = params,
     shared_params = shared_params
   )
-  expect_equal(vd$getParameterValue("prob"), list(Geom1__prob = 0.1, Geom2__prob = 0.2))
-  expect_equal(vd$getParameterValue("trials"), list(Geom1__trials = TRUE, Geom2__trials = TRUE))
+  expect_equal(vd$getParameterValue("prob"), list(Geom1 = 0.1, Geom2 = 0.2))
+  expect_equal(vd$getParameterValue("trials"), list(Geom1 = TRUE, Geom2 = TRUE))
 })
 
 test_that("shared d/p/q/r", {
@@ -391,10 +392,12 @@ test_that("multivariate", {
                           EmpMV2 = e2$cdf(12, 16)))
 
   rand <- expect_silent(vd$rand(1))
-  expect_type(rand, "array")
+  expect_true(inherits(rand, "array"))
+  expect_type(rand, "integer")
   expect_equal(dim(rand), c(1, 2, 2))
   rand <- expect_silent(vd$rand(3))
-  expect_type(rand, "array")
+  expect_true(inherits(rand, "array"))
+  expect_type(rand, "integer")
   expect_equal(dim(rand), c(3, 2, 2))
 })
 
@@ -422,7 +425,7 @@ test_that("vecdist constructor", {
 })
 
 test_that("length", {
-  expect_equal(length(VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)))), 2)
+  expect_equal(length(VectorDistribution$new(list(bin, Exponential$new(rate = 1)))), 2)
   expect_equal(length(VectorDistribution$new(distribution = "WeightedDiscrete", params =
                data.frame(x = 1:2, pdf = rep(1, 2)))), 2)
 })
@@ -430,41 +433,38 @@ test_that("length", {
 
 test_that("ids", {
   v1 <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2, prob = 0.5))
-  v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a"))
-  expect_equal(v$ids, c("a", "b_a"))
-  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
-  expect_equal(v["a"]$strprint(), "Binom(prob = 0.5, qprob = 0.5, size = 1)")
+  expect_error(VectorDistribution$new(vecdist = list(v1), ids = c("a", "b_a")), "alphanumeric")
+  v <- VectorDistribution$new(vecdist = list(v1), ids = c("a", "b"))
+  expect_equal(v$ids, c("a", "b"))
+  expect_equal(names(v$wrappedModels()), c("a", "b"))
+  expect_equal_distr(v["a"], Binomial$new(size = 1))
 
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:2, pdf = rep(1, 2)),
-                              ids = c("a", "b_a"))
-  expect_equal(v$ids, c("a", "b_a"))
-  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
+                              ids = c("a", "b"))
+  expect_equal(v$ids, c("a", "b"))
+  expect_equal(names(v$wrappedModels()), c("a", "b"))
   expect_equal(v["a"]$strprint(), "WeightDisc()")
   expect_error(v["c"]$strprint(), "subset")
 
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",
                               params = data.frame(x = 1:3, pdf = rep(1, 3)),
-                              ids = c("a", "b_a", "c"))
-  expect_equal(v[c("a", "b_a")]$strprint(), c("a", "b_a"))
+                              ids = c("a", "b", "c"))
+  expect_equal(v[c("a", "b")]$strprint(), c("a", "b"))
 
-  v <- VectorDistribution$new(list(Binomial$new(), Exponential$new(rate = 1)),
-                              ids = c("a", "b_a"))
-  expect_equal(v$ids, c("a", "b_a"))
-  expect_equal(names(v$wrappedModels()), c("a", "b_a"))
-  expect_equal(v["b_a"]$strprint(), "Exp(rate = 1, scale = 1)")
+  v <- VectorDistribution$new(list(bin, Exponential$new(rate = 1)),
+                              ids = c("a", "b"))
+  expect_equal(v$ids, c("a", "b"))
+  expect_equal(names(v$wrappedModels()), c("a", "b"))
+  expect_equal(v["b"]$strprint(), "Exp(rate = 1)")
 
-  expect_equal(v[c("a", "b_a")]$strprint(), c("a", "b_a"))
-
-  expect_error(VectorDistribution$new(distribution = "WeightedDiscrete",
-                              params = data.frame(x = 1:2, pdf = rep(1, 2)),
-                              ids = c("a", "a__b")), "reserved")
+  expect_equal(v[c("a", "b")]$strprint(), c("a", "b"))
 })
 
 
 test_that("can extract required linked parameters", {
-  v <- dstrs("Binom", data.frame(size = 1:2))
+  v <- dstrs("Binom", data.frame(size = 1:2, prob = 0.5))
   expect_equal(v$parameters()$values,
-               list(Binom1__size = 1, Binom2__size = 2,
-                    Binom1__prob = 0.5, Binom2__prob = 0.5))
+               list(Binom1__prob = 0.5, Binom1__size = 1,
+                    Binom2__prob = 0.5, Binom2__size = 2))
 })
