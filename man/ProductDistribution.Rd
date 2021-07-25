@@ -100,7 +100,6 @@ Other wrappers:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
@@ -113,6 +112,7 @@ Other wrappers:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-getParameterValue}{\code{distr6::VectorDistribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="median">}\href{../../distr6/html/VectorDistribution.html#method-median}{\code{distr6::VectorDistribution$median()}}\out{</span>}

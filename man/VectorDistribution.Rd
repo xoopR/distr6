@@ -104,6 +104,7 @@ Other wrappers:
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{VectorDistribution$new()}}
+\item \href{#method-getParameterValue}{\code{VectorDistribution$getParameterValue()}}
 \item \href{#method-wrappedModels}{\code{VectorDistribution$wrappedModels()}}
 \item \href{#method-strprint}{\code{VectorDistribution$strprint()}}
 \item \href{#method-mean}{\code{VectorDistribution$mean()}}
@@ -127,7 +128,6 @@ Other wrappers:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
@@ -199,6 +199,8 @@ Alternative constructor to directly create this object from an object inheriting
 \item{\code{ids}}{\code{(character())} \cr
 Optional ids for wrapped distributions in vector, should be unique and of same length as
 the number of distributions.}
+
+\item{\code{...}}{Unused}
 }
 \if{html}{\out{</div>}}
 }
@@ -233,6 +235,26 @@ VectorDistribution$new(
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
+\subsection{Method \code{getParameterValue()}}{
+Returns the value of the supplied parameter.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VectorDistribution$getParameterValue(id, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character()} \cr
+id of parameter value to return.}
+
+\item{\code{...}}{Unused}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-wrappedModels"></a>}}

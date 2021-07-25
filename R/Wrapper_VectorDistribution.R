@@ -8,6 +8,7 @@
 #' @template method_entropy
 #' @template method_pgf
 #' @template method_mgfcf
+#' @template param_paramid
 #' @template param_log
 #' @template param_logp
 #' @template param_simplify
@@ -29,6 +30,7 @@ VectorDistribution <- R6Class("VectorDistribution",
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param ... Unused
     #'
     #' @examples
     #' \dontrun{
@@ -592,7 +594,8 @@ or `distlist` should be used.")
 
     #' @description
     #' Returns the value of the supplied parameter.
-    getParameterValue = function(id, error = "warn") {
+    #' @param ... Unused
+    getParameterValue = function(id, ...) {
       vals <- private$.parameters$get_values(id)
       if (!is.null(names(vals))) {
         names(vals) <- get_n_prefix(names(vals))
