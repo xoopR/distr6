@@ -13,8 +13,7 @@ test_that("SDistributions", {
   expect_equal(c(bin, norm)$short_name, "BinomVecNorm")
 })
 
-## FIXME: BROKEN BECAUSE TRAFO RUNNING ON NORMAL MEAN AND GAMMA MEAN
-## NEED A WAY TO PULL PREFIX INTO TRAFO WITHOUT COMPROMISING VECTORISATION
+
 test_that("VectorDistributions", {
   v1 <- VectorDistribution$new(list(bin, norm))
   v2 <- VectorDistribution$new(distribution = "Gamma",
@@ -22,15 +21,19 @@ test_that("VectorDistributions", {
   expect_silent(c(v1, v2))
   expect_silent(c(v1, v2, norm, truncate(bin, 2, 6)))
 
-  v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2))
-  v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4))
-  expect_equal_distr(c(v1, v2)$cdf(5),
-      VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:4))$cdf(5))
+  v1 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:2, prob = 0.5))
+  v2 <- VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 3:4, prob = 0.5))
+  expect_equal(
+    c(v1, v2)$cdf(5),
+    VectorDistribution$new(distribution = "Binomial", params = data.frame(size = 1:4, prob = 0.5))$cdf(5)
+  )
 
   v2 <- VectorDistribution$new(distribution = "Geometric", params = data.frame(prob = c(0.1, 0.2)))
-  expect_equal_distr(c(v1, v2)$pdf(1:10),
-      VectorDistribution$new(list(Binomial$new(size = 1), Binomial$new(size = 2),
-                                  Geometric$new(prob = 0.1), Geometric$new(prob = 0.2)))$pdf(1:10))
+  expect_equal(
+    c(v1, v2)$pdf(1:10),
+    VectorDistribution$new(list(Binomial$new(size = 1, prob = 0.5), Binomial$new(size = 2, prob = 0.5),
+                                  Geometric$new(prob = 0.1), Geometric$new(prob = 0.2)))$pdf(1:10)
+  )
 })
 
 test_that("weighteddiscrete vec", {
