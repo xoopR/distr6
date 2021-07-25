@@ -1,6 +1,6 @@
 library(testthat)
 
-context("Distribution helpers")
+
 
 test_that("lists", {
   expect_silent(listDistributions())

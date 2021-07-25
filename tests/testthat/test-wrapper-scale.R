@@ -1,6 +1,6 @@
 # library(testthat)
 #
-# context("Scale Wrapper")
+
 #
 # test_that("check continuous scale wrapper", {
 #   scaleExp = Scale$new(Exponential$new())

@@ -1,4 +1,4 @@
-context("qqplot")
+
 
 test_that("silent", {
   expect_silent(qqplot(Normal$new(mean = 15, sd = sqrt(30)), ChiSquared$new(df = 15)))

@@ -1,7 +1,7 @@
 library(testthat)
 library(magrittr)
 
-context("Decorator")
+
 
 test_that("abstract decorator", {
   expect_error(DistributionDecorator$new(Binomial$new()), "unused")

@@ -108,11 +108,12 @@ rbin <- function(n) {
   }
   return(sample(1:10, size = n, replace = T, prob = pdf(1:10)))
 }
+
 discreteTester <- Distribution$new("Discrete Test", "TestDistr",
   support = Set$new(0:10),
   symmetric = TRUE, type = Naturals$new(),
   pdf = dbin, rand = rbin,
-  parameters = ps,
+  parameters = getParameterSet.Binomial(),
   decorators = "CoreStatistics"
 )
 

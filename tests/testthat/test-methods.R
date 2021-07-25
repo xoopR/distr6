@@ -1,6 +1,6 @@
 library(testthat)
 
-context("Lies In")
+
 
 test_that("liesInType", {
   expect_true(Wald$new()$liesInType(c(0, 1), all = TRUE, bound = TRUE))

@@ -1,6 +1,6 @@
 library(testthat)
 
-context("distrSimulate")
+
 
 test_that("no pars", {
   expect_silent(distrSimulate())
