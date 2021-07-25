@@ -60,12 +60,8 @@ VectorDistribution <- R6Class("VectorDistribution",
                           decorators = NULL, vecdist = NULL, ids = NULL, ...) {
 
       if (!is.null(ids)) {
-        if (any(grepl("__", ids, fixed = TRUE))) {
-          stop("'__' is a reserved symbol in VectorDistributions and cannot be used in 'ids'.")
-        } else {
-          # 3.6 fix
-          ids <- as.character(ids)
-        }
+        # 3.6 fix
+        ids <- as.character(assert_alphanum(ids))
       }
 
       #-----------------
@@ -95,13 +91,23 @@ VectorDistribution <- R6Class("VectorDistribution",
           private$.quantile <- vecdist[[1]]$.__enclos_env__$private$.quantile
           private$.rand <- vecdist[[1]]$.__enclos_env__$private$.rand
 
-          parameters  <- unlist(sapply(vecdist, function(.x) .x$parameters()$parameterSets))
-          names(parameters) <- ids
-          support <- subset(as.data.table(parameters[[1]]), select = c(id, support))
-          support[, support := sapply(support, set6::setpower, power = length(ids))]
-          parameters <- ParameterSetCollection$new(lst = parameters,
-                            .checks = vecdist[[1]]$parameters()$.__enclos_env__$private$.checks,
-                            .supports = support)
+          ## TODO: This is very messy, not too slow but probably inefficient
+          params <- unlist(lapply(vecdist, function(.x) {
+            vals <- .x$parameters()$values
+            pf <- unique(get_prefix(names(vals)))
+            lapply(pf, function(i) {
+              v <- vals[grepl(i, names(vals))]
+              names(v) <- unprefix(names(v))
+              v
+            })
+          }), FALSE)
+          parameters <- do.call(get(paste0("getParameterSet.", dist)),
+                                c(params[[1]], shared_params))
+          parameters$rep(length(params), prefix = ids)
+          names(params) <- ids
+          params <- unlist(params, recursive = FALSE)
+          names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+          parameters$values <- params
 
           super$initialize(
             distlist = if (vecdist[[1]]$distlist)
@@ -201,20 +207,33 @@ or `distlist` should be used.")
           # create wrapper parameters by cloning distribution parameters and setting by given params
           # skip if no parameters
           pdist <- get(distribution)
-          shortname <- pdist$public_fields$short_name
-          shortnames <- sprintf("%s%d", shortname, seq(length(params)))
+          if (is.null(ids)) {
+            shortname <- pdist$public_fields$short_name
+            shortnames <- NULL
+          } else {
+            shortname <- shortnames <- ids
+          }
+
+          if (!is.null(names(params)) && all(grepl("__", names(params)))) {
+            pf <- unique(get_prefix(names(params)))
+            shortnames <- pf
+          } else {
+            if (is.null(shortnames)) {
+              shortnames <- sprintf("%s%d", shortname, seq(length(params)))
+            }
+            names(params) <- shortnames
+            params <- unlist(params, recursive = FALSE)
+            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+          }
+          lng <- length(shortnames)
 
           parameters <- tryCatch(get(paste0("getParameterSet.", distribution)),
                                  error = function(e) NULL)
           if (!is.null(parameters)) {
             parameters <- do.call(parameters, c(params[[1]], shared_params))
-            parameters$rep(length(params), prefix = shortname)
-            names(params) <- shortnames
-            params <- unlist(params, recursive = FALSE)
-            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+            parameters$rep(lng, prefix = shortname)
             parameters$values <- params
           }
-
 
           # if (class(p)[[1]] != "try-error") {
           #   paramlst <- vector("list", length(params))
@@ -410,6 +429,7 @@ or `distlist` should be used.")
           # ditlist constructor
           #----------------------------------
         } else {
+
           # set flag to TRUE
           private$.distlist <- TRUE
           distribution <- c()
@@ -432,10 +452,12 @@ or `distlist` should be used.")
               shortname <- c(shortname, distlist[[i]]$short_name)
             }
             distribution <- c(distribution, distlist[[i]]$name)
-            if (!is.null(distlist[[i]]$parameters()))
+            if (!is.null(distlist[[i]]$parameters())) {
               paramlst[[i]] <- distlist[[i]]$parameters()
+            }
             vs <- c(vs, distlist[[i]]$traits$valueSupport)
           }
+
           valueSupport <- if (length(unique(vs)) == 1) vs[[1]] else "mixture"
           if (is.null(ids)) {
             shortname <- makeUniqueNames(shortname)
@@ -568,16 +590,25 @@ or `distlist` should be used.")
     },
 
     #' @description
+    #' Returns the value of the supplied parameter.
+    getParameterValue = function(id, error = "warn") {
+      vals <- private$.parameters$get_values(id)
+      names(vals) <- get_prefix(names(vals))
+      vals
+    },
+
+    #' @description
     #' Returns model(s) wrapped by this wrapper.
     wrappedModels = function(model = NULL) {
+
       if (is.null(model)) {
         if (private$.distlist) {
           distlist <- private$.wrappedModels
         } else {
           distlist <- lapply(private$.modelTable$shortname, function(x) {
+            pars <- self$parameters()[prefix = x]$values
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
-                            list(decorators = self$decorators))
-            dist$setParameterValue(lst = self$parameters()[prefix = paste0(x, "__")]$values)
+                            c(pars, list(decorators = self$decorators)))
             return(dist)
           })
         }
@@ -594,7 +625,7 @@ or `distlist` should be used.")
           distlist <- lapply(models, function(x) {
             dist <- do.call(get(as.character(unlist(private$.modelTable$Distribution[[1]])))$new,
                             list(decorators = self$decorators))
-            dist$setParameterValue(lst = self$parameters()[prefix = paste0(x, "__")]$values)
+            dist$setParameterValue(lst = self$parameters()[prefix = x]$values)
             return(dist)
           })
         }
@@ -1149,6 +1180,7 @@ or `distlist` should be used.")
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
       pars <- vecdist$parameters()$values
+      pars <- pars[grepl(paste0(id, collapse = "|"), names(pars))]
 
       return(VectorDistribution$new(
         distribution = distribution, params = pars,

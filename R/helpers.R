@@ -274,3 +274,20 @@ get_private <- function(x) {
 sort_named_list <- function(x, ...) {
   x[order(names(x), ...)]
 }
+
+
+unprefix <- function(x) {
+  gsub("([[:alnum:]]+)__(\\S*)", "\\2", x)
+}
+
+get_prefix <- function(x) {
+  gsub("([[:alnum:]]+)__(\\S*)", "\\1", x)
+}
+
+
+assert_alphanum <- function(x) {
+  if (any(grepl("[^[:alnum:]]", x))) {
+    stop("'x' must be alphanumeric")
+  }
+  invisible(x)
+}
