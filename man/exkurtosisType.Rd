@@ -29,6 +29,3 @@ exkurtosisType(-1)
 exkurtosisType(0)
 exkurtosisType(1)
 }
-\seealso{
-\code{\link{kurtosis}}, \code{\link{skewType}}
-}

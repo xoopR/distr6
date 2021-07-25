@@ -1,6 +1,6 @@
 #' @title Sample Empirical Distribution Without Replacement
 #' @description Function to sample [Empirical] Distributions without replacement, as
-#' opposed to the [rand] method which samples with replacement.
+#' opposed to the `rand` method which samples with replacement.
 #' @param EmpiricalDist Empirical Distribution
 #' @param n Number of samples to generate. See Details.
 #' @param seed Numeric passed to \code{set.seed}. See Details.

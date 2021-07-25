@@ -19,7 +19,7 @@ Empirical distribution.
 }
 \description{
 Function to sample \link{Empirical} Distributions without replacement, as
-opposed to the \link{rand} method which samples with replacement.
+opposed to the \code{rand} method which samples with replacement.
 }
 \details{
 This function can only be used to sample from the \code{Empirical} distribution without

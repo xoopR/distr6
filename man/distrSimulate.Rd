@@ -35,6 +35,3 @@ distribution.
 \description{
 Helper function to quickly simulate from a distribution with given parameters.
 }
-\seealso{
-\link{rand}
-}

@@ -10,8 +10,6 @@
 #'
 #' @param kurtosis numeric.
 #'
-#' @seealso \code{\link{kurtosis}}, \code{\link{skewType}}
-#'
 #' @examples
 #' exkurtosisType(-1)
 #' exkurtosisType(0)

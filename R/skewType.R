@@ -5,9 +5,7 @@
 #' A distribution can either have negative skew, no skew or positive skew. A symmetric distribution
 #' will always have no skew but the reverse relationship does not always hold.
 #'
-#' @param skew numeric.
-#'
-#' @seealso \code{\link{skewness}}, \code{\link{exkurtosisType}}
+#' @param skew numeric
 #'
 #' @return Returns one of 'negative skew', 'no skew' or 'positive skew'.
 #'
