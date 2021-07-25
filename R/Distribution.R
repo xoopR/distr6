@@ -856,6 +856,7 @@ decorator to numerically estimate this.")
   )
 )
 
+#' @export
 as.character.Distribution <- function(x, n, ...) {
   if (length(x$parameters()) != 0) {
     p <- sort_named_list(x$parameters()$values)
@@ -879,4 +880,9 @@ as.character.Distribution <- function(x, n, ...) {
     string <- paste0(x$short_name, "()")
   }
   string
+}
+
+#' @export
+summary.Distribution <- function(object, ...) {
+  object$summary(...)
 }

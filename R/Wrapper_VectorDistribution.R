@@ -1157,7 +1157,7 @@ or `distlist` should be used.")
 #' @param i indices specifying distributions to extract or ids of wrapped distributions.
 #' @usage \method{[}{VectorDistribution}(vecdist, i)
 #' @examples
-#' v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+#' v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2, prob = 0.5))
 #' v[1]
 #' v["Binom1"]
 #'

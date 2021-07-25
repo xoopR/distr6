@@ -40,7 +40,7 @@ m$pdf(1, 2)
 ## ------------------------------------------------
 
 m <- MixtureDistribution$new(distribution = "Normal",
-params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+params = data.frame(mean = 1:2, sd = 1))
 m$rand(5)
 }
 \seealso{
@@ -368,7 +368,7 @@ If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{m <- MixtureDistribution$new(distribution = "Normal",
-params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+params = data.frame(mean = 1:2, sd = 1))
 m$rand(5)
 }
 \if{html}{\out{</div>}}

@@ -37,7 +37,7 @@
 #'      list(list(size = 4), list(rate = 2, shape = 3)))
 #'
 #' # Multiple Binomials
-#' dstrs("Binom", data.frame(size = 1:5))
+#' dstrs("Binom", data.frame(size = 1:5, prob = 0.5))
 #'
 #' @export
 dstr <- function(d, ..., pars = NULL) {

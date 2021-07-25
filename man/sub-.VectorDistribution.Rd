@@ -16,7 +16,7 @@ Once a \code{VectorDistribution} has been constructed, use \code{[}
 to extract one or more \code{Distribution}s from inside it.
 }
 \examples{
-v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2))
+v <- VectorDistribution$new(distribution = "Binom", params = data.frame(size = 1:2, prob = 0.5))
 v[1]
 v["Binom1"]
 

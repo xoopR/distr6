@@ -203,7 +203,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' to the samples from the Multinomial, and finally randomly permuting these draws.
     #' @examples
     #' m <- MixtureDistribution$new(distribution = "Normal",
-    #' params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+    #' params = data.frame(mean = 1:2, sd = 1))
     #' m$rand(5)
     rand = function(n, simplify = TRUE) {
       weights <- private$.outerParameters$values$weights
