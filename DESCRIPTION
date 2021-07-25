@@ -84,7 +84,7 @@ BugReports: https://github.com/alan-turing-institute/distr6/issues
 Imports:
     checkmate,
     data.table,
-    param6 (>= 0.1.1.9000),
+    param6 (>= 0.2.0),
     R6,
     Rcpp,
     set6 (>= 0.2.2.9000),
@@ -102,7 +102,7 @@ Suggests:
     rmarkdown,
     testthat
 Remotes:
-    param6#12,
+    param6,
     set6
 LinkingTo:
     Rcpp
