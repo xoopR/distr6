@@ -102,7 +102,7 @@ Suggests:
     rmarkdown,
     testthat
 Remotes:
-    param6,
+    param6#12,
     set6
 LinkingTo:
     Rcpp
