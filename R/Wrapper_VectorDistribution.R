@@ -188,9 +188,8 @@ constructor, use `distlist` instead.")
 or `distlist` should be used.")
           }
 
-          if (distribution == "NegativeBinomial" &
-              any(c("form", "size") %in% names(unlist(params)))) {
-            stop("For NegativeBinomial distributions either `form`/`size` must be passed to
+          if (distribution == "NegativeBinomial" & "form" %in% names(unlist(params))) {
+            stop("For NegativeBinomial distributions either `form` must be passed to
 `shared_params` or `distlist` should be used.")
           }
 
@@ -221,9 +220,11 @@ or `distlist` should be used.")
             if (is.null(shortnames)) {
               shortnames <- sprintf("%s%d", shortname, seq(length(params)))
             }
-            names(params) <- shortnames
-            params <- unlist(params, recursive = FALSE)
-            names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+            if (length(drop_null(params))) {
+              names(params) <- shortnames
+              params <- unlist(params, recursive = FALSE)
+              names(params) <- gsub(".", "__", names(params), fixed = TRUE)
+            }
           }
           lng <- length(shortnames)
 
@@ -593,7 +594,9 @@ or `distlist` should be used.")
     #' Returns the value of the supplied parameter.
     getParameterValue = function(id, error = "warn") {
       vals <- private$.parameters$get_values(id)
-      names(vals) <- get_prefix(names(vals))
+      if (!is.null(names(vals))) {
+        names(vals) <- get_n_prefix(names(vals))
+      }
       vals
     },
 

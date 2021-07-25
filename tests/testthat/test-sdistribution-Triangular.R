@@ -3,7 +3,7 @@ library(testthat)
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Triangular,
-    pars = list(lower = 0, upper = 1),
+    pars = list(lower = 0, upper = 1, mode = 0.5),
     traits = list(
       valueSupport = "continuous",
       variateForm = "univariate",

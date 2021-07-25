@@ -18,7 +18,7 @@ test_that("dstrs", {
   v <- dstrs(c("Binom", "Gamma"), list(list(size = 4), list(rate = 2, shape = 3)))
   expect_equal_distr(v[1], Binomial$new(size = 4, prob = 0.5))
   expect_equal_distr(v[2], Gamma$new(shape = 3, rate = 2))
-  v <- dstrs("Binom", data.frame(size = 1:2))
+  v <- dstrs("Binom", data.frame(size = 1:2, prob = 0.5))
   expect_equal_distr(v[1], Binomial$new(prob = 0.5, size = 1))
   expect_equal_distr(v[2], Binomial$new(prob = 0.5, size = 2))
 })

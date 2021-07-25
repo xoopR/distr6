@@ -174,7 +174,10 @@ Dirichlet <- R6Class("Dirichlet",
     #' Returns distribution properties, including skewness type and symmetry.
     properties = function() {
       prop <- super$properties
-      prop$support <- setpower(Interval$new(0, 1, type = "()"), len)
+      prop$support <- setpower(
+        Interval$new(0, 1, type = "()"),
+        length(self$getParameterValue("params"))
+      )
       prop
     }
   ),

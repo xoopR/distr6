@@ -476,7 +476,7 @@ getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # noli
     prm("form", Set$new("sbf", "tbf", "tbs", "fbs"), form, tags = c("required", "immutable")),
     trafo = function(x, self) {
 
-      forms <- list_element(x, "form")
+      forms <- list_element(self$values, "form")
       form <- forms[[1]]
       sizes <- list_element(x, "size")
       probs <- list_element(x, "prob")

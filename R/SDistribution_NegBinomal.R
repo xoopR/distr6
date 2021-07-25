@@ -21,8 +21,6 @@
 #'
 #' For each we refer to the number of K successes/failures as the \code{size} parameter.
 #'
-#' Note that the `size` parameter is not currently vectorised in [VectorDistribution]s.
-#'
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution

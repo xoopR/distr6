@@ -51,8 +51,8 @@ test_that("pgf", {
 })
 
 test_that("entropy", {
-  expect_message(expect_equal(round(continuousTester$entropy(), 1),
-                              round(expo$entropy(), 1)))
+  expect_message(expect_equal(round(continuousTester$entropy()),
+                              round(expo$entropy())))
   expect_message(expect_equal(round(discreteTester$entropy(3), 2),
                               round(bin$entropy(3), 2)))
 })

@@ -284,10 +284,19 @@ get_prefix <- function(x) {
   gsub("([[:alnum:]]+)__(\\S*)", "\\1", x)
 }
 
+get_n_prefix <- function(x) {
+  gsub("(\\S+)__(\\S*)", "\\1", x)
+}
+
 
 assert_alphanum <- function(x) {
   if (any(grepl("[^[:alnum:]]", x))) {
     stop("'x' must be alphanumeric")
   }
   invisible(x)
+}
+
+
+drop_null <- function(x) {
+  x[vapply(x, function(.x) length(.x) > 0, logical(1))]
 }

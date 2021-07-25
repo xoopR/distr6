@@ -42,7 +42,7 @@ test_that("wrap a wrapper", {
   expect_silent(x$setParameterValue(HubTruncNorm__TruncNorm__trunc__upper = 6))
   expect_equal(x$getParameterValue("HubTruncNorm__TruncNorm__trunc__upper"), 6)
   expect_equal(x$getParameterValue("upper"), list(
-    HubTruncNorm__TruncNorm__trunc__upper = 6,
-    HubTruncNorm__hub__upper = 5
+    HubTruncNorm__TruncNorm__trunc = 6,
+    HubTruncNorm__hub = 5
   ))
 })

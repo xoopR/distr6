@@ -291,7 +291,7 @@ assertSymmetric <- function() {}
 
 makeChecks(
   assertionName = "Symmetric",
-  cond = get_private(object)$.properties$symmetry == "symmetric",
+  cond = object$properties$symmetry == "symmetric",
   defaulterrormsg = paste(object$short_name, "is not symmetric"),
   pos = environment()
 )

@@ -36,6 +36,6 @@ test_that("manual", {
 
 test_that("vector", {
   d <- VectorDistribution$new(distribution = "Beta",
-                              params = data.frame(shape1 = 1:2))
+                              params = data.frame(shape1 = 1:2, shape2 = 1))
   expect_error(d$mode(), "cannot be")
 })

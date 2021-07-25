@@ -4,7 +4,7 @@ r <- 10
 test_that("autotest - fbs", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
-    pars = list(prob = 0.2, form = "fbs"),
+    pars = list(prob = 0.2, size = 10, form = "fbs"),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",
@@ -32,7 +32,7 @@ p <- 1 - p
 test_that("autotest - sbf", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
-    pars = list(prob = 0.2, form = "sbf"),
+    pars = list(prob = 0.2, size = 10, form = "sbf"),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",
@@ -61,7 +61,7 @@ p <- 1 - p
 test_that("autotest - tbs", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
-    pars = list(prob = 0.2, form = "tbs"),
+    pars = list(prob = 0.2, size = 10, form = "tbs"),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",
@@ -89,7 +89,7 @@ p <- 1 - p
 test_that("autotest - tbf", {
   autotest_sdistribution(
     sdist = NegativeBinomial,
-    pars = list(prob = 0.2, form = "tbf"),
+    pars = list(prob = 0.2, size = 10, form = "tbf"),
     traits = list(
       valueSupport = "discrete",
       variateForm = "univariate",
@@ -119,8 +119,6 @@ test_that("manual", {
   dist <- NegativeBinomial$new(prob = 0.2, form = "tbf")
   expect_equal(dist$pdf(11:13), dnbinom(1:3, 10, 0.8))
   expect_equal(dist$cdf(11:13), pnbinom(1:3, 10, 0.8))
-  expect_error(VectorDistribution$new(distribution = "Negative", params = data.frame(size = 1:2)),
-               "should be used")
   expect_equal(dist$mgf(10), NaN)
   expect_equal(dist$pgf(10), NaN)
 })
