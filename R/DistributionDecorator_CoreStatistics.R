@@ -23,7 +23,7 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' @param ... `ANY` \cr
     #' Passed to `$genExp`.
     mgf = function(t, ...) {
-      return(self$genExp(trafo = function(x) exp(x * t), ...))
+      self$genExp(trafo = function(x) exp(x * t), ...)
     },
 
     #' @description
@@ -159,7 +159,11 @@ CoreStatistics <- R6Class("CoreStatistics",
         formals(trafo) <- alist(x = ) # nolint
       }
 
-      count <- self$properties$support$properties$countability
+      support <- private$.properties$support
+      count <- support$properties$countability
+      inf <- support$lower
+      sup <- support$upper
+
       if (count != "uncountable") {
         ws <- self$workingSupport()
         rng <- seq.int(ws$lower, ws$upper)
@@ -176,8 +180,8 @@ CoreStatistics <- R6Class("CoreStatistics",
             xs <- trafo(x)
             xs[pdfs == 0] <- 0
             return(xs * pdfs)
-          }, lower = self$inf,
-          upper = self$sup,
+          }, lower = inf,
+          upper = sup,
           ...)$integral))
         } else {
           return(suppressMessages(integrate(function(x) {
@@ -185,7 +189,7 @@ CoreStatistics <- R6Class("CoreStatistics",
             xs <- trafo(x)
             xs[pdfs == 0] <- 0
             return(xs * pdfs)
-          }, lower = self$inf, upper = self$sup)$value))
+          }, lower = inf, upper = sup)$value))
         }
       }
     },

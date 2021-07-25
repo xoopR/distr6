@@ -211,7 +211,7 @@ Multinomial <- R6Class("Multinomial",
       prop <- super$properties
       prop$support <- setpower(Set$new(0:self$getParameterValue("size"),
                                        class = "integer"),
-                               length(probs))
+                               length(self$getParameterValue("probs")))
       prop
     }
   ),

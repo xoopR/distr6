@@ -401,7 +401,7 @@ getParameterSet.Lognormal <- function(object, ...) {
             exp(2 * unlist(meanlogs) + unlist(varlogs)),
           gsub("varlog", "var", names(varlogs)))
       } else {
-        means <- list_element(x, "means")
+        means <- list_element(x, "mean")
         meanlogs <- as_named_list(
           log(unlist(means) / sqrt(1 + unlist(vars) / unlist(means)^2)),
           gsub("mean", "meanlog", names(means))

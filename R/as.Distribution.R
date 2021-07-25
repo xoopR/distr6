@@ -37,15 +37,14 @@ as.Distribution.matrix <- function(obj, fun, decorators = NULL) {
 
   x <- as.numeric(colnames(obj))
   obj <- apply(obj, 1, function(.x) {
-    out <- list(.x)
-    names(out) <- fun
+    out <- list(fun = .x, x = x)
+    names(out)[[1]] <- fun
     out
   })
 
   VectorDistribution$new(
     distribution = "WeightedDiscrete",
     params = obj,
-    shared_params = list(x = x),
     decorators = decorators
   )
 

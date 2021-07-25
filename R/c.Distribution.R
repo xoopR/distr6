@@ -26,31 +26,56 @@ c.Distribution <- function(..., name = NULL, short_name = NULL, decorators = NUL
   distlist <- list(...)
   assertDistributionList(distlist)
 
-  # If all distributions in the list are VectorDistributions then try and return a
-  # VectorDistribution with distribution/params constructor.
-  if (all(sapply(distlist, getR6Class) %in% "VectorDistribution")) {
-    if (any(sapply(distlist, function(x) x$distlist))) {
-      return(VectorDistribution$new(unlist(lapply(distlist, function(x) x$wrappedModels()))))
+  classes <- vapply(distlist, getR6Class, character(1))
+
+  if (length(distribution <- unique(classes)) == 1) {
+    if (distribution != "VectorDistribution") {
+      params <- lapply(distlist, function(x) x$parameters()$values)
+      return(VectorDistribution$new(
+        distribution = distribution, params = params, name = name,
+        short_name = short_name, decorators = decorators
+      ))
     } else {
-      distribution <- unlist(lapply(distlist, function(x) {
-        as.character(unlist(x$modelTable$Distribution))
-      }))
-      if (length(unique(distribution)) == 1) {
-        return(VectorDistribution$new(vecdist = distlist))
+      ## if there are any distlist VDs then forced to construct the same
+      if (any(vapply(distlist, function(x) x$distlist, logical(1)))) {
+        return(VectorDistribution$new(
+          unlist(lapply(distlist, function(x) x$wrappedModels())),
+          name = name, short_name = short_name, decorators = decorators
+        ))
       } else {
-        return(VectorDistribution$new(unlist(lapply(distlist, function(x) x$wrappedModels()))))
+        distribution <- unlist(lapply(distlist, function(x) {
+          as.character(unlist(x$modelTable$Distribution))
+        }))
+        if (length(unique(distribution)) == 1) {
+          ## if all distributions same can construct with distr/params
+          return(VectorDistribution$new(
+            vecdist = distlist, name = name,
+            short_name = short_name,
+            decorators = decorators
+          ))
+        } else {
+          ## otherwise forced to use distlist
+          return(VectorDistribution$new(
+            unlist(lapply(distlist, function(x) x$wrappedModels())),
+            name = name, short_name = short_name, decorators = decorators
+          ))
+        }
       }
     }
   }
 
   # If any are VectorDistributions then get the wrapped list
-  distlist <- unlist(lapply(distlist, function(x) {
-    ifelse(getR6Class(x) == "VectorDistribution", list(x$wrappedModels()), list(x))
-  }))
+  if ("VectorDistribution" %in% classes) {
+    distlist <- unlist(lapply(distlist, function(x) {
+      if (getR6Class(x) == "VectorDistribution") {
+        list(x$wrappedModels())
+      } else {
+        list(x)
+      }
+    }))
+  }
 
-  # Create VectorDistribution
-  return(VectorDistribution$new(distlist,
-    name = name, short_name = short_name,
-    decorators = decorators
-  ))
+
+  VectorDistribution$new(distlist, name = name, short_name = short_name,
+                         decorators = decorators)
 }

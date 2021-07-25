@@ -155,14 +155,12 @@ Hypergeometric <- R6Class("Hypergeometric",
     #' Returns distribution properties, including skewness type and symmetry.
     properties = function() {
       prop <- super$properties
+      size <- self$getParameterValue("size")
+      draws <- self$getParameterValue("draws")
+      successes <- self$getParameterValue("successes")
       prop$support <-
-        Set$new(seq(
-                  max(0,
-                      self$getParameterValue("draws") +
-                        self$getParameterValue("successes") - size),
-                  min(self$getParameterValue("draws"),
-                      self$getParameterValue("successes"))
-          ), class = "integer")
+        Set$new(seq(max(0, draws + successes - size), min(draws, successes)),
+                class = "integer")
       prop
     }
   ),
