@@ -49,7 +49,7 @@ Distribution <- R6Class("Distribution",
     #' Quantile (inverse-cdf) function of the distribution.
     #' @param rand `function(1)` \cr
     #' Simulation function for drawing random samples from the distribution.
-    #' @param parameters `([ParameterSet])` \cr
+    #' @param parameters `([param6::ParameterSet])` \cr
     #' Parameter set for defining the parameters in the distribution, which should be set before
     #' construction.
     #' @param valueSupport `(character(1))` \cr
@@ -163,7 +163,7 @@ Distribution <- R6Class("Distribution",
         # Parameter Checks
         #-------------------------
         if (!is.null(parameters)) {
-          checkmate::assertClass(parameters, "ParameterSet")
+          assertParameterSet(parameters)
           # parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
         }
       }

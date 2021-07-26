@@ -41,7 +41,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     #' Wrapped distribution variate form.
     #' @param parameters `([param6::ParameterSet])`\cr
     #' Optional parameters to add to the internal collection, ignored if `distlist` is given.
-    #' @param outerID `([ParameterSet])`\cr
+    #' @param outerID `([param6::ParameterSet])`\cr
     #' Parameters added by the wrapper.
     initialize = function(distlist = NULL,
                           name, short_name, description,
@@ -88,7 +88,7 @@ DistributionWrapper <- R6Class("DistributionWrapper",
       }
 
       if (!is.null(parameters) & is.null(distlist)) {
-        checkmate::assertClass(parameters, "ParameterSet")
+        assertParameterSet(parameters)
         if (is.null(private$.parameters)) {
           private$.parameters <- parameters
         } else {

@@ -27,6 +27,8 @@ navbar:
         href: articles/webs/listing.html
   - text: Advanced
     menu:
+      - text: S3 and Piping
+        href: articles/webs/s3_piping.html
       - text: Decorators
         href: articles/webs/decorators.html
       - text: Wrappers
@@ -240,16 +242,3 @@ reference:
       - distr6-package
       - distr6News
       - distrSimulate
-  - title: "Parameter Sets"
-    desc: "Functions and classes for creating Parameter Sets for use in Distributions."
-    contents:
-      - ParameterSet
-      - ParameterSetCollection
-      - as.data.table.ParameterSet
-      - as.ParameterSet
-      - getParameterSupport
-      - getParameterValue
-      - merge.ParameterSet
-      - print.ParameterSet
-      - setParameterValue
-      - "[.ParameterSet"

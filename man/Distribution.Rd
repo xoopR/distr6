@@ -188,7 +188,7 @@ Quantile (inverse-cdf) function of the distribution.}
 \item{\code{rand}}{\verb{function(1)} \cr
 Simulation function for drawing random samples from the distribution.}
 
-\item{\code{parameters}}{\verb{([ParameterSet])} \cr
+\item{\code{parameters}}{\verb{([param6::ParameterSet])} \cr
 Parameter set for defining the parameters in the distribution, which should be set before
 construction.}
 

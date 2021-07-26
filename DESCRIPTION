@@ -134,7 +134,6 @@ Collate:
     'Kernel_Tricube.R'
     'Kernel_Triweight.R'
     'Kernel_Uniform.R'
-    'ParameterSetCollection.R'
     'RcppExports.R'
     'SDistribution_Arcsine.R'
     'SDistribution_Bernoulli.R'

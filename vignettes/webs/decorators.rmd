@@ -31,7 +31,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In this tutorial we take a look at a big feature of distr6, decorators.
+The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/s3_piping.html) introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.
 
 Note: Decorators in distr6 are still maturing, this means the API is still subject to minor changes and the internal computations may be improved, therefore we are aware performance may be sub-optimal.
 
