@@ -115,7 +115,7 @@ Wrapped distribution variate form.}
 \item{\code{parameters}}{\verb{([param6::ParameterSet])}\cr
 Optional parameters to add to the internal collection, ignored if \code{distlist} is given.}
 
-\item{\code{outerID}}{\verb{([ParameterSet])}\cr
+\item{\code{outerID}}{\verb{([param6::ParameterSet])}\cr
 Parameters added by the wrapper.}
 }
 \if{html}{\out{</div>}}

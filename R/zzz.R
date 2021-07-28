@@ -7,6 +7,7 @@ NULL
 #' @importFrom R6 R6Class
 #' @importFrom data.table data.table as.data.table
 #' @importFrom checkmate assert
+#' @importFrom stats setNames
 #' @import set6
 #' @import param6
 NULL
