@@ -128,8 +128,8 @@ test_that("vecdist constructor", {
   m <- MixtureDistribution$new(distribution = "Binom", params = params)
   p <- ProductDistribution$new(distribution = "Binom", params = params)
 
-  expect_equal_distr(as.MixtureDistribution(v), m)
-  expect_equal_distr(as.MixtureDistribution(p), m)
+  expect_equal(as.MixtureDistribution(v)$cdf(1:10), m$cdf(1:10))
+  expect_equal(as.MixtureDistribution(p)$cdf(1:10), m$cdf(1:10))
 
   b1 <- Binomial$new(size = 1)
   b2 <- Binomial$new(size = 2)
@@ -138,6 +138,6 @@ test_that("vecdist constructor", {
   m <- MixtureDistribution$new(list(b1, b2))
   p <- ProductDistribution$new(list(b1, b2))
 
-  expect_equal_distr(as.MixtureDistribution(v), m)
-  expect_equal_distr(as.MixtureDistribution(p), m)
+  expect_equal(as.MixtureDistribution(v)$cdf(1:10), m$cdf(1:10))
+  expect_equal(as.MixtureDistribution(p)$cdf(1:10), m$cdf(1:10))
 })
