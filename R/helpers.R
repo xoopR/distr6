@@ -63,8 +63,9 @@ getR6Class <- function(object, classname = TRUE, n.par = 0, pos = -1) {
     return(class(object))
   }
 }
-ifnerror <- function(expr, noerror, error = NULL, silent = T) {
-  x <- try(expr, silent)
+ifnerror <- function(expr, noerror, error = NULL) {
+
+  x <- try(expr, silent = TRUE)
   if (inherits(x, "try-error")) {
     if (is.null(error) | error == "warn") {
       stopwarn("warn", "Error not Nerror!")
@@ -222,4 +223,80 @@ getR6Call <- function() {
   calls <- calls[names(calls) %nin% "decorators"]
   # prevent lazy evaluation
   lapply(calls, eval.parent, n = 5)
+}
+
+
+unique_nlist <- function(x) {
+  x[!duplicated(names(x))]
+}
+
+
+expand_list <- function(names, named_var) {
+  checkmate::assert_character(names)
+  checkmate::assert_list(named_var)
+
+  mtc <- match(names(named_var), names)
+  if (any(is.na(mtc))) {
+    stop("ids in 'names' not in 'named_var'")
+  }
+
+  x <- setNames(vector("list", length(names)), names)
+  x[mtc] <- named_var
+  x
+}
+
+list_element <- function(x, name) {
+  x[grepl(sprintf("(__%s$)|(^%s$)", name, name), names(x))]
+}
+
+named_list <- function(values, names) {
+  if (missing(values) && missing(names)) {
+    setNames(list(), character())
+  } else {
+    setNames(list(values), names)
+  }
+}
+
+as_named_list <- function(values, names) {
+  if (missing(values) && missing(names)) {
+    setNames(list(), character())
+  } else {
+    setNames(as.list(values), names)
+  }
+}
+
+
+get_private <- function(x) {
+  x$.__enclos_env__$private
+}
+
+
+sort_named_list <- function(x, ...) {
+  x[order(names(x), ...)]
+}
+
+
+unprefix <- function(x) {
+  gsub("([[:alnum:]]+)__(\\S*)", "\\2", x)
+}
+
+get_prefix <- function(x) {
+  gsub("([[:alnum:]]+)__(\\S*)", "\\1", x)
+}
+
+get_n_prefix <- function(x) {
+  gsub("(\\S+)__(\\S*)", "\\1", x)
+}
+
+
+assert_alphanum <- function(x) {
+  if (any(grepl("[^[:alnum:]]", x))) {
+    stop("'x' must be alphanumeric")
+  }
+  invisible(x)
+}
+
+
+drop_null <- function(x) {
+  x[vapply(x, function(.x) length(.x) > 0, logical(1))]
 }

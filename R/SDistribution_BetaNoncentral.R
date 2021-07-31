@@ -52,21 +52,21 @@ BetaNoncentral <- R6Class("BetaNoncentral",
         type = PosReals$new(zero = T),
         symmetry = "sym"
       )
-    },
+    }
+  ),
 
-    # stats
-
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$getParameterValue("shape1") == self$getParameterValue("shape2")) {
-        private$.properties$symmetry <- "symmetric"
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$symmetry <- if (self$getParameterValue("shape1") ==
+                            self$getParameterValue("shape2")) {
+        "symmetric"
       } else {
-        private$.properties$symmetry <- "asymmetric"
+        "asymmetric"
       }
-      invisible(self)
+      prop
     }
   ),
 

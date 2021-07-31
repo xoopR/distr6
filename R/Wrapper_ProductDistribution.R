@@ -70,7 +70,7 @@ ProductDistribution <- R6Class("ProductDistribution",
         parameters  <- vecdist$parameters()
 
         if (checkmate::testClass(vecdist, "MixtureDistribution")) {
-          parameters$.__enclos_env__$private$.parametersets$mix <- NULL
+          parameters$remove(prefix = "mix")
         }
 
         super$.__enclos_env__$super$initialize(
@@ -190,7 +190,7 @@ ProductDistribution <- R6Class("ProductDistribution",
 #' @export
 as.ProductDistribution <- function(object) {
   if (checkmate::testClass(object, "VectorDistribution")) {
-    return(ProductDistribution$new(vecdist = object))
+    ProductDistribution$new(vecdist = object)
   } else {
     stop("Object must inherit from VectorDistribution.")
   }

@@ -44,11 +44,17 @@ Other wrappers:
 \section{Super classes}{
 \code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:DistributionWrapper]{distr6::DistributionWrapper}} -> \code{HuberizedDistribution}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{properties}}{Returns distribution properties, including skewness type and symmetry.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{HuberizedDistribution$new()}}
-\item \href{#method-setParameterValue}{\code{HuberizedDistribution$setParameterValue()}}
 \item \href{#method-clone}{\code{HuberizedDistribution$clone()}}
 }
 }
@@ -68,6 +74,7 @@ Other wrappers:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
@@ -115,40 +122,6 @@ huberize(Binomial$new(), lower = 2, upper = 4)
 
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
-\subsection{Method \code{setParameterValue()}}{
-Sets the value(s) of the given parameter(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HuberizedDistribution$setParameterValue(
-  ...,
-  lst = NULL,
-  error = "warn",
-  resolveConflicts = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{\code{ANY} \cr
-Named arguments of parameters to set values for. See examples.}
-
-\item{\code{lst}}{\code{(list(1))} \cr
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.}
-
-\item{\code{error}}{\code{(character(1))} \cr
-If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"stop"}.}
-
-\item{\code{resolveConflicts}}{\code{(logical(1))}\cr
-If \code{FALSE} (default) throws error if conflicting parameterisations are provided, otherwise
-automatically resolves them by removing all conflicting parameters.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

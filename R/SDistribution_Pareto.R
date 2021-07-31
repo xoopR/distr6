@@ -169,15 +169,20 @@ Pareto <- R6Class("Pareto",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      private$.properties$support <- Interval$new(self$getParameterValue("scale"), Inf, type = "[)")
-      invisible(self)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Interval$new(
+        self$getParameterValue("scale"),
+        Inf,
+        type = "[)"
+      )
+      prop
     }
   ),
 

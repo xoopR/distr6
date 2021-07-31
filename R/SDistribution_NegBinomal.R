@@ -21,8 +21,6 @@
 #'
 #' For each we refer to the number of K successes/failures as the \code{size} parameter.
 #'
-#' Note that the `size` parameter is not currently vectorised in [VectorDistribution]s.
-#'
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
@@ -256,20 +254,20 @@ NegativeBinomial <- R6Class("NegativeBinomial",
       } else {
         return(NaN)
       }
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
       form <- self$getParameterValue("form")[[1]]
+      prop <- super$properties
       if (form == "tbf" | form == "tbs") {
-        private$.properties$support <- Interval$new(self$getParameterValue("size"),
-                                                    Inf, type = "[)", class = "integer")
+        prop$support <- Interval$new(self$getParameterValue("size"),
+                                     Inf, type = "[)", class = "integer")
       }
-      invisible(self)
+      prop
     }
   ),
 

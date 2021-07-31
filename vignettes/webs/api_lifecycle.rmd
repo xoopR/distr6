@@ -31,4 +31,3 @@ The lists below use the headings name from the [reference page](https://alan-tur
 * [Multivariate Distributions](https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions)
 * [Assertions](https://alan-turing-institute.github.io/distr6/reference/#section-assertions)
 * [Helper Functions](https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions)
-* [Parameter Sets](https://alan-turing-institute.github.io/distr6/reference/#section-parameter-sets)

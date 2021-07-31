@@ -1,945 +1,700 @@
+trafo_probs <- function(x, self) {
+  probs <- list_element(x, "prob")
+  qprobs <- list_element(x, "qprob")
+
+  if (length(probs) && length(qprobs)) {
+    stop("Can't update 'prob' and 'qprob' parameters simultaneously")
+  }
+  if (length(probs)) {
+    old <- probs
+    old_name <- "prob"
+    new_name <- "qprob"
+  } else {
+    old <- qprobs
+    old_name <- "qprob"
+    new_name <- "prob"
+  }
+  c(x,
+    setNames(
+      as.list(1 - unlist(old)),
+      gsub(old_name, new_name, names(old))
+    )
+  )
+}
+
+trafo_rate <- function(x, self) {
+  scales <- list_element(x, "scale")
+  rates <- list_element(x, "rate")
+  if (length(scales) && length(rates)) {
+    stop("Can't update 'scale' and 'rate' parameters simultaneously")
+  }
+  if (length(scales)) {
+    old <- scales
+    old_name <- "scale"
+    new_name <- "rate"
+  } else {
+    old <- rates
+    old_name <- "rate"
+    new_name <- "scale"
+  }
+  c(x,
+    setNames(as.list(1 / unlist(old)), gsub(old_name, new_name, names(old))))
+}
+
+trafo_normalise <- function(x, self) {
+  which <- grepl("probs", names(x))
+  if (any(which)) {
+    x[which] <- lapply(x[which], function(.x) .x / sum(.x))
+  }
+  x
+}
+
 getParameterSet <- function(object, ...) {
   UseMethod("getParameterSet", object)
 }
 
 getParameterSet.Arcsine <- function(object, ...) {
-  ps <- ParameterSet$new(
-    id = list("lower", "upper"),
-    value = list(0, 1),
-    support = list(reals, reals),
-    description = list(
-      "Lower distribution limit.",
-      "Upper distribution limit."
+  pset(
+    prm("lower", "reals", 0, "required"),
+    prm("upper", "reals", 1, "required"),
+    deps = list(
+      list(id = "lower", on = "upper", cond = cnd("leq", id = "upper"))
     )
   )
-  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <=
-                                    unlist(self$getParameterValue("upper"))))
-  return(ps)
 }
 
 getParameterSet.Bernoulli <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("prob", "qprob"), value = list(0.5, 0.5),
-    support = list(Interval$new(0, 1), Interval$new(0, 1)),
-    description = list("Probability of Success", "Probability of failure")
+  pset(
+    prm("prob", Interval$new(0, 1), 0.5, c("linked", "required")),
+    prm("qprob", Interval$new(0, 1), tags = c("linked", "required")),
+    trafo = trafo_probs
   )
-  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
-  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
-
-  return(ps)
 }
 
 getParameterSet.Beta <- function(object, ...) {
-
-  ParameterSet$new(
-    id = list("shape1", "shape2"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list("Shape Parameter (alpha)", "Shape Parameter (beta)")
+  pset(
+    prm("shape1", "posreals", 1, tags = "required"),
+    prm("shape2", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.BetaNoncentral <- function(object, ...) {
-  ParameterSet$new(
-    id = list("shape1", "shape2", "location"), value = list(1, 1, 0),
-    support = list(pos_reals, pos_reals, PosReals$new(zero = TRUE)),
-    description = list(
-      "Shape Parameter (alpha)", "Shape Parameter (beta)",
-      "Non-centrality parameter"
-    )
+  pset(
+    prm("shape1", "posreals", 1, tags = "required"),
+    prm("shape2", "posreals", 1, tags = "required"),
+    prm("location", "posreals0", 1, tags = "required")
   )
 }
 
 getParameterSet.Binomial <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("prob", "qprob", "size"), value = list(0.5, 0.5, 10),
-    support = list(Interval$new(0, 1), Interval$new(0, 1), pos_naturals),
-    description = list(
-      "Probability of Success",
-      "Probability of failure", "Number of trials"
-    )
+  pset(
+    prm("prob", Interval$new(0, 1), 0.5, tags = c("linked", "required")),
+    prm("qprob", Interval$new(0, 1), tags = c("linked", "required")),
+    prm("size", "posnaturals", 10, tags = "required"),
+    trafo = trafo_probs
   )
-  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
-  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
-
-  return(ps)
 }
 
 getParameterSet.Categorical <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("elements", "probs"),
-    value = list(1, 1),
-    support = list(
-      Universal$new(), setpower(Interval$new(0, 1), "n")
+  pset(
+    prm("elements", "universal", 1, tags = "required"),
+    prm("probs", Interval$new(0, 1)^"n", 1, tags = "required"),
+    deps = list(
+      list(id = "probs", on = "elements", cond = cnd("len", id = "elements"))
     ),
-    settable = list(TRUE, TRUE),
-    description = list("Categories", "Probability of success i")
+    trafo = trafo_normalise
   )
-
-  ps$addChecks(function(self) all(length(unlist(self$getParameterValue("probs"))) ==
-                 length(unlist(self$getParameterValue("elements")))))
-  ps$addTrafos("probs", function(x, self) x / sum(x))
-
-  return(ps)
 }
 
 getParameterSet.Cauchy <- function(object, ...) {
-  ParameterSet$new(
-    id = list("location", "scale"), value = list(0, 1),
-    support = list(reals, pos_reals),
-    description = list(
-      "Location Parameter",
-      "Scale Parameter"
-    )
+  pset(
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.ChiSquared <- function(object, ...) {
-  ParameterSet$new(
-    id = list("df"), value = list(1),
-    support = list(PosReals$new(zero = TRUE)),
-    description = list("Degrees of Freedom")
+  pset(
+    prm("df", "posreals0", 1, tags = "required")
   )
 }
 
 getParameterSet.ChiSquaredNoncentral <- function(object, ...) { # nolint
-  ParameterSet$new(
-    id = list("df", "location"), value = list(1, 0),
-    support = list(PosReals$new(zero = TRUE), PosReals$new(zero = TRUE)),
-    description = list("Degrees of Freedom", "Non-centrality parameter")
+  pset(
+    prm("df", "posreals0", 1, tags = "required"),
+    prm("location", "posreals0", 0, tags = "required")
   )
 }
 
 getParameterSet.Degenerate <- function(object, ...) {
-  ParameterSet$new(
-    id = list("mean"), value = list(0),
-    support = list(reals),
-    description = list("Location Parameter")
+  pset(
+    prm("mean", "reals", 0, tags = "required")
   )
 }
 
 getParameterSet.Dirichlet <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("params"),
-    value = list(rep(1, 2)),
-    support = list(
-      setpower(pos_reals, "n")
-    ),
-    settable = list(TRUE),
-    description = list("Concentration parameters")
+  pset(
+    prm("params", "nposreals", rep(1, 2), tags = "required")
   )
-
-  return(ps)
 }
 
 getParameterSet.DiscreteUniform <- function(object, ...) { # nolint
-
-  ps <- ParameterSet$new(
-    id = list("lower", "upper"),
-    value = list(0, 1),
-    support = list(Integers$new(), Integers$new()),
-    settable = list(TRUE, TRUE),
-    description = list(
-      "Lower distribution limit.", "Upper distribution limit."
+  pset(
+    prm("lower", "integers", 0, tags = "required"),
+    prm("upper", "integers", 1, tags = "required"),
+    deps = list(
+      list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
     )
   )
-
-  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
-                 unlist(self$getParameterValue("upper"))))
-
-  return(ps)
 }
 
 getParameterSet.Erlang <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("shape", "rate", "scale"), value = list(1, 1, 1),
-    support = list(PosIntegers$new(), pos_reals, pos_reals),
-    description = list(
-      "Shape - Shape Parameter",
-      "Rate - Inverse Scale Parameter",
-      "Scale - Scale Parameter"
-    )
+  pset(
+    prm("shape", "posintegers", 1, tags = "required"),
+    prm("rate", "posreals", 1, , tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    trafo = trafo_rate
   )
-  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
-  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
-
-  return(ps)
 }
 
 getParameterSet.Exponential <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("rate", "scale"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list("Arrival Rate", "Scale")
+  pset(
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    trafo = trafo_rate
   )
-  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
-  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
-
-  return(ps)
-
 }
 
 getParameterSet.FDistribution <- function(object, ...) {
-
-  ParameterSet$new(
-    id = list("df1", "df2"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list(
-      "Degrees of freedom 1",
-      "Degrees of freedom 2"
-    )
+  pset(
+    prm("df1", "posreals", 1, tags = "required"),
+    prm("df2", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.FDistributionNoncentral <- function(object, ...) { # nolint
-
-  ParameterSet$new(
-    id = list("df1", "df2", "location"), value = list(1, 1, 0),
-    support = list(pos_reals, pos_reals, PosReals$new(zero = TRUE)),
-    description = list(
-      "Degrees of freedom 1",
-      "Degrees of freedom 2",
-      "Non-centrality parameter"
-    )
+  pset(
+    prm("df1", "posreals", 1, tags = "required"),
+    prm("df2", "posreals", 1, tags = "required"),
+    prm("location", "posreals0", 0, tags = "required")
   )
 }
 
 getParameterSet.Frechet <- function(object, ...) {
-
-  ParameterSet$new(
-    id = list("shape", "scale", "minimum"), value = list(1, 1, 0),
-    support = list(pos_reals, pos_reals, reals),
-    description = list(
-      "Shape Parameter", "Scale Parameter",
-      "Distribution Minimum - Location Parameter"
-    )
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required"),
+    prm("minimum", "reals", 0, tags = "required")
   )
-
 }
 
 getParameterSet.Gamma <- function(object, ...) {
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("rate", "posreals", 1, , tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    prm("mean", "posreals", tags = c("linked", "required")),
+    trafo = function(x, self) {
+      rates <- scales <- means <- NULL
 
-  ps <- ParameterSet$new(
-    id = list("shape", "rate", "scale", "mean"), value = list(1, 1, 1, 1),
-    support = list(pos_reals, pos_reals, pos_reals, pos_reals),
-    description = list(
-      "Shape - Shape Parameter",
-      "Rate - Inverse Scale Parameter",
-      "Scale - Scale Parameter",
-      "Mean - Mean Parameter"
-    )
+      shapes <- list_element(x, "shape")
+
+      if (any(grepl("scale", names(x)))) {
+        scales <- list_element(x, "scale")
+        rates <- setNames(as.list(1 / unlist(scales)),
+                          gsub("scale", "rate", names(scales)))
+      } else if (any(grepl("mean", names(x)))) {
+        means <- list_element(x, "mean")
+        rates <- setNames(as.list(unlist(shapes) / unlist(means)),
+                          gsub("shape", "rate", names(shapes)))
+      }
+
+      if (is.null(rates)) {
+        rates <- list_element(x, "rate")
+      }
+
+      if (is.null(scales)) {
+        scales <- setNames(as.list(1 / unlist(rates)),
+                           gsub("rate", "scale", names(rates)))
+      }
+
+      if (is.null(means)) {
+        means <- setNames(as.list(unlist(shapes) * unlist(scales)),
+                          gsub("rate", "mean", names(rates)))
+      }
+
+      unique_nlist(c(shapes, rates, scales, means, x))
+    }
   )
-  ps$addDeps("rate", c("scale", "mean"), function(self) {
-    rate <- self$getParameterValue("rate")
-    list(scale = 1 / rate,
-         mean = self$getParameterValue("shape") / rate)
-  })
-  ps$addDeps("scale", c("rate", "mean"), function(self) {
-    scale <- self$getParameterValue("scale")
-    list(rate = 1 / scale,
-         mean = self$getParameterValue("shape") * scale)
-  })
-  ps$addDeps("mean", c("rate", "scale"), function(self) {
-    rate <- self$getParameterValue("shape") / self$getParameterValue("mean")
-    list(rate, scale = rate^-1)
-  })
-
-  return(ps)
 }
 
 getParameterSet.Geometric <- function(object, trials = FALSE, ...) {
-
-  if (trials) {
-    ps <- ParameterSet$new(
-      id = list("prob", "qprob", "trials"),
-      value = list(0.5, 0.5, TRUE),
-      support = list(
-        Interval$new(0, 1, type = "()"),
-        Interval$new(0, 1, type = "()"),
-        Logicals$new()
-      ),
-      settable = list(TRUE, TRUE, FALSE),
-      description = list(
-        "Probability of success",
-        "Probability of failure",
-        "Form: number of trials before first success"
-      )
-    )
-  } else {
-    ps <- ParameterSet$new(
-      id = list("prob", "qprob", "trials"),
-      value = list(0.5, 0.5, FALSE),
-      support = list(
-        Interval$new(0, 1, type = "(]"),
-        Interval$new(0, 1, type = "(]"),
-        Logicals$new()
-      ),
-      settable = list(TRUE, TRUE, FALSE),
-      description = list(
-        "Probability of success",
-        "Probability of failure",
-        "Form: number of failures before first success"
-      )
-    )
-  }
-
-  ps$addDeps("prob", "qprob", function(self) list(qprob = 1 - self$getParameterValue("prob")))
-  ps$addDeps("qprob", "prob", function(self) list(prob = 1 - self$getParameterValue("qprob")))
-
-  return(ps)
+  type <- ifelse(trials, "()", "(]")
+  pset(
+    prm("prob", Interval$new(0, 1, type = type), 0.5, tags = c("linked", "required")),
+    prm("qprob", Interval$new(0, 1, type = type), tags = c("linked", "required")),
+    prm("trials", "logicals", trials, tags = "immutable"),
+    trafo = trafo_probs
+  )
 }
 
 getParameterSet.Gompertz <- function(object, ...) {
-  ParameterSet$new(
-    id = list("shape", "scale"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list("Shape parameter", "Scale parameter")
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Gumbel <- function(object, ...) {
-  ParameterSet$new(
-    id = list("location", "scale"), value = list(0, 1),
-    support = list(reals, pos_reals),
-    description = list(
-      "Location Parameter",
-      "Scale Parameter"
-    )
+  pset(
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Hypergeometric <- function(object, ...) {
+  pset(
+    prm("size", "naturals", 50, tags = "required"),
+    prm("successes", Set$new(0:50, class = "integer"), tags = c("linked", "required")),
+    prm("failures", Set$new(0:50, class = "integer"), 45, tags = c("linked", "required")),
+    prm("draws", Set$new(0:50, class = "integer"), 10, tags = "required"),
+    trafo = function(x, self) {
+      sizes <- list_element(x, "size")
+      successess <- list_element(x, "successes")
+      failuress <- list_element(x, "failures")
+      if (length(successess) && length(failuress)) {
+        stop("Can't update 'successes' and 'failures' parameters simultaneously")
+      } else if (length(successess)) {
+        old <- successess
+        old_name <- "successes"
+        new_name <- "failures"
+      } else {
+        old <- failuress
+        old_name <- "failures"
+        new_name <- "successes"
+      }
 
-  ps <- ParameterSet$new(
-    id = list("size", "successes", "failures", "draws"),
-    value = list(50, 5, 45, 10),
-    support = list(naturals,
-                  Set$new(0:50, class = "integer"),
-                  Set$new(0:50, class = "integer"),
-                  Set$new(0:50, class = "integer")),
-    description = list(
-      "Population size",
-      "Number of successes in the population.",
-      "Number of failures in the population.",
-      "Number of draws."
-    )
+      c(x,
+        setNames(as.list(unlist(sizes) - unlist(old)),
+                 gsub(old_name, new_name, names(old)))
+      )
+    }
   )
-
-  ps$addDeps(
-    "successes", "failures", function(self) {
-      list(failures = self$getParameterValue("size") - self$getParameterValue("successes"))
-    })
-  ps$addDeps(
-    "failures", "successes", function(self) {
-      list(successes = self$getParameterValue("size") - self$getParameterValue("failures"))
-    })
-  ps$addChecks(function(self) {
-    successes <- unlist(self$getParameterValue("successes"))
-    failures <- unlist(self$getParameterValue("failures"))
-    size <- unlist(self$getParameterValue("size"))
-    all(successes <= size) && all(failures <= size)
-  })
-
-  return(ps)
-
 }
 
 getParameterSet.InverseGamma <- function(object, ...) {
-  ParameterSet$new(
-    id = list("shape", "scale"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list("Shape Parameter", "Scale Parameter")
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Laplace <- function(object, ...) {
+  pset(
+    prm("mean", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("var", "posreals", tags = c("linked", "required")),
+    trafo = function(x, self) {
+        scales <- list_element(x, "scale")
+        vars <- list_element(x, "var")
+        if (length(scales) && length(vars)) {
+          stop("Can't update 'scale' and 'var' parameters simultaneously")
+        }
+        if (length(scales)) {
+          vars <- setNames(2 * unlist(scales)^2,
+                           gsub("scale", "var", names(scales)))
+        } else {
+          scales <- setNames(sqrt(vars / 2),
+                             gsub("var", "scale", names(vars)))
+        }
 
-  ps <- ParameterSet$new(
-    id = list("mean", "scale", "var"), value = list(0, 1, 2),
-    support = list(reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Scale - Scale Parameter",
-      "Variance - Alternate Scale Parameter"
-    )
+        unique_nlist(c(vars, scales, x))
+    }
   )
-  ps$addDeps("scale", "var", function(self) list(var = 2 * self$getParameterValue("scale")^2))
-  ps$addDeps("var", "scale", function(self) list(scale = sqrt(self$getParameterValue("var") / 2)))
-
-  return(ps)
 }
 
 getParameterSet.Logarithmic <- function(object, ...) {
-  ParameterSet$new(
-    id = list("theta"), value = list(0.5),
-    support = list(Interval$new(0, 1, type = "()")),
-    description = list("Theta parameter.")
+  pset(
+    prm("theta", Interval$new(0, 1, type = "()"), 0.5, tags = "required")
   )
 }
 
 getParameterSet.Logistic <- function(object, ...) {
+  pset(
+    prm("mean", "reals", 0, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("sd", "posreals", tags = c("linked", "required")),
+    trafo = function(x, self) {
+      scales <- list_element(x, "scale")
+      sds <- list_element(x, "sd")
+      if (length(scales) && length(sds)) {
+        stop("Can't update 'scale' and 'sd' parameters simultaneously")
+      }
+      if (length(scales)) {
+        sds <- setNames(as.list(unlist(scales) * pi / sqrt(3)),
+                        gsub("scale", "sd", names(scales)))
+      } else {
+        scales <- setNames(as.list(unlist(sds) * sqrt(3) / pi),
+                        gsub("scale", "sd", names(scales)))
+      }
 
-  ps <- ParameterSet$new(
-    id = list("mean", "scale", "sd"), value = list(0, 1, pi / sqrt(3)),
-    support = list(reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Scale - Scale Parameter",
-      "Standard Deviation - Alternative Scale Parameter"
-    )
+      unique_nlist(c(scales, sds, x))
+    }
   )
-  ps$addDeps("scale", "sd",
-             function(self) list(sd = self$getParameterValue("scale") * pi / sqrt(3)))
-  ps$addDeps("sd", "scale",
-             function(self) list(scale = self$getParameterValue("sd") * sqrt(3) / pi))
-
-  return(ps)
 }
 
 getParameterSet.Loglogistic <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("scale", "rate", "shape"), value = list(1, 1, 1),
-    support = list(pos_reals, pos_reals, pos_reals),
-    description = list(
-      "Scale Parameter",
-      "Rate Parameter",
-      "Shape Parameter"
-    )
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    trafo = trafo_rate
   )
-
-  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
-  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
-
-  return(ps)
 }
 
 getParameterSet.Lognormal <- function(object, ...) {
+  pset(
+    prm("meanlog", "reals", 0, tags = c("required", "means")),
+    prm("varlog", "posreals", 1, tags = c("required", "vars")),
+    prm("sdlog", "posreals", tags = c("required", "vars")),
+    prm("preclog", "posreals", tags = c("required", "vars")),
+    prm("mean", "posreals", tags = c("required", "means")),
+    prm("var", "posreals", tags = c("required", "vars")),
+    prm("sd", "posreals", tags = c("required", "vars")),
+    prm("prec", "posreals", tags = c("required", "vars")),
+    tag_properties = list(linked = c("means", "vars")),
+    trafo = function(x, self) {
 
-    ps <- ParameterSet$new(
-      id = list("meanlog", "varlog", "sdlog", "preclog", "mean", "var", "sd", "prec"),
-      value = list(
-        0, 1, 1, 1, exp(0.5), (exp(1) - 1) * exp(1), sqrt((exp(1) - 1) * exp(1)),
-        ((exp(1) - 1) * exp(1))^-1
-      ),
-      support = list(
-        reals, pos_reals, pos_reals, pos_reals, pos_reals,
-        pos_reals, pos_reals, pos_reals
-      ),
-      description = list(
-        "meanlog - Location Parameter on log scale",
-        "varlog - Squared Scale Parameter on log scale",
-        "sdlog - Scale Parameter on log scale",
-        "preclog - Inverse Squared Scale Parameter on logscale",
-        "mean - Location Parameter",
-        "var - Squared Scale Parameter",
-        "sd - Scale Parameter",
-        "prec - Inverse Squared Scale Parameter"
+      log_vals <- sum(grepl("log", names(x)))
+      if (log_vals %nin% c(0, length(x))) {
+        stop("Can't update log and non-log parameters simultaneously")
+      }
+
+      # first compute var or varlog if other scale params given
+      sdlogs <- list_element(x, "sdlog")
+      preclogs <- list_element(x, "preclog")
+      varlogs <- list_element(x, "varlog")
+      sds <- list_element(x, "sd")
+      precs <- list_element(x, "prec")
+      vars <- list_element(x, "var")
+
+      if (length(sdlogs)) {
+        varlogs <- as_named_list(unlist(sdlogs)^2,
+                                 gsub("sdlog", "varlog", names(sdlogs)))
+      } else if (length(preclogs)) {
+        varlogs <- as_named_list(1 / unlist(preclogs),
+                                 gsub("preclog", "varlog", names(preclogs)))
+      } else if (length(sds)) {
+        vars <- as_named_list(unlist(sds)^2, gsub("sd", "var", names(sds)))
+      } else if (length(precs)) {
+        vars <- as_named_list(1 / unlist(precs),
+                              gsub("prec", "var", names(precs)))
+      }
+
+      if (log_vals > 0) {
+        # calculate mean and var
+        meanlogs <- list_element(x, "meanlog")
+        means <- as_named_list(exp(unlist(meanlogs) + unlist(varlogs) / 2),
+                               gsub("meanlog", "mean", names(meanlogs)))
+        vars <- as_named_list(
+          (exp(unlist(varlogs)) - 1) *
+            exp(2 * unlist(meanlogs) + unlist(varlogs)),
+          gsub("varlog", "var", names(varlogs)))
+      } else {
+        means <- list_element(x, "mean")
+        meanlogs <- as_named_list(
+          log(unlist(means) / sqrt(1 + unlist(vars) / unlist(means)^2)),
+          gsub("mean", "meanlog", names(means))
+        )
+        varlogs <- as_named_list(
+          log(1 + unlist(vars) / unlist(means)^2),
+          gsub("var", "varlog", names(vars))
+        )
+      }
+
+      sdlogs <- as_named_list(sqrt(unlist(varlogs)),
+                              gsub("varlog", "sdlog", names(varlogs)))
+      preclogs <- as_named_list(1 / unlist(varlogs),
+                                gsub("varlog", "preclog", names(varlogs)))
+      sds <- as_named_list(sqrt(unlist(vars)),
+                           gsub("var", "sd", names(vars)))
+      precs <- as_named_list(1 / unlist(vars),
+                             gsub("var", "prec", names(vars)))
+
+
+      unique_nlist(
+        c(meanlogs, varlogs, sdlogs, preclogs, means, vars, sds, precs, x)
       )
-    )
-
-
-    ps$addDeps("varlog", c("sdlog", "preclog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 varlog <- self$getParameterValue("varlog")
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   sdlog = varlog^0.5,
-                   preclog =  varlog^-1,
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-
-    ps$addDeps("sdlog", c("varlog", "preclog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 sdlog <- self$getParameterValue("sdlog")
-                 varlog <- sdlog^2
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   varlog = varlog,
-                   preclog =  varlog^-1,
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-    ps$addDeps("preclog", c("varlog", "sdlog", "mean", "var", "sd", "prec"),
-               function(self) {
-                 preclog <- self$getParameterValue("preclog")
-                 varlog <- 1 / preclog
-                 meanlog <- self$getParameterValue("meanlog")
-                 var <- (exp(varlog) - 1) * exp(2 * meanlog + varlog)
-                 list(
-                   varlog = varlog,
-                   sdlog =  sqrt(varlog),
-                   mean = exp(meanlog + varlog / 2),
-                   var = var,
-                   sd =  sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-    ps$addDeps("var", c("meanlog", "varlog", "sdlog", "preclog", "sd", "prec"),
-               function(self) {
-                 var <- self$getParameterValue("var")
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   sd = sqrt(var),
-                   prec = 1 / var
-                 )
-               })
-
-    ps$addDeps("sd", c("var", "meanlog", "varlog", "sdlog", "preclog", "prec"),
-               function(self) {
-                 sd <- self$getParameterValue("sd")
-                 var <- sd^2
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   var = var,
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   prec = 1 / var
-                 )
-               })
-
-    ps$addDeps("prec", c("var", "meanlog", "varlog", "sdlog", "preclog", "sd"),
-               function(self) {
-                 prec <- self$getParameterValue("prec")
-                 var <- 1 / prec
-                 mean <- self$getParameterValue("mean")
-                 varlog <- log(1 + var / mean^2)
-                 list(
-                   var = var,
-                   meanlog = log(mean / sqrt(1 + var / mean^2)),
-                   varlog = varlog,
-                   sdlog = sqrt(varlog),
-                   preclog = 1 / varlog,
-                   sd = sqrt(var)
-                 )
-               })
-    ps$addDeps("mean", "meanlog", function(self) {
-      mean <- self$getParameterValue("mean")
-      list(meanlog = log(mean / sqrt(1 + self$getParameterValue("var") / mean^2)))
-    })
-    ps$addDeps("meanlog", "mean", function(self) {
-      list(mean = exp(self$getParameterValue("meanlog") +
-            self$getParameterValue("varlog") / 2))
-    })
-
-  return(ps)
+    }
+  )
 }
 
 getParameterSet.Multinomial <- function(object, ...) {
-
-  ps <- ParameterSet$new(
-    id = list("size", "probs"),
-    value = list(10, rep(0.5, 2)),
-    support = list(pos_naturals, setpower(Interval$new(0, 1), "n")),
-    settable = list(TRUE, TRUE),
-    description = list(
-      "Number of trials", "Probability of success i"
-    )
+  pset(
+    prm("size", "posnaturals", 10, tags = "required"),
+    prm("probs", Interval$new(0, 1)^"n", rep(0.5, 2), tags = "required"),
+    trafo = trafo_normalise
   )
-
-  ps$addTrafos("probs", function(x, self) x / sum(x))
-
-  return(ps)
 }
 
 getParameterSet.MultivariateNormal <- function(object, ...) { # nolint
+  pset(
+    prm("mean", "nreals", rep(0, 2), tags = "required"),
+    prm("cov", "nreals", matrix(c(1, 0, 0, 1), nrow = 2), tags = c("required", "linked")),
+    prm("prec", "nreals", tags = c("required", "linked")),
+    trafo = function(x, self) {
+      mean <- list_element(x, "mean")
+      covs <- list_element(x, "cov")
+      precs <- list_element(x, "prec")
 
-  ps <- ParameterSet$new(
-    id = list("mean", "cov", "prec"),
-    value = list(
-      rep(0, 2),
-      matrix(c(1, 0, 0, 1), nrow = 2),
-      matrix(c(1, 0, 0, 1), nrow = 2)
-    ),
-    support = list(
-      setpower(reals, "n"),
-      setpower(reals, "n"),
-      setpower(reals, "n")
-    ),
-    description = list(
-      "Vector of means - Location Parameter.",
-      "Covariance matrix - Scale Parameter.",
-      "Precision matrix - Scale Parameter."
-    )
-  )
+      if (length(covs) && length(precs)) {
+        stop("Can't update 'cov' and 'prec' parameters simultaneously")
+      } else if (length(covs)) {
+        old <- covs
+        old_name <- "cov"
+        new_name <- "prec"
+      } else {
+        old <- precs
+        old_name <- "prec"
+        new_name <- "cov"
+      }
 
-  ps$addDeps("cov", "prec", function(self) {
-    list(prec = list(solve(matrix(self$getParameterValue("cov"),
-      nrow = length(self$getParameterValue("mean"))
-    ))))
-  })
-  ps$addDeps("prec", "cov", function(self) {
-   list(cov = list(solve(matrix(self$getParameterValue("prec"),
-      nrow = length(self$getParameterValue("mean"))
-    ))))
-  })
-  ps$addChecks(function(self) {
-    mean <- self$getParameterValue("mean")
-    if (checkmate::testList(mean)) {
-      n <- length(mean[[1]])^2 * length(mean)
-    } else {
-      n <- length(mean)^2
+      old <- Map(function(.x, .y) matrix(.x, length(.y), length(.y)),
+                 old, mean)
+      new <- setNames(lapply(old, solve), gsub(old_name, new_name, names(old)))
+      unique_nlist(c(mean, old, new, x))
     }
-    n == length(unlist(self$getParameterValue("cov")))
-    })
-
-  return(ps)
+  )
 }
 
 getParameterSet.NegativeBinomial <- function(object, form = "fbs", ...) { # nolint
+  ps <- pset(
+    prm("prob", Interval$new(0, 1, type = "()"), 0.5, tags = c("required", "linked")),
+    prm("qprob", Interval$new(0, 1, type = "()"), tags = c("required", "linked")),
+    prm("mean", "posreals", tags = c("required", "linked")),
+    prm("size", "posnaturals", 10, tags = "required"),
+    prm("form", Set$new("sbf", "tbf", "tbs", "fbs"), form, tags = c("required", "immutable")),
+    trafo = function(x, self) {
 
-  if (form == "sbf") {
-    desc <- "Number of failures"
-  } else if (form == "tbf") {
-    desc <- "Number of failures"
-  } else if (form == "tbs") {
-    desc <- "Number of successes"
-  } else {
-    desc <- "Number of successes"
-  }
+      forms <- list_element(self$values, "form")
+      form <- forms[[1]]
+      sizes <- list_element(x, "size")
+      probs <- list_element(x, "prob")
+      qprobs <- list_element(x, "qprob")
+      means <- list_element(x, "mean")
 
-  ps <- ParameterSet$new(
-    id = list("prob", "qprob", "mean", "size", "form"),
-    value = list(0.5, 0.5, 10, 10, form),
-    support = list(
-      Interval$new(0, 1, type = "()"),
-      Interval$new(0, 1, type = "()"),
-      pos_reals,
-      pos_naturals,
-      Set$new("sbf", "tbf", "tbs", "fbs")
-    ),
-    settable = list(TRUE, TRUE, TRUE, TRUE, FALSE),
-    description = list(
-      "Probability of Success",
-      "Probability of failure",
-      "Mean - Location Parameter", desc, "Distribution form"
-    )
+      if (sum(length(probs) > 0, length(qprobs) > 0, length(means) > 0) > 1) {
+        stop("Can't update 'prob', 'qprob', 'mean' parameters simultaneously")
+      } else if (length(qprobs)) {
+        probs <- as_named_list(1 - unlist(qprobs),
+                            gsub("qprob", "prob", names(qprobs)))
+      } else if (length(means)) {
+        probs <- as_named_list(switch(form,
+          "sbf" = unlist(means) / (unlist(sizes) + unlist(means)),
+          "tbf" = (unlist(means) - unlist(sizes)) / unlist(means),
+          "tbs" = unlist(sizes) / unlist(means),
+          "fbs" = unlist(sizes) / (unlist(means) + unlist(sizes))
+        ), gsub("mean", "prob", names(means)))
+      }
+
+      if (!length(qprobs)) {
+        qprobs <- as_named_list(1 - unlist(probs),
+                              gsub("prob", "qprob", names(probs)))
+      }
+
+      if (!length(means)) {
+        means <- as_named_list(switch(form,
+          "sbf" = unlist(sizes) * (unlist(probs) / unlist(qprobs)),
+          "tbf" = unlist(sizes) / unlist(qprobs),
+          "tbs" = unlist(sizes) / unlist(probs),
+          "fbs" = unlist(sizes) * (unlist(qprobs) / unlist(probs))
+        ), gsub("prob", "mean", names(probs)))
+      }
+
+      unique_nlist(c(forms, sizes, probs, qprobs, means, x))
+    }
   )
 
-  if (form == "sbf") {
-    ps$addDeps("size", "mean", function(self) {
-      prob <- self$getParameterValue("prob")
-      list(mean = self$getParameterValue("size") * prob / (1 - prob))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") * prob / (1 - prob))
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") * (1 - qprob) / qprob)
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      mean <- self$getParameterValue("mean")
-      prob <- mean / (self$getParameterValue("size") + mean)
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-  } else if (form == "tbf") {
-    ps$addDeps("size", "mean", function(self) {
-      list(mean = self$getParameterValue("size") / (1 - self$getParameterValue("prob")))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") / (1 - prob)
-        )
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") / qprob)
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      mean <- self$getParameterValue("mean")
-      prob <- (mean - self$getParameterValue("size")) / mean
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
-                   unlist(self$getParameterValue("size"))))
-  } else if (form == "tbs") {
-    ps$addDeps("size", "mean", function(self) {
-      list(mean = self$getParameterValue("size") /
-        self$getParameterValue("prob"))
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") / prob
-        )
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") / (1 - qprob))
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      prob <- self$getParameterValue("size") / self$getParameterValue("mean")
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
-    ps$addChecks(function(self) all(unlist(self$getParameterValue("mean")) >=
-                                      unlist(self$getParameterValue("size"))))
-  } else {
-    ps$addDeps("size", "mean", function(self) {
-      prob <- self$getParameterValue("prob")
-      list(mean = self$getParameterValue("size") * (1 - prob) / prob)
-    })
-    ps$addDeps("prob", c("qprob", "mean"), function(self) {
-      prob <- self$getParameterValue("prob")
-      list(
-        qprob = 1 - prob,
-        mean = self$getParameterValue("size") * (1 - prob) / prob)
-    })
-    ps$addDeps("qprob", c("prob", "mean"), function(self) {
-      qprob <- self$getParameterValue("qprob")
-      list(
-        prob = 1 - qprob,
-        mean = self$getParameterValue("size") * qprob / (1 - qprob))
-    })
-    ps$addDeps("mean", c("prob", "qprob"), function(self) {
-      size <- self$getParameterValue("size")
-      prob <- size / (self$getParameterValue("mean") + size)
-      list(
-        prob = prob,
-        qprob = 1 - prob
-      )
-    })
+  if (form %in% c("tbf", "tbs")) {
+    ps$add_dep("mean", "size", cnd("geq", id = "size"))
   }
 
-  return(ps)
+  ps
 }
 
 getParameterSet.Normal <- function(object, ...) {
-  ps <- ParameterSet$new(
-    id = list("mean", "var", "sd", "prec"),
-    value = list(0, 1, 1, 1),
-    support = list(reals, pos_reals, pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Variance - Squared Scale Parameter",
-      "Standard Deviation - Scale Parameter",
-      "Precision - Inverse Squared Scale Parameter"
-    )
-  )
-  ps$addDeps("var", c("sd", "prec"), function(self) {
-    var <- self$getParameterValue("var")
-    list(
-      sd = sqrt(var),
-      prec = 1 / var
-    )
-  })
-  ps$addDeps("sd", c("var", "prec"), function(self) {
-    sd <- self$getParameterValue("sd")
-    list(
-      var = sd^2,
-      prec = sd^-2
-    )
-  })
-  ps$addDeps("prec", c("var", "sd"), function(self) {
-    prec <- self$getParameterValue("prec")
-    list(
-      var = 1 / prec,
-      sd = prec^-0.5
-    )
-  })
+  pset(
+    prm("mean", "reals", 0, tags = "required"),
+    prm("var", "posreals", 1, tags = c("linked", "required")),
+    prm("sd", "posreals", tags = c("linked", "required")),
+    prm("prec", "posreals", tags = c("linked", "required")),
+    trafo = function(x, self) {
 
-  return(ps)
+      vars <- sds <- precs <- NULL
+
+      if (any(grepl("sd", names(x)))) {
+        sds <- list_element(x, "sd")
+        vars <- setNames(as.list(unlist(sds) ^ 2),
+                         gsub("sd", "var", names(sds)))
+      } else if (any(grepl("prec", names(x)))) {
+        precs <- list_element(x, "prec")
+        vars <- setNames(as.list(1 / unlist(precs)),
+                         gsub("prec", "var", names(precs)))
+      }
+
+      if (is.null(vars)) {
+        vars <- list_element(x, "var")
+      }
+
+      if (is.null(sds)) {
+        sds <- setNames(as.list(sqrt(unlist(vars))),
+                          gsub("var", "sd", names(vars)))
+      }
+
+      if (is.null(precs)) {
+        precs <- setNames(as.list(1 / unlist(vars)),
+                          gsub("var", "prec", names(vars)))
+      }
+
+      unique_nlist(c(vars, sds, precs, x))
+    }
+  )
 }
 
 getParameterSet.Pareto <- function(object, ...) {
-  ParameterSet$new(
-    id = list("shape", "scale"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list("Shape parameter", "Scale parameter")
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Poisson <- function(object, ...) {
-  ParameterSet$new(
-    id = list("rate"), value = list(1),
-    support = list(pos_reals),
-    description = list("Arrival Rate")
+  pset(
+    prm("rate", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Rayleigh <- function(object, ...) {
-  ParameterSet$new(
-    id = list("mode"), value = list(1),
-    support = list(pos_reals),
-    description = list("Mode - Scale Parameter")
+  pset(
+    prm("mode", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.ShiftedLoglogistic <- function(object, ...) { # nolint
-
-  ps <- ParameterSet$new(
-    id = list("scale", "rate", "shape", "location"), value = list(1, 1, 1, 0),
-    support = list(pos_reals, pos_reals, reals, reals),
-    description = list(
-      "Scale Parameter",
-      "Rate Parameter",
-      "Shape Parameter",
-      "Location Parameter"
-    )
+  pset(
+    prm("shape", "reals", 1, tags = "required"),
+    prm("location", "reals", 0, tags = "required"),
+    prm("scale", "posreals", tags = c("linked", "required")),
+    prm("rate", "posreals", 1, tags = c("linked", "required")),
+    trafo = trafo_rate
   )
-
-  ps$addDeps("rate", "scale", function(self) list(scale = self$getParameterValue("rate")^-1))
-  ps$addDeps("scale", "rate", function(self) list(rate = self$getParameterValue("scale")^-1))
-
-  return(ps)
 }
 
 getParameterSet.StudentT <- function(object, ...) {
-  ParameterSet$new(
-    id = list("df"), value = list(1),
-    support = list(pos_reals),
-    description = list("Degrees of Freedom")
+  pset(
+    prm("df", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.StudentTNoncentral <- function(object, ...) { # nolint
-
-  ParameterSet$new(
-    id = list("df", "location"), value = list(1, 0),
-    support = list(pos_reals, reals),
-    description = list("Degrees of Freedom", "Non-centrality parameter")
+  pset(
+    prm("df", "posreals", 1, tags = "required"),
+    prm("location", "reals", 0, tags = "required")
   )
-
 }
 
 getParameterSet.Triangular <- function(object, symmetric = FALSE, ...) {
+  mode_tag <- if (symmetric) "immutable" else "required"
+  mode_val <- if (symmetric) NULL else 0.5
 
-  ps <- ParameterSet$new(
-    id = list("lower", "upper", "mode", "symmetric"),
-    value = list(0, 1, 0.5, symmetric),
-    support = list(reals, reals, reals, Logicals$new()),
-    settable = list(TRUE, TRUE, !symmetric, FALSE),
-    description = list(
-      "Lower distribution limit.", "Upper distribution limit.",
-      "Distribution mode.", "Type of distribution."
+  ps <- pset(
+    prm("lower", "reals", 0, tags = "required"),
+    prm("upper", "reals", 1, tags = "required"),
+    prm("mode", "reals", mode_val, tags = mode_tag),
+    prm("symmetric", "logicals", symmetric, tags = "immutable"),
+    deps = list(
+      list(id = "mode", on = "lower", cond = cnd("gt", id = "lower")),
+      list(id = "mode", on = "upper", cond = cnd("lt", id = "upper"))
     )
   )
 
   if (symmetric) {
-    ps$addDeps("lower", "mode", function(self) {
-      list(mode = (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2)
-    })
-    ps$addDeps("upper", "mode", function(self) {
-      list(mode = (self$getParameterValue("lower") +
-        self$getParameterValue("upper")) / 2)
-    })
+    ps$trafo <- function(x, self) {
+      lower <- ifelse(!is.null(x$lower), x$lower, self$values$lower)
+      upper <- ifelse(!is.null(x$upper), x$upper, self$values$upper)
+      x$mode <- (lower + upper) / 2
+      x
+    }
   }
 
-  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
-                 unlist(self$getParameterValue("upper"))))
-
-  return(ps)
+  ps
 }
 
 getParameterSet.Uniform <- function(object, ...) {
-  ps <- ParameterSet$new(
-    id = list("lower", "upper"),
-    value = list(0, 1),
-    support = list(reals, reals),
-    description = list("Lower distribution limit.", "Upper distribution limit.")
+  pset(
+    prm("lower", "reals", 0, tags = "required"),
+    prm("upper", "reals", 1, tags = "required"),
+    deps = list(
+      list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
+    )
   )
-
-  ps$addChecks(function(self) all(unlist(self$getParameterValue("lower")) <
-                                    unlist(self$getParameterValue("upper"))))
-
-  return(ps)
 }
 
 getParameterSet.Wald <- function(object, ...) {
-
-  ParameterSet$new(
-    id = list("mean", "shape"), value = list(1, 1),
-    support = list(pos_reals, pos_reals),
-    description = list(
-      "Mean - Location Parameter",
-      "Shape Parameter"
-    )
+  pset(
+    prm("mean", "posreals", 1, tags = "required"),
+    prm("shape", "posreals", 1, tags = "required")
   )
 }
 
 getParameterSet.Weibull <- function(object, ...) {
+  pset(
+    prm("shape", "posreals", 1, tags = "required"),
+    prm("scale", "posreals", 1, tags = c("linked", "required")),
+    prm("altscale", "posreals", tags = c("linked", "required")),
+    trafo = function(x, self) {
+      shapes <- list_element(x, "shape")
+      scales <- list_element(x, "scale")
+      altscales <- list_element(x, "altscale")
+      if (length(scales) && length(altscales)) {
+        stop("Can't update 'scale' and 'altscale' parameters simultaneously")
+      } else if (length(scales)) {
+        altscales <- setNames(as.list(unlist(scales)^-unlist(shapes)),
+                              gsub("scale", "altscale", names(scales)))
+      } else {
+        scales <-
+          setNames(as.list(exp(log(unlist(altscales)) / -unlist(shapes))),
+                   gsub("scale", "altscale", names(scales)))
+      }
 
-  ps <- ParameterSet$new(
-    id = list("shape", "scale", "altscale"), value = list(1, 1, 1),
-    support = list(pos_reals, pos_reals, pos_reals),
-    description = list("Shape parameter", "Scale parameter", "Alternate scale parameter")
+      unique_nlist(c(scales, altscales, shapes, x))
+    }
   )
-
-  ps$addDeps("scale", "altscale", function(self) {
-    list(altscale = self$getParameterValue("scale")^-self$getParameterValue("shape"))
-  })
-  ps$addDeps("altscale", "scale", function(self) {
-    list(scale = exp(log(self$getParameterValue("altscale")) /
-      (-self$getParameterValue("shape"))))
-  })
-
-  return(ps)
 }
 
 getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
+  pset(
+    prm("x", "nreals", 1, tags = c("required", "unique")),
+    prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
+    prm("cdf", Interval$new(0, 1)^"n", 1, tags = c("required", "linked")),
+    deps = list(
+      list(id = "cdf", on = "x", cond = cnd("len", id = "x"))
+    ),
+    trafo = function(x, self) {
+      pdfs <- list_element(x, "pdf")
+      cdfs <- list_element(x, "cdf")
 
-  ps <- ParameterSet$new(
-    id = list("x", "pdf", "cdf"),
-    value = list(1, 1, 1),
-    support = list(reals^"n", Interval$new(0, 1)^"n", Interval$new(0, 1)^"n"),
-    description = list(
-      "Data.", "Probability density function.",
-      "Cumulative distribution function."
-    )
+      if (length(pdfs) && length(cdfs)) {
+        stop("Can't update 'pdf' and 'cdf' parameters simultaneously")
+      } else if (length(pdfs)) {
+        cdfs <- setNames(lapply(pdfs, cumsum),
+                         gsub("pdf", "cdf", names(pdfs)))
+      } else {
+        pdfs <- setNames(lapply(cdfs, function(.x) c(.x[1], diff(.x))),
+                         gsub("cdf", "pdf", names(cdfs)))
+      }
+
+      unique_nlist(c(pdfs, cdfs, x))
+    }
   )
-  ps$addDeps("pdf", "cdf", function(self) list(cdf = cumsum(self$getParameterValue("pdf"))))
-  ps$addDeps("cdf", "pdf", function(self) {
-    list(pdf = c(self$getParameterValue("cdf")[1], diff(self$getParameterValue("cdf"))))
-  })
-  ps$addChecks(function(self) {
-    x <- unlist(self$getParameterValue("x"))
-    all(length(unlist(self$getParameterValue("cdf"))) == length(x)) &&
-      all(vapply(self$getParameterValue("x"), function(.x) !any(duplicated(.x)), logical(1)))
-  })
-
-  return(ps)
 }

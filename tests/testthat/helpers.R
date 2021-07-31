@@ -12,7 +12,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
                                    pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL,
                                    vectorise = TRUE) {
 
-  # context("public fields")
+
   checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description",
                                                         "packages"))
   expect_equal(as.character(sdist$inherit), "SDistribution")
@@ -26,7 +26,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     checkmate::expect_names(sdist$public_fields$packages)
   }
 
-  # context("public methods")
+
   checkmate::expect_subset(
     names(sdist$public_methods),
     c(
@@ -64,7 +64,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (!is.null(sdist$public_methods$pgf))
     expect_equal(names(formals(sdist$public_methods$pgf)), c("z", "..."))
 
-  # context("private methods")
+
   checkmate::expect_subset(names(sdist$private_methods), c(
     ".pdf", ".cdf", ".quantile", ".rand",
     ".log"
@@ -81,21 +81,18 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   if (!is.null(sdist$private_methods$.rand))
     expect_equal(formals(sdist$private_methods$.rand), as.pairlist(alist(n = ))) # nolint
 
-  sdist <- expect_silent({
-    do.call(sdist$new, pars)
-  })
-
+  sdist <- do.call(sdist$new, pars)
 
   if (vectorise) {
     autotest_vec_sdistribution(sdist, pars)
   }
 
-  # context("sdist specific - properties & traits")
+
   expect_equal(sdist$traits, traits)
   expect_equal(sdist$properties$support, support)
   expect_equal(sdist$properties$symmetry, symmetry)
 
-  # context("sdist specific - public methods")
+
   if (!is.null(sdist$mean)) {
     expect_rounded_equal(sdist$mean(), mean, 4)
   }
@@ -140,12 +137,12 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
 
 
 
-  # context("sdist specific - representation methods")
+
   expect_output(sdist$print())
   expect_output(sdist$summary())
   expect_output(sdist$summary(F))
 
-  # context("d/p/q/r")
+
   if (testUnivariate(sdist)) {
     if (isPdf(sdist)) {
       expect_rounded_equal(sdist$pdf(1:3), pdf)
@@ -256,6 +253,7 @@ autotest_vec_sdistribution <- function(sdist, pars) {
   if (testMultivariate(sdist)) {
     autotest_vec_mv_sdistribution(sdist, pars)
   } else {
+
     if (sdist$name == "Geometric" & !is.null(pars$trials)) {
       vdist <- VectorDistribution$new(distribution = sdist$name,
                                       params = rep(list(pars[names(pars) %nin% "trials"]), 3),
@@ -298,7 +296,7 @@ autotest_vec_sdistribution <- function(sdist, pars) {
     #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1:2)
     # }
 
-    # context("d/p/q/r")
+
       if (isPdf(sdist)) {
         test_vectorised_dpqr(vdist, "pdf", list(1:3))
         if (sdist$.__enclos_env__$private$.log) {
@@ -368,7 +366,7 @@ autotest_vec_mv_sdistribution <- function(sdist, pars) {
 }
 
 autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm, pdf, cdf) {
-  # context("public fields")
+
   checkmate::expect_subset(names(kern$public_fields), c("name", "short_name", "description",
                                                         "packages"))
   expect_equal(as.character(kern$inherit), "Kernel")
@@ -382,7 +380,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
     checkmate::expect_names(kern$public_fields$packages)
   }
 
-  # context("public methods")
+
   checkmate::expect_subset(names(kern$public_methods), c("clone", "pdfSquared2Norm",
                                                          "cdfSquared2Norm", "variance",
                                                          "initialize"))
@@ -412,7 +410,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
                                                                                "log.p"))
   }
 
-  # context("kernel specific")
+
   kern <- kern$new()
   expect_equal(kern$mean(), 0)
   expect_equal(kern$median(), 0)
@@ -424,7 +422,7 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   expect_output(kern$summary())
   expect_output(kern$summary(F))
 
-  # context("d/p/q/r")
+
   if (isPdf(kern)) {
     expect_rounded_equal(kern$pdf(c(-0.1, 0, 0.1)), pdf, 2)
     if (kern$.__enclos_env__$private$.log) {
@@ -451,7 +449,11 @@ autotest_kernel <- function(kern, shortname, support, variance, pdfSquared2Norm,
   }
 }
 
-expect_equal_distribution <- function(d1, d2) {
+expect_equal_distr_lst <- function(l1, l2) {
+  Map(expect_equal_distr, l1, l2)
+}
+
+expect_equal_distr <- function(d1, d2) {
   expect_equal(class(d1), class(d2))
 
   expect_equal(d1$traits$variateForm, d2$traits$variateForm)
@@ -467,17 +469,18 @@ expect_equal_distribution <- function(d1, d2) {
   expect_equal(d1$pdf(1:5), d2$pdf(1:5))
   expect_equal(d1$cdf(1:5), d2$cdf(1:5))
   q <- try(d1$quantile(0.1), silent = TRUE)
-  if (class(q)[1] != "try-error")
-    expect_equal(d1$quantile(c(0.1, 0.2, 0.3)), d2$pdf(c(0.1, 0.2, 0.3)))
+  if (class(q)[1] != "try-error") {
+    expect_equal(d1$quantile(c(0.1, 0.2, 0.3)), d2$quantile(c(0.1, 0.2, 0.3)))
+  }
 
-  p1 <- as.data.table(d1$parameters())
-  p1$support <- rsapply(p1$support, "strprint")
-  p2 <- as.data.table(d2$parameters())
-  p2$support <- rsapply(p2$support, "strprint")
-  expect_equal(p1, p2)
+  expect_equal_ps(d1$parameters(), d2$parameters())
 }
 
 expect_distribution <- function(d, class) {
-  expect_is(d, "Distribution")
-  expect_is(d, "Distribution")
+  expect_R6_class(d, "Distribution")
+  expect_R6_class(d, class)
+}
+
+expect_R6_class <- function(obj, what) { # nolint
+  expect_true(inherits(obj, c(what, "R6")))
 }

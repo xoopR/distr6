@@ -60,16 +60,13 @@ Try decorate(distribution, FunctionImputation) first.")
       distlist <- list(distribution)
       names(distlist) <- distribution$short_name
 
-      private$.outerParameters <- ParameterSet$new(
-        id = list("lower", "upper"), value = list(lower, upper),
-        support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
-        description = list(
-          "Lower limit of truncation",
-          "Upper limit of truncation"
+      private$.outerParameters <- pset(
+        prm("lower", "extreals", lower, "required"),
+        prm("upper", "extreals", upper, "required"),
+        deps = list(
+          list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
         )
       )
-      private$.outerParameters$addChecks(function(self) self$getParameterValue("lower") <
-                                           self$getParameterValue("upper"))
 
       if (testDiscrete(distribution)) {
         support <- Interval$new(lower + 1, upper, class = "integer", type = "(]")
@@ -90,26 +87,28 @@ Try decorate(distribution, FunctionImputation) first.")
         valueSupport = distribution$traits$valueSupport, variateForm = "univariate",
         outerID = "trunc"
       )
-    },
+    }
+  ),
 
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-
-      if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc__lower") + 1,
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (prop$support$class == "integer") {
+        Interval$new(
+          self$getParameterValue("trunc__lower") + 1,
           self$getParameterValue("trunc__upper"),
           class = "integer"
         )
       } else {
-        private$.properties$support <- Interval$new(self$getParameterValue("trunc__lower"),
+        Interval$new(
+          self$getParameterValue("trunc__lower"),
           self$getParameterValue("trunc__upper"),
           type = "(]"
         )
       }
-
-      invisible(self)
+      prop
     }
   ),
 

@@ -52,21 +52,22 @@ MixtureDistribution <- R6Class("MixtureDistribution",
 
       if (checkmate::testNumeric(weights)) {
         stopifnot(length(weights) == lng)
-        weights <- list(weights / sum(weights))
+        weights <- weights / sum(weights)
       } else if (weights != "uniform") {
         stop(sprintf("weights should either be a numeric of length %s, or 'uniform'", lng))
       }
 
-      private$.outerParameters <- ParameterSet$new(
-        id = "weights",
-        value = weights,
-        support = Interval$new(0, 1)^lng + Set$new("uniform"),
-        description = "Mixture weights"
-      )
-      private$.outerParameters$addTrafos(
-        "weights",
-        function(x, self) {
-          if (checkmate::testNumeric(x)) list(x / sum(x)) else "uniform" # nocov
+      private$.outerParameters <- pset(
+        prm("weights", Interval$new(0, 1)^lng + Set$new("uniform"), weights, "required"),
+        trafo = function(x, self) {
+          weights <- lapply(list_element(x, "weights"), function(.x) {
+            if (checkmate::testNumeric(.x)) {
+              .x <- .x / sum(.x)
+            } else {
+              .x
+            }
+          })
+          unique_nlist(c(weights, x))
         }
       )
 
@@ -157,7 +158,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     pdf = function(..., log = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$pdf(..., log = log, data = data),
-        weights = private$.outerParameters$getParameterValue("weights"),
+        weights = private$.outerParameters$values$weights,
         univariate = private$.univariate
       )
     },
@@ -180,7 +181,7 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
       mixture_dpqr_returner(
         dpqr = super$cdf(..., lower.tail = lower.tail, log.p = log.p, data = data),
-        weights = private$.outerParameters$getParameterValue("weights"),
+        weights = private$.outerParameters$values$weights,
         univariate = private$.univariate
       )
     },
@@ -202,10 +203,10 @@ MixtureDistribution <- R6Class("MixtureDistribution",
     #' to the samples from the Multinomial, and finally randomly permuting these draws.
     #' @examples
     #' m <- MixtureDistribution$new(distribution = "Normal",
-    #' params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+    #' params = data.frame(mean = 1:2, sd = 1))
     #' m$rand(5)
     rand = function(n, simplify = TRUE) {
-      weights <- private$.outerParameters$getParameterValue("weights")
+      weights <- private$.outerParameters$values$weights
 
       lng <- nrow(self$modelTable)
       if (checkmate::testCharacter(weights)) {

@@ -27,7 +27,7 @@ Kernel <- R6Class("Kernel",
 
       private$.properties$support <- assertSet(support)
       private$.traits$type <- Reals$new()
-      private$.parameters <- ParameterSet$new()
+      private$.parameters <- pset()
 
       invisible(self)
     },
@@ -95,33 +95,3 @@ Kernel <- R6Class("Kernel",
     }
   )
 )
-
-#' @title Squared Probability Density Function 2-Norm
-#' @name pdfSquared2Norm
-#' @description The squared 2-norm of the pdf evaluated up to a given limit, possibly shifted.
-#'
-#' @usage pdfSquared2Norm(object, x = 0, upper = Inf)
-#'
-#' @param object Distribution.
-#' @param x amount to shift the result.
-#' @param upper upper limit of the integral.
-#'
-#' @return Squared 2-norm of pdf evaluated between limits as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Squared Cumulative Distribution Function 2-Norm
-#' @name cdfSquared2Norm
-#' @description The squared 2-norm of the cdf evaluated up to a given limit, possibly shifted.
-#'
-#' @usage cdfSquared2Norm(object, x = 0, upper = Inf)
-#'
-#' @param object Distribution.
-#' @param x amount to shift the result.
-#' @param upper upper limit of the integral.
-#'
-#' @return Squared 2-norm of cdf evaluated between limits as a numeric.
-#'
-#' @export
-NULL

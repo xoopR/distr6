@@ -66,16 +66,13 @@ Try decorate(distribution, FunctionImputation) first.")
         support <- Interval$new(lower, upper)
       }
 
-      private$.outerParameters <- ParameterSet$new(
-        id = list("lower", "upper"), value = list(lower, upper),
-        support = list(Reals$new() + Set$new(-Inf, Inf), Reals$new() + Set$new(-Inf, Inf)),
-        description = list(
-          "Lower limit of huberization",
-          "Upper limit of huberization"
+      private$.outerParameters <- pset(
+        prm("lower", "extreals", lower, "required"),
+        prm("upper", "extreals", upper, "required"),
+        deps = list(
+          list(id = "lower", on = "upper", cond = cnd("lt", id = "upper"))
         )
       )
-      private$.outerParameters$addChecks(function(self) self$getParameterValue("lower") <
-                                           self$getParameterValue("upper"))
 
       super$initialize(
         distlist = distlist,
@@ -90,25 +87,27 @@ Try decorate(distribution, FunctionImputation) first.")
         valueSupport = "mixture", variateForm = "univariate",
         outerID = "hub"
       )
-    },
+    }
+  ),
 
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$properties$support$class == "integer") {
-        private$.properties$support <- Interval$new(self$getParameterValue("hub__lower"),
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (prop$support$class == "integer") {
+        Interval$new(
+          self$getParameterValue("hub__lower"),
           self$getParameterValue("hub__upper"),
           class = "integer"
         )
       } else {
-        private$.properties$support <- Interval$new(
+        Interval$new(
           self$getParameterValue("hub__lower"),
           self$getParameterValue("hub__upper")
         )
       }
-
-      invisible(self)
+      prop
     }
   ),
 

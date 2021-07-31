@@ -45,16 +45,19 @@ In distr6, all pdf and cdf functions use the first argument of `x`, for univaria
 
 ### ParameterSet
 
-We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a `ParameterSet` objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call `parameters()` on a distribution. Every time you use the `set/getParameterSet()` methods these are actually called on the `ParameterSet`. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in `?ParameterSet`
+We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we use [param6](https://cran.r-project.org/package=param6).
 
 ```{r}
-ps <- ParameterSet$new(id = list("lower","upper"), value = c(1,10),
-                       support = list(set6::Reals$new(),set6::Reals$new()),
-                       settable = list(TRUE, TRUE))
-print(ps)
-```
+library(param6)
+ps <- pset(
+  # id = lower; support = reals; value = 1
+  prm("lower", "reals", 1),
+  # id = upper; support = reals; value = 10
+  prm("upper", "reals", 10)
+)
 
-We have omitted the `description` argument as this is rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).
+ps
+```
 
 ### Constructing the Distribution
 

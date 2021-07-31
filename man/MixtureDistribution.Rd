@@ -40,7 +40,7 @@ m$pdf(1, 2)
 ## ------------------------------------------------
 
 m <- MixtureDistribution$new(distribution = "Normal",
-params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+params = data.frame(mean = 1:2, sd = 1))
 m$rand(5)
 }
 \seealso{
@@ -72,19 +72,19 @@ Other wrappers:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionWrapper" data-id="setParameterValue">}\href{../../distr6/html/DistributionWrapper.html#method-setParameterValue}{\code{distr6::DistributionWrapper$setParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-getParameterValue}{\code{distr6::VectorDistribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="median">}\href{../../distr6/html/VectorDistribution.html#method-median}{\code{distr6::VectorDistribution$median()}}\out{</span>}
@@ -368,7 +368,7 @@ If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{m <- MixtureDistribution$new(distribution = "Normal",
-params = data.table::data.table(mean = 1:2), shared_params = list(sd = 1))
+params = data.frame(mean = 1:2, sd = 1))
 m$rand(5)
 }
 \if{html}{\out{</div>}}

@@ -149,18 +149,19 @@ Uniform <- R6Class("Uniform",
     #' @param ... Unused.
     pgf = function(z, ...) {
       return(NaN)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      private$.properties$support <- Interval$new(
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- Interval$new(
         self$getParameterValue("lower"),
         self$getParameterValue("upper")
       )
-      invisible(self)
+      prop
     }
   ),
 

@@ -161,13 +161,24 @@ Dirichlet <- R6Class("Dirichlet",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(lst = lst)
       len <- length(self$getParameterValue("params"))
       private$.variates <- len
-      private$.properties$support <- setpower(Interval$new(0, 1, type = "()"), len)
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- setpower(
+        Interval$new(0, 1, type = "()"),
+        length(self$getParameterValue("params"))
+      )
+      prop
     }
   ),
 

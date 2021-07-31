@@ -35,14 +35,9 @@ print(N)
 To access useful statistics, distr6 includes a summary method
 
 ```{r}
-summary(N)
+N$summary()
 ```
 
-And a shortened form is available too
-
-```{r}
-summary(N, full = F)
-```
 
 ## Alternative Parameterisations
 

@@ -188,7 +188,7 @@ Quantile (inverse-cdf) function of the distribution.}
 \item{\code{rand}}{\verb{function(1)} \cr
 Simulation function for drawing random samples from the distribution.}
 
-\item{\code{parameters}}{\verb{([ParameterSet])} \cr
+\item{\code{parameters}}{\verb{([param6::ParameterSet])} \cr
 Parameter set for defining the parameters in the distribution, which should be set before
 construction.}
 
@@ -285,8 +285,7 @@ Returns the full parameter details for the supplied parameter.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\code{character()} \cr
-id of parameter value to return.}
+\item{\code{id}}{Deprecated.}
 }
 \if{html}{\out{</div>}}
 }
@@ -320,7 +319,7 @@ Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$setParameterValue(
   ...,
-  lst = NULL,
+  lst = list(...),
   error = "warn",
   resolveConflicts = FALSE
 )}\if{html}{\out{</div>}}

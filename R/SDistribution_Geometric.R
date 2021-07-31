@@ -11,8 +11,8 @@
 #' @templateVar distsupport the Naturals (zero is included if modelling number of failures before success)
 #' @templateVar default prob = 0.5, trials = FALSE
 #' @details
-#' The Geometric distribution is used to either refer to modelling the number of trials or number
-#' of failures before the first success.
+#' The Geometric distribution is used to either model the number of trials
+#' (`trials = TRUE`) or number of failures (`trials = FALSE`) before the first success.
 # nolint end
 #'
 #' @template class_distribution
@@ -21,7 +21,6 @@
 #' @template method_kurtosis
 #' @template method_pgf
 #' @template method_mgfcf
-#' @template method_setParameterValue
 #' @template param_decorators
 #' @template param_prob
 #' @template param_qprob
@@ -257,7 +256,6 @@ Geometric <- R6Class("Geometric",
 
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
-
     .trials = logical(0)
   )
 )

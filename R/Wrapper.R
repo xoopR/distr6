@@ -39,9 +39,9 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     #' Wrapped distribution value support.
     #' @param variateForm `(character(1))`\cr
     #' Wrapped distribution variate form.
-    #' @param parameters `([ParameterSetCollection])`\cr
+    #' @param parameters `([param6::ParameterSet])`\cr
     #' Optional parameters to add to the internal collection, ignored if `distlist` is given.
-    #' @param outerID `([ParameterSet])`\cr
+    #' @param outerID `([param6::ParameterSet])`\cr
     #' Parameters added by the wrapper.
     initialize = function(distlist = NULL,
                           name, short_name, description,
@@ -84,15 +84,15 @@ DistributionWrapper <- R6Class("DistributionWrapper",
       }
 
       if (length(paramlst) != 0) {
-        private$.parameters <- ParameterSetCollection$new(lst = paramlst)
+        private$.parameters <- cpset(pss = paramlst)
       }
 
       if (!is.null(parameters) & is.null(distlist)) {
-        assertParameterSetCollection(parameters)
+        assertParameterSet(parameters)
         if (is.null(private$.parameters)) {
           private$.parameters <- parameters
         } else {
-          private$.parameters$merge(parameters)
+          private$.parameters <- c(private$.parameters, parameters)
         }
       }
 
@@ -116,21 +116,6 @@ DistributionWrapper <- R6Class("DistributionWrapper",
       } else {
         private$.wrappedModels
       }
-    },
-
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      # This case is highly unlikely to ever be seen.
-      # if (length(private$.parameters) == 0) {
-      #   return(NULL)
-      # } else {
-        if (is.null(lst)) {
-          lst <- list(...)
-        }
-        self$parameters()$setParameterValue(lst = lst, error = error,
-                                            resolveConflicts = resolveConflicts)
-      # }
     }
   ),
 
@@ -144,18 +129,3 @@ DistributionWrapper <- R6Class("DistributionWrapper",
     .log = TRUE
   )
 )
-
-#' @name wrappedModels
-#' @title Gets Internally Wrapped Models
-#' @description Returns either a list of all the wrapped models or the models named by parameters.
-#'
-#' @usage wrappedModels(object, model = NULL)
-#'
-#' @param object Distribution.
-#' @param model character, see details.
-#'
-#' @return If \code{model} is NULL then returns list of models that are wrapped by the wrapper.
-#' Otherwise returns model given in \code{model}.
-#'
-#' @export
-NULL

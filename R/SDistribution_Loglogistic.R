@@ -19,7 +19,6 @@
 #' @template method_kurtosis
 #' @template method_pgf
 #' @template method_mgfcf
-#' @template method_setParameterValue
 #' @template param_decorators
 #' @template param_scale
 #' @template param_shape

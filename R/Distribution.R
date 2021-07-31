@@ -49,7 +49,7 @@ Distribution <- R6Class("Distribution",
     #' Quantile (inverse-cdf) function of the distribution.
     #' @param rand `function(1)` \cr
     #' Simulation function for drawing random samples from the distribution.
-    #' @param parameters `([ParameterSet])` \cr
+    #' @param parameters `([param6::ParameterSet])` \cr
     #' Parameter set for defining the parameters in the distribution, which should be set before
     #' construction.
     #' @param valueSupport `(character(1))` \cr
@@ -163,7 +163,7 @@ Distribution <- R6Class("Distribution",
         # Parameter Checks
         #-------------------------
         if (!is.null(parameters)) {
-          checkmate::assertClass(parameters, "ParameterSet")
+          assertParameterSet(parameters)
           # parameters <- parameters$clone(deep = TRUE)$.__enclos_env__$private$.update()
         }
       }
@@ -219,30 +219,7 @@ Distribution <- R6Class("Distribution",
     #' @param n `(integer(1))` \cr
     #' Number of parameters to display when printing.
     strprint = function(n = 2) {
-      if (length(private$.parameters) != 0) {
-        p <- as.data.table(self$parameters())
-        settable <- p$settable
-        id <- p[settable, "id"][[1]]
-        value <- p[settable, "value"][[1]]
-        lng <- length(id)
-        if (lng > (2 * n)) {
-          string <- paste0(
-            self$short_name, "(", paste(id[1:n], value[1:n], sep = " = ", collapse = ", "),
-            ",...,", paste(id[(lng - n + 1):lng], value[(lng - n + 1):lng],
-              sep = " = ",
-              collapse = ", "
-            ), ")"
-          )
-        } else {
-          string <- paste0(
-            self$short_name, "(", paste(id, value, sep = " = ", collapse = ", "),
-            ")"
-          )
-        }
-      } else {
-        string <- paste0(self$short_name)
-      }
-      return(string)
+      as.character(self, 2)
     },
 
     #' @description
@@ -266,18 +243,13 @@ Distribution <- R6Class("Distribution",
     summary = function(full = TRUE, ...) {
 
       if (full) {
-
-        settable <- as.data.table(self$parameters())$settable
+        pars <- self$parameters()
         name <- ifelse(is.null(self$description), self$name, self$description)
-        if (!any(settable)) {
+        if (!length(pars)) {
           cat(name)
         } else {
-          cat(name, "Parameterised with:\n")
-
-          cat(" ", paste(unlist(as.data.table(self$parameters())[settable, "id"]),
-                         unlist(as.data.table(self$parameters())[settable, "value"]),
-                         sep = " = ", collapse = ", "
-          ))
+          cat(name, "\nParameterised with:\n\n")
+          print(self$parameters())
         }
 
         a_exp <- suppressMessages(try(self$mean(), silent = T))
@@ -287,7 +259,7 @@ Distribution <- R6Class("Distribution",
 
         if (!inherits(a_exp, "try-error") | !inherits(a_var, "try-error") |
           !inherits(a_skew, "try-error") | !inherits(a_kurt, "try-error")) {
-          cat("\n\n ", "Quick Statistics", "\n")
+          cat("\n\n", "Quick Statistics", "\n", sep = "")
         }
 
         if (!inherits(a_exp, "try-error")) {
@@ -322,14 +294,15 @@ Distribution <- R6Class("Distribution",
         }
         cat("\n")
 
-        cat(
-          " Support:", self$properties$support$strprint(), "\tScientific Type:",
-          self$traits$type$strprint(), "\n"
-        )
-        cat("\n Traits:\t", self$traits$valueSupport, "; ", self$traits$variateForm, sep = "")
-        cat("\n Properties:\t", self$properties$symmetry, sep = "")
-        if (!inherits(a_kurt, "try-error")) cat(";", exkurtosisType(a_kurt))
-        if (!inherits(a_skew, "try-error")) cat(";", skewType(a_skew))
+        cat("Support:", self$properties$support$strprint(),
+            "\tScientific Type:", self$traits$type$strprint(), "\n")
+        cat("\nTraits:\t\t", self$traits$valueSupport, "; ",
+            self$traits$variateForm, sep = "")
+        cat("\nProperties:\t", self$properties$symmetry, sep = "")
+        a_kurt <- self$properties$kurtosis
+        a_skew <- self$properties$skewness
+        if (!is.null(a_kurt)) cat(";", a_kurt)
+        if (!is.null(a_skew)) cat(";", a_skew)
 
         if (length(self$decorators) != 0) {
           cat("\n\n Decorated with: ", paste0(self$decorators, collapse = ", "))
@@ -350,21 +323,22 @@ Distribution <- R6Class("Distribution",
 
     #' @description
     #' Returns the full parameter details for the supplied parameter.
+    #' @param id Deprecated.
     parameters = function(id = NULL) {
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
-        return(private$.parameters$parameters(id))
+      if (!is.null(id)) {
+        warning("'id' argument is deprecated and currently unused")
+      }
+
+      if (length(private$.parameters)) {
+        private$.parameters
       }
     },
 
     #' @description
     #' Returns the value of the supplied parameter.
     getParameterValue = function(id, error = "warn") {
-      if (length(private$.parameters) == 0) {
-        return(NULL)
-      } else {
-        return(private$.parameters$getParameterValue(id, error))
+      if (length(private$.parameters)) {
+        private$.parameters$get_values(id)
       }
     },
 
@@ -375,15 +349,16 @@ Distribution <- R6Class("Distribution",
     #' b = Binomial$new()
     #' b$setParameterValue(size = 4, prob = 0.4)
     #' b$setParameterValue(lst = list(size = 4, prob = 0.4))
-    setParameterValue = function(..., lst = NULL, error = "warn",
+    setParameterValue = function(..., lst = list(...), error = "warn",
                                  resolveConflicts = FALSE) {
-      if (is.null(lst)) {
-        lst <- list(...)
+      if (resolveConflicts) {
+        warning("'resolveConflicts' is redundant and deprecated")
       }
+
       if (private$.parameters$length && length(lst)) {
-        self$parameters()$setParameterValue(lst = lst, error = error,
-                                            resolveConflicts = resolveConflicts)
+        private$.parameters$values <- unique_nlist(c(lst, private$.parameters$values))
       }
+
       invisible(self)
     },
 
@@ -710,12 +685,12 @@ decorator to numerically estimate this.")
     #' and is more prone to error. Used primarily by decorators.
     workingSupport = function() {
 
-      if (testCountablyFinite(self$properties$support)) {
-        return(self$properties$support)
+      if (testCountablyFinite(support <- private$.properties$support)) {
+        return(support)
       }
 
-      lower <- self$inf
-      upper <- self$sup
+      lower <- support$lower
+      upper <- support$upper
 
       if (lower == -Inf) {
         if (private$.isCdf == 1L) {
@@ -805,7 +780,10 @@ decorator to numerically estimate this.")
     #' @field properties
     #' Returns distribution properties, including skewness type and symmetry.
     properties = function() {
-      private$.properties
+      prop <- private$.properties
+      prop$kurtosis <- tryCatch(exkurtosisType(self$kurtosis()), error = function(e) NULL)
+      prop$skewness <- tryCatch(skewType(self$skewness()), error = function(e) NULL)
+      prop
     },
 
     #' @field support
@@ -878,386 +856,33 @@ decorator to numerically estimate this.")
   )
 )
 
-
-#' @title String Representation of Print
-#' @name strprint
-#' @description Parsable string to be supplied to \code{print}, \code{data.frame}, etc.
-#' @details strprint is a suggested method that should be included in all R6 classes to be passed to
-#' methods such as \code{cat}, \code{summary} and \code{print}. Additionally can be used to easily
-#' parse R6 objects into data-frames, see examples.
-#'
-#' @param object R6 object
-#' @param n Number of parameters to display before & after ellipsis
-#' @usage strprint(object, n = 2)
-#'
-#' @return String representation of the distribution.
-#'
-#' @examples
-#' Triangular$new()$strprint()
-#' Triangular$new()$strprint(1)
 #' @export
-NULL
+as.character.Distribution <- function(x, n, ...) {
+  if (length(x$parameters()) != 0) {
+    p <- sort_named_list(x$parameters()$values)
+    lng <- length(p)
+    if (lng > (2 * n)) {
+      string <- paste0(
+        x$short_name, "(",
+        paste(names(p)[1:n], p[1:n], sep = " = ", collapse = ", "),
+        ",...,", paste(names(p)[(lng - n + 1):lng], p[(lng - n + 1):lng],
+          sep = " = ",
+          collapse = ", "
+        ), ")"
+      )
+    } else {
+      string <- paste0(
+        x$short_name, "(", paste(names(p), p, sep = " = ", collapse = ", "),
+        ")"
+      )
+    }
+  } else {
+    string <- paste0(x$short_name, "()")
+  }
+  string
+}
 
-#' @title Distribution Summary
-#' @description Summary method for distribution objects (and all child classes).
-#'
-#' @section R6 Usage: $summary(full = TRUE)
-#' @param object Distribution.
-#' @param full logical; if TRUE (default), gives an extended summary, otherwise brief.
-#' @param ... additional arguments.
-#'
-#' @seealso \code{\link{Distribution}}
-#'
-#' @return Printed summary of the distribution.
-#'
 #' @export
-summary.Distribution <- function(object, full = TRUE, ...) {}
-
-#' @name pdf
-#' @title Probability Density Function
-#' @description See [Distribution]`$pdf`
-#' @usage pdf(object, ..., log = FALSE, simplify = TRUE, data = NULL)
-#' @param object ([Distribution])
-#' @param ... `(numeric())` \cr
-#' Points to evaluate the probability density function of the distribution. Arguments do not need
-#' to be named. The length of each argument corresponds to the number of points to evaluate,
-#' the number of arguments corresponds to the number of variables in the distribution.
-#' See examples.
-#' @param log `logical(1)` \cr
-#' If `TRUE` returns log-pdf. Default is `FALSE`.
-#' @param simplify `logical(1)` \cr
-#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#' [data.table::data.table][data.table].
-#' @param data [array] \cr
-#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#' to the distribution in the vector to evaluate.
-#'
-#' @return Pdf evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a [data.table::data.table].
-#'
-#' @export
-NULL
-
-#' @name cdf
-#' @title Cumulative Distribution Function
-#' @description See [Distribution]`$cdf`
-#' @usage cdf(object, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL)
-#' @param object ([Distribution])
-#' @param ... `(numeric())` \cr
-#' Points to evaluate the cumulative distribution function of the distribution. Arguments do not
-#' need to be named. The length of each argument corresponds to the number of points to evaluate,
-#' the number of arguments corresponds to the number of variables in the distribution.
-#' See examples.
-#' @param lower.tail `logical(1)` \cr
-#' If `TRUE` (default), probabilities are `X <= x`, otherwise, `X > x`.
-#' @param log.p `logical(1)` \cr
-#' If `TRUE` returns log-cdf. Default is `FALSE`.
-#' @param simplify `logical(1)` \cr
-#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#' [data.table::data.table][data.table].
-#' @param data [array] \cr
-#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#' to the distribution in the vector to evaluate.
-#'
-#' @return Cdf evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a [data.table::data.table].
-#'
-#' @export
-NULL
-
-#' @title Inverse Cumulative Distribution Function
-#' @description See [Distribution]`$quantile`
-#' @importFrom stats quantile
-#' @param x ([Distribution])
-#' @param ... `(numeric())` \cr
-#' Points to evaluate the quantile function of the distribution. Arguments do not need
-#' to be named. The length of each argument corresponds to the number of points to evaluate,
-#' the number of arguments corresponds to the number of variables in the distribution.
-#' See examples.
-#' @param lower.tail `logical(1)` \cr
-#' If `TRUE` (default), probabilities are `X <= x`, otherwise, `X > x`.
-#' @param log.p `logical(1)` \cr
-#' If `TRUE` returns log-cdf. Default is `FALSE`.
-#' @param simplify `logical(1)` \cr
-#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#' [data.table::data.table][data.table].
-#' @param data [array] \cr
-#' Alternative method to specify points to evaluate. If univariate then rows correspond with number
-#' of points to evaluate and columns correspond with number of variables to evaluate. In the special
-#' case of [VectorDistribution]s of multivariate distributions, then the third dimension corresponds
-#' to the distribution in the vector to evaluate.
-#'
-#' @return Quantile evaluated at given points as either a numeric if \code{simplify} is TRUE
-#' or as a [data.table::data.table].
-#'
-#' @export
-quantile.Distribution <- function(x, ..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE,
-                                  data = NULL) {}
-
-#' @name rand
-#' @title Random Simulation Function
-#' @description See [Distribution]`$rand`
-#' @usage rand(object, n, simplify = TRUE)
-#' @param object ([Distribution])
-#' @param n `(numeric(1))` \cr
-#' Number of points to simulate from the distribution. If length greater than \eqn{1}, then
-#' `n <- length(n)`,
-#' @param simplify `logical(1)` \cr
-#' If `TRUE` (default) simplifies the pdf if possible to a `numeric`, otherwise returns a
-#' [data.table::data.table][data.table].
-#'
-#' @return Simulations as either a numeric if \code{simplify} is TRUE
-#' or as a [data.table::data.table].
-#'
-#' @export
-NULL
-
-#' @name prec
-#' @title Precision of a Distribution
-#' @description Precision of a distribution assuming variance is provided.
-#' @usage prec(object)
-#' @param object Distribution.
-#' @return Reciprocal of variance as a numeric.
-#' @export
-NULL
-
-#' @name stdev
-#' @title Standard Deviation of a Distribution
-#' @description Standard deviation of a distribution assuming variance is provided.
-#'
-#' @usage stdev(object)
-#' @param object Distribution.
-#' @return Square-root of variance as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Median of a Distribution
-#' @description Median of a distribution assuming quantile is provided.
-#'
-#' @importFrom stats median
-#' @method median Distribution
-#' @param x Distribution.
-#' @param na.rm ignored, added for consistency with S3 generic.
-#' @param ... ignored, added for consistency with S3 generic.
-#' @return Quantile function evaluated at 0.5 as a numeric.
-#' @export
-median.Distribution <- function(x, na.rm = NULL, ...) {}
-
-#' @title Distribution Interquartile Range
-#' @name iqr
-#' @description Interquartile range of a distribution
-#' @usage iqr(object)
-#' @param object Distribution.
-#' @return Interquartile range of distribution as a numeric.
-#' @export
-NULL
-
-#' @title Distribution Correlation
-#' @name correlation
-#' @description Correlation of a distribution.
-#'
-#' @usage correlation(object)
-#'
-#' @param object Distribution.
-#'
-#' @return Either '1' if distribution is univariate or the correlation as a numeric or matrix.
-#'
-#' @export
-NULL
-
-#' @name liesInSupport
-#' @title Test if Data Lies in Distribution Support
-#' @description Tests if the given data lies in the support of the Distribution, either tests if all
-#' data lies in the support or any of it.
-#'
-#' @usage liesInSupport(object, x, all = TRUE, bound = FALSE)
-#' @param object Distribution.
-#' @param x vector of numerics to test.
-#' @param all logical, see details.
-#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#'
-#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every
-#' element lies in the distribution support or FALSE otherwise.
-#'
-#' @export
-NULL
-
-#' @name liesInType
-#' @title Test if Data Lies in Distribution Type
-#' @description Tests if the given data lies in the type of the Distribution, either tests if all
-#' data lies in the type or any of it.
-#'
-#' @usage liesInType(object, x, all = TRUE, bound = FALSE)
-#' @param object Distribution.
-#' @param x vector of numerics to test.
-#' @param all logical, see details.
-#' @param bound logical, if FALSE (default) uses dmin/dmax otherwise inf/sup.
-#'
-#' @return Either a vector of logicals if \code{all} is FALSE otherwise returns TRUE if every
-#' element lies in the distribution type or FALSE otherwise.
-#'
-#' @export
-NULL
-
-
-#' @name decorators
-#' @title Decorators Accessor
-#' @usage decorators(object)
-#' @section R6 Usage: $decorators
-#' @param object Distribution.
-#' @description Returns the decorators added to a distribution.
-#' @return Character vector of decorators.
-#' @export
-NULL
-
-#' @name traits
-#' @title Traits Accessor
-#' @usage traits(object)
-#' @section R6 Usage: $traits
-#' @param object Distribution.
-#' @description Returns the traits of the distribution.
-#' @return List of traits.
-#' @export
-NULL
-
-#' @name valueSupport
-#' @title Value Support Accessor - Deprecated
-#' @usage valueSupport(object)
-#' @param object Distribution.
-#' @description Deprecated. Use $traits$valueSupport
-#' @return One of "discrete"/"continuous"/"mixture".
-#' @export
-NULL
-
-#' @name variateForm
-#' @title Variate Form Accessor - Deprecated
-#' @usage variateForm(object)
-#' @param object Distribution.
-#' @description Deprecated. Use $traits$variateForm
-#' @return One of "univariate"/"multivariate"/"matrixvariate".
-#' @export
-NULL
-
-#' @name type
-#' @title Type Accessor - Deprecated
-#' @usage type(object)
-#' @section R6 Usage: $type
-#' @param object Distribution.
-#' @description Deprecated. Use $traits$type
-#' @return An R6 object of class [set6::Set].
-#' @export
-NULL
-
-#' @name properties
-#' @title Properties Accessor
-#' @usage properties(object)
-#' @section R6 Usage: $properties
-#' @param object Distribution.
-#' @description Returns the properties of the distribution.
-#' @return List of distribution properties.
-#' @export
-NULL
-
-#' @name support
-#' @title Support Accessor - Deprecated
-#' @usage support(object)
-#' @section R6 Usage: $support
-#' @param object Distribution.
-#' @description Deprecated. Use $properties$support
-#' @details The support of a probability distribution is defined as the interval where the pmf/pdf
-#' is greater than zero,
-#' \deqn{Supp(X) = \{x \ \in R: \ f_X(x) \ > \ 0\}}{Supp(X) = {x \epsilon R: f_X(x) > 0}}
-#' where \eqn{f_X} is the pmf if distribution \eqn{X} is discrete, otherwise the pdf.
-#' @return An R6 object of class [set6::Set].
-#' @export
-NULL
-
-#' @name symmetry
-#' @title Symmetry Accessor - Deprecated
-#' @usage symmetry(object)
-#' @param object Distribution.
-#' @description Deprecated. Use $properties$symmetry.
-#' @return One of "symmetric" or "asymmetric".
-#' @export
-NULL
-
-#' @name sup
-#' @title Supremum Accessor
-#' @usage sup(object)
-#' @section R6 Usage: $sup
-#' @param object Distribution.
-#' @description Returns the distribution supremum as the supremum of the support.
-#' @return Supremum as a numeric.
-#' @export
-NULL
-
-#' @name inf
-#' @title Infimum Accessor
-#' @usage inf(object)
-#' @section R6 Usage: $inf
-#' @param object Distribution.
-#' @description Returns the distribution infimum as the infimum of the support.
-#' @return Infimum as a numeric.
-#' @export
-NULL
-
-#' @name dmax
-#' @title Distribution Maximum Accessor
-#' @usage dmax(object)
-#' @section R6 Usage: $dmax
-#' @param object Distribution.
-#' @description Returns the distribution maximum as the maximum of the support. If the support is
-#' not bounded above then maximum is given by
-#' \deqn{maximum = supremum - 1.1e-15}
-#' @return Maximum as a numeric.
-#' @seealso \code{\link{support}}, \code{\link{dmin}}, \code{\link{sup}}, \code{\link{inf}}
-#' @export
-NULL
-
-#' @name dmin
-#' @title Distribution Minimum Accessor
-#' @usage dmin(object)
-#' @section R6 Usage: $dmin
-#' @param object Distribution.
-#' @description Returns the distribution minimum as the minimum of the support. If the support is
-#' not bounded below then minimum is given by
-#' \deqn{minimum = infimum + 1.1e-15}
-#' @return Minimum as a numeric.
-#' @export
-NULL
-
-#' @name kurtosisType
-#' @title Type of Kurtosis Accessor - Deprecated
-#' @usage kurtosisType(object)
-#' @param object Distribution.
-#' @description Deprecated. Use $properties$kurtosis.
-#' @return If the distribution kurtosis is present in properties, returns one of
-#' "platykurtic"/"mesokurtic"/"leptokurtic", otherwise returns NULL.
-#' @export
-NULL
-
-#' @name skewnessType
-#' @title Type of Skewness Accessor - Deprecated
-#' @usage skewnessType(object)
-#' @param object Distribution.
-#' @description Deprecated. Use $properties$skewness.
-#' @return If the distribution skewness is present in properties, returns one of
-#' "negative skew", "no skew", "positive skew", otherwise returns NULL.
-#' @export
-NULL
-
-#' @name workingSupport
-#' @title Approximate Finite Support
-#' @usage workingSupport(object)
-#' @param object Distribution.
-#' @description If the distribution has an infinite support then this function calculates
-#' the approximate finite limits by finding the largest small number for which `cdf == 0` and the
-#' smallest large number for which `cdf == 1`.
-#' @return \CRANpkg{set6} object.
-#' @export
-NULL
+summary.Distribution <- function(object, ...) {
+  object$summary(...)
+}

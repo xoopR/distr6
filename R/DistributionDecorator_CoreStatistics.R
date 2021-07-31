@@ -23,7 +23,7 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' @param ... `ANY` \cr
     #' Passed to `$genExp`.
     mgf = function(t, ...) {
-      return(self$genExp(trafo = function(x) exp(x * t), ...))
+      self$genExp(trafo = function(x) exp(x * t), ...)
     },
 
     #' @description
@@ -159,7 +159,11 @@ CoreStatistics <- R6Class("CoreStatistics",
         formals(trafo) <- alist(x = ) # nolint
       }
 
-      count <- self$properties$support$properties$countability
+      support <- private$.properties$support
+      count <- support$properties$countability
+      inf <- support$lower
+      sup <- support$upper
+
       if (count != "uncountable") {
         ws <- self$workingSupport()
         rng <- seq.int(ws$lower, ws$upper)
@@ -176,8 +180,8 @@ CoreStatistics <- R6Class("CoreStatistics",
             xs <- trafo(x)
             xs[pdfs == 0] <- 0
             return(xs * pdfs)
-          }, lower = self$inf,
-          upper = self$sup,
+          }, lower = inf,
+          upper = sup,
           ...)$integral))
         } else {
           return(suppressMessages(integrate(function(x) {
@@ -185,7 +189,7 @@ CoreStatistics <- R6Class("CoreStatistics",
             xs <- trafo(x)
             xs[pdfs == 0] <- 0
             return(xs * pdfs)
-          }, lower = self$inf, upper = self$sup)$value))
+          }, lower = inf, upper = sup)$value))
         }
       }
     },
@@ -218,177 +222,3 @@ CoreStatistics <- R6Class("CoreStatistics",
 )
 
 .distr6$decorators <- append(.distr6$decorators, list(CoreStatistics = CoreStatistics))
-
-#' @title Moment Generating Function
-#' @name mgf
-#' @description Moment generating function of a distribution
-#'
-#' @usage mgf(object, t, ...)
-#'
-#' @param object Distribution.
-#' @param t integer to evaluate moment generating function at.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Moment generating function evaluated at t as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Characteristic Function
-#' @name cf
-#' @description Characteristic function of a distribution
-#'
-#' @usage cf(object, t, ...)
-#'
-#' @param object Distribution.
-#' @param t integer to evaluate characteristic function at.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Characteristic function evaluated at t as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Probability Generating Function
-#' @name pgf
-#' @description Probability generating function of a distribution
-#'
-#' @usage pgf(object, z, ...)
-#'
-#' @param object Distribution.
-#' @param z integer to evaluate characteristic function at.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Probability generating function evaluated at z as a numeric if distribution is discrete,
-#' otherwise NaN.
-#'
-#' @export
-NULL
-
-#' @title Distribution Entropy
-#' @name entropy
-#' @description (Information) Entropy of a distribution
-#'
-#' @param object Distribution.
-#' @param base base of the entropy logarithm, default = 2 (Shannon entropy)
-#' @param ... Passed to `$genExp`.
-#'
-#' @usage entropy(object, base = 2, ...)
-#'
-#' @return Entropy with given base as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Distribution Skewness
-#' @name skewness
-#' @description Skewness of a distribution
-#'
-#' @usage skewness(object, ...)
-#'
-#' @param object Distribution.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Skewness as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Distribution Kurtosis
-#' @name kurtosis
-#' @description Kurtosis of a distribution
-#'
-#' @usage kurtosis(object, excess = TRUE, ...)
-#'
-#' @param object Distribution.
-#' @param excess logical, if TRUE (default) excess Kurtosis returned.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Kurtosis as a numeric.
-#'
-#' @export
-NULL
-
-#' @name variance
-#' @title Distribution Variance
-#' @description The variance or covariance of a distribution, either calculated analytically if
-#' or estimated numerically.
-#'
-#' @usage variance(object, ...)
-#'
-#' @param object Distribution.
-#' @param ... Passed to `$genExp`.
-#'
-#' @return Variance as a numeric.
-#'
-#' @export
-NULL
-
-#' @title Kth Moment
-#' @name kthmoment
-#' @description Kth standardised or central moment of a distribution
-#'
-#' @usage kthmoment(object, k, type = c("central", "standard", "raw"), ...)
-#'
-#' @param object Distribution.
-#' @param k the kth moment to calculate
-#' @param type one of 'central', 'standard' or 'raw', abbreviations allowed
-#' @param ... Passed to `$genExp`.
-#'
-#' @return If univariate, the given k-moment as a numeric, otherwise NULL.
-#'
-#' @export
-NULL
-
-#' @title Generalised Expectation of a Distribution
-#' @name genExp
-#'
-#' @usage genExp(object, trafo = NULL, cubature = FALSE, ...)
-#'
-#' @param object Distribution.
-#' @param trafo transformation for expectation calculation, see details.
-#' @param cubature If `TRUE` uses [cubature::cubintegrate] for approximation, otherwise [integrate].
-#' @param ... Passed to [cubature::cubintegrate].
-#'
-#' @description A generalised expectation function for distributions, for arithmetic mean and more
-#' complex numeric calculations.
-#'
-#' @return The given expectation as a numeric, otherwise NULL.
-#'
-#' @export
-NULL
-
-#' @title Mode of a Distribution
-#' @name mode
-#' @description A numeric search for the mode(s) of a distribution.
-#'
-#' @usage mode(object, which = "all")
-#'
-#' @param object Distribution.
-#' @param which which mode of the distribution should be returned, default is all.
-#'
-#' @details If the distribution has multiple modes, all are returned by default. Otherwise the index
-#' of the mode to return can be given or "all" if all should be returned.
-#'
-#' If an analytic expression isn't available, returns error. To impute a numerical expression, use
-#' the \code{\link{CoreStatistics}} decorator.
-#'
-#' @seealso \code{\link{CoreStatistics}} and \code{\link{decorate}}.
-#'
-#' @return The estimated mode as a numeric, either all modes (if multiple) or the ordered mode given
-#' in \code{which}.
-#'
-#' @export
-NULL
-
-#' @title Distribution Mean
-#'
-#' @param x Distribution.
-#' @param ... Passed to `$genExp`.
-#'
-#' @description Arithmetic mean for the probability distribution.
-#'
-#' @return Mean as a numeric.
-#'
-#' @export
-mean.Distribution <- function(x, ...) {}

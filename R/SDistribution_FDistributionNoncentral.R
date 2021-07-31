@@ -86,19 +86,21 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
           (df2[df2 > 4] - 2)) /
         ((df2[df2 > 4] - 2)^2 * (df2[df2 > 4] - 4))
       return(var)
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$getParameterValue("df1") == 1) {
-        private$.properties$support <- PosReals$new(zero = FALSE)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (self$getParameterValue("df1") == 1) {
+        prop$support <- PosReals$new(zero = FALSE)
       } else {
-        private$.properties$support <- PosReals$new(zero = TRUE)
+        prop$support <- PosReals$new(zero = TRUE)
       }
-      invisible(self)
+
+      prop
     }
   ),
 

@@ -189,20 +189,20 @@ Bernoulli <- R6Class("Bernoulli",
       prob <- self$getParameterValue("prob")
       qprob <- 1 - prob
       return(qprob + (prob * z))
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$getParameterValue("prob") == 0.5) {
-        private$.properties$symmetry <- "symmetric"
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$symmetry <- if (self$getParameterValue("prob") == 0.5) {
+        "symmetric"
       } else {
-        private$.properties$symmetry <- "asymmetric"
+        "asymmetric"
       }
-      invisible(self)
+      prop
     }
   ),
 

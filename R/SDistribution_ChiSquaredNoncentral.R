@@ -124,19 +124,20 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     #' @param ... Unused.
     cf = function(t, ...) {
       return(exp(self$getParameterValue("location") * 1i * t / (1 - 2i * t)) / ((1 - 2i * t)^(self$getParameterValue("df") / 2))) # nolint
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$getParameterValue("df") <= 1) {
-        private$.properties$support <- PosReals$new(zero = F)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (self$getParameterValue("df") <= 1) {
+        PosReals$new(zero = F)
       } else {
-        private$.properties$support <- PosReals$new(zero = T)
+        PosReals$new(zero = T)
       }
-      invisible(self)
+      prop
     }
   ),
 

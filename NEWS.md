@@ -1,3 +1,13 @@
+# distr6 1.6.0
+
+* Parameter set interface has been moved to [param6](https://cran.r-project.org/package=param6). This should not cause breakages if parameters have only been accessed via distribution methods but may otherwise.
+* R62S3 is no longer loaded by default, S3 methods must now be manually created with R62S3::R62Fun. This may cause breakages if scripts assume pre-loading but will work as before once R62Fun is called (see S3 and piping vignette)
+* Kurtosis and skewness methods now vectorised
+* Ids for vector distributions now forced to be alphanumeric
+* Deprecated unused arguments from parameter methods
+* `print` method now only shows active parameters
+* Many other internal improvements to code quality and efficiency
+
 # distr6 1.5.6
 
 * Fix for M1mac

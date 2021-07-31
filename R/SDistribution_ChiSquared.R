@@ -143,19 +143,20 @@ ChiSquared <- R6Class("ChiSquared",
       } else {
         return(NaN)
       }
-    },
+    }
+  ),
 
-    # optional setParameterValue
-    #' @description
-    #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      super$setParameterValue(..., lst = lst, error = error, resolveConflicts = resolveConflicts)
-      if (self$getParameterValue("df") == 1) {
-        private$.properties$support <- PosReals$new(zero = F)
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- if (self$getParameterValue("df") == 1) {
+        PosReals$new(zero = F)
       } else {
-        private$.properties$support <- PosReals$new(zero = T)
+        PosReals$new(zero = T)
       }
-      invisible(self)
+      prop
     }
   ),
 

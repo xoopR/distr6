@@ -38,7 +38,7 @@ N$rand(5) # 5 samples from the Normal distribution
 
 We have seen in the [first tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) how the `summary` method can be used to view quick statistics about a probability distribution, i.e.
 ```{r}
-summary(N)
+N$summary()
 ```
 
 But all these statistics can be accessed individually as well. To see the full list of available methods view the 'Statistical Methods' section of the distribution help page, `?Normal`. All probability distributions have the same methods available if possible, i.e. If there is an analytic expression for a statistical result, then we provide it! Below are just a few examples

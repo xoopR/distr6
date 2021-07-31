@@ -27,8 +27,9 @@ rep.Distribution <- function(x, times, class = c("vector", "product", "mixture")
   if (getR6Class(x) == "Distribution") {
     get(paste0(toproper(class), "Distribution"))$new(distlist = rep(list(x), times))
   } else {
-    get(paste0(toproper(class), "Distribution"))$new(distribution = getR6Class(x),
-                                                     params = rep(list(x$parameters()$values()),
-                                                                  times))
+    ## TODO: Can make more efficient using param6$rep
+    get(paste0(toproper(class), "Distribution"))$new(
+      distribution = getR6Class(x),
+      params = rep(list(x$parameters()$values), times))
   }
 }

@@ -7,7 +7,7 @@
 skewType(skew)
 }
 \arguments{
-\item{skew}{numeric.}
+\item{skew}{numeric}
 }
 \value{
 Returns one of 'negative skew', 'no skew' or 'positive skew'.
@@ -25,7 +25,4 @@ will always have no skew but the reverse relationship does not always hold.
 skewType(1)
 skewType(0)
 skewType(-1)
-}
-\seealso{
-\code{\link{skewness}}, \code{\link{exkurtosisType}}
 }

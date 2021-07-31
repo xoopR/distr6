@@ -197,15 +197,22 @@ Multinomial <- R6Class("Multinomial",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = NULL, error = "warn", resolveConflicts = FALSE) {
-      if (is.null(lst)) lst <- list(...)
-      super$setParameterValue(lst = lst, error = error, resolveConflicts = resolveConflicts)
-      probs <- self$getParameterValue("probs")
-      private$.variates <- length(probs)
-      private$.properties$support <- setpower(Set$new(0:self$getParameterValue("size"),
-                                                      class = "integer"),
-                                              length(probs))
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+      super$setParameterValue(lst = lst)
+      private$.variates <- length(self$getParameterValue("probs"))
       invisible(self)
+    }
+  ),
+
+  active = list(
+    #' @field properties
+    #' Returns distribution properties, including skewness type and symmetry.
+    properties = function() {
+      prop <- super$properties
+      prop$support <- setpower(Set$new(0:self$getParameterValue("size"),
+                                       class = "integer"),
+                               length(self$getParameterValue("probs")))
+      prop
     }
   ),
 

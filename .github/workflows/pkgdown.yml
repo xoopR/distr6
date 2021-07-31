@@ -30,11 +30,13 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
+      - name: Install system dependencies
+        run: brew install harfbuzz fribidi
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown")
-          remotes::install_github("mlr-org/mlr3pkgdowntemplate")
+          install.packages(c("pkgdown", "textshaping"))
         shell: Rscript {0}
 
       - name: Install package
@@ -45,4 +47,3 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
-          

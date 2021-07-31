@@ -10,7 +10,6 @@
 #' @param ... additional optional arguments for [set.seed]
 #' @return If `simplify` then vector of `n` simulations, otherwise list of simulations and
 #' distribution.
-#' @seealso [rand]
 #' @export
 distrSimulate <- function(n = 100, distribution = "Normal", pars = list(), simplify = TRUE,
                           seed, ...) {
