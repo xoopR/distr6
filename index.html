@@ -20,7 +20,18 @@
 <script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="The Complete R6 Probability Distributions Interface">
-<meta property="og:description" content="An R6 object oriented distributions package. Unified interface for 42 probability distributions and 11 kernels including functionality for multiple scientific types. Additionally functionality for composite distributions and numerical imputation. Design patterns including wrappers and decorators are described in Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of probability distributions including d/p/q/r functions and results we refer to McLaughlin, M. P. (2001). Additionally Devroye (1986, ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle (2009) &lt;doi:10.1007/978-0-387-98144-4&gt; for sampling the Multivariate Normal distribution and Michael et al. (1976) &lt;doi:10.2307/2683801&gt; for sampling the Wald distribution.">
+<meta property="og:description" content="An R6 object oriented distributions package. Unified
+    interface for 42 probability distributions and 11 kernels including
+    functionality for multiple scientific types. Additionally
+    functionality for composite distributions and numerical imputation.
+    Design patterns including wrappers and decorators are described in
+    Gamma et al. (1994, ISBN:0-201-63361-2). For quick reference of
+    probability distributions including d/p/q/r functions and results we
+    refer to McLaughlin, M. P. (2001). Additionally Devroye (1986,
+    ISBN:0-387-96305-7) for sampling the Dirichlet distribution, Gentle
+    (2009) &lt;doi:10.1007/978-0-387-98144-4&gt; for sampling the Multivariate
+    Normal distribution and Michael et al. (1976) &lt;doi:10.2307/2683801&gt;
+    for sampling the Wald distribution.">
 <meta property="og:image" content="https://alan-turing-institute.github.io/distr6/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -40,7 +51,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -249,9 +260,9 @@
 <code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="co"># B$mean()</span>
 <span class="co">#&gt; [1] 5</span>
-<span class="fu"><a href="reference/variance.html">variance</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="co"># B$variance()</span>
+<span class="fu">variance</span><span class="op">(</span><span class="va">B</span><span class="op">)</span> <span class="co"># B$variance()</span>
 <span class="co">#&gt; [1] 2.5</span>
-<span class="fu"><a href="reference/cdf.html">cdf</a></span><span class="op">(</span><span class="va">B</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="co"># B$cdf(2:5)</span>
+<span class="fu">cdf</span><span class="op">(</span><span class="va">B</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="co"># B$cdf(2:5)</span>
 <span class="co">#&gt; [1] 0.0546875 0.1718750 0.3769531 0.6230469</span></code></pre></div>
 <p>Wrappers including truncation, huberization and product distributions for manipulation and composition of distributions.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">

@@ -87,7 +87,7 @@ is commonly used as a prior in Bayesian modelling and is multivariate generalisa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -325,6 +325,12 @@ Springer-Verlag. ISBN 0-387-96305-7.</p>
 <dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
 
 </dl><p></div></p>
+    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
+
+    <p><div class="r6-active-bindings"></p><dl>
+<dt><code>properties</code></dt><dd><p>Returns distribution properties, including skewness type and symmetry.</p></dd>
+
+</dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -389,7 +395,7 @@ with an integration analogue for continuous distributions.</p><h4 class='hasAnch
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
+<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/mode.html'>mode()</a></code></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
 maxima).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -403,7 +409,7 @@ which mode to return.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='variance.html'>variance()</a></code></h3>
+<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>variance()</code></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
@@ -416,7 +422,7 @@ covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class=
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>entropy()</code></h3>
 <p>The entropy of a (discrete) distribution is defined by
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
@@ -432,7 +438,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>pgf()</code></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -447,11 +453,11 @@ z integer to evaluate probability generating function at.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>setParameterValue()</code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Dirichlet</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
   <span class='va'>...</span>,
-  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lst <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
   error <span class='op'>=</span> <span class='st'>"warn"</span>,
   resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre><p></div></p>

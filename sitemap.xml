@@ -148,12 +148,6 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/NormalKernel.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/ParameterSet.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/ParameterSetCollection.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/Pareto.html</loc>
   </url>
   <url>
@@ -226,46 +220,16 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.MixtureDistribution.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/as.ParameterSet.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.ProductDistribution.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.VectorDistribution.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/as.data.table.ParameterSet.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/c.Distribution.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cdf.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cdfAntiDeriv.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cdfPNorm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cdfSquared2Norm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cf.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/correlation.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/cumHazard.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/decorate.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/decorators.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/distr6-deprecated.html</loc>
@@ -280,61 +244,19 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/distrSimulate.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/dmax.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/dmin.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/dstr.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/entropy.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/exkurtosisType.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/genExp.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/generalPNorm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/getParameterSupport.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/getParameterValue.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/hazard.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/huberize.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/inf.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/iqr.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/kthmoment.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/kurtosis.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/kurtosisType.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/length.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/liesInSupport.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/liesInType.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/lines.Distribution.html</loc>
@@ -355,37 +277,7 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/makeUniqueDistributions.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/mean.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/median.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/merge.ParameterSet.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/mgf.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/mixturiseVector.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/mode.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/pdf.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/pdfPNorm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/pdfSquared2Norm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/pgf.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/plot.Distribution.html</loc>
@@ -394,28 +286,10 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/plot.VectorDistribution.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/prec.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/print.ParameterSet.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/properties.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/qqplot.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/quantile.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/rand.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/rep.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/setParameterValue.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/simulateEmpiricalDistribution.html</loc>
@@ -424,43 +298,7 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/skewType.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/skewness.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/skewnessType.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/stdev.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/strprint.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/sub-.ParameterSet.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/sub-.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/summary.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/sup.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/support.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/survival.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/survivalAntiDeriv.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/survivalPNorm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/symmetry.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/testContinuous.html</loc>
@@ -499,12 +337,6 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/testParameterSet.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/testParameterSetCollection.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/testParameterSetCollectionList.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/testParameterSetList.html</loc>
   </url>
   <url>
@@ -520,28 +352,7 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/testUnivariate.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/traits.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/truncate.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/type.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/valueSupport.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/variance.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/variateForm.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/workingSupport.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/distr6/reference/wrappedModels.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/articles/distr6.html</loc>

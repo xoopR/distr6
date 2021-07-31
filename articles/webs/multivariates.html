@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multivariate Distributions</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/multivariates.rmd"><code>vignettes/webs/multivariates.rmd</code></a></small>
       <div class="hidden name"><code>multivariates.rmd</code></div>
@@ -194,11 +194,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">MN</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="co"># This is in fact the default</span>
-<span class="co">#&gt; MultiNorm(mean = c(0, 0), cov = c(1, 0, 0, 1), prec = c(1, 0, 0, 1))</span></code></pre></div>
+<span class="co">#&gt; MultiNorm(cov = c(1, 0, 0, 1), mean = c(0, 0))</span></code></pre></div>
 <p>Notice how this is almost identical to constructing a univariate Normal distribution. We even allow multiple parameterisations</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; MultiNorm(mean = c(0, 0), cov = c(1, 0, 0, 1), prec = c(1, 0, 0, 1))</span></code></pre></div>
+<span class="co">#&gt; MultiNorm(mean = c(0, 0), prec = c(1, 0, 0, 1))</span></code></pre></div>
 </div>
 <div id="dpqr" class="section level2">
 <h2 class="hasAnchor">
@@ -222,7 +222,7 @@
 <span class="co">#&gt; 3: 0.4042683 -0.10612452</span>
 <span class="co">#&gt; 4: 1.5115220 -0.09465904</span>
 <span class="co">#&gt; 5: 2.0184237 -0.06271410</span></code></pre></div>
-<p>Note: <code><a href="../../reference/cdf.html">cdf()</a></code> and <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.</p>
+<p>Note: <code>cdf()</code> and <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.</p>
 </div>
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">

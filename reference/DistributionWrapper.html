@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -265,7 +265,6 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 <ul>
 <li><p><a href='#method-new'><code>DistributionWrapper$new()</code></a></p></li>
 <li><p><a href='#method-wrappedModels'><code>DistributionWrapper$wrappedModels()</code></a></p></li>
-<li><p><a href='#method-setParameterValue'><code>DistributionWrapper$setParameterValue()</code></a></p></li>
 <li><p><a href='#method-clone'><code>DistributionWrapper$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
@@ -283,6 +282,7 @@ of Reusable Object-Oriented Software.” Addison-Wesley.</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
@@ -332,15 +332,15 @@ Wrapped distribution value support.</p></dd>
 <dt><code>variateForm</code></dt><dd><p><code>(character(1))</code><br />
 Wrapped distribution variate form.</p></dd>
 
-<dt><code>parameters</code></dt><dd><p><code>([ParameterSetCollection])</code><br />
+<dt><code>parameters</code></dt><dd><p><code>([param6::ParameterSet])</code><br />
 Optional parameters to add to the internal collection, ignored if <code>distlist</code> is given.</p></dd>
 
-<dt><code>outerID</code></dt><dd><p><code>([ParameterSet])</code><br />
+<dt><code>outerID</code></dt><dd><p><code>([param6::ParameterSet])</code><br />
 Parameters added by the wrapper.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-wrappedModels"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='wrappedModels.html'>wrappedModels()</a></code></h3>
+<a id="method-wrappedModels"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>wrappedModels()</code></h3>
 <p>Returns model(s) wrapped by this wrapper.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>wrappedModels</span><span class='op'>(</span>model <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
@@ -350,33 +350,6 @@ Parameters added by the wrapper.</p></dd>
 id of wrapped <a href='Distribution.html'>Distribution</a>s to return. If <code>NULL</code> (default), a list of all wrapped
 <a href='Distribution.html'>Distribution</a>s is returned; if only one <a href='Distribution.html'>Distribution</a> is matched then this is returned,
 otherwise a list of <a href='Distribution.html'>Distribution</a>s.</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
-<p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>DistributionWrapper</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
-  <span class='va'>...</span>,
-  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
-  error <span class='op'>=</span> <span class='st'>"warn"</span>,
-  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
-Named arguments of parameters to set values for. See examples.</p></dd>
-
-<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.</p></dd>
-
-<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
-If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
-
-<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
-If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
-automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -224,9 +224,24 @@
       <small>Source: <a href='https://github.com/alan-turing-institute/distr6/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="distr6-160" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0">
+<a href="#distr6-160" class="anchor"></a>distr6 1.6.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>Parameter set interface has been moved to <a href="https://cran.r-project.org/package=param6">param6</a>. This should not cause breakages if parameters have only been accessed via distribution methods but may otherwise.</li>
+<li>R62S3 is no longer loaded by default, S3 methods must now be manually created with R62S3::R62Fun. This may cause breakages if scripts assume pre-loading but will work as before once R62Fun is called (see S3 and piping vignette)</li>
+<li>Kurtosis and skewness methods now vectorised</li>
+<li>Ids for vector distributions now forced to be alphanumeric</li>
+<li>Deprecated unused arguments from parameter methods</li>
+<li>
+<code>print</code> method now only shows active parameters</li>
+<li>Many other internal improvements to code quality and efficiency</li>
+</ul>
+</div>
     <div id="distr6-156" class="section level1">
 <h1 class="page-header" data-toc-text="1.5.6">
-<a href="#distr6-156" class="anchor"></a>distr6 1.5.6<small> Unreleased </small>
+<a href="#distr6-156" class="anchor"></a>distr6 1.5.6<small> 2021-07-17 </small>
 </h1>
 <ul>
 <li>Fix for M1mac</li>
@@ -485,7 +500,7 @@
 <li>Bugfix in <code>$rand</code> for <code>Geometric</code> distribution with <code>trials == TRUE</code> , previously was randomising between <span class="math inline">[1, <em>I</em><em>n</em><em>f</em>)</span> not <span class="math inline">[0, <em>I</em><em>n</em><em>f</em>)</span>
 </li>
 <li>Changed default <code>form</code> parameter in <code>NegativeBinomial</code>, now errors if supplied argument is not in one of the four choices (previously reverted to “fbs”)</li>
-<li>Fixed bug in <code>MultivariateNormal</code> <code><a href="../reference/rand.html">rand()</a></code> which was not adding the <code>mean</code> correctly</li>
+<li>Fixed bug in <code>MultivariateNormal</code> <code>rand()</code> which was not adding the <code>mean</code> correctly</li>
 <li>Massive bottleneck in <code>VectorDistribution</code> for same distribution type removed in d/p/q/r functions as well as non-generating function methods</li>
 <li>Improved speed in <code>VectorDistribution</code> when only one row or column of data passed to d/p/q</li>
 <li>
@@ -749,7 +764,7 @@
 </h1>
 <ul>
 <li>Updated vignettes to remove redundant distr6 installation via GitHub that was causing a warning on Debian</li>
-<li>Redundant <code>stopwarn</code> argument removed from <code><a href="../reference/parameters.html">parameters()</a></code> method in <code>Distribution</code> and <code>ParameterSet</code> classes</li>
+<li>Redundant <code>stopwarn</code> argument removed from <code>parameters()</code> method in <code>Distribution</code> and <code>ParameterSet</code> classes</li>
 <li>Updated Kernel$new() error message to point user to Distribution class</li>
 <li>Fixed broken if/else statement in liesInSetInterval method of SetInterval class</li>
 </ul>

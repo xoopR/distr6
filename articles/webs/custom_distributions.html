@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Custom Distributions</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/custom_distributions.rmd"><code>vignettes/webs/custom_distributions.rmd</code></a></small>
       <div class="hidden name"><code>custom_distributions.rmd</code></div>
@@ -194,7 +194,7 @@
 <div id="self" class="section level3">
 <h3 class="hasAnchor">
 <a href="#self" class="anchor"></a>self</h3>
-<p>The <code>self</code> keyword is used to tell an object that it should call a method on itself. For example we have used the method <code><a href="../../reference/getParameterValue.html">getParameterValue()</a></code> on objects before but often we need the object to use this method on itself, so we use <code>self$getParameterValue()</code> this is especially important when defining d/p/q/r functions.</p>
+<p>The <code>self</code> keyword is used to tell an object that it should call a method on itself. For example we have used the method <code>getParameterValue()</code> on objects before but often we need the object to use this method on itself, so we use <code>self$getParameterValue()</code> this is especially important when defining d/p/q/r functions.</p>
 <p>The pdf of the Uniform distribution is defined by <span class="math display">\[f(x) = 1/(b - a)\]</span> where <span class="math inline">\(b\)</span> and <span class="math inline">\(a\)</span> are upper and lower limits respectively.</p>
 <p>Hence our pdf function needs to get the values of these limits, and define the distribution support</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -211,16 +211,20 @@
 <div id="parameterset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameterset" class="anchor"></a>ParameterSet</h3>
-<p>We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we have to first construct a <code>ParameterSet</code> objects. In fact we have seen these objects multiple times throughout these tutorials, they are what we see when we call <code><a href="../../reference/parameters.html">parameters()</a></code> on a distribution. Every time you use the <code>set/getParameterSet()</code> methods these are actually called on the <code>ParameterSet</code>. Constructing a ParameterSet is simple, you just have to remember which arguments are required, and luckily these are all given in <code><a href="../../reference/ParameterSet.html">?ParameterSet</a></code></p>
+<p>We have a pdf that accesses parameters, but currently we have no parameters to access. To add these we use <a href="https://cran.r-project.org/package=param6">param6</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/ParameterSet.html">ParameterSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"lower"</span>,<span class="st">"upper"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>,
-                       support <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Reals.html">Reals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-                       settable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span>
-<span class="co">#&gt;       id value support</span>
-<span class="co">#&gt; 1: lower     1       ℝ</span>
-<span class="co">#&gt; 2: upper    10       ℝ</span></code></pre></div>
-<p>We have omitted the <code>description</code> argument as this is rarely used in custom distributions. The arguments passed to the constructor above are respectively: a unique ID for the parameter, the starting (or default) value of the parameter, the parameter support (where it can take values), and whether or not the parameter can be machine updated (i.e. can an automated procedure be used to manipulate its value).</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xoopR.github.io/param6/">param6</a></span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://xoopR.github.io/param6/reference/pset.html">pset</a></span><span class="op">(</span>
+  <span class="co"># id = lower; support = reals; value = 1</span>
+  <span class="fu"><a href="https://xoopR.github.io/param6/reference/prm.html">prm</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"reals"</span>, <span class="fl">1</span><span class="op">)</span>,
+  <span class="co"># id = upper; support = reals; value = 10</span>
+  <span class="fu"><a href="https://xoopR.github.io/param6/reference/prm.html">prm</a></span><span class="op">(</span><span class="st">"upper"</span>, <span class="st">"reals"</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">ps</span>
+<span class="co">#&gt;       Id Support Value Tags</span>
+<span class="co">#&gt; 1: lower       ℝ     1     </span>
+<span class="co">#&gt; 2: upper       ℝ    10</span></code></pre></div>
 </div>
 <div id="constructing-the-distribution" class="section level3">
 <h3 class="hasAnchor">
@@ -267,6 +271,8 @@
 <span class="co">#&gt; Uniform is now decorated with FunctionImputation</span>
 <span class="co">#&gt; Uniform(lower = 1, upper = 10)</span>
 <span class="va">U</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
+<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 0.4444444</span>
 

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Wrapper</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_wrapper.rmd"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
       <div class="hidden name"><code>create_wrapper.rmd</code></div>
@@ -198,14 +198,14 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">M</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;               id   value               support            description</span>
-<span class="co">#&gt; 1:  Binom1__prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 2: Binom1__qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 3:  Binom1__size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 4:  Binom2__prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 5: Binom2__qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 6:  Binom2__size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 7:  mix__weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span></code></pre></div>
+<span class="co">#&gt;               Id               Support   Value                    Tags</span>
+<span class="co">#&gt; 1:  Binom1__prob                 [0,1]     0.5 Binom1__linked,required</span>
+<span class="co">#&gt; 2: Binom1__qprob                 [0,1]         Binom1__linked,required</span>
+<span class="co">#&gt; 3:  Binom1__size                    ℕ+      10                required</span>
+<span class="co">#&gt; 4:  Binom2__prob                 [0,1]     0.5 Binom2__linked,required</span>
+<span class="co">#&gt; 5: Binom2__qprob                 [0,1]         Binom2__linked,required</span>
+<span class="co">#&gt; 6:  Binom2__size                    ℕ+      10                required</span>
+<span class="co">#&gt; 7:  mix__weights ([0,1]^2) ∪ {uniform} uniform                required</span></code></pre></div>
 </div>
 <div id="setparametervalue" class="section level3">
 <h3 class="hasAnchor">
@@ -216,19 +216,19 @@
 <p>And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined <code>ParameterSet</code> is updated as well as the one in the internal model</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;               id   value               support            description</span>
-<span class="co">#&gt; 1:  Binom1__prob     0.2                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 2: Binom1__qprob     0.8                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 3:  Binom1__size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 4:  Binom2__prob     0.5                 [0,1] Probability of Success</span>
-<span class="co">#&gt; 5: Binom2__qprob     0.5                 [0,1] Probability of failure</span>
-<span class="co">#&gt; 6:  Binom2__size      10                    ℕ+       Number of trials</span>
-<span class="co">#&gt; 7:  mix__weights uniform ([0,1]^2) ∪ {uniform}        Mixture weights</span>
+<span class="co">#&gt;               Id               Support   Value                    Tags</span>
+<span class="co">#&gt; 1:  Binom1__prob                 [0,1]     0.2 Binom1__linked,required</span>
+<span class="co">#&gt; 2: Binom1__qprob                 [0,1]         Binom1__linked,required</span>
+<span class="co">#&gt; 3:  Binom1__size                    ℕ+      10                required</span>
+<span class="co">#&gt; 4:  Binom2__prob                 [0,1]     0.5 Binom2__linked,required</span>
+<span class="co">#&gt; 5: Binom2__qprob                 [0,1]         Binom2__linked,required</span>
+<span class="co">#&gt; 6:  Binom2__size                    ℕ+      10                required</span>
+<span class="co">#&gt; 7:  mix__weights ([0,1]^2) ∪ {uniform} uniform                required</span>
 <span class="va">M</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Binom1"</span><span class="op">)</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;       id value support            description</span>
-<span class="co">#&gt; 1:  prob   0.2   [0,1] Probability of Success</span>
-<span class="co">#&gt; 2: qprob   0.8   [0,1] Probability of failure</span>
-<span class="co">#&gt; 3:  size    10      ℕ+       Number of trials</span></code></pre></div>
+<span class="co">#&gt;       Id Support Value            Tags</span>
+<span class="co">#&gt; 1:  prob   [0,1]   0.5 linked,required</span>
+<span class="co">#&gt; 2: qprob   [0,1]       linked,required</span>
+<span class="co">#&gt; 3:  size      ℕ+    10        required</span></code></pre></div>
 </div>
 <div id="wrappedmodels" class="section level3">
 <h3 class="hasAnchor">

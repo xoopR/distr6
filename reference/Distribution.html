@@ -87,7 +87,7 @@ as well as serving as the parent class to specific, familiar distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -358,7 +358,7 @@ Quantile (inverse-cdf) function of the distribution.</p></dd>
 <dt><code>rand</code></dt><dd><p><code>function(1)</code> <br />
 Simulation function for drawing random samples from the distribution.</p></dd>
 
-<dt><code>parameters</code></dt><dd><p><code>([ParameterSet])</code> <br />
+<dt><code>parameters</code></dt><dd><p><code>([param6::ParameterSet])</code> <br />
 Parameter set for defining the parameters in the distribution, which should be set before
 construction.</p></dd>
 
@@ -381,7 +381,7 @@ Used internally.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='strprint.html'>strprint()</a></code></h3>
+<a id="method-strprint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>strprint()</code></h3>
 <p>Printable string representation of the <code>Distribution</code>. Primarily used internally.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>strprint</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre><p></div></p>
 
@@ -421,18 +421,17 @@ Unused. Added for consistency.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-parameters"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='parameters.html'>parameters()</a></code></h3>
+<a id="method-parameters"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>parameters()</code></h3>
 <p>Returns the full parameter details for the supplied parameter.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>parameters</span><span class='op'>(</span>id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> <br />
-id of parameter value to return.</p></dd>
+<dt><code>id</code></dt><dd><p>Deprecated.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='getParameterValue.html'>getParameterValue()</a></code></h3>
+<a id="method-getParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>getParameterValue()</code></h3>
 <p>Returns the value of the supplied parameter.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>getParameterValue</span><span class='op'>(</span><span class='va'>id</span>, error <span class='op'>=</span> <span class='st'>"warn"</span><span class='op'>)</span></pre><p></div></p>
 
@@ -446,11 +445,11 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
+<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>setParameterValue()</code></h3>
 <p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
   <span class='va'>...</span>,
-  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lst <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
   error <span class='op'>=</span> <span class='st'>"warn"</span>,
   resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre><p></div></p>
@@ -479,7 +478,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-pdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pdf.html'>pdf()</a></code></h3>
+<a id="method-pdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/grDevices/pdf.html'>pdf()</a></code></h3>
 <p>For discrete distributions the probability mass function (pmf) is returned, defined as
 $$p_X(x) = P(X = x)$$
 for continuous distributions the probability density function (pdf), \(f_X\), is returned
@@ -525,11 +524,11 @@ to the distribution in the vector to evaluate.</p></dd>
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-cdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdf.html'>cdf()</a></code></h3>
+<a id="method-cdf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cdf()</code></h3>
 <p>The (lower tail) cumulative distribution function, \(F_X\), is defined as
 $$F_X(x) = P(X \le x)$$
 If <code>lower.tail</code> is FALSE then \(1 - F_X(x)\) is returned, also known as the
-<code><a href='survival.html'>survival</a></code> function.</p>
+<code>survival</code> function.</p>
 <p>If available a cdf will be returned using an analytic expression. Otherwise,
 if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
 returned.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -622,7 +621,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-rand"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='rand.html'>rand()</a></code></h3>
+<a id="method-rand"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>rand()</code></h3>
 <p>The rand function draws <code>n</code> simulations from the distribution.</p>
 <p>If available simulations will be returned using an analytic expression. Otherwise,
 if the distribution has not been decorated with <a href='FunctionImputation.html'>FunctionImputation</a>, <code>NULL</code> is
@@ -649,12 +648,12 @@ data.table::data.table.</p></dd>
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-prec"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='prec.html'>prec()</a></code></h3>
+<a id="method-prec"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>prec()</code></h3>
 <p>Returns the precision of the distribution as <code>1/self$variance()</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>prec</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-stdev"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='stdev.html'>stdev()</a></code></h3>
+<a id="method-stdev"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>stdev()</code></h3>
 <p>Returns the standard deviation of the distribution as <code><a href='https://rdrr.io/r/base/MathFun.html'>sqrt(self$variance())</a></code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>stdev</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
@@ -675,18 +674,18 @@ Ignored, addded for consistency.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-iqr"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='iqr.html'>iqr()</a></code></h3>
+<a id="method-iqr"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>iqr()</code></h3>
 <p>Inter-quartile range of the distribution. Estimated as
 <code>self$quantile(0.75) - self$quantile(0.25)</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>iqr</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-correlation"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='correlation.html'>correlation()</a></code></h3>
+<a id="method-correlation"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>correlation()</code></h3>
 <p>If univariate returns <code>1</code>, otherwise returns the distribution correlation.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>correlation</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-liesInSupport"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='liesInSupport.html'>liesInSupport()</a></code></h3>
+<a id="method-liesInSupport"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>liesInSupport()</code></h3>
 <p>Tests if the given values lie in the support of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>liesInSupport</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>TRUE</span>, bound <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -707,7 +706,7 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-liesInType"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='liesInType.html'>liesInType()</a></code></h3>
+<a id="method-liesInType"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>liesInType()</code></h3>
 <p>Tests if the given values lie in the type of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Distribution</span><span class='op'>$</span><span class='fu'>liesInType</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>TRUE</span>, bound <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -728,7 +727,7 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-workingSupport"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='workingSupport.html'>workingSupport()</a></code></h3>
+<a id="method-workingSupport"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>workingSupport()</code></h3>
 <p>Returns an estimate for the computational support of the distribution.
 If an analytical cdf is available, then this is computed as the smallest interval
 in which the cdf lower bound is <code>0</code> and the upper bound is <code>1</code>, bounds are incremented in

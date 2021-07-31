@@ -87,7 +87,7 @@ is commonly used as a special case of the Generalised Extreme Value distribution
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -355,6 +355,12 @@ Michael P. McLaughlin.</p>
 <dt><code>packages</code></dt><dd><p>Packages required to be installed in order to construct the distribution.</p></dd>
 
 </dl><p></div></p>
+    <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
+
+    <p><div class="r6-active-bindings"></p><dl>
+<dt><code>properties</code></dt><dd><p>Returns distribution properties, including skewness type and symmetry.</p></dd>
+
+</dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -370,7 +376,6 @@ Michael P. McLaughlin.</p>
 <li><p><a href='#method-kurtosis'><code>Frechet$kurtosis()</code></a></p></li>
 <li><p><a href='#method-entropy'><code>Frechet$entropy()</code></a></p></li>
 <li><p><a href='#method-pgf'><code>Frechet$pgf()</code></a></p></li>
-<li><p><a href='#method-setParameterValue'><code>Frechet$setParameterValue()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Frechet$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
@@ -387,6 +392,7 @@ Michael P. McLaughlin.</p>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-print'><code>distr6::Distribution$print()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-quantile'><code>distr6::Distribution$quantile()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-rand'><code>distr6::Distribution$rand()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-stdev'><code>distr6::Distribution$stdev()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-strprint'><code>distr6::Distribution$strprint()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-summary'><code>distr6::Distribution$summary()</code></a></span></p></li>
@@ -427,7 +433,7 @@ with an integration analogue for continuous distributions.</p><h4 class='hasAnch
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='mode.html'>mode()</a></code></h3>
+<a id="method-mode"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/mode.html'>mode()</a></code></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
 maxima).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -448,7 +454,7 @@ returns <code>self$quantile(0.5)</code>.</p><h4 class='hasAnchor' id='arguments'
 <p><div class="r"></p><pre><span class='va'>Frechet</span><span class='op'>$</span><span class='fu'>median</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
-<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='variance.html'>variance()</a></code></h3>
+<a id="method-variance"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>variance()</code></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
@@ -461,7 +467,7 @@ covariance matrix is returned.</p><h4 class='hasAnchor' id='arguments'><a class=
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='skewness.html'>skewness()</a></code></h3>
+<a id="method-skewness"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>skewness()</code></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
@@ -474,7 +480,7 @@ distribution and \(\sigma\) is the standard deviation of the distribution.</p><h
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='kurtosis.html'>kurtosis()</a></code></h3>
+<a id="method-kurtosis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>kurtosis()</code></h3>
 <p>The kurtosis of a distribution is defined by the fourth standardised moment,
 $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
 where \(E_X\) is the expectation of distribution X, \(\mu\) is the mean of the
@@ -491,7 +497,7 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='entropy.html'>entropy()</a></code></h3>
+<a id="method-entropy"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>entropy()</code></h3>
 <p>The entropy of a (discrete) distribution is defined by
 $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
@@ -507,7 +513,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pgf.html'>pgf()</a></code></h3>
+<a id="method-pgf"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>pgf()</code></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -519,33 +525,6 @@ where X is the distribution and \(E_X\) is the expectation of the distribution X
 z integer to evaluate probability generating function at.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Unused.</p></dd>
-
-</dl><p></div></p>
-<p><hr>
-<a id="method-setParameterValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValue.html'>setParameterValue()</a></code></h3>
-<p>Sets the value(s) of the given parameter(s).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Frechet</span><span class='op'>$</span><span class='fu'>setParameterValue</span><span class='op'>(</span>
-  <span class='va'>...</span>,
-  lst <span class='op'>=</span> <span class='cn'>NULL</span>,
-  error <span class='op'>=</span> <span class='st'>"warn"</span>,
-  resolveConflicts <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p><code>ANY</code> <br />
-Named arguments of parameters to set values for. See examples.</p></dd>
-
-<dt><code>lst</code></dt><dd><p><code>(list(1))</code> <br />
-Alternative argument for passing parameters. List names should be parameter names and list values
-are the new values to set.</p></dd>
-
-<dt><code>error</code></dt><dd><p><code>(character(1))</code> <br />
-If <code>"warn"</code> then returns a warning on error, otherwise breaks if <code>"stop"</code>.</p></dd>
-
-<dt><code>resolveConflicts</code></dt><dd><p><code>(logical(1))</code><br />
-If <code>FALSE</code> (default) throws error if conflicting parameterisations are provided, otherwise
-automatically resolves them by removing all conflicting parameters.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

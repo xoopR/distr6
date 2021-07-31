@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/decorators.rmd"><code>vignettes/webs/decorators.rmd</code></a></small>
       <div class="hidden name"><code>decorators.rmd</code></div>
@@ -198,7 +198,7 @@
 <span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1586553</span></code></pre></div>
 <p>In the example above we:</p>
@@ -220,14 +220,14 @@
 <span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">w</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Weibull is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Weibull(shape = 1, scale = 1, altscale = 1)</span>
+<span class="co">#&gt; Weibull(scale = 1, shape = 1)</span>
 
 <span class="co"># Warning as numerical integration used</span>
 <span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 0.0384616+0.1923076i</span></code></pre></div>
-<p>The decorator also introduces generalised moment and expectation methods. The help documentation for these <code><a href="../../reference/kthmoment.html">?kthmoment</a></code> and <code><a href="../../reference/genExp.html">?genExp</a></code> give a full overview to these methods, but both are very useful for modelling, inference and deriving other numeric results.</p>
+<p>The decorator also introduces generalised moment and expectation methods. The help documentation for these <code>?kthmoment</code> and <code>?genExp</code> give a full overview to these methods, but both are very useful for modelling, inference and deriving other numeric results.</p>
 </div>
 <div id="exoticstatistics" class="section level3">
 <h3 class="hasAnchor">
@@ -241,7 +241,7 @@
 <span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
 
 <span class="co"># No warning as an analytic expression using pdf and cdf are used</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
@@ -265,21 +265,15 @@
 <p>In Construction</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"CoreStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
 <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>After Construction</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span>
-
-<span class="co"># Or piping as in the last tutorial</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Normal is now decorated with CoreStatistics, ExoticStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>And that’s all there is to it! If you forget which decorators are available, just run <code><a href="../../reference/listDecorators.html">listDecorators()</a></code>, or <code><a href="../../reference/listDecorators.html">listDecorators(simplify = FALSE)</a></code> if you want to see which methods they include at the same time.</p>
 </div>
 <div id="summary" class="section level2">

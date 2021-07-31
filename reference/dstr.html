@@ -87,7 +87,7 @@ or VectorDistribution (with dstrs)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -260,18 +260,18 @@ List of parameters of same length as <code>d</code> corresponding to distributio
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Construct standard Normal and  distribution</span>
 <span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Norm"</span><span class='op'>)</span> <span class='co'># ShortName</span>
-</div><div class='output co'>#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1) </div><div class='input'><span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Normal"</span><span class='op'>)</span> <span class='co'># ClassName</span>
-</div><div class='output co'>#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1) </div><div class='input'>
+</div><div class='output co'>#&gt; Norm(mean = 0, var = 1) </div><div class='input'><span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Normal"</span><span class='op'>)</span> <span class='co'># ClassName</span>
+</div><div class='output co'>#&gt; Norm(mean = 0, var = 1) </div><div class='input'>
 <span class='co'># Construct Binomial(5, 0.1)</span>
 <span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Binomial"</span>, size <span class='op'>=</span> <span class='fl'>5</span>, prob <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Binom(prob = 0.1, qprob = 0.9, size = 5) </div><div class='input'>
+</div><div class='output co'>#&gt; Binom(prob = 0.1, size = 5) </div><div class='input'>
 <span class='co'># Construct decorated Gamma(2, 1)</span>
 <span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Gamma"</span>, shape <span class='op'>=</span> <span class='fl'>2</span>, rate <span class='op'>=</span> <span class='fl'>1</span>,
      decorators <span class='op'>=</span> <span class='st'>"ExoticStatistics"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Gamma(shape = 2, rate = 1, scale = 1, mean = 2) </div><div class='input'>
+</div><div class='output co'>#&gt; Gamma(rate = 1, shape = 2) </div><div class='input'>
 <span class='co'># Or with a list</span>
 <span class='fu'>dstr</span><span class='op'>(</span><span class='st'>"Gamma"</span>, pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shape <span class='op'>=</span> <span class='fl'>2</span>, rate <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Gamma(shape = 2, rate = 4, scale = 0.25, mean = 0.5) </div><div class='input'>
+</div><div class='output co'>#&gt; Gamma(rate = 4, shape = 2) </div><div class='input'>
 <span class='co'># Construct vector with dstrs</span>
 
 <span class='co'># Binomial and Gamma with default parameters</span>
@@ -286,7 +286,7 @@ List of parameters of same length as <code>d</code> corresponding to distributio
      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rate <span class='op'>=</span> <span class='fl'>2</span>, shape <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Binom Gamma </div><div class='input'>
 <span class='co'># Multiple Binomials</span>
-<span class='fu'>dstrs</span><span class='op'>(</span><span class='st'>"Binom"</span>, <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>dstrs</span><span class='op'>(</span><span class='st'>"Binom"</span>, <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, prob <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Binom1 Binom2 ... Binom4 Binom5 </div><div class='input'>
 </div></pre>
   </div>

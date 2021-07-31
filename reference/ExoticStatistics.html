@@ -88,7 +88,7 @@ exploited, otherwise numerical ones are used with a message." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -274,7 +274,7 @@ numerical results are used with a message.</p>
 </details>
 
 <hr>
-<a id="method-cdfAntiDeriv"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdfAntiDeriv.html'>cdfAntiDeriv()</a></code></h3>
+<a id="method-cdfAntiDeriv"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cdfAntiDeriv()</code></h3>
 <p>The cdf anti-derivative is defined by $$acdf(a, b) = \int_a^b F_X(x) dx$$
 where X is the distribution, \(F_X\) is the cdf of the distribution \(X\) and
 \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -290,7 +290,7 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survivalAntiDeriv"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='survivalAntiDeriv.html'>survivalAntiDeriv()</a></code></h3>
+<a id="method-survivalAntiDeriv"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>survivalAntiDeriv()</code></h3>
 <p>The survival anti-derivative is defined by
 $$as(a, b) = \int_a^b S_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function of the distribution
@@ -307,7 +307,7 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survival"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='survival.html'>survival()</a></code></h3>
+<a id="method-survival"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>survival()</code></h3>
 <p>The survival function is defined by
 $$S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function, \(F_X\) is the cdf
@@ -337,7 +337,7 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-hazard"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='hazard.html'>hazard()</a></code></h3>
+<a id="method-hazard"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>hazard()</code></h3>
 <p>The hazard function is defined by
 $$h_X(x) = \frac{f_X}{S_X}$$
 where X is the distribution, \(S_X\) is the survival function and \(f_X\) is the pdf.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -366,7 +366,7 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cumHazard"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cumHazard.html'>cumHazard()</a></code></h3>
+<a id="method-cumHazard"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cumHazard()</code></h3>
 <p>The cumulative hazard function is defined analytically by
 $$H_X(x) = -log(S_X)$$
 where X is the distribution and \(S_X\) is the survival function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -395,7 +395,7 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-cdfPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='cdfPNorm.html'>cdfPNorm()</a></code></h3>
+<a id="method-cdfPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cdfPNorm()</code></h3>
 <p>The p-norm of the cdf is defined by
 $$(\int_a^b |F_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(F_X\) is the cdf and \(a, b\)
@@ -416,7 +416,7 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-pdfPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='pdfPNorm.html'>pdfPNorm()</a></code></h3>
+<a id="method-pdfPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>pdfPNorm()</code></h3>
 <p>The p-norm of the pdf is defined by
 $$(\int_a^b |f_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(f_X\) is the pdf and \(a, b\)
@@ -437,7 +437,7 @@ Upper bounds of integral.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-survivalPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='survivalPNorm.html'>survivalPNorm()</a></code></h3>
+<a id="method-survivalPNorm"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>survivalPNorm()</code></h3>
 <p>The p-norm of the survival function is defined by
 $$(\int_a^b |S_X|^p d\mu)^{1/p}$$
 where X is the distribution, \(S_X\) is the survival function and \(a, b\)
@@ -472,8 +472,8 @@ Upper bounds of integral.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='decorate.html'>decorate</a></span><span class='op'>(</span><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"ExoticStatistics"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>decorators <span class='op'>=</span> <span class='st'>"ExoticStatistics"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Exp(rate = 1, scale = 1) </div><div class='input'><span class='va'>ExoticStatistics</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>decorate</span><span class='op'>(</span><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>decorators <span class='op'>=</span> <span class='st'>"ExoticStatistics"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Exp(rate = 1) </div><div class='input'><span class='va'>ExoticStatistics</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='fu'>decorate</span><span class='op'>(</span><span class='va'><a href='Exponential.html'>Exponential</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Exponential is now decorated with ExoticStatistics</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

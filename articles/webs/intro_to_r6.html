@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to R6</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/intro_to_r6.rmd"><code>vignettes/webs/intro_to_r6.rmd</code></a></small>
       <div class="hidden name"><code>intro_to_r6.rmd</code></div>
@@ -207,11 +207,11 @@
 <p>Constructing a class in R6 is always done using the same syntax <code>$new(...)</code> but the arguments passed to this function depend on the class. Just like functions in R these arguments can be named or un-named and a default may or may not be provided. In this case there is a default so the following does not produce an error</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>But we can also pass arguments in the usual way</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 2, sd = 1.4142135623731, prec = 0.5)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 2)</span></code></pre></div>
 <p>See the help documentation for the specific arguments to pass to the constructor.</p>
 </div>
 <div id="methods" class="section level2">
@@ -239,7 +239,7 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 5</span></code></pre></div>
-<p>Don’t worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just remember that <code><a href="../../reference/setParameterValue.html">setParameterValue()</a></code> will update the object <code>N</code> without us having to manually save this.</p>
+<p>Don’t worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just remember that <code>setParameterValue()</code> will update the object <code>N</code> without us having to manually save this.</p>
 <div id="method-chaining" class="section level3">
 <h3 class="hasAnchor">
 <a href="#method-chaining" class="anchor"></a>Method Chaining</h3>
@@ -264,7 +264,7 @@
 <span class="co"># active bindings</span>
 <span class="va">b</span><span class="op">$</span><span class="va">kurtosisType</span>
 <span class="co">#&gt; Deprecated. Use $properties$kurtosis instead.</span>
-<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; [1] "platykurtic"</span>
 <span class="va">b</span><span class="op">$</span><span class="va">inf</span>
 <span class="co">#&gt; [1] 0</span>
 

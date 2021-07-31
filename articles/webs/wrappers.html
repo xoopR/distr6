@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Wrappers</h1>
             
-            <h4 class="date">2021-07-16</h4>
+            <h4 class="date">2021-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/wrappers.rmd"><code>vignettes/webs/wrappers.rmd</code></a></small>
       <div class="hidden name"><code>wrappers.rmd</code></div>
@@ -202,15 +202,15 @@
 <div id="accessing-wrapped-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessing-wrapped-models" class="anchor"></a>Accessing Wrapped Models</h2>
-<p>All wrappers share a common method <code><a href="../../reference/wrappedModels.html">wrappedModels()</a></code>. More often than not this is used internally but it’s still useful if you want to remind yourself of the original wrapped model.</p>
+<p>All wrappers share a common method <code>wrappedModels()</code>. More often than not this is used internally but it’s still useful if you want to remind yourself of the original wrapped model.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $Norm</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>You can also specify the name of the internal model to access it,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Norm"</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1, sd = 1, prec = 1)</span></code></pre></div>
+<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>A slightly quicker approach is to use the <code>description</code> variable which is updated each time a distribution is wrapped</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">description</span>
@@ -220,7 +220,7 @@
 <p>Or finally just look at the new distribution name</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/huberize.html">huberize</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; HubTruncNorm(TruncNorm__Norm__mean = 0, TruncNorm__Norm__var = 1,...,hub__lower = -2, hub__upper = 2)</span></code></pre></div>
+<span class="co">#&gt; HubTruncNorm(hub__lower = -2, hub__upper = 2,...,TruncNorm__trunc__lower = -3, TruncNorm__trunc__upper = 3)</span></code></pre></div>
 </div>
 <div id="wrappers-in-distr6" class="section level2">
 <h2 class="hasAnchor">
@@ -234,9 +234,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va"><a href="../../reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1,...,trunc__lower = -2, trunc__upper = 2)</span>
+<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1, trunc__lower = -2, trunc__upper = 2)</span>
 <span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1,...,trunc__lower = -2, trunc__upper = 2)</span></code></pre></div>
+<span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1, trunc__lower = -2, trunc__upper = 2)</span></code></pre></div>
 <p>In both cases, the result has to be saved to truncate the distribution as these are not methods in the Normal distribution class, i.e. to use the truncated normal distribution:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This is a good example of when piping is clean and effective</span>
