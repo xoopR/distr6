@@ -93,7 +93,7 @@ NormalKernel <- R6Class("NormalKernel",
         li = lower[ifelse(i %% ll == 0, ll, i %% ll)] / self$getParameterValue("bw")
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
         if (li == -Inf) {
-            ret[i] <- (ui / 2) * (pracma::erf(ui / sqrt(2)) + 1) + (exp(- ui^2 / 2)) / (sqrt(2 * pi))
+            ret[i] <- (ui / 2) * (pracma::erf(ui / sqrt(2)) + 1) + (self$getParameterValue("bw") *(exp(- ui^2 / 2))) / (sqrt(2 * pi))
         } else {
           ret[i] <-  (ui * (pracma::erf(ui / sqrt(2)) + 1) - li * (pracma::erf(li / sqrt(2)) + 1)) / 2 -
             ((exp(ui^2 / (2)) - exp(li^2 / (2))) * exp(-(ui^2 + li^2) / (2))) / (sqrt(2 * pi))
@@ -118,7 +118,7 @@ NormalKernel <- R6Class("NormalKernel",
         li = lower[ifelse(i %% ll == 0, ll, i %% ll)] / self$getParameterValue("bw")
         ui = upper[ifelse(i %% ul == 0, ul, i %% ul)] / self$getParameterValue("bw")
         if (upper == Inf) {
-          ret[i] <- (li / 2) * (pracma::erf(li / sqrt(2)) - 1)  + (exp(- li^2 / 2)) / (sqrt(2 * pi))
+          ret[i] <- (li / 2) * (pracma::erf(li / sqrt(2)) - 1)  + (self$getParameterValue("bw") *exp(- li^2 / 2)) / (sqrt(2 * pi))
         } else {
           ret[i] <- ((exp(ui^2 / 2) - exp(li^2 / 2)) * exp(- (ui^2 + li^2) / 2)) / (sqrt(2 * pi)) -
             (uh * (pracma::erf(ui / sqrt(2)) - 1) - li * (pracma::erf(li / sqrt(2)) - 1)) /2
