@@ -138,7 +138,6 @@ Hypergeometric <- R6Class("Hypergeometric",
     setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
       super$setParameterValue(lst = lst)
       size <- self$getParameterValue("size")
-
       pparams <- get_private(self$parameters())
       pparams$.update_support(
         successes = Set$new(0:size, class = "integer"),

@@ -1,3 +1,7 @@
+# distr6 1.6.1
+
+* Bump param6 version to fix bug in HyperGeometric distribution
+
 # distr6 1.6.0
 
 * Parameter set interface has been moved to [param6](https://cran.r-project.org/package=param6). This should not cause breakages if parameters have only been accessed via distribution methods but may otherwise.
