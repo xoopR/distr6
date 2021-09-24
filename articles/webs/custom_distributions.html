@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.1</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Custom Distributions</h1>
             
-            <h4 class="date">2021-07-31</h4>
+            <h4 class="date">2021-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/custom_distributions.rmd"><code>vignettes/webs/custom_distributions.rmd</code></a></small>
       <div class="hidden name"><code>custom_distributions.rmd</code></div>
@@ -250,14 +250,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1111111</span>
-
 <span class="co"># The log argument can be imputed with decorators</span>
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">U</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Uniform is now decorated with CoreStatistics</span>
 <span class="co">#&gt; Uniform(lower = 1, upper = 10)</span>
 <span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">4</span>, log <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 <span class="co">#&gt; [1] -2.197225</span>
-
 <span class="co"># Automatically returns 0 when outside the support</span>
 <span class="va">U</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span>
@@ -275,7 +273,6 @@
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 0.4444444</span>
-
 <span class="co"># The same as expected</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">punif</a></span><span class="op">(</span><span class="fl">5</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.4444444</span></code></pre></div>
@@ -310,7 +307,6 @@
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">U</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span>, <span class="st">"FunctionImputation"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Uniform is now decorated with CoreStatistics, ExoticStatistics, FunctionImputation</span>
 <span class="co">#&gt; unif(lower = 1, upper = 10)</span>
-
 <span class="va">U</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 5.5</span>

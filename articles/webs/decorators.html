@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.1</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators</h1>
             
-            <h4 class="date">2021-07-31</h4>
+            <h4 class="date">2021-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/decorators.rmd"><code>vignettes/webs/decorators.rmd</code></a></small>
       <div class="hidden name"><code>decorators.rmd</code></div>
@@ -221,7 +221,6 @@
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">w</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Weibull is now decorated with CoreStatistics</span>
 <span class="co">#&gt; Weibull(scale = 1, shape = 1)</span>
-
 <span class="co"># Warning as numerical integration used</span>
 <span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
@@ -242,11 +241,9 @@
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1)</span>
-
 <span class="co"># No warning as an analytic expression using pdf and cdf are used</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.525135</span>
-
 <span class="co"># Warning as numeric calculations are used</span>
 <span class="va">N</span><span class="op">$</span><span class="fu">pdfPNorm</span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
