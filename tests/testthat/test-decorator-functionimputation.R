@@ -1,4 +1,3 @@
-library(testthat)
 
 #----------
 # Setup
@@ -69,9 +68,10 @@ disc_cdf <- Distribution$new("Discrete Test",
 #----------
 test_that("constructor", {
   expect_error(FunctionImputation$new()$decorate(MultivariateNormal$new()), "univariate")
-  expect_equal(expect_message(
+  expect_message(expect_equal(
     FunctionImputation$new()$decorate(Binomial$new(decorators = "FunctionImputation")),
-    "already decorated"), FunctionImputation$new())
+    FunctionImputation$new()
+  ), "already decorated")
 })
 
 test_that("method", {
