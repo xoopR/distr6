@@ -1,3 +1,7 @@
+# distr6 1.6.2
+
+* Patch for testthat
+
 # distr6 1.6.1
 
 * Bump param6 version to fix bug in HyperGeometric distribution
