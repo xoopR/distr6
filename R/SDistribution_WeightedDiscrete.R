@@ -303,12 +303,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         data <- matrix(unlist(data), ncol = ncol(pdf))
         C_Vec_WeightedDiscretePdf(x, data, pdf, log)
       } else {
-        out <- pdf[match(x, data)]
-        out[is.na(out)] <- 0
-        if (log) {
-          out <- log(out)
-        }
-        out
+        .wd_pdf(x, data, pdf, log)
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
@@ -325,14 +320,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         data <- matrix(unlist(data), ncol = ncol(cdf))
         C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p)
       } else {
-        cdf <- cdf[findInterval(x, data)]
-        if (!lower.tail) {
-          cdf <- 1 - cdf
-        }
-        if (log.p) {
-          cdf <- log(cdf)
-        }
-        cdf
+        .wd_cdf(x, data, cdf, lower.tail, log.p)
       }
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
@@ -381,3 +369,23 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     Package = "-", Tags = ""
   )
 )
+
+.wd_pdf <- function(x, data, pdf, log) {
+  out <- pdf[match(x, data)]
+  out[is.na(out)] <- 0
+  if (log) {
+    out <- log(out)
+  }
+  out
+}
+
+.wd_cdf <- function(x, data, cdf, lower.tail, log.p) {
+  cdf <- cdf[findInterval(x, data)]
+  if (!lower.tail) {
+    cdf <- 1 - cdf
+  }
+  if (log.p) {
+    cdf <- log(cdf)
+  }
+  cdf
+}
