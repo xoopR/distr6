@@ -296,7 +296,6 @@ autotest_vec_sdistribution <- function(sdist, pars) {
     #   if (!is.null(sdist$pgf)) test_vectorised_method(vdist, "pgf", 1:2)
     # }
 
-
       if (isPdf(sdist)) {
         test_vectorised_dpqr(vdist, "pdf", list(1:3))
         if (sdist$.__enclos_env__$private$.log) {

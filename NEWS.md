@@ -1,3 +1,8 @@
+# distr6 1.6.4
+
+* Off-by-one error fixed in WeightedDiscrete distribution cdf function
+* Speed-ups in pdf, cdf, rand functions in WeightedDiscrete
+
 # distr6 1.6.2
 
 * Patch for testthat

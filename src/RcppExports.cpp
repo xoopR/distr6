@@ -178,20 +178,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// C_WeightedDiscretePdf
-NumericVector C_WeightedDiscretePdf(NumericVector x, NumericVector data, NumericVector pdf, bool logp);
-RcppExport SEXP _distr6_C_WeightedDiscretePdf(SEXP xSEXP, SEXP dataSEXP, SEXP pdfSEXP, SEXP logpSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type pdf(pdfSEXP);
-    Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_WeightedDiscretePdf(x, data, pdf, logp));
-    return rcpp_result_gen;
-END_RCPP
-}
 // C_Vec_WeightedDiscretePdf
 NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, NumericMatrix pdf, bool logp);
 RcppExport SEXP _distr6_C_Vec_WeightedDiscretePdf(SEXP xSEXP, SEXP dataSEXP, SEXP pdfSEXP, SEXP logpSEXP) {
@@ -639,7 +625,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_ShiftedLoglogisticPdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticPdf, 5},
     {"_distr6_C_ShiftedLoglogisticCdf", (DL_FUNC) &_distr6_C_ShiftedLoglogisticCdf, 6},
     {"_distr6_C_ShiftedLoglogisticQuantile", (DL_FUNC) &_distr6_C_ShiftedLoglogisticQuantile, 6},
-    {"_distr6_C_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_WeightedDiscretePdf, 4},
     {"_distr6_C_Vec_WeightedDiscretePdf", (DL_FUNC) &_distr6_C_Vec_WeightedDiscretePdf, 4},
     {"_distr6_C_WeightedDiscreteCdf", (DL_FUNC) &_distr6_C_WeightedDiscreteCdf, 5},
     {"_distr6_C_Vec_WeightedDiscreteCdf", (DL_FUNC) &_distr6_C_Vec_WeightedDiscreteCdf, 5},
