@@ -397,30 +397,6 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
   return mat;
 }
 
-// [[Rcpp::export]]
-NumericVector C_WeightedDiscretePdf(NumericVector x, NumericVector data, NumericVector pdf,
-                                    bool logp) {
-
-  int nr = data.length();
-  int n = x.length();
-
-  NumericVector mat(n);
-
-  for (int k = 0; k < n; k++) {
-    for (int j = 0; j < nr; j++) {
-      if (data[j] == x[k]) {
-        if (logp) {
-          mat[k] = log(pdf[j]);
-        } else {
-          mat[k] = pdf[j];
-        }
-        break;
-      }
-    }
-  }
-
-  return mat;
-}
 
 // [[Rcpp::export]]
 NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, NumericMatrix pdf,
@@ -504,28 +480,29 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
 
   NumericMatrix mat(n, nc);
 
+  // i - distribution
+  // j - data samples
+  // k - evaluates
+
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (data(j, i) >= x[k]) {
-          mat(k, i) = cdf(j, i);
-          if (!lower) {
-            mat(k, i) = 1 - mat(k, i);
-          }
-          if (logp) {
-            mat(k, i) = log(mat(k, i));
-          }
+        if (j == 0 && x[k] < data(0, i)) {
+          mat(k, i) = 0;
           break;
         } else if (j == nr - 1) {
-          mat(k, i) = 1;
-          if (!lower) {
-            mat(k, i) = 1 - mat(k, i);
-          }
-          if (logp) {
-            mat(k, i) = log(mat(k, i));
-          }
+          mat(k, i) = cdf(j, i);
+          break;
+        } else if (x[k] >= data(j, i) && x[k] < data(j + 1, i)) {
+          mat(k, i) = cdf(j, i);
           break;
         }
+      }
+      if (!lower) {
+        mat(k, i) = 1 - mat(k, i);
+      }
+      if (logp) {
+        mat(k, i) = log(mat(k, i));
       }
     }
   }

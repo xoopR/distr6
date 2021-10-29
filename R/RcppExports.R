@@ -49,10 +49,6 @@ C_ShiftedLoglogisticQuantile <- function(x, location, shape, scale, lower, logp)
     .Call(`_distr6_C_ShiftedLoglogisticQuantile`, x, location, shape, scale, lower, logp)
 }
 
-C_WeightedDiscretePdf <- function(x, data, pdf, logp) {
-    .Call(`_distr6_C_WeightedDiscretePdf`, x, data, pdf, logp)
-}
-
 C_Vec_WeightedDiscretePdf <- function(x, data, pdf, logp) {
     .Call(`_distr6_C_Vec_WeightedDiscretePdf`, x, data, pdf, logp)
 }

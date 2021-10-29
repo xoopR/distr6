@@ -240,13 +240,13 @@ Categorical <- R6Class("Categorical",
         for (i in seq(ncol(probs))) {
           els_ind <- seq_along(els[, i])
           new_x <- match(x, els[, i])
-          pdf[, i] <- C_WeightedDiscretePdf(new_x, els_ind, probs[, i], log)
+          pdf[, i] <- .wd_pdf(new_x, els_ind, probs[, i], log)
         }
-        return(pdf)
+        pdf
       } else {
         els_ind <- seq_along(els)
         new_x <- match(x, els)
-        return(C_WeightedDiscretePdf(new_x, els_ind, probs, log))
+        .wd_pdf(new_x, els_ind, probs, log)
       }
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
@@ -262,14 +262,14 @@ Categorical <- R6Class("Categorical",
           els_ind <- seq_along(els[, i])
           new_x <- match(x, els[, i])
           new_cdf <- cumsum(probs[, i])
-          cdf[, i] <- C_WeightedDiscreteCdf(new_x, els_ind, new_cdf, lower.tail, log.p)
+          cdf[, i] <- .wd_cdf(new_x, els_ind, new_cdf, lower.tail, log.p)
         }
-        return(cdf)
+        cdf
       } else {
         els_ind <- seq_along(els)
         new_x <- match(x, els)
         cdf <- cumsum(probs)
-        return(C_WeightedDiscreteCdf(new_x, els_ind, cdf, lower.tail, log.p))
+        .wd_cdf(new_x, els_ind, cdf, lower.tail, log.p)
       }
 
     },
