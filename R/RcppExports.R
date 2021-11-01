@@ -77,96 +77,96 @@ C_NumericQuantile <- function(p, x, cdf, lower, logp) {
     .Call(`_distr6_C_NumericQuantile`, p, x, cdf, lower, logp)
 }
 
-C_CosineKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_CosineKernelPdf`, x, logp)
+C_CosineKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_CosineKernelPdf`, x, bw, logp)
 }
 
-C_CosineKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_CosineKernelCdf`, x, lower, logp)
+C_CosineKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_CosineKernelCdf`, x, bw, lower, logp)
 }
 
 C_CosineKernelQuantile <- function(x, lower, logp) {
     .Call(`_distr6_C_CosineKernelQuantile`, x, lower, logp)
 }
 
-C_EpanechnikovKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_EpanechnikovKernelPdf`, x, logp)
+C_EpanechnikovKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_EpanechnikovKernelPdf`, x, bw, logp)
 }
 
-C_EpanechnikovKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_EpanechnikovKernelCdf`, x, lower, logp)
+C_EpanechnikovKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_EpanechnikovKernelCdf`, x, bw, lower, logp)
 }
 
-C_LogisticKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_LogisticKernelPdf`, x, logp)
+C_LogisticKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_LogisticKernelPdf`, x, bw, logp)
 }
 
-C_LogisticKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_LogisticKernelCdf`, x, lower, logp)
+C_LogisticKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_LogisticKernelCdf`, x, bw, lower, logp)
 }
 
 C_LogisticKernelQuantile <- function(x, lower, logp) {
     .Call(`_distr6_C_LogisticKernelQuantile`, x, lower, logp)
 }
 
-C_NormalKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_NormalKernelPdf`, x, logp)
+C_NormalKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_NormalKernelPdf`, x, bw, logp)
 }
 
-C_QuarticKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_QuarticKernelPdf`, x, logp)
+C_QuarticKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_QuarticKernelPdf`, x, bw, logp)
 }
 
-C_QuarticKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_QuarticKernelCdf`, x, lower, logp)
+C_QuarticKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_QuarticKernelCdf`, x, bw, lower, logp)
 }
 
-C_SigmoidKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_SigmoidKernelPdf`, x, logp)
+C_SigmoidKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_SigmoidKernelPdf`, x, bw, logp)
 }
 
-C_SilvermanKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_SilvermanKernelPdf`, x, logp)
+C_SilvermanKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_SilvermanKernelPdf`, x, bw, logp)
 }
 
-C_SilvermanKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_SilvermanKernelCdf`, x, lower, logp)
+C_SilvermanKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_SilvermanKernelCdf`, x, bw, lower, logp)
 }
 
-C_TriangularKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_TriangularKernelPdf`, x, logp)
+C_TriangularKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_TriangularKernelPdf`, x, bw, logp)
 }
 
-C_TriangularKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_TriangularKernelCdf`, x, lower, logp)
+C_TriangularKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_TriangularKernelCdf`, x, bw, lower, logp)
 }
 
 C_TriangularKernelQuantile <- function(x, lower, logp) {
     .Call(`_distr6_C_TriangularKernelQuantile`, x, lower, logp)
 }
 
-C_TricubeKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_TricubeKernelPdf`, x, logp)
+C_TricubeKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_TricubeKernelPdf`, x, bw, logp)
 }
 
-C_TricubeKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_TricubeKernelCdf`, x, lower, logp)
+C_TricubeKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_TricubeKernelCdf`, x, bw, lower, logp)
 }
 
-C_TriweightKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_TriweightKernelPdf`, x, logp)
+C_TriweightKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_TriweightKernelPdf`, x, bw, logp)
 }
 
-C_TriweightKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_TriweightKernelCdf`, x, lower, logp)
+C_TriweightKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_TriweightKernelCdf`, x, bw, lower, logp)
 }
 
-C_UniformKernelPdf <- function(x, logp) {
-    .Call(`_distr6_C_UniformKernelPdf`, x, logp)
+C_UniformKernelPdf <- function(x, bw, logp) {
+    .Call(`_distr6_C_UniformKernelPdf`, x, bw, logp)
 }
 
-C_UniformKernelCdf <- function(x, lower, logp) {
-    .Call(`_distr6_C_UniformKernelCdf`, x, lower, logp)
+C_UniformKernelCdf <- function(x, bw, lower, logp) {
+    .Call(`_distr6_C_UniformKernelCdf`, x, bw, lower, logp)
 }
 
 C_UniformKernelQuantile <- function(x, lower, logp) {

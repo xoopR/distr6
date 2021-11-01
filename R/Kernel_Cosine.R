@@ -17,6 +17,17 @@ Cosine <- R6Class("Cosine",
     short_name = "Cos",
     description = "Cosine Kernel",
 
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(bw = NULL, decorators = NULL) {
+      super$initialize(
+        decorators = decorators,
+        support = Reals$new()
+      )
+    },
+
+
     #' @description
     #' The squared 2-norm of the pdf is defined by
     #' \deqn{\int_a^b (f_X(u))^2 du}
@@ -157,13 +168,13 @@ Cosine <- R6Class("Cosine",
 
   private = list(
     .pdf = function(x, log = FALSE) {
-      C_CosineKernelPdf(x, log)
+      C_CosineKernelPdf(x, bw, log)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
-      C_CosineKernelCdf(x, lower.tail, log.p)
+      C_CosineKernelCdf(x, bw, lower.tail, log.p)
     },
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      C_CosineKernelQuantile(p, lower.tail, log.p)
+      C_CosineKernelQuantile(p, bw, lower.tail, log.p)
     }
   )
 )

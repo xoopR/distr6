@@ -283,27 +283,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_CosineKernelPdf
-NumericVector C_CosineKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_CosineKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_CosineKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_CosineKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_CosineKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_CosineKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_CosineKernelCdf
-NumericVector C_CosineKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_CosineKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_CosineKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_CosineKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_CosineKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_CosineKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -321,52 +323,56 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_EpanechnikovKernelPdf
-NumericVector C_EpanechnikovKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_EpanechnikovKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_EpanechnikovKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_EpanechnikovKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_EpanechnikovKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_EpanechnikovKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_EpanechnikovKernelCdf
-NumericVector C_EpanechnikovKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_EpanechnikovKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_EpanechnikovKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_EpanechnikovKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_EpanechnikovKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_EpanechnikovKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_LogisticKernelPdf
-NumericVector C_LogisticKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_LogisticKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_LogisticKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_LogisticKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_LogisticKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_LogisticKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_LogisticKernelCdf
-NumericVector C_LogisticKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_LogisticKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_LogisticKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_LogisticKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_LogisticKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_LogisticKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -384,101 +390,109 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_NormalKernelPdf
-NumericVector C_NormalKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_NormalKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_NormalKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_NormalKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_NormalKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_NormalKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_QuarticKernelPdf
-NumericVector C_QuarticKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_QuarticKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_QuarticKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_QuarticKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_QuarticKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_QuarticKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_QuarticKernelCdf
-NumericVector C_QuarticKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_QuarticKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_QuarticKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_QuarticKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_QuarticKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_QuarticKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_SigmoidKernelPdf
-NumericVector C_SigmoidKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_SigmoidKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_SigmoidKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_SigmoidKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_SigmoidKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_SigmoidKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_SilvermanKernelPdf
-NumericVector C_SilvermanKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_SilvermanKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_SilvermanKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_SilvermanKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_SilvermanKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_SilvermanKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_SilvermanKernelCdf
-NumericVector C_SilvermanKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_SilvermanKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_SilvermanKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_SilvermanKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_SilvermanKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_SilvermanKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_TriangularKernelPdf
-NumericVector C_TriangularKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_TriangularKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_TriangularKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_TriangularKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TriangularKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TriangularKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_TriangularKernelCdf
-NumericVector C_TriangularKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_TriangularKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_TriangularKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_TriangularKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TriangularKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TriangularKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -496,77 +510,83 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_TricubeKernelPdf
-NumericVector C_TricubeKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_TricubeKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_TricubeKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_TricubeKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TricubeKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TricubeKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_TricubeKernelCdf
-NumericVector C_TricubeKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_TricubeKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_TricubeKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_TricubeKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TricubeKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TricubeKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_TriweightKernelPdf
-NumericVector C_TriweightKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_TriweightKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_TriweightKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_TriweightKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TriweightKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TriweightKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_TriweightKernelCdf
-NumericVector C_TriweightKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_TriweightKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_TriweightKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_TriweightKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_TriweightKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_TriweightKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_UniformKernelPdf
-NumericVector C_UniformKernelPdf(NumericVector x, bool logp);
-RcppExport SEXP _distr6_C_UniformKernelPdf(SEXP xSEXP, SEXP logpSEXP) {
+NumericMatrix C_UniformKernelPdf(NumericVector x, NumericVector bw, bool logp);
+RcppExport SEXP _distr6_C_UniformKernelPdf(SEXP xSEXP, SEXP bwSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_UniformKernelPdf(x, logp));
+    rcpp_result_gen = Rcpp::wrap(C_UniformKernelPdf(x, bw, logp));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_UniformKernelCdf
-NumericVector C_UniformKernelCdf(NumericVector x, bool lower, bool logp);
-RcppExport SEXP _distr6_C_UniformKernelCdf(SEXP xSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
+NumericMatrix C_UniformKernelCdf(NumericVector x, NumericVector bw, bool lower, bool logp);
+RcppExport SEXP _distr6_C_UniformKernelCdf(SEXP xSEXP, SEXP bwSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bw(bwSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_UniformKernelCdf(x, lower, logp));
+    rcpp_result_gen = Rcpp::wrap(C_UniformKernelCdf(x, bw, lower, logp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -632,29 +652,29 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_Vec_WeightedDiscreteQuantile", (DL_FUNC) &_distr6_C_Vec_WeightedDiscreteQuantile, 5},
     {"_distr6_C_NumericCdf_Discrete", (DL_FUNC) &_distr6_C_NumericCdf_Discrete, 5},
     {"_distr6_C_NumericQuantile", (DL_FUNC) &_distr6_C_NumericQuantile, 5},
-    {"_distr6_C_CosineKernelPdf", (DL_FUNC) &_distr6_C_CosineKernelPdf, 2},
-    {"_distr6_C_CosineKernelCdf", (DL_FUNC) &_distr6_C_CosineKernelCdf, 3},
+    {"_distr6_C_CosineKernelPdf", (DL_FUNC) &_distr6_C_CosineKernelPdf, 3},
+    {"_distr6_C_CosineKernelCdf", (DL_FUNC) &_distr6_C_CosineKernelCdf, 4},
     {"_distr6_C_CosineKernelQuantile", (DL_FUNC) &_distr6_C_CosineKernelQuantile, 3},
-    {"_distr6_C_EpanechnikovKernelPdf", (DL_FUNC) &_distr6_C_EpanechnikovKernelPdf, 2},
-    {"_distr6_C_EpanechnikovKernelCdf", (DL_FUNC) &_distr6_C_EpanechnikovKernelCdf, 3},
-    {"_distr6_C_LogisticKernelPdf", (DL_FUNC) &_distr6_C_LogisticKernelPdf, 2},
-    {"_distr6_C_LogisticKernelCdf", (DL_FUNC) &_distr6_C_LogisticKernelCdf, 3},
+    {"_distr6_C_EpanechnikovKernelPdf", (DL_FUNC) &_distr6_C_EpanechnikovKernelPdf, 3},
+    {"_distr6_C_EpanechnikovKernelCdf", (DL_FUNC) &_distr6_C_EpanechnikovKernelCdf, 4},
+    {"_distr6_C_LogisticKernelPdf", (DL_FUNC) &_distr6_C_LogisticKernelPdf, 3},
+    {"_distr6_C_LogisticKernelCdf", (DL_FUNC) &_distr6_C_LogisticKernelCdf, 4},
     {"_distr6_C_LogisticKernelQuantile", (DL_FUNC) &_distr6_C_LogisticKernelQuantile, 3},
-    {"_distr6_C_NormalKernelPdf", (DL_FUNC) &_distr6_C_NormalKernelPdf, 2},
-    {"_distr6_C_QuarticKernelPdf", (DL_FUNC) &_distr6_C_QuarticKernelPdf, 2},
-    {"_distr6_C_QuarticKernelCdf", (DL_FUNC) &_distr6_C_QuarticKernelCdf, 3},
-    {"_distr6_C_SigmoidKernelPdf", (DL_FUNC) &_distr6_C_SigmoidKernelPdf, 2},
-    {"_distr6_C_SilvermanKernelPdf", (DL_FUNC) &_distr6_C_SilvermanKernelPdf, 2},
-    {"_distr6_C_SilvermanKernelCdf", (DL_FUNC) &_distr6_C_SilvermanKernelCdf, 3},
-    {"_distr6_C_TriangularKernelPdf", (DL_FUNC) &_distr6_C_TriangularKernelPdf, 2},
-    {"_distr6_C_TriangularKernelCdf", (DL_FUNC) &_distr6_C_TriangularKernelCdf, 3},
+    {"_distr6_C_NormalKernelPdf", (DL_FUNC) &_distr6_C_NormalKernelPdf, 3},
+    {"_distr6_C_QuarticKernelPdf", (DL_FUNC) &_distr6_C_QuarticKernelPdf, 3},
+    {"_distr6_C_QuarticKernelCdf", (DL_FUNC) &_distr6_C_QuarticKernelCdf, 4},
+    {"_distr6_C_SigmoidKernelPdf", (DL_FUNC) &_distr6_C_SigmoidKernelPdf, 3},
+    {"_distr6_C_SilvermanKernelPdf", (DL_FUNC) &_distr6_C_SilvermanKernelPdf, 3},
+    {"_distr6_C_SilvermanKernelCdf", (DL_FUNC) &_distr6_C_SilvermanKernelCdf, 4},
+    {"_distr6_C_TriangularKernelPdf", (DL_FUNC) &_distr6_C_TriangularKernelPdf, 3},
+    {"_distr6_C_TriangularKernelCdf", (DL_FUNC) &_distr6_C_TriangularKernelCdf, 4},
     {"_distr6_C_TriangularKernelQuantile", (DL_FUNC) &_distr6_C_TriangularKernelQuantile, 3},
-    {"_distr6_C_TricubeKernelPdf", (DL_FUNC) &_distr6_C_TricubeKernelPdf, 2},
-    {"_distr6_C_TricubeKernelCdf", (DL_FUNC) &_distr6_C_TricubeKernelCdf, 3},
-    {"_distr6_C_TriweightKernelPdf", (DL_FUNC) &_distr6_C_TriweightKernelPdf, 2},
-    {"_distr6_C_TriweightKernelCdf", (DL_FUNC) &_distr6_C_TriweightKernelCdf, 3},
-    {"_distr6_C_UniformKernelPdf", (DL_FUNC) &_distr6_C_UniformKernelPdf, 2},
-    {"_distr6_C_UniformKernelCdf", (DL_FUNC) &_distr6_C_UniformKernelCdf, 3},
+    {"_distr6_C_TricubeKernelPdf", (DL_FUNC) &_distr6_C_TricubeKernelPdf, 3},
+    {"_distr6_C_TricubeKernelCdf", (DL_FUNC) &_distr6_C_TricubeKernelCdf, 4},
+    {"_distr6_C_TriweightKernelPdf", (DL_FUNC) &_distr6_C_TriweightKernelPdf, 3},
+    {"_distr6_C_TriweightKernelCdf", (DL_FUNC) &_distr6_C_TriweightKernelCdf, 4},
+    {"_distr6_C_UniformKernelPdf", (DL_FUNC) &_distr6_C_UniformKernelPdf, 3},
+    {"_distr6_C_UniformKernelCdf", (DL_FUNC) &_distr6_C_UniformKernelCdf, 4},
     {"_distr6_C_UniformKernelQuantile", (DL_FUNC) &_distr6_C_UniformKernelQuantile, 3},
     {"_distr6_C_dpq", (DL_FUNC) &_distr6_C_dpq, 5},
     {"_distr6_C_r", (DL_FUNC) &_distr6_C_r, 3},

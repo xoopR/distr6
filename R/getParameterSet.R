@@ -698,3 +698,76 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     }
   )
 }
+
+getParameterSet.Cosine <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Epanechnikov <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Cosine <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.LogisticKernel <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+
+getParameterSet.NormalKernel <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Quartic <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Sigmoid <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Silverman <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.TriangularKernel <- function(object, ...) {
+  pset(
+    prm("bw", "posreals", 1, tags = "required")
+  )
+}
+
+getParameterSet.Triweight <- function(object, ...) {
+    pset(
+      prm("bw", "posreals", 1, tags = "required")
+    )
+  }
+
+getParameterSet.UniformKernel <- function(object, ...) {
+    pset(
+      prm("bw", "posreals", 1, tags = "required")
+    )
+  }
+
+
+
+
+
+

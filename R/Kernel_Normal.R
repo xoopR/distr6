@@ -66,8 +66,8 @@ NormalKernel <- R6Class("NormalKernel",
   ),
 
   private = list(
-    .pdf = function(x, log = FALSE) {
-      C_NormalKernelPdf(x, log)
+    .pdf = function(x, bw, log = FALSE) {
+      C_NormalKernelPdf(x, bw, log)
     },
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       cdf <- 1 / 2 * (pracma::erf(x / sqrt(2)) + 1)
@@ -80,7 +80,7 @@ NormalKernel <- R6Class("NormalKernel",
 
       return(cdf)
     },
-    .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
+    .quantile = function(p, bw, lower.tail = TRUE, log.p = FALSE) {
       quantile <- numeric(length(p))
       if (log.p) {
         p <- exp(p)
