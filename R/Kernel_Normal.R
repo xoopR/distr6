@@ -24,7 +24,7 @@ NormalKernel <- R6Class("NormalKernel",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(decorators = NULL) {
+    initialize = function(decorators = NULL, bw = NULL) {
       super$initialize(
         decorators = decorators,
         support = Reals$new()
