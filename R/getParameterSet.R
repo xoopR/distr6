@@ -700,11 +700,6 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
 }
 
 
-getParameterSet.Kernel <- function(object, ...) {
-    pset(
-      prm("bw", "posreals", 1, tags = "required")
-    )
-  }
 
 
 
