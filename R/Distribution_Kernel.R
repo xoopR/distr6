@@ -29,6 +29,17 @@ Kernel <- R6Class("Kernel",
       private$.traits$type <- Reals$new()
       private$.parameters <- pset()
 
+      
+      args <- getR6Call()
+      private$.parameters <- pset(
+      prm("bw", "posreals", 1, tags = "required")
+      )
+        if (length(args)) {
+           self$setParameterValue(lst = args)
+          }
+        
+     
+      
       invisible(self)
     },
 
