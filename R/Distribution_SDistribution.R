@@ -10,7 +10,6 @@
 SDistribution <- R6Class("SDistribution",
   inherit = Distribution,
   public = list(
-    package = "This is now deprecated. Use $packages instead.",
     packages = NULL,
 
     #' @description

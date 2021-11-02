@@ -1,3 +1,7 @@
+# distr6 1.6.5
+
+* Removed deprecated `$package` field
+
 # distr6 1.6.4
 
 * Off-by-one error fixed in WeightedDiscrete distribution cdf function

@@ -9,11 +9,10 @@
 #' @template method_pdfsquared2Norm
 #'
 #' @export
-Kernel <- R6Class("Kernel",
+Kernel <- AbstractClass("Kernel",
   inherit = Distribution,
   lock_objects = FALSE,
   public = list(
-    package = "This is now deprecated. Use $packages instead.",
     packages = NULL,
 
     #' @description
