@@ -1,7 +1,6 @@
 #' @title Abstract Special Distribution Class
 #'
 #' @template class_abstract
-#' @template field_package
 #' @template field_packages
 #' @template param_decorators
 #' @template param_support

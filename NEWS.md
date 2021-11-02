@@ -1,6 +1,7 @@
 # distr6 1.6.5
 
 * Removed deprecated `$package` field
+* Abstract classes are now implemented via [ooplah](https://cran.r-project.org/package=ooplah), which is still using an experimental interface.
 
 # distr6 1.6.4
 

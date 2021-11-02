@@ -1,25 +1,26 @@
 #' @title Abstract Kernel Class
+#' @name Kernel
+#' @description Abstract class for kernels. Call [listKernels()] for implemented
+#' kernels.
 #'
-#' @template class_abstract
-#' @template field_package
-#' @template field_packages
-#' @template param_decorators
-#' @template param_support
-#' @template method_mode
-#' @template method_pdfsquared2Norm
+#' @section Kernels may include the following methods:
+#'
+#' * `mode()` - Mode of the kernel, always `0`
+#' * `mean()` - Mean of the kernel, always `0`
+#' * `median()` - Median of the kernel, always `0`
+#' * `skewness()` - Skewness of the kernel, always `0`
+#' * `pdfSquared2Norm` - Squared 2-norm of pdf, will be moved to a new decorator
+#' * `cdfSquared2Norm` - Squared 2-norm of cdf, will be moved to a new decorator
 #'
 #' @export
+NULL
 Kernel <- AbstractClass("Kernel",
   inherit = Distribution,
   lock_objects = FALSE,
   public = list(
     packages = NULL,
 
-    #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(decorators = NULL, support = Interval$new(-1, 1)) {
-      abstract(self, "Kernel", "listKernels()")
-
       assert_pkgload(self$packages)
 
       if (!is.null(decorators)) suppressMessages(decorate(self, decorators))
@@ -31,49 +32,26 @@ Kernel <- AbstractClass("Kernel",
       invisible(self)
     },
 
-    #' @description
-    #' Calculates the mode of the distribution.
     mode = function(which = "all") {
       return(0)
     },
 
-    #' @description
-    #' Calculates the mean (expectation) of the distribution.
-    #' @param ... Unused.
     mean = function(...) {
       return(0)
     },
 
-    #' @description
-    #' Calculates the median of the distribution.
     median = function() {
       return(0)
     },
 
-    #' @description
-    #' The squared 2-norm of the pdf is defined by
-    #' \deqn{\int_a^b (f_X(u))^2 du}
-    #' where X is the Distribution, \eqn{f_X} is its pdf and \eqn{a, b}
-    #' are the distribution support limits.
     pdfSquared2Norm = function(x = 0, upper = Inf) {
       return(NULL)
     },
 
-    #' @description
-    #' The squared 2-norm of the cdf is defined by
-    #' \deqn{\int_a^b (F_X(u))^2 du}
-    #' where X is the Distribution, \eqn{F_X} is its pdf and \eqn{a, b}
-    #' are the distribution support limits.
     cdfSquared2Norm = function(x = 0, upper = Inf) {
       return(NULL)
     },
 
-    #' @description
-    #' The skewness of a distribution is defined by the third standardised moment,
-    #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
-    #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
-    #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
-    #' @param ... Unused.
     skewness = function(...) return(0)
   ),
 

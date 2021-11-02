@@ -15,8 +15,6 @@ Abstract class that cannot be constructed directly.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{package}}{Deprecated, use \verb{$packages} instead.}
-
 \item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
 }
 \if{html}{\out{</div>}}
