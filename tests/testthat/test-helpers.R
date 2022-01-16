@@ -87,11 +87,6 @@ test_that("v_genfun", {
   expect_equal(v_genfun(c(1, 2), function(x) x + 1), 2:3)
 })
 
-test_that("abstract", {
-  expect_error(abstract(1, "numeric"), "abstract class")
-  expect_error(abstract(1, "numeric", "purple"), "purple")
-})
-
 test_that("rsapply", {
   expect_equal(rsapply(list(Binomial$new(), Normal$new()), pdf, 1),
                c(Binomial$new()$pdf(1), Normal$new()$pdf(1)))

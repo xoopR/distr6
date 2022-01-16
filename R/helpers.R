@@ -152,8 +152,8 @@ assertOneWord <- function(x, errormsg = "All values must be one word.") {
   }
 }
 
-strCollapse <- function(x, par = "{}") {
-  paste0(substr(par, 1, 1), paste0(x, collapse = ", "), substr(par, 2, 2))
+strCollapse <- function(x, par = "{}", collapse = ", ") {
+  paste0(substr(par, 1, 1), paste0(x, collapse = collapse), substr(par, 2, 2))
 }
 
 test_list <- function(x) {
@@ -193,16 +193,6 @@ rsapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, active = FAL
   }
 }
 
-abstract <- function(obj, class, see) {
-  if (getR6Class(obj) == class) {
-    if (missing(see)) {
-      stopf("%s is an abstract class that can't be initialized.", class)
-    } else {
-      stopf("%s is an abstract class that can't be initialized. Instead see %s.", class, see)
-    }
-  }
-}
-
 stopf <- function(str, ...) {
   stop(sprintf(str, ...))
 }
@@ -217,12 +207,13 @@ v_genfun <- function(x, fun) {
 
 getR6Call <- function() {
   # get call
-  calls <- as.list(match.call(definition = sys.function(sys.parent(2L)),
-                 call = sys.call(sys.parent(3L)),
-                 envir = parent.frame(4L)))[-1]
+  calls <- as.list(match.call(
+                definition = sys.function(sys.parent(3L)),
+                call = sys.call(sys.parent(3L)),
+                envir = parent.frame(4L)))[-1]
   calls <- calls[names(calls) %nin% "decorators"]
   # prevent lazy evaluation
-  lapply(calls, eval.parent, n = 5)
+  lapply(calls, eval.parent)
 }
 
 

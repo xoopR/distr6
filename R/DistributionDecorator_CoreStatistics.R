@@ -15,7 +15,7 @@
 #' Exponential$new(decorators = "CoreStatistics")
 #' CoreStatistics$new()$decorate(Exponential$new())
 #' @export
-CoreStatistics <- R6Class("CoreStatistics",
+CoreStatistics <- DecoratorClass("CoreStatistics",
   inherit = DistributionDecorator,
   public = list(
     #' @description
@@ -152,6 +152,7 @@ CoreStatistics <- R6Class("CoreStatistics",
     #' @param ... `ANY` \cr
     #' Passed to [cubature::cubintegrate].
     genExp = function(trafo = NULL, cubature = FALSE, ...) {
+
       if (is.null(trafo)) {
         trafo <- function() {
           return(x)

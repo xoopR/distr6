@@ -27,7 +27,7 @@ Other kernels:
 }
 \concept{kernels}
 \section{Super classes}{
-\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[ooplah:Kernel]{ooplah::Kernel}} -> \code{Silverman}
+\code{\link[distr6:Distribution]{distr6::Distribution}} -> \code{\link[distr6:Kernel]{distr6::Kernel}} -> \code{Silverman}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -70,10 +70,10 @@ Other kernels:
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ooplah" data-topic="Kernel" data-id="mean">}\href{../../ooplah/html/Kernel.html#method-mean}{\code{ooplah::Kernel$mean()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ooplah" data-topic="Kernel" data-id="median">}\href{../../ooplah/html/Kernel.html#method-median}{\code{ooplah::Kernel$median()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ooplah" data-topic="Kernel" data-id="mode">}\href{../../ooplah/html/Kernel.html#method-mode}{\code{ooplah::Kernel$mode()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ooplah" data-topic="Kernel" data-id="skewness">}\href{../../ooplah/html/Kernel.html#method-skewness}{\code{ooplah::Kernel$skewness()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness">}\href{../../distr6/html/Kernel.html#method-skewness}{\code{distr6::Kernel$skewness()}}\out{</span>}
 }
 \out{</details>}
 }

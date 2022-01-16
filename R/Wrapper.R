@@ -18,7 +18,7 @@
 #' of Reusable Object-Oriented Software.” Addison-Wesley.
 #'
 #' @export
-DistributionWrapper <- R6Class("DistributionWrapper",
+DistributionWrapper <- AbstractClass("DistributionWrapper",
   inherit = Distribution, lock_objects = FALSE,
   public = list(
     #' @description
@@ -47,8 +47,6 @@ DistributionWrapper <- R6Class("DistributionWrapper",
                           name, short_name, description,
                           support, type, valueSupport, variateForm,
                           parameters = NULL, outerID = NULL) {
-
-      abstract(self, "DistributionWrapper", "listWrappers()")
 
       self$name <- name
       self$short_name <- short_name

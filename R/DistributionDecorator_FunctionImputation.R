@@ -48,7 +48,7 @@
 #' x$rand(4)
 #' }
 #' @export
-FunctionImputation <- R6Class("FunctionImputation",
+FunctionImputation <- DecoratorClass("FunctionImputation",
   inherit = DistributionDecorator,
   public = list(
     packages = c("pracma", "GoFKernel"),

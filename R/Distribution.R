@@ -203,7 +203,7 @@ Distribution <- R6Class("Distribution",
       private$.properties$symmetry <- symm
 
       if (!is.null(decorators)) {
-        suppressMessages(decorate(self, decorators))
+        decorate(self, decorators)
       }
 
       lockBinding("name", self)
@@ -857,7 +857,7 @@ decorator to numerically estimate this.")
 )
 
 #' @export
-as.character.Distribution <- function(x, n, ...) {
+as.character.Distribution <- function(x, n = 5, ...) {
   if (length(x$parameters()) != 0) {
     p <- sort_named_list(x$parameters()$values)
     lng <- length(p)

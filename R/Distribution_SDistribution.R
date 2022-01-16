@@ -1,26 +1,37 @@
 #' @title Abstract Special Distribution Class
-#'
+#' @name SDistribution
 #' @template class_abstract
-#' @template field_packages
-#' @template param_decorators
-#' @template param_support
+#'
+#' @seealso [listDistributions()]
+#'
+#' @section Methods:
+#'
+#' * `mode(which = "all")` - Mode of the distribution. `which` selects which
+#' mode to return if multimodal
+#' * `mean(...)` \deqn{E_X(X) = \sum p_X(x)*x}
+#' * `variance(...)` \deqn{var_X = E[X^2] - E[X]^2}
+#' * `median()` Any real-valued m where
+#' \deqn{P(X \le m) \ge 0.5 and P(X \ge m) \ge 0.5}
+#' * `skewness(...)`
+#' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
+#' * `kurtosis(excess = TRUE, ...)` \cr
+#' If `excess = FALSE`
+#' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
+#' If `excess = TRUE`
+#' \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4] - 3}{k_X = E_X[((x - \mu)/\sigma)^4] - 3}
+#' * `entropy(base = 2, ...)` \deqn{- \sum (f_X)log_{base}(f_X)}
+#' * `mgf(t, ...)` \deqn{mgf_X(t) = E_X[exp(xt)]}
+#' * `cf(t, ...)` \deqn{cf_X(t) = E_X[exp(xti)]}
+#' * `pgf(z, ...)` \deqn{pgf_X(z) = E_X[exp(z^x)]}
 #'
 #' @export
-SDistribution <- R6Class("SDistribution",
+NULL
+SDistribution <- AbstractClass("SDistribution",
   inherit = Distribution,
   public = list(
     packages = NULL,
-
-    #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param type `[set6::Set]` \cr
-    #' Type of the distribution.
-    #' @param symmetry `character(1)` \cr
-    #' Distribution symmetry type, default "asymmetric".
     initialize = function(decorators, support, type,
                           symmetry = c("asymmetric", "symmetric")) {
-
-      abstract(self, "SDistribution", "listDistributions()")
 
       # check required packages are loaded
       assert_pkgload(self$packages)

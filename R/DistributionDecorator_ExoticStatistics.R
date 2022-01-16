@@ -17,7 +17,7 @@
 #' Exponential$new(decorators = "ExoticStatistics")
 #' ExoticStatistics$new()$decorate(Exponential$new())
 #' @export
-ExoticStatistics <- R6Class("ExoticStatistics",
+ExoticStatistics <- DecoratorClass("ExoticStatistics",
   inherit = DistributionDecorator,
   public = list(
 
