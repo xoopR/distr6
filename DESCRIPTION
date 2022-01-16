@@ -101,6 +101,8 @@ Suggests:
     R62S3 (>= 1.4.0),
     rmarkdown,
     testthat
+Remotes:
+    xoopR/ooplah
 LinkingTo:
     Rcpp
 VignetteBuilder:
