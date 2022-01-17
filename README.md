@@ -15,7 +15,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com
 
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
-[![codecov](https://codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://codecov.io/gh/alan-turing-institute/distr6)
+[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6))
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -68,15 +68,15 @@ B$rand(5)
 summary(B)
 #> Binomial Probability Distribution. Parameterised with:
 #>   prob = 0.5, qprob = 0.5, size = 10
-#> 
-#>   Quick Statistics 
+#>
+#>   Quick Statistics
 #>  Mean:       5
 #>  Variance:   2.5
 #>  Skewness:   0
 #>  Ex. Kurtosis:   -0.2
-#> 
-#>  Support: {0, 1,...,9, 10}   Scientific Type: ℕ0 
-#> 
+#>
+#>  Support: {0, 1,...,9, 10}   Scientific Type: ℕ0
+#>
 #>  Traits: discrete; univariate
 #>  Properties: symmetric; platykurtic; no skew
 ```
