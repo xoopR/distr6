@@ -79,19 +79,25 @@ VectorDistribution <- R6Class("VectorDistribution",
 
           dist <- as.character(unlist(vecdist[[1]]$modelTable$Distribution[[1]]))
           if (is.null(ids)) {
-            ids <- paste0(get(dist)$public_fields$short_name,
-                       seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
+            ids <- paste0(
+              get(dist)$public_fields$short_name,
+              seq.int(sum(sapply(vecdist, function(.x) nrow(.x$modelTable)))))
           } else {
             checkmate::assertCharacter(ids, unique = TRUE)
           }
 
-          private$.modelTable <- as.data.table(data.frame(Distribution = dist, shortname = ids))
+          private$.modelTable <- as.data.table(data.frame(Distribution = dist,
+                                                          shortname = ids))
           private$.distlist <- FALSE
           private$.univariate <- vecdist[[1]]$.__enclos_env__$private$.univariate
-          private$.pdf <- vecdist[[1]]$.__enclos_env__$private$.pdf
-          private$.cdf <- vecdist[[1]]$.__enclos_env__$private$.cdf
-          private$.quantile <- vecdist[[1]]$.__enclos_env__$private$.quantile
-          private$.rand <- vecdist[[1]]$.__enclos_env__$private$.rand
+          # need to recopy function to prevent referencing error
+          for (which in c(".pdf", ".cdf", ".quantile", ".rand")) {
+            private[[which]] <- function() {}
+            formals(private[[which]]) <-
+              formals(vecdist[[1]]$.__enclos_env__$private[[which]])
+            body(private[[which]]) <-
+              body(vecdist[[1]]$.__enclos_env__$private[[which]])
+          }
 
           ## TODO: This is very messy, not too slow but probably inefficient
           params <- unlist(lapply(vecdist, function(.x) {
@@ -987,6 +993,7 @@ or `distlist` should be used.")
     #' the number of arguments corresponds to the number of variables in the distribution.
     #' See examples.
     cdf = function(..., lower.tail = TRUE, log.p = FALSE, simplify = TRUE, data = NULL) {
+
       if (is.null(data)) {
         data <- as.matrix(data.table(...))
       }
