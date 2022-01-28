@@ -34,7 +34,7 @@ test_that("as.Distribution works with cdf expected", {
   wd <- as.Distribution(mat, fun = "cdf")
 
   expect_R6_class(wd, "VectorDistribution")
-  expect_equal(unique(wd$modelTable$Distribution), "WeightedDiscrete")
+  expect_equal(as.character(unique(wd$modelTable$Distribution)), "WeightedDiscrete")
 
   expect_equal(
     vapply(wd$getParameterValue("x"), identity, numeric(10)),
