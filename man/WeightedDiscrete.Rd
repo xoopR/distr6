@@ -162,6 +162,7 @@ Other univariate distributions:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
@@ -235,6 +236,7 @@ Ignored.}
 The arithmetic mean of a (discrete) probability distribution X is the expectation
 \deqn{E_X(X) = \sum p_X(x)*x}
 with an integration analogue for continuous distributions.
+If distribution is improper (F(Inf) != 1, then E_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$mean(...)}\if{html}{\out{</div>}}
 }
@@ -276,6 +278,7 @@ The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
 where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.
+If distribution is improper (F(Inf) != 1, then var_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$variance(...)}\if{html}{\out{</div>}}
 }
@@ -296,6 +299,7 @@ The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
 where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
+If distribution is improper (F(Inf) != 1, then sk_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$skewness(...)}\if{html}{\out{</div>}}
 }
@@ -317,6 +321,7 @@ The kurtosis of a distribution is defined by the fourth standardised moment,
 where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
 distribution and \eqn{\sigma} is the standard deviation of the distribution.
 Excess Kurtosis is Kurtosis - 3.
+If distribution is improper (F(Inf) != 1, then k_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$kurtosis(excess = TRUE, ...)}\if{html}{\out{</div>}}
 }
@@ -340,6 +345,7 @@ The entropy of a (discrete) distribution is defined by
 \deqn{- \sum (f_X)log(f_X)}
 where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
 continuous distributions.
+If distribution is improper then entropy is Inf.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$entropy(base = 2, ...)}\if{html}{\out{</div>}}
 }
@@ -362,6 +368,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 The moment generating function is defined by
 \deqn{mgf_X(t) = E_X[exp(xt)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+If distribution is improper (F(Inf) != 1, then mgf_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$mgf(t, ...)}\if{html}{\out{</div>}}
 }
@@ -384,6 +391,7 @@ t integer to evaluate function at.}
 The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+If distribution is improper (F(Inf) != 1, then cf_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$cf(t, ...)}\if{html}{\out{</div>}}
 }
@@ -406,6 +414,7 @@ t integer to evaluate function at.}
 The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
 where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+If distribution is improper (F(Inf) != 1, then pgf_X(x) = Inf).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{WeightedDiscrete$pgf(z, ...)}\if{html}{\out{</div>}}
 }
