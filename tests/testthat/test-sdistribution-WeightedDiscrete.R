@@ -42,3 +42,28 @@ test_that("manual", {
   expect_equal(v$cdf(3, lower.tail = FALSE, log.p = TRUE),
                data.table(WeightDisc1 = -Inf, WeightDisc2 = -Inf))
 })
+
+test_that("autottest improper", {
+  autotest_sdistribution(WeightedDiscrete,
+    pars = list(x = 1:3, cdf = c(0.1, 0.2, 0.4)),
+    traits = list(
+      valueSupport = "discrete", variateForm = "univariate",
+      type = Reals$new()
+    ),
+    support = Set$new(1:3, class = "numeric"),
+    symmetry = "asymmetric",
+    mean = Inf,
+    mode = 3,
+    median = NaN,
+    variance = Inf,
+    skewness = Inf,
+    exkur = Inf,
+    entropy = Inf,
+    mgf = Inf,
+    cf = Inf,
+    pgf = Inf,
+    pdf = c(0.1, 0.1, 0.2),
+    cdf = c(0.1, 0.2, 0.4),
+    quantile = c(3, NA, NA)
+  )
+})

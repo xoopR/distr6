@@ -656,9 +656,7 @@ getParameterSet.Weibull <- function(object, ...) {
       shapes <- list_element(x, "shape")
       scales <- list_element(x, "scale")
       altscales <- list_element(x, "altscale")
-      if (length(scales) && length(altscales)) {
-        stop("Can't update 'scale' and 'altscale' parameters simultaneously")
-      } else if (length(scales)) {
+      if (length(scales)) {
         altscales <- setNames(as.list(unlist(scales)^-unlist(shapes)),
                               gsub("scale", "altscale", names(scales)))
       } else {
@@ -678,20 +676,19 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
     prm("cdf", Interval$new(0, 1)^"n", 1, tags = c("required", "linked")),
     deps = list(
-      list(id = "cdf", on = "x", cond = cnd("len", id = "x"))
+      list(id = "cdf", on = "x", cond = cnd("len", id = "x")),
+      list(id = "cdf", cond = cnd("sinc"))
     ),
     trafo = function(x, self) {
       pdfs <- list_element(x, "pdf")
       cdfs <- list_element(x, "cdf")
 
-      if (length(pdfs) && length(cdfs)) {
-        stop("Can't update 'pdf' and 'cdf' parameters simultaneously")
-      } else if (length(pdfs)) {
+      if (length(pdfs)) {
         cdfs <- setNames(lapply(pdfs, cumsum),
-                         gsub("pdf", "cdf", names(pdfs)))
+                        gsub("pdf", "cdf", names(pdfs)))
       } else {
         pdfs <- setNames(lapply(cdfs, function(.x) c(.x[1], diff(.x))),
-                         gsub("cdf", "pdf", names(cdfs)))
+                        gsub("cdf", "pdf", names(cdfs)))
       }
 
       unique_nlist(c(pdfs, cdfs, x))

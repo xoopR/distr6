@@ -653,6 +653,25 @@ decorator to numerically estimate this.")
     },
 
     #' @description
+    #' 1 or 2-sided confidence interval around distribution.
+    #' @param alpha `(numeric(1))` \cr Level of confidence, default is 95%
+    #' @param sides `(character(1))` \cr One of 'lower', 'upper' or 'both'
+    #' @param median `(logical(1))` \cr If `TRUE` also returns median
+    confidence = function(alpha = 0.95, sides = "both", median = FALSE) {
+      if (sides == "both") {
+        alpha <- c((1 - alpha) / 2, 1 - (1 - alpha) / 2)
+      } else if (sides == "lower") {
+        alpha <- 1 - alpha
+      } else if (sides != "upper") {
+        stop("'sides' should be one of 'lower', 'upper', or 'both'")
+      }
+      if (median) {
+        alpha <- unique(c(alpha, 0.5))
+      }
+      sort(self$quantile(alpha))
+    },
+
+    #' @description
     #' If univariate returns `1`, otherwise returns the distribution correlation.
     correlation = function() {
       if (testUnivariate(self)) {
