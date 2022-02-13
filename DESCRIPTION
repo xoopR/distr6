@@ -93,12 +93,10 @@ Suggests:
     actuar,
     cubature,
     extraDistr,
-    GoFKernel,
+    GoFKernel,  **
     knitr,
-    magrittr,
     plotly,
     pracma,
-    R62S3 (>= 1.4.0),
     rmarkdown,
     testthat
 Remotes:
