@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Epanechnikov)
+
 test_that("autotest", {
   autotest_kernel(Epanechnikov,
     shortname = "Epan",

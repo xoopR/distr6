@@ -1,6 +1,5 @@
-library(testthat)
-
-
+skip_if_distr_not_installed(UniformKernel)
+skip_if_distr_not_installed(Epanechnikov)
 
 test_that("kernel constructor error", {
   expect_error(Kernel$new())

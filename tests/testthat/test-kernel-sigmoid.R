@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Sigmoid)
+
 test_that("autotest", {
   autotest_kernel(Sigmoid,
     shortname = "Sigm",

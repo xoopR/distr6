@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Cosine)
+
 test_that("autotest", {
   autotest_kernel(Cosine,
     shortname = "Cos",

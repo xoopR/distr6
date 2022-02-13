@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Gumbel)
+
 test_that("autotest", {
   expect_warning({
     autotest_sdistribution(

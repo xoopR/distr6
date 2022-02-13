@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(LogisticKernel)
+
 test_that("autotest", {
   autotest_kernel(LogisticKernel,
     shortname = "Logis",

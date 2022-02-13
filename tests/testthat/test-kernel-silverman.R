@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Silverman)
+
 test_that("autotest", {
   autotest_kernel(Silverman,
     shortname = "Silv",

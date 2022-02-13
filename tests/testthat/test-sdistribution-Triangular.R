@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Triangular)
+
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Triangular,

@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Logarithmic)
 
 test_that("autotest", {
   autotest_sdistribution(

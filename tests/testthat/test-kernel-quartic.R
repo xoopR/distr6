@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Quartic)
+
 test_that("autotest", {
   autotest_kernel(Quartic,
     shortname = "Quart",

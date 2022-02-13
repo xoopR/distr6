@@ -94,6 +94,7 @@ test_that("mode", {
 test_that("mean", {
   expect_message(expect_equal(continuousTester$mean(), expo$mean()))
   expect_equal(discreteTester$mean(), bin$mean())
+  skip_if_not_installed("cubature")
   expect_equal(discreteTester$mean(cubature = TRUE), bin$mean())
   expect_equal(discreteTester$genExp(cubature = TRUE), bin$mean())
 })

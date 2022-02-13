@@ -78,6 +78,7 @@ test_that("use_support", {
 })
 
 test_that("multivariate", {
+  skip_if_not_installed("plotly")
   dist <- MultivariateNormal$new()
   expect_silent(plot(dist, fun = "pdf", npoints = 10))
   expect_error(expect_message(plot(dist, fun = "cdf", npoints = 10)), "No plottable")

@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Tricube)
+
 test_that("autotest", {
   autotest_kernel(Tricube,
     shortname = "Tric",

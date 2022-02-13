@@ -2,6 +2,7 @@
 
 * WeightedDiscrete now correctly handles improper distributions by returning Inf and NA where appropriate
 * Add distribution method `confidence` to calculate confidence intervals
+* Fix testing of suggested distributions
 
 # distr6 1.6.5
 

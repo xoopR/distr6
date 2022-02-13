@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Wald)
 
 test_that("autotest", {
   expect_warning({

@@ -1,6 +1,4 @@
-library(testthat)
-
-skip_if_not_installed("actuar")
+skip_if_distr_not_installed(Loglogistic)
 
 test_that("autotest", {
   autotest_sdistribution(
