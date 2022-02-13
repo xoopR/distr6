@@ -1,5 +1,7 @@
 library(testthat)
 
+skip_if_not_installed("actuar")
+
 test_that("autotest", {
   autotest_sdistribution(
     sdist = Loglogistic,
