@@ -43,12 +43,11 @@ N/A
 ## ------------------------------------------------
 
 Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
-Triangular$new(lower = 2, upper = 5, mode = 4)
+Triangular$new(lower = 2, upper = 5, mode = 4, symmetric = FALSE)
 
 # You can view the type of Triangular distribution with $description
-Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+Triangular$new(symmetric = TRUE)$description
+Triangular$new(symmetric = FALSE)$description
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -236,12 +235,11 @@ Decorators to add to the distribution during construction.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
-Triangular$new(lower = 2, upper = 5, mode = 4)
+Triangular$new(lower = 2, upper = 5, mode = 4, symmetric = FALSE)
 
 # You can view the type of Triangular distribution with $description
-Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+Triangular$new(symmetric = TRUE)$description
+Triangular$new(symmetric = FALSE)$description
 }
 \if{html}{\out{</div>}}
 
