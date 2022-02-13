@@ -237,7 +237,7 @@ or `distlist` should be used.")
           lng <- length(shortnames)
 
           parameters <- tryCatch(get(paste0("getParameterSet.", distribution)),
-                                 error = function(e) NULL)
+                                error = function(e) NULL)
           if (!is.null(parameters)) {
             parameters <- do.call(parameters, c(params[[1]], shared_params))
             parameters$rep(lng, prefix = shortname)

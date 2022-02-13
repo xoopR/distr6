@@ -93,7 +93,7 @@ Suggests:
     actuar,
     cubature,
     extraDistr,
-    GoFKernel,  **
+    GoFKernel,
     knitr,
     plotly,
     pracma,
