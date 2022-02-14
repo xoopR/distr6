@@ -677,7 +677,7 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     prm("cdf", Interval$new(0, 1)^"n", 1, tags = c("required", "linked")),
     deps = list(
       list(id = "cdf", on = "x", cond = cnd("len", id = "x")),
-      list(id = "cdf", cond = cnd("sinc"))
+      list(id = "cdf", cond = cnd("inc"))
     ),
     trafo = function(x, self) {
       pdfs <- list_element(x, "pdf")
