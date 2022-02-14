@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Lognormal)
 
 test_that("autotest - log", {
   autotest_sdistribution(

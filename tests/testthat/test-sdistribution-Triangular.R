@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Triangular)
 
 test_that("autotest", {
   autotest_sdistribution(
@@ -31,5 +31,7 @@ test_that("manual", {
   expect_true(testSymmetric(Triangular$new(lower = 1, upper = 2, symmetric = TRUE)))
   expect_true(testSymmetric(Triangular$new(lower = 0, upper = 2, mode = 1, symmetric = FALSE)))
   expect_false(testSymmetric(Triangular$new(lower = 1, upper = 2, mode = 1.8, symmetric = FALSE)))
-  expect_false(testSymmetric(Triangular$new(lower = 1, upper = 2)$setParameterValue(mode = 1.8)))
+  expect_false(testSymmetric(
+    Triangular$new(lower = 1, upper = 2, mode = 1.2)$setParameterValue(mode = 1.8)
+  ))
 })

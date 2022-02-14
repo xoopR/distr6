@@ -1,8 +1,3 @@
-library(testthat)
-library(magrittr)
-
-
-
 test_that("abstract decorator", {
   expect_error(DistributionDecorator$new(Binomial$new()), "unused")
   expect_error(DistributionDecorator$new(), "abstract")

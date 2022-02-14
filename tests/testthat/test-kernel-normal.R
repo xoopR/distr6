@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(NormalKernel)
+
 test_that("autotest", {
   autotest_kernel(NormalKernel,
     shortname = "Norm",

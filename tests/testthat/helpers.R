@@ -1,3 +1,10 @@
+skip_if_distr_not_installed <- function(d) {
+  pkg <- d$public_fields$packages
+  if (!is.null(pkg)) {
+    sapply(pkg, testthat::skip_if_not_installed)
+  }
+}
+
 expect_rounded_equal <- function(object, expected, dp = 4) {
   expect_equal(round(object, dp), round(expected, dp),
     label = as.character(substitute(quote(object)))[2],

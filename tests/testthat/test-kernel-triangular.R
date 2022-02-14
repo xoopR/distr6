@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(TriangularKernel)
+
 test_that("autotest", {
   autotest_kernel(TriangularKernel,
     shortname = "Tri",

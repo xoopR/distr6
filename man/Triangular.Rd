@@ -43,12 +43,11 @@ N/A
 ## ------------------------------------------------
 
 Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
-Triangular$new(lower = 2, upper = 5, mode = 4)
+Triangular$new(lower = 2, upper = 5, mode = 4, symmetric = FALSE)
 
 # You can view the type of Triangular distribution with $description
-Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+Triangular$new(symmetric = TRUE)$description
+Triangular$new(symmetric = FALSE)$description
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -176,6 +175,7 @@ Other univariate distributions:
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
@@ -235,12 +235,11 @@ Decorators to add to the distribution during construction.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
-Triangular$new(lower = 2, upper = 5, mode = 4)
+Triangular$new(lower = 2, upper = 5, mode = 4, symmetric = FALSE)
 
 # You can view the type of Triangular distribution with $description
-Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+Triangular$new(symmetric = TRUE)$description
+Triangular$new(symmetric = FALSE)$description
 }
 \if{html}{\out{</div>}}
 

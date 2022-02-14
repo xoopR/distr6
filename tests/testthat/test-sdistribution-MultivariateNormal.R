@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(MultivariateNormal)
+
 test_that("autotest", {
   autotest_sdistribution(
     sdist = MultivariateNormal,

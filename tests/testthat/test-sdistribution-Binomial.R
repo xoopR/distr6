@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Binomial)
 
 test_that("autottest", {
   autotest_sdistribution(

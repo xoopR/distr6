@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Cosine)
+
 test_that("autotest", {
   autotest_kernel(Cosine,
     shortname = "Cos",
@@ -11,7 +13,7 @@ test_that("autotest", {
 
 test_that("pdfsquared2norm upper", {
   kern <- Cosine$new(decorators = "ExoticStatistics")
-  expect_rounded_equal(kern$pdfPNorm(2, upper = 2)^2, kern$pdfSquared2Norm(upper = 2), 4)
+  expect_rounded_equal(kern$pdfPNorm(2, upper = 1)^2, kern$pdfSquared2Norm(upper = 1), 4)
   expect_rounded_equal(kern$pdfPNorm(2, upper = 0)^2, kern$pdfSquared2Norm(upper = 0), 4)
   expect_rounded_equal(kern$pdfPNorm(2, upper = -1)^2, kern$pdfSquared2Norm(upper = -1), 4)
 })

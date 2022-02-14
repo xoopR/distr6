@@ -71,6 +71,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         support = Set$new(1, class = "numeric"),
         type = Reals$new()
       )
+      invisible(self)
     },
 
     #' @description
@@ -87,15 +88,27 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' The arithmetic mean of a (discrete) probability distribution X is the expectation
     #' \deqn{E_X(X) = \sum p_X(x)*x}
     #' with an integration analogue for continuous distributions.
+    #' If distribution is improper (F(Inf) != 1, then E_X(x) = Inf).
     #' @param ... Unused.
     mean = function(...) {
       x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
+      cdf <- self$getParameterValue("cdf")
 
       if (checkmate::testList(x)) {
-        return(mapply(function(x0, pdf0) sum(x0 * pdf0), x, pdf))
+        mapply(function(x0, pdf0, cdf0) {
+          if (tail(cdf0, 1) < 1) {
+            Inf
+          } else {
+            sum(x0 * pdf0)
+          }
+        }, x, pdf, cdf)
       } else {
-        return(sum(self$getParameterValue("x") * self$getParameterValue("pdf")))
+        if (tail(cdf, 1) < 1) {
+          Inf
+        } else {
+          sum(x * pdf)
+        }
       }
     },
 
@@ -136,16 +149,28 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' \deqn{var_X = E[X^2] - E[X]^2}
     #' where \eqn{E_X} is the expectation of distribution X. If the distribution is multivariate the
     #' covariance matrix is returned.
+    #' If distribution is improper (F(Inf) != 1, then var_X(x) = Inf).
     #' @param ... Unused.
     variance = function(...) {
       x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
+      cdf <- self$getParameterValue("cdf")
       mean <- self$mean()
 
       if (checkmate::testList(x)) {
-        return(mapply(function(x0, pdf0, mean0) sum((x0 - mean0)^2 * pdf0), x, pdf, mean))
+        mapply(function(x0, pdf0, mean0, cdf0) {
+          if (tail(cdf0, 1) < 1) {
+            Inf
+          } else {
+            sum((x0 - mean0)^2 * pdf0)
+          }
+        }, x, pdf, mean, cdf)
       } else {
-        return(sum((x - mean)^2 * pdf))
+        if (tail(cdf, 1) < 1) {
+          Inf
+        } else {
+          sum((x - mean)^2 * pdf)
+        }
       }
     },
 
@@ -154,20 +179,29 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
+    #' If distribution is improper (F(Inf) != 1, then sk_X(x) = Inf).
     #' @param ... Unused.
     skewness = function(...) {
       x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
+      cdf <- self$getParameterValue("cdf")
       mean <- self$mean()
       sd <- self$stdev()
 
       if (checkmate::testList(x)) {
-        return(mapply(
-          function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^3 * pdf0),
-          x, pdf, mean, sd
-        ))
+        mapply(function(x0, pdf0, mean0, sd0, cdf0) {
+          if (tail(cdf0, 1) < 1) {
+            Inf
+          } else {
+            sum(((x0 - mean0) / sd0)^3 * pdf0)
+          }
+        }, x, pdf, mean, sd, cdf)
       } else {
-        return(sum(((x - mean) / sd)^3 * pdf))
+        if (tail(cdf, 1) < 1) {
+          Inf
+        } else {
+          sum(((x - mean) / sd)^3 * pdf)
+        }
       }
     },
 
@@ -177,26 +211,35 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' where \eqn{E_X} is the expectation of distribution X, \eqn{\mu} is the mean of the
     #' distribution and \eqn{\sigma} is the standard deviation of the distribution.
     #' Excess Kurtosis is Kurtosis - 3.
+    #' If distribution is improper (F(Inf) != 1, then k_X(x) = Inf).
     #' @param ... Unused.
     kurtosis = function(excess = TRUE, ...) {
       x <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
+      cdf <- self$getParameterValue("cdf")
       mean <- self$mean()
       sd <- self$stdev()
 
       if (checkmate::testList(x)) {
-        kurt <- mapply(
-          function(x0, pdf0, mean0, sd0) sum(((x0 - mean0) / sd0)^4 * pdf0),
-          x, pdf, mean, sd
-        )
+        kurt <- mapply(function(x0, pdf0, mean0, sd0, cdf0) {
+          if (tail(cdf0, 1) < 1) {
+            Inf
+          } else {
+            sum(((x0 - mean0) / sd0)^4 * pdf0)
+          }
+        }, x, pdf, mean, sd, cdf)
       } else {
-        kurt <- sum(((x - mean) / sd)^4 * pdf)
+        if (tail(cdf, 1) < 1) {
+          kurt <- Inf
+        } else {
+          kurt <- sum(((x - mean) / sd)^4 * pdf)
+        }
       }
 
       if (excess) {
-        return(kurt - 3)
+        kurt - 3
       } else {
-        return(kurt)
+        kurt
       }
     },
 
@@ -205,73 +248,103 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' \deqn{- \sum (f_X)log(f_X)}
     #' where \eqn{f_X} is the pdf of distribution X, with an integration analogue for
     #' continuous distributions.
+    #' If distribution is improper then entropy is Inf.
     #' @param ... Unused.
     entropy = function(base = 2, ...) {
       pdf <- self$getParameterValue("pdf")
+      cdf <- self$getParameterValue("cdf")
       if (checkmate::testList(pdf)) {
-        return(sapply(pdf, function(x) -sum(x * log(x, base))))
+        mapply(function(pdf0, cdf0) {
+          if (tail(cdf0, 1) < 1) {
+            Inf
+          } else {
+            -sum(pdf0 * log(pdf0, base))
+          }
+        }, pdf, cdf)
       } else {
-        return(-sum(pdf * log(pdf, base)))
+        if (tail(cdf, 1) < 1) {
+          Inf
+        } else {
+          -sum(pdf * log(pdf, base))
+        }
       }
     },
 
     #' @description The moment generating function is defined by
     #' \deqn{mgf_X(t) = E_X[exp(xt)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    #' If distribution is improper (F(Inf) != 1, then mgf_X(x) = Inf).
     #' @param ... Unused.
     mgf = function(t, ...) {
       data <- self$getParameterValue("x")
       pdf <- self$getParameterValue("pdf")
 
-      if (length(t) == 1) {
-        return(sum(exp(data * t) * (pdf)))
+      if (tail(self$getParameterValue("cdf"), 1) < 1) {
+        Inf
       } else {
-        nr <- length(t)
-        nc <- length(data)
-        return(as.numeric(
-          exp(matrix(data, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
-        ))
+        if (length(t) == 1) {
+          sum(exp(data * t) * (pdf))
+        } else {
+          nr <- length(t)
+          nc <- length(data)
+          as.numeric(
+            exp(matrix(data, nrow = nr, ncol = nc, byrow = T) *
+              matrix(t, nrow = nr, ncol = nc)) %*%
+              matrix(pdf, nrow = nc, ncol = 1)
+          )
+        }
       }
     },
 
     #' @description The characteristic function is defined by
     #' \deqn{cf_X(t) = E_X[exp(xti)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    #' If distribution is improper (F(Inf) != 1, then cf_X(x) = Inf).
     #' @param ... Unused.
     cf = function(t, ...) {
-      data <- self$getParameterValue("x")
-      pdf <- self$getParameterValue("pdf")
-
-      if (length(t) == 1) {
-        return(sum(exp(data * t * 1i) * (pdf)))
+      if (tail(self$getParameterValue("cdf"), 1) < 1) {
+        Inf
       } else {
-        nr <- length(t)
-        nc <- length(data)
-        return(as.complex(
-          exp(matrix(data * 1i, nrow = nr, ncol = nc, byrow = T) *
-            matrix(t, nrow = nr, ncol = nc)) %*% matrix(pdf, nrow = nc, ncol = 1)
-        ))
+        data <- self$getParameterValue("x")
+        pdf <- self$getParameterValue("pdf")
+
+        if (length(t) == 1) {
+          return(sum(exp(data * t * 1i) * (pdf)))
+        } else {
+          nr <- length(t)
+          nc <- length(data)
+          return(as.complex(
+            exp(matrix(data * 1i, nrow = nr, ncol = nc, byrow = T) *
+              matrix(t, nrow = nr, ncol = nc)) %*%
+                matrix(pdf, nrow = nc, ncol = 1)
+          ))
+        }
       }
     },
 
     #' @description The probability generating function is defined by
     #' \deqn{pgf_X(z) = E_X[exp(z^x)]}
     #' where X is the distribution and \eqn{E_X} is the expectation of the distribution X.
+    #' If distribution is improper (F(Inf) != 1, then pgf_X(x) = Inf).
     #' @param ... Unused.
     pgf = function(z, ...) {
-      data <- self$getParameterValue("x")
-      pdf <- self$getParameterValue("pdf")
-
-      if (length(z) == 1) {
-        return(sum((z^data) * pdf))
+      if (tail(self$getParameterValue("cdf"), 1) < 1) {
+        Inf
       } else {
-        nr <- length(z)
-        nc <- length(data)
-        return(as.numeric(
-          (matrix(z, nrow = nr, ncol = nc)^matrix(data, nrow = nr, ncol = nc, byrow = z)) %*%
-            matrix(pdf, nrow = nc, ncol = 1)
-        ))
+        data <- self$getParameterValue("x")
+        pdf <- self$getParameterValue("pdf")
+
+        if (length(z) == 1) {
+          sum((z^data) * pdf)
+        } else {
+          nr <- length(z)
+          nc <- length(data)
+          as.numeric(
+            (matrix(z, nrow = nr, ncol = nc)^matrix(data, nrow = nr, ncol = nc,
+                                                    byrow = z)) %*%
+              matrix(pdf, nrow = nc, ncol = 1)
+          )
+        }
       }
     }
   ),
@@ -336,9 +409,9 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         }
         cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(cdf))
-        return(C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
+        C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p)
       } else {
-        return(C_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p))
+        C_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p)
       }
     },
     .rand = function(n) {
@@ -347,7 +420,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
 
       if (checkmate::testList(data)) {
         vapply(seq_along(data),
-               function(i) sample(data[[i]], n, TRUE, pdf[[i]]), numeric(n))
+              function(i) sample(data[[i]], n, TRUE, pdf[[i]]), numeric(n))
       } else {
         sample(data, n, TRUE, pdf)
       }
@@ -356,7 +429,8 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
 
-    .data = "Deprecated - use self$getParameterValue instead."
+    .data = "Deprecated - use self$getParameterValue instead.",
+    .improper = FALSE
   )
 )
 

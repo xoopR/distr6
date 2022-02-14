@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(UniformKernel)
 
 test_that("autotest", {
   autotest_kernel(UniformKernel,
@@ -14,7 +14,7 @@ test_that("autotest", {
 
 test_that("pdfsquared2norm upper", {
   kern <- UniformKernel$new(decorators = "ExoticStatistics")
-  expect_rounded_equal(kern$pdfPNorm(2, upper = 2)^2, kern$pdfSquared2Norm(upper = 2), 4)
+  expect_rounded_equal(kern$pdfPNorm(2, upper = 1)^2, kern$pdfSquared2Norm(upper = 1), 4)
   expect_rounded_equal(kern$pdfPNorm(2, upper = 0)^2, kern$pdfSquared2Norm(upper = 0), 4)
   expect_rounded_equal(kern$pdfPNorm(2, upper = -1)^2, kern$pdfSquared2Norm(upper = -1), 4)
 })
@@ -28,7 +28,7 @@ test_that("pdfsquared2norm x", {
 
 test_that("cdfsquared2norm upper", {
   kern <- UniformKernel$new(decorators = "ExoticStatistics")
-  expect_rounded_equal(kern$cdfPNorm(2, upper = 2)^2, kern$cdfSquared2Norm(upper = 2), 4)
+  expect_rounded_equal(kern$cdfPNorm(2, upper = 1)^2, kern$cdfSquared2Norm(upper = 1), 4)
   expect_rounded_equal(kern$cdfPNorm(2, upper = 0)^2, kern$cdfSquared2Norm(upper = 0), 4)
   expect_rounded_equal(kern$cdfPNorm(2, upper = -1)^2, kern$cdfSquared2Norm(upper = -1), 4)
 })

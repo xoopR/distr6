@@ -52,12 +52,11 @@ Triangular <- R6Class("Triangular",
     #'
     #' @examples
     #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)
-    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)
-    #' Triangular$new(lower = 2, upper = 5, mode = 4)
+    #' Triangular$new(lower = 2, upper = 5, mode = 4, symmetric = FALSE)
     #'
     #' # You can view the type of Triangular distribution with $description
-    #' Triangular$new(lower = 2, upper = 5, symmetric = TRUE)$description
-    #' Triangular$new(lower = 2, upper = 5, symmetric = FALSE)$description
+    #' Triangular$new(symmetric = TRUE)$description
+    #' Triangular$new(symmetric = FALSE)$description
     initialize = function(lower = NULL, upper = NULL, mode = NULL, symmetric = NULL,
                           decorators = NULL) {
 

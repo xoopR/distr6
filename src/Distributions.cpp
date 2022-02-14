@@ -519,6 +519,7 @@ NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, Nu
   double y;
 
   NumericVector mat(n);
+  std::fill( mat.begin(), mat.end(), NumericVector::get_na() ) ;
 
   for (int k = 0; k < n; k++) {
     for (int j = 0; j < nr; j++) {
@@ -551,6 +552,7 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data
   int n = x.length();
 
   NumericMatrix mat(n, nc);
+  std::fill( mat.begin(), mat.end(), NumericVector::get_na() ) ;
 
   double y;
 

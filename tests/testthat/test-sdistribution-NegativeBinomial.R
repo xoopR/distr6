@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(NegativeBinomial)
+
 p <- 0.2
 r <- 10
 

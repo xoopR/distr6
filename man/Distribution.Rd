@@ -124,6 +124,7 @@ mvn$rand(5)
 \item \href{#method-stdev}{\code{Distribution$stdev()}}
 \item \href{#method-median}{\code{Distribution$median()}}
 \item \href{#method-iqr}{\code{Distribution$iqr()}}
+\item \href{#method-confidence}{\code{Distribution$confidence()}}
 \item \href{#method-correlation}{\code{Distribution$correlation()}}
 \item \href{#method-liesInSupport}{\code{Distribution$liesInSupport()}}
 \item \href{#method-liesInType}{\code{Distribution$liesInType()}}
@@ -627,6 +628,27 @@ Inter-quartile range of the distribution. Estimated as
 \if{html}{\out{<div class="r">}}\preformatted{Distribution$iqr()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-confidence"></a>}}
+\if{latex}{\out{\hypertarget{method-confidence}{}}}
+\subsection{Method \code{confidence()}}{
+1 or 2-sided confidence interval around distribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Distribution$confidence(alpha = 0.95, sides = "both", median = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{alpha}}{\code{(numeric(1))} \cr Level of confidence, default is 95\%}
+
+\item{\code{sides}}{\code{(character(1))} \cr One of 'lower', 'upper' or 'both'}
+
+\item{\code{median}}{\code{(logical(1))} \cr If \code{TRUE} also returns median}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-correlation"></a>}}

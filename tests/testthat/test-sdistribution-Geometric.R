@@ -1,4 +1,4 @@
-library(testthat)
+skip_if_distr_not_installed(Geometric)
 
 test_that("autotest_failures", {
   autotest_sdistribution(

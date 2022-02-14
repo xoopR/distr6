@@ -1,3 +1,5 @@
+skip_if_distr_not_installed(Triweight)
+
 test_that("autotest", {
   autotest_kernel(Triweight,
     shortname = "Triw",
