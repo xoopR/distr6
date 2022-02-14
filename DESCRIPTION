@@ -97,6 +97,7 @@ Suggests:
     knitr,
     plotly,
     pracma,
+    R62S3,
     rmarkdown,
     testthat
 Remotes:
