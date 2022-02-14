@@ -1,6 +1,7 @@
 # distr6 1.6.6
 
 * WeightedDiscrete now correctly handles improper distributions by returning Inf and NA where appropriate
+* Added constraint on WeightedDiscrete so `cdf` parameter must be increasing
 * Add distribution method `confidence` to calculate confidence intervals
 * Fix testing of suggested distributions
 
