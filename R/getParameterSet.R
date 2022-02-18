@@ -684,12 +684,19 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
       cdfs <- list_element(x, "cdf")
 
       if (length(pdfs)) {
-        cdfs <- setNames(lapply(pdfs, cumsum),
-                        gsub("pdf", "cdf", names(pdfs)))
+        cdfs <- setNames(
+          lapply(pdfs, cumsum),
+          gsub("pdf", "cdf", names(pdfs))
+        )
       } else {
-        pdfs <- setNames(lapply(cdfs, function(.x) c(.x[1], diff(.x))),
-                        gsub("cdf", "pdf", names(cdfs)))
+        pdfs <- setNames(
+          lapply(cdfs, function(.x) c(.x[1], diff(.x))),
+          gsub("cdf", "pdf", names(cdfs))
+        )
       }
+
+      ## FIX FOR M1
+      cdfs <- lapply(cdfs, round, digits = 15L)
 
       unique_nlist(c(pdfs, cdfs, x))
     }

@@ -1,3 +1,7 @@
+# distr6 1.6.7
+
+* Fix for Apple M1
+
 # distr6 1.6.6
 
 * WeightedDiscrete now correctly handles improper distributions by returning Inf and NA where appropriate
