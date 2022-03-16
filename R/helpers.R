@@ -300,3 +300,41 @@ assert_alphanum <- function(x) {
 drop_null <- function(x) {
   x[vapply(x, function(.x) length(.x) > 0, logical(1))]
 }
+
+assert_cdf_matrix <- function (x) {
+
+  if (!all(x <= 1 & x >= 0)) {
+      stop("Cdf probabilities, x, must be 0 <= x <= 1")
+  }
+  if (is.null(colnames(x)) || !identical(
+    order(as.numeric(colnames(x))),
+    seq(ncol(x))
+  )) {
+    stop("Cdf matrix column names must be increasing numeric")
+  }
+
+  apply(x, 1, function(.x) {
+    if (!identical(order(.x), seq(ncol(x)))) {
+      stop("Cdf must be (non-strictly) increasing")
+    }
+  })
+
+  invisible(NULL)
+}
+
+`%=%` <- function(l, r) {
+    l <- trimws(strsplit(l, ",", TRUE)[[1]])
+    if (all(l == "USE.NAMES") || all(l == "*") || all(l == "?")) {
+      stopifnot(length(names(r)) > 0)
+      l <- names(r)
+    } else {
+      stopifnot(identical(length(l), length(r)))
+      which <- l == "?"
+      if (any(which)) {
+        stopifnot(length(names(r)) > 0)
+        l[which] <- names(r)[which]
+      }
+    }
+
+    invisible(Map(assign, l, r, MoreArgs = list(envir = parent.frame())))
+  }

@@ -10,4 +10,5 @@ NULL
 #' @importFrom stats setNames
 #' @import set6
 #' @import param6
+#' @import ooplah
 NULL

@@ -702,3 +702,32 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
     }
   )
 }
+
+getParameterSet.Matdist <- function(object, ...) { # nolint
+  pset(
+    prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
+    prm("cdf", Interval$new(0, 1)^"n",
+        matrix(0.5, 2, 2, dimnames = list(NULL, 1:2)),
+        tags = c("required", "linked")),
+    prm("x", "integers", tags = "immutable"),
+    trafo = function(x, self) {
+
+      pdf <- list_element(x, "pdf")$pdf
+      cdf <- list_element(x, "cdf")$cdf
+
+      if (length(pdf)) {
+        cdf <- t(apply(pdf, 1, cumsum))
+      } else {
+        pdf <- t(apply(cdf, 1, function(.y) c(.y[1], diff(.y))))
+      }
+
+      ## FIX FOR M1
+      cdf <- round(cdf, digits = 14L)
+      pdf <- round(pdf, digits = 14L)
+
+      assert_cdf_matrix(cdf)
+
+      list(pdf = pdf, cdf = cdf, x = as.numeric(colnames(pdf)))
+    }
+  )
+}

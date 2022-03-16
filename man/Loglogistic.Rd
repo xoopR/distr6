@@ -101,6 +101,7 @@ Other univariate distributions:
 \code{\link{Logarithmic}},
 \code{\link{Logistic}},
 \code{\link{Lognormal}},
+\code{\link{Matdist}},
 \code{\link{NegativeBinomial}},
 \code{\link{Normal}},
 \code{\link{Pareto}},

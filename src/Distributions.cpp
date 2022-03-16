@@ -399,8 +399,8 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
 
 
 // [[Rcpp::export]]
-NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, NumericMatrix pdf,
-                                        bool logp) {
+NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data,
+                                        NumericMatrix pdf) {
 
   int nc = data.ncol();
   int nr = data.nrow();
@@ -416,11 +416,7 @@ NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, Num
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
         if (data(j, i) == x[k]) {
-          if (logp) {
-            mat(k, i) = log(pdf(j, i));
-          } else {
-            mat(k, i) = pdf(j, i);
-          }
+          mat(k, i) = pdf(j, i);
           break;
         }
       }
