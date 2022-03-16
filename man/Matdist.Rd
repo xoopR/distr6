@@ -28,7 +28,7 @@ The distribution is supported on \eqn{x_{11},...,x_{kn}}.
 
 \section{Default Parameterisation}{
 
-Matdist(Matdist(0.5, 2, 2, dimnames = list(NULL, 1:2)))
+Matdist(matrix(0.5, 2, 2, dimnames = list(NULL, 1:2)))
 }
 
 \section{Omitted Methods}{
@@ -44,8 +44,8 @@ N/A
 }
 
 \examples{
-x <- Matdist$new(pdf = Matdist(0.5, 2, 2, dimnames = list(NULL, 1:2)))
-Matdist$new(cdf = Matdist(c(0.5, 1), 2, 2, TRUE, dimnames = list(NULL, c(1, 2)))) # equivalently
+x <- Matdist$new(pdf = matrix(0.5, 2, 2, dimnames = list(NULL, 1:2)))
+Matdist$new(cdf = matrix(c(0.5, 1), 2, 2, TRUE, dimnames = list(NULL, c(1, 2)))) # equivalently
 
 # d/p/q/r
 x$pdf(1:5)

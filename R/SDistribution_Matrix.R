@@ -7,7 +7,7 @@
 #' @templateVar pdfpmfeq \deqn{f(x_{ij}) = p_{ij}}
 #' @templateVar paramsupport \eqn{p_{ij}, i = 1,\ldots,k, j = 1,\ldots,n; \sum_i p_{ij} = 1}
 #' @templateVar distsupport \eqn{x_{11},...,x_{kn}}
-#' @templateVar default Matdist(0.5, 2, 2, dimnames = list(NULL, 1:2))
+#' @templateVar default matrix(0.5, 2, 2, dimnames = list(NULL, 1:2))
 #' @details
 #' This is a special case distribution in distr6 which is technically a vectorised distribution
 #' but is treated as if it is not. Therefore we only allow evaluation of all functions at
@@ -30,8 +30,8 @@
 #' @family univariate distributions
 #'
 #' @examples
-#' x <- Matdist$new(pdf = Matdist(0.5, 2, 2, dimnames = list(NULL, 1:2)))
-#' Matdist$new(cdf = Matdist(c(0.5, 1), 2, 2, TRUE, dimnames = list(NULL, c(1, 2)))) # equivalently
+#' x <- Matdist$new(pdf = matrix(0.5, 2, 2, dimnames = list(NULL, 1:2)))
+#' Matdist$new(cdf = matrix(c(0.5, 1), 2, 2, TRUE, dimnames = list(NULL, c(1, 2)))) # equivalently
 #'
 #' # d/p/q/r
 #' x$pdf(1:5)
