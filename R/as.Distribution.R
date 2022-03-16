@@ -11,6 +11,9 @@
 #' and tells the constructor if the elements in `obj` correspond to the pdf or
 #' cdf of the distribution.
 #' @param decorators Passed to [VectorDistribution] or [Matdist].
+#' @param vector `(logical(1))` \cr If `TRUE` then constructs a
+#' [VectorDistribution] of [WeightedDiscrete] distributions, otherwise (default)
+#' constructs a [Matdist].
 #' @return A [VectorDistribution] or [Matdist]
 #' @export
 #' @examples

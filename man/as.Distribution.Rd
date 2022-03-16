@@ -20,6 +20,10 @@ and tells the constructor if the elements in \code{obj} correspond to the pdf or
 cdf of the distribution.}
 
 \item{decorators}{Passed to \link{VectorDistribution} or \link{Matdist}.}
+
+\item{vector}{\code{(logical(1))} \cr If \code{TRUE} then constructs a
+\link{VectorDistribution} of \link{WeightedDiscrete} distributions, otherwise (default)
+constructs a \link{Matdist}.}
 }
 \value{
 A \link{VectorDistribution} or \link{Matdist}
