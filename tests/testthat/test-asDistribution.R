@@ -46,3 +46,15 @@ test_that("as.Distribution works with cdf expected", {
     matrix(t(mat), 10, 20, FALSE, list(1:10, paste0("WeightDisc", 1:20)))
   )
 })
+
+
+test_that("as.Distribution works with Matdist", {
+  mat <- matrix(rep(0.1, 200), 20, 10)
+  colnames(mat) <- 1:10
+  mat <- t(apply(mat, 1, function(x) cumsum(x)))
+  expect_distribution(as.Distribution(mat, fun = "cdf"), "Matdist")
+
+  mat <- matrix(rep(0.1, 200), 20, 10)
+  colnames(mat) <- 1:10
+  expect_distribution(as.Distribution(mat, fun = "pdf"), "Matdist")
+})
