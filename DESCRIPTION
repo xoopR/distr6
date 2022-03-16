@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.6.7
+Version: 1.6.8
 Authors@R:
     c(person(given = "Raphael",
              family = "Sonabend",
@@ -84,6 +84,7 @@ BugReports: https://github.com/alan-turing-institute/distr6/issues
 Imports:
     checkmate,
     data.table,
+    ooplah,
     param6 (>= 0.2.4),
     R6,
     Rcpp,
@@ -107,7 +108,7 @@ VignetteBuilder:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 SystemRequirements: C++11
 Collate:
     'helpers.R'
@@ -161,6 +162,7 @@ Collate:
     'SDistribution_Logistic.R'
     'SDistribution_Loglogistic.R'
     'SDistribution_Lognormal.R'
+    'SDistribution_Matrix.R'
     'SDistribution_Multinomial.R'
     'SDistribution_MultivariateNormal.R'
     'SDistribution_NegBinomal.R'

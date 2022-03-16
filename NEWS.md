@@ -1,3 +1,8 @@
+# distr6 1.6.8
+
+* Added `Matdist` to simplify the process of creating a vector distribution for `WeightedDiscrete` distributions. `Matdist` acts as a univariate distribution whilst technically being multivariate - it contains a matrix of probabilities and provides methods for acting on those.
+* Possibly breaking change - Changed default of `as.Distribution.matrix` to now coerce to a `Matdist`, a vector of `WeightedDisrete` is still possible.
+
 # distr6 1.6.7
 
 * Fix for Apple M1

@@ -66,6 +66,7 @@ Other discrete distributions:
 \code{\link{Geometric}},
 \code{\link{Hypergeometric}},
 \code{\link{Logarithmic}},
+\code{\link{Matdist}},
 \code{\link{Multinomial}},
 \code{\link{NegativeBinomial}},
 \code{\link{WeightedDiscrete}}

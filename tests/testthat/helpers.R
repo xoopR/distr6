@@ -50,8 +50,12 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
   expect_true("decorators" %in% names(formals(sdist$public_methods$initialize)))
   if (!is.null(sdist$public_methods$mean))
     expect_equal(names(formals(sdist$public_methods$mean)), "...")
-  if (!is.null(sdist$public_methods$mode))
-    expect_equal(formals(sdist$public_methods$mode), pairlist(which = "all"))
+  if (!is.null(sdist$public_methods$mode)) {
+    expect_true(
+      identical(formals(sdist$public_methods$mode), pairlist(which = "all")) ||
+      identical(formals(sdist$public_methods$mode), pairlist(which = 1))
+    )
+  }
   if (!is.null(sdist$public_methods$median))
     expect_null(names(formals(sdist$public_methods$median)))
   if (!is.null(sdist$public_methods$variance))
@@ -172,7 +176,11 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     }
     if (isRand(sdist)) {
       r <- sdist$rand(1:3)
-      expect_equal(length(r), 3)
+      if (object_class(sdist) == "Matdist") {
+        expect_equal(dim(r), c(2, 3))
+      } else {
+        expect_equal(length(r), 3)
+      }
       expect_true(all(r >= sdist$inf & r <= sdist$sup))
     }
   } else {

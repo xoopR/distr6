@@ -374,7 +374,11 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
         }
         pdf <- matrix(unlist(pdf), nrow = length(data[[1]]), ncol = length(data))
         data <- matrix(unlist(data), ncol = ncol(pdf))
-        C_Vec_WeightedDiscretePdf(x, data, pdf, log)
+        out <- C_Vec_WeightedDiscretePdf(x, data, pdf)
+        if (log) {
+          out <- log(out)
+        }
+        out
       } else {
         .wd_pdf(x, data, pdf, log)
       }

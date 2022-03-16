@@ -180,8 +180,8 @@ VectorDistribution <- R6Class("VectorDistribution",
           distribution <- match.arg(distribution, c(listDistributions(simplify = TRUE),
                                                     listKernels(simplify = TRUE)))
 
-          if (grepl("Empirical", distribution)) {
-            stop("Empirical and EmpiricalMV not currently available for `distribution/params`
+          if (grepl("Empirical|Matdist", distribution)) {
+            stop("Matdist, Empirical and EmpiricalMV not currently available for `distribution/params`
 constructor, use `distlist` instead.")
           }
 

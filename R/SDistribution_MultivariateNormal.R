@@ -184,7 +184,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     # optional setParameterValue
     #' @description
     #' Sets the value(s) of the given parameter(s).
-    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {
+    setParameterValue = function(..., lst = list(...), error = "warn", resolveConflicts = FALSE) {# FIXME
 
       super$setParameterValue(lst = lst)
       mean <- self$getParameterValue("mean")

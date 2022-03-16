@@ -16,3 +16,4 @@ CRAN-RELEASE
 *.dll
 /doc/
 /Meta/
+check/*

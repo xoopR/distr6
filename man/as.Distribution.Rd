@@ -3,11 +3,11 @@
 \name{as.Distribution}
 \alias{as.Distribution}
 \alias{as.Distribution.matrix}
-\title{Coerce matrix to vector of WeightedDiscrete}
+\title{Coerce matrix to vector of WeightedDiscrete or Matrix Distribution}
 \usage{
-as.Distribution(obj, fun, decorators = NULL)
+as.Distribution(obj, fun, decorators = NULL, vector = FALSE)
 
-\method{as.Distribution}{matrix}(obj, fun, decorators = NULL)
+\method{as.Distribution}{matrix}(obj, fun, decorators = NULL, vector = FALSE)
 }
 \arguments{
 \item{obj}{\link{matrix}. Column names correspond to \code{x} in \link{WeightedDiscrete},
@@ -15,25 +15,33 @@ so this method only works if all distributions (rows in the matrix) have the
 same points to be evaluated on. Elements correspond to either the pdf
 or cdf of the distribution (see below).}
 
-\item{fun}{Either \code{"pdf"} or \code{"cdf"}, passed to \link{WeightedDiscrete} and tells
-the constructor if the elements in \code{obj} correspond to the pdf or cdf of
-the distribution.}
+\item{fun}{Either \code{"pdf"} or \code{"cdf"}, passed to \link{WeightedDiscrete} or \link{Matdist}
+and tells the constructor if the elements in \code{obj} correspond to the pdf or
+cdf of the distribution.}
 
-\item{decorators}{Passed to \link{VectorDistribution}.}
+\item{decorators}{Passed to \link{VectorDistribution} or \link{Matdist}.}
+
+\item{vector}{\code{(logical(1))} \cr If \code{TRUE} then constructs a
+\link{VectorDistribution} of \link{WeightedDiscrete} distributions, otherwise (default)
+constructs a \link{Matdist}.}
 }
 \value{
-A \link{VectorDistribution}
+A \link{VectorDistribution} or \link{Matdist}
 }
 \description{
 Coerces matrices to a \link{VectorDistribution} containing
-\link{WeightedDiscrete} distributions. Number of distributions are the number
-of rows in the matrix, number of \code{x} points are number of columns in the
-matrix.
+\link{WeightedDiscrete} distributions or a \link{Matdist}. Number of distributions
+are the number of rows in the matrix, number of \code{x} points are number of
+columns in the matrix.
 }
 \examples{
 pdf <- runif(200)
 mat <- matrix(pdf, 20, 10)
 mat <- t(apply(mat, 1, function(x) x / sum(x)))
 colnames(mat) <- 1:10
+# coercion to matrix distribution
 as.Distribution(mat, fun = "pdf")
+
+# coercion to vector of weighted discrete distributions
+as.Distribution(mat, fun = "pdf", vector = TRUE)
 }

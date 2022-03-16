@@ -79,6 +79,7 @@ Other discrete distributions:
 \code{\link{Geometric}},
 \code{\link{Hypergeometric}},
 \code{\link{Logarithmic}},
+\code{\link{Matdist}},
 \code{\link{Multinomial}},
 \code{\link{NegativeBinomial}},
 \code{\link{WeightedDiscrete}}
@@ -111,6 +112,7 @@ Other univariate distributions:
 \code{\link{Logistic}},
 \code{\link{Loglogistic}},
 \code{\link{Lognormal}},
+\code{\link{Matdist}},
 \code{\link{NegativeBinomial}},
 \code{\link{Normal}},
 \code{\link{Pareto}},
