@@ -37,5 +37,5 @@ plot.Matdist <- function(x,
     val <- -log(1 - gprm(x, "cdf"))
   }
 
-  matplot(t(val), type = "l", ...)
+  graphics::matplot(t(val), type = "l", ...)
 }
