@@ -84,6 +84,7 @@ BugReports: https://github.com/alan-turing-institute/distr6/issues
 Imports:
     checkmate,
     data.table,
+    ooplah,
     param6 (>= 0.2.4),
     R6,
     Rcpp,
