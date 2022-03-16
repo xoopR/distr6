@@ -214,6 +214,7 @@ Collate:
     'plot_continuous.R'
     'plot_discrete.R'
     'plot_distribution.R'
+    'plot_matdistribution.R'
     'plot_multivariate.R'
     'plot_vectordistribution.R'
     'qqplot.R'
