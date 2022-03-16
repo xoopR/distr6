@@ -5,7 +5,7 @@
 \alias{dstrs}
 \title{Helper Functionality for Constructing Distributions}
 \usage{
-dstr(d, ..., pars = NULL)
+dstr(d, ..., pars = list(...), decorators = NULL)
 
 dstrs(d, pars = NULL, ...)
 }
@@ -18,6 +18,9 @@ Passed to the distribution constructor, should be parameters or \code{decorators
 
 \item{pars}{(\code{list()}) \cr
 List of parameters of same length as \code{d} corresponding to distribution parameters.}
+
+\item{decorators}{(\code{character()}) \cr
+Passed to distribution constructor.}
 }
 \description{
 Helper functions for constructing an \link{SDistribution} (with \code{dstr})

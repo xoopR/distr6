@@ -8,6 +8,8 @@
 #' Passed to the distribution constructor, should be parameters or `decorators`.
 #' @param pars (`list()`) \cr
 #' List of parameters of same length as `d` corresponding to distribution parameters.
+#' @param decorators (`character()`) \cr
+#' Passed to distribution constructor.
 #' @examples
 #' # Construct standard Normal and  distribution
 #' dstr("Norm") # ShortName
@@ -40,20 +42,19 @@
 #' dstrs("Binom", data.frame(size = 1:5, prob = 0.5))
 #'
 #' @export
-dstr <- function(d, ..., pars = NULL) {
+dstr <- function(d, ..., pars = list(...), decorators = NULL) {
   choices <- listDistributions()
   short <- as.character(unlist(choices$ShortName))
   class <- as.character(unlist(choices$ClassName))
   checkmate::assert_choice(d, c(short, class))
-  if (is.null(pars)) pars <- list(...)
 
   ShortName <- ClassName <- NULL # global binding fix
   if (d %in% short) {
     do.call(get(as.character(unlist(subset(choices, ShortName == d, select = ClassName))))$new,
-            pars)
+            c(pars, list(decorators = decorators)))
   } else if (d %in% class) {
     do.call(get(as.character(unlist(subset(choices, ClassName == d, select = ClassName))))$new,
-            pars)
+            c(pars, list(decorators = decorators)))
   }
 }
 
