@@ -12,3 +12,5 @@ NULL
 #' @import param6
 #' @import ooplah
 NULL
+
+globalVariables(c("pdf", "cdf"))

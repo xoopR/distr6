@@ -90,3 +90,16 @@ test_that("multivariate", {
   expect_silent(plot(dist, fun = "cdf", npoints = 10))
   expect_error(plot(EmpiricalMV$new(matrix(1, ncol = 3))), "over two variables")
 })
+
+test_that("matdist", {
+  pdf <- runif(200)
+  mat <- matrix(pdf, 20, 10)
+  mat <- t(apply(mat, 1, function(x) x / sum(x)))
+  colnames(mat) <- 1:10
+  d <- as.Distribution(mat, fun = "pdf")
+  expect_silent(plot(d, "pdf", xlab = "x", ylab = "p(x)"))
+  expect_silent(plot(d, "cdf", xlab = "x", ylab = "F(x)"))
+  expect_silent(plot(d, "survival", xlab = "x", ylab = "S(x)"))
+  expect_silent(plot(d, "hazard", xlab = "x", ylab = "h(x)"))
+  expect_silent(plot(d, "cumhazard", xlab = "x", ylab = "H(x)"))
+})
