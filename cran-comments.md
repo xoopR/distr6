@@ -14,4 +14,4 @@ No new NOTEs, WARNINGs, or ERRORs.
 
 ## Reverse Dependencies
 
-All reverse dependencies OK.
+Breakages in mlr3proba expected.
