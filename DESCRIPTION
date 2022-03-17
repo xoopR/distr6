@@ -162,7 +162,7 @@ Collate:
     'SDistribution_Logistic.R'
     'SDistribution_Loglogistic.R'
     'SDistribution_Lognormal.R'
-    'SDistribution_Matrix.R'
+    'SDistribution_Matdist.R'
     'SDistribution_Multinomial.R'
     'SDistribution_MultivariateNormal.R'
     'SDistribution_NegBinomal.R'
