@@ -280,6 +280,7 @@ Matdist <- R6Class("Matdist",
       colnames(out) <- x
       out
     },
+
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
       "cdf, data" %=% gprm(self, c("cdf", "x"))
       out <- t(C_Vec_WeightedDiscreteCdf(
