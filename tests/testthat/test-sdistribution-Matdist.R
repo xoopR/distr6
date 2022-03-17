@@ -60,3 +60,49 @@ test_that("autottest improper", {
     vectorise = FALSE
   )
 })
+
+
+test_that("c.Matdist", {
+  m1 <- as.Distribution(
+    t(apply(matrix(runif(200), 20, 10, FALSE,
+                    list(NULL, sort(sample(1:20, 10)))), 1,
+            function(x) x / sum(x))),
+    fun = "pdf"
+  )
+  m2 <- as.Distribution(
+    t(apply(matrix(runif(200), 20, 10, FALSE,
+                    list(NULL, sort(sample(1:20, 10)))), 1,
+            function(x) x / sum(x))),
+    fun = "pdf"
+  )
+  m3 <- c(m1, m2)
+
+  expect_equal(m3$pdf(0:50), rbind(m1$pdf(0:50), m2$pdf(0:50)))
+  expect_equal(m3$cdf(0:50), rbind(m1$cdf(0:50), m2$cdf(0:50)))
+  expect_equal(m3$quantile(0.42), rbind(m1$quantile(0.42), m2$quantile(0.42)))
+  r <- m3$rand(50)
+  expect_equal(dim(r), c(40, 50))
+  expect_true(all(r <= 20))
+  expect_true(all(r >= 1))
+})
+
+test_that("c.Matdist", {
+  set.seed(1)
+  m <- as.Distribution(
+    t(apply(matrix(runif(200), 20, 10, FALSE,
+                    list(NULL, sort(sample(1:20, 10)))), 1,
+            function(x) x / sum(x))),
+    fun = "pdf"
+  )
+
+  m1 <- m[1]
+  m12 <- m[1:2]
+  expect_distribution(m1, "WeightedDiscrete")
+  expect_distribution(m12, "Matdist")
+
+  expect_equal(unname(m$cdf(0:25)[1, ]), unname(m1$cdf(0:25)))
+  expect_equal(unname(m$pdf(0:25)[1, ]), unname(m1$pdf(0:25)))
+
+  expect_equal(unname(m$cdf(0:25)[1:2, ]), unname(m12$cdf(0:25)))
+  expect_equal(unname(m$pdf(0:25)[1:2, ]), unname(m12$pdf(0:25)))
+})

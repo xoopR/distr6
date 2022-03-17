@@ -327,3 +327,71 @@ Matdist <- R6Class("Matdist",
   val[which_improper] <- Inf
   val
 }
+
+#' @title Combine Matrix Distributions into a Matdist
+#' @description Helper function for quickly combining distributions into a [Matdist].
+#' @param ... matrix distributions to be concatenated.
+#' @return [Matdist]
+#' @examples
+#' # create three matrix distributions with different column names
+#' mats <- replicate(3, {
+#'   pdf <- runif(200)
+#'   mat <- matrix(pdf, 20, 10, FALSE, list(NULL, sort(sample(1:20, 10))))
+#'   mat <- t(apply(mat, 1, function(x) x / sum(x)))
+#'   as.Distribution(mat, fun = "pdf")
+#' })
+#' do.call(c, mats)
+#' @export
+c.Matdist <- function(...) {
+  # get the pdfs
+  pdfdec <- unlist(lapply(list(...), function(x) list(gprm(x, "pdf"), x$decorators)),
+    recursive = FALSE
+  )
+  pdfs <- pdfdec[seq.int(1, length(pdfdec), by = 2)]
+  decs <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
+
+  # merge column names
+  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
+
+  # new number of rows and columns
+  nc <- length(cnms)
+
+  as.Distribution(
+    do.call(rbind, lapply(pdfs, function(.x) {
+      out <- matrix(0, nrow(.x), nc, FALSE, list(NULL, cnms))
+      out[, match(as.numeric(colnames(.x)), cnms)] <- .x
+      out
+    })),
+    fun = "pdf",
+    decorators = decs
+  )
+}
+
+
+#' @title Extract one or more Distributions from a Matdist
+#' @description Extract a [WeightedDiscrete] or [Matdist] from a [Matdist].
+#' @param md [Matdist] from which to extract Distributions.
+#' @param i indices specifying distributions to extract.
+#' @return If `length(i) == 1` then returns a [WeightedDiscrete] otherwise
+#' returns a [Matdist].
+#' @usage \method{[}{Matdist}(md, i)
+#' @examples
+#' m <- as.Distribution(
+#'   t(apply(matrix(runif(200), 20, 10, FALSE,
+#'                   list(NULL, sort(sample(1:20, 10)))), 1,
+#'           function(x) x / sum(x))),
+#'   fun = "pdf"
+#' )
+#' m[1]
+#' m[1:2]
+#' @export
+"[.Matdist" <- function(md, i) {
+  if (length(i) == 1) {
+    pdf <- gprm(md, "pdf")[i, ]
+    dstr("WeightedDiscrete", x = as.numeric(names(pdf)), pdf = pdf,
+          decorators = md$decorators)
+  } else {
+    pdf <- gprm(md, "pdf")[i, ]
+    as.Distribution(pdf, fun = "pdf", decorators = md$decorators)
+  }
+}
