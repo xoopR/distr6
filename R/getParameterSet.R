@@ -721,10 +721,6 @@ getParameterSet.Matdist <- function(object, ...) { # nolint
         pdf <- t(apply(cdf, 1, function(.y) c(.y[1], diff(.y))))
       }
 
-      ## FIX FOR M1
-      cdf <- round(cdf, digits = 14L)
-      pdf <- round(pdf, digits = 14L)
-
       assert_cdf_matrix(cdf)
 
       list(pdf = pdf, cdf = cdf, x = as.numeric(colnames(pdf)))

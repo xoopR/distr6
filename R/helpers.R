@@ -302,6 +302,7 @@ drop_null <- function(x) {
 }
 
 assert_cdf_matrix <- function (x) {
+  x <- round(x, 14L) # M1 fix
 
   if (!all(x <= 1 & x >= 0)) {
       stop("Cdf probabilities, x, must be 0 <= x <= 1")

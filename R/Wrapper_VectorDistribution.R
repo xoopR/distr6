@@ -1184,7 +1184,9 @@ or `distlist` should be used.")
 #' @export
 as.VectorDistribution <- function(object) {
   if (checkmate::testClass(object, "VectorDistribution")) {
-    return(VectorDistribution$new(vecdist = object))
+    VectorDistribution$new(vecdist = object)
+  } else if (checkmate::testClass(object, "Matdist")) {
+    as.Distribution(gprm(object, "pdf"), "pdf", object$decorators, TRUE)
   } else {
     stop("Object must inherit from VectorDistribution.")
   }

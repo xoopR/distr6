@@ -422,6 +422,16 @@ test_that("vecdist constructor", {
 
   expect_equal(as.VectorDistribution(p)$pdf(1:10), v$pdf(1:10))
   expect_equal(as.VectorDistribution(m)$cdf(1:10), v$cdf(1:10))
+
+  expect_error(as.VectorDistribution(Binomial$new()), "must inherit from")
+
+  m <- t(apply(matrix(runif(200), 20, 10, FALSE,
+                    list(NULL, sort(sample(1:20, 10)))), 1,
+            function(x) x / sum(x)))
+  v1 <- as.VectorDistribution(as.Distribution(m, "pdf"))
+  v2 <- as.Distribution(m, "pdf", vector = TRUE)
+  expect_equal(v1$pdf(0:25), v2$pdf(0:25))
+  expect_equal(v1$cdf(0:25), v2$cdf(0:25))
 })
 
 test_that("length", {

@@ -36,9 +36,9 @@ columns in the matrix.
 }
 \examples{
 pdf <- runif(200)
-mat <- matrix(pdf, 20, 10)
+mat <- matrix(pdf, 20, 10, FALSE, list(NULL, 1:10))
 mat <- t(apply(mat, 1, function(x) x / sum(x)))
-colnames(mat) <- 1:10
+
 # coercion to matrix distribution
 as.Distribution(mat, fun = "pdf")
 
