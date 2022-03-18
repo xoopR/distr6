@@ -2,6 +2,7 @@
 
 * Added `Matdist` to simplify the process of creating a vector distribution for `WeightedDiscrete` distributions. `Matdist` acts as a univariate distribution whilst technically being multivariate - it contains a matrix of probabilities and provides methods for acting on those. Also added methods: `plot.Matdist` to wrap `matplot` around `Matdist`, `c.Matdist` to combine multiple matrix distributions into one, `[.Matdist` for extracting `WeightedDiscrete` or `Matdist` distributions from `Matdist`, and `as.Distribution`.
 * Possibly breaking change - Changed default of `as.Distribution.matrix` to now coerce to a `Matdist`, a vector of `WeightedDisrete` is still possible.
+* Slight speed improvements to EmpiricalMV
 
 # distr6 1.6.7
 

@@ -476,21 +476,11 @@ Use CoreStatistics decorator to numerically estimate this.")
       }
 
       data <- pdq_point_assert(..., self = self, data = data)
-      if (inherits(data, "matrix")) {
-        if (!self$liesInType(apply(data, 1, as.Tuple), all = TRUE, bound = TRUE)) {
-          stop(
-            sprintf("Not all points in %s lie in the distribution domain (%s).",
-                    strCollapse(apply(data, 1, function(x) as.Tuple(x)$strprint())),
-                    self$traits$type$strprint())
-          )
-        }
-      } else {
-        if (!suppressWarnings(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE))) {
-          stop(
-            sprintf("Not all points in %s lie in the distribution domain (%s).",
-                    strCollapse(as.numeric(data)), self$traits$type$strprint())
-          )
-        }
+      if (!suppressWarnings(self$liesInType(as.numeric(data), all = TRUE, bound = TRUE))) {
+        stop(
+          sprintf("Not all points in %s lie in the distribution domain (%s).",
+                  strCollapse(as.numeric(data)), self$traits$type$strprint())
+        )
       }
 
       if (log.p | !lower.tail) {
