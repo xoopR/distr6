@@ -1188,7 +1188,7 @@ as.VectorDistribution <- function(object) {
   } else if (checkmate::testClass(object, "Matdist")) {
     as.Distribution(gprm(object, "pdf"), "pdf", object$decorators, TRUE)
   } else {
-    stop("Object must inherit from VectorDistribution.")
+    stop("Object must inherit from VectorDistribution or Matdist.")
   }
 }
 
