@@ -5,6 +5,7 @@
 * Added `mixMatrix` as a specialised mixing method for `Matdist` that creates a new `Matdist` instead of a `MixtureDistribution`
 * Possibly breaking change - Changed default of `as.Distribution.matrix` to now coerce to a `Matdist`, a vector of `WeightedDisrete` is still possible.
 * Slight speed improvements to EmpiricalMV
+* Fixed r-devel linux warnings
 
 # distr6 1.6.7
 
