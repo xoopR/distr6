@@ -343,28 +343,36 @@ Matdist <- R6Class("Matdist",
 #' do.call(c, mats)
 #' @export
 c.Matdist <- function(...) {
-  # get the pdfs
+  # get the pdfs and decorators
   pdfdec <- unlist(lapply(list(...), function(x) list(gprm(x, "pdf"), x$decorators)),
     recursive = FALSE
   )
   pdfs <- pdfdec[seq.int(1, length(pdfdec), by = 2)]
   decs <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
 
-  # merge column names
+  as.Distribution(do.call(rbind, .merge_matpdf_cols(pdfs)), fun = "pdf",
+                  decorators = decs)
+}
+
+.merge_matpdf_cols <- function(pdfs) {
+  # get column names
+  nc <- unique(viapply(pdfs, ncol))
   cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
+
+  # if unique column name length same as all column length of pdfs then
+  #  already same column names
+  if (nc == 1 && length(cnms) == nc) {
+    return(pdfs)
+  }
 
   # new number of rows and columns
   nc <- length(cnms)
 
-  as.Distribution(
-    do.call(rbind, lapply(pdfs, function(.x) {
-      out <- matrix(0, nrow(.x), nc, FALSE, list(NULL, cnms))
-      out[, match(as.numeric(colnames(.x)), cnms)] <- .x
-      out
-    })),
-    fun = "pdf",
-    decorators = decs
-  )
+  lapply(pdfs, function(.x) {
+    out <- matrix(0, nrow(.x), nc, FALSE, list(NULL, cnms))
+    out[, match(as.numeric(colnames(.x)), cnms)] <- .x
+    out
+  })
 }
 
 

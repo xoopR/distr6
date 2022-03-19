@@ -365,10 +365,10 @@ NumericVector C_TricubeKernelCdf(NumericVector x, bool lower, bool logp) {
       ret[i] = 1;
     } else if (x[i] <= -1) {
       ret[i] = 0;
-    } else if ((x[i] > -1) & (x[i] <= 0)) {
+    } else if ((x[i] > -1) && (x[i] <= 0)) {
       ret[i] = (81 + 140 * x[i] + 150 * pow(x[i], 4) + 60 * pow(x[i], 7) + 14 * pow(x[i], 10)) /
         162;
-    } else if ((x[i] > 0) & (x[i] <= 1)) {
+    } else if ((x[i] > 0) && (x[i] <= 1)) {
       ret[i] = (81 + 140 * x[i] - 105 * pow(x[i], 4) + 60 * pow(x[i], 7) - 14 * pow(x[i], 10)) /
         162;
     }
