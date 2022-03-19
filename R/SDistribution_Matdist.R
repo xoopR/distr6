@@ -361,7 +361,7 @@ c.Matdist <- function(...) {
 
   # if unique column name length same as all column length of pdfs then
   #  already same column names
-  if (length(cnms) == nc) {
+  if (nc == 1 && length(cnms) == nc) {
     return(pdfs)
   }
 
