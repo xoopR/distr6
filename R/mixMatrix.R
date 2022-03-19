@@ -48,29 +48,19 @@ mixMatrix <- function(mds, weights = "uniform") {
     weights <- rep(1 / length(mds), length(mds))
   }
 
-  # get cdfs
-  cdfs <- lapply(mds, gprm, "cdf")
+  pdfs <- .merge_matpdf_cols(lapply(mds, gprm, "pdf"))
 
   # check mds compatible
-  xs <- colnames(cdfs[[1]])
-  nr <- nrow(cdfs[[1]])
-  lapply(cdfs[-1], function(.x) {
-    if (!identical(xs, colnames(.x))) {
-      stop("Can only use mixMatrix across same data points. Use
-      `mixturiseVector` instead:
-      `mixturiseVector(lapply(mds, as.VectorDistribution), weights)`.")
-    }
-    if (!identical(nr, nrow(.x))) {
-      stop("Can't mix distributions with different number of rows")
-    }
-  })
+  if (length(unique(viapply(pdfs, nrow))) > 1) {
+    stop("Can't mix distributions with different number of rows")
+  }
 
   # mix mds
-  out <- matrix(0, nr, length(xs))
-  for (i in seq_along(cdfs)) {
-    out <- out + (cdfs[[i]] * weights[[i]])
+  out <- matrix(0, nrow(pdfs[[1]]), ncol(pdfs[[1]]))
+  for (i in seq_along(pdfs)) {
+    out <- out + (pdfs[[i]] * weights[[i]])
   }
 
   # convert to new Matdist
-  dstr("Matdist", cdf = out)
+  dstr("Matdist", pdf = out)
 }
