@@ -33,12 +33,6 @@ pdq_point_assert <- function(..., self, data) {
         data <- as.matrix(data)
       }
     }
-    # TODO - Once matrixvariates implemented
-    # else {
-    #   if (class(data) != "array") {
-    #     stop("For matrixvariate distributions `data` must be an array.")
-    #   }
-    # }
   }
 
   return(data)

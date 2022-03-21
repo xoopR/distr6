@@ -611,7 +611,7 @@ decorator to numerically estimate this.")
     median = function(na.rm = NULL, ...) {
       if (testSymmetric(self)) {
         med <- try(self$mean(), silent = TRUE)
-        if (class(med) == "try-error") {
+        if (inherits(med, "try-error")) {
           return(self$quantile(0.5))
         } else if (is.null(med)) {
           return(self$quantile(0.5))
