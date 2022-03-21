@@ -288,7 +288,7 @@ or `distlist` should be used.")
                   } else {
                     for (i in seq_len(ncol(x1))) {
                       a_dpqr <- fun(unlist(x1[, i]), log = log)
-                      a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                      a_dpqr <- if (inherits(a_dpqr, "numeric")) a_dpqr[i] else a_dpqr[, i]
                       dpqr <- cbind(dpqr, a_dpqr)
                     }
                   }
@@ -298,11 +298,11 @@ or `distlist` should be used.")
                   } else {
                     for (i in seq_len(dim(x1)[3])) {
                       mx <- x1[, , i]
-                      if (class(mx)[1] == "numeric") {
+                      if (inherits(mx, "numeric")) {
                         mx <- matrix(mx, nrow = 1)
                       }
                       a_dpqr <- fun(mx, log = log)
-                      a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                      a_dpqr <- if (inherits(a_dpqr, "numeric")) a_dpqr[i] else a_dpqr[, i]
                       dpqr <- cbind(dpqr, a_dpqr)
                     }
                   }
@@ -332,7 +332,7 @@ or `distlist` should be used.")
                   } else {
                     for (i in seq(ncol(x1))) {
                       a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-                      a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                      a_dpqr <- if (inherits(a_dpqr, "numeric")) a_dpqr[i] else a_dpqr[, i]
                       dpqr <- cbind(dpqr, a_dpqr)
                     }
                   }
@@ -369,7 +369,7 @@ or `distlist` should be used.")
                 } else {
                   for (i in seq_len(ncol(x1))) {
                     a_dpqr <- fun(unlist(x1[, i]), lower.tail = lower.tail, log.p = log.p)
-                    a_dpqr <- if (class(a_dpqr)[1] == "numeric") a_dpqr[i] else a_dpqr[, i]
+                    a_dpqr <- if (inherits(a_dpqr, "numeric")) a_dpqr[i] else a_dpqr[, i]
                     dpqr <- cbind(dpqr, a_dpqr)
                   }
                 }
@@ -961,7 +961,7 @@ or `distlist` should be used.")
                          ncol = nrow(private$.modelTable))
         }
         dpqr <- private$.pdf(data, log = log)
-        if (class(dpqr)[1] == "numeric") {
+        if (inherits(dpqr, "numeric")) {
           dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
         }
         dpqr <- as.data.table(dpqr)
@@ -1019,7 +1019,7 @@ or `distlist` should be used.")
       }
 
       dpqr <- private$.cdf(data, lower.tail = lower.tail, log.p = log.p)
-      if (class(dpqr)[1] == "numeric") {
+      if (inherits(dpqr, "numeric")) {
         dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
       }
       dpqr <- as.data.table(dpqr)
@@ -1053,7 +1053,7 @@ or `distlist` should be used.")
       }
 
       dpqr <- private$.quantile(data, lower.tail = lower.tail, log.p = log.p)
-      if (class(dpqr)[1] == "numeric") {
+      if (inherits(dpqr, "numeric")) {
         dpqr <- matrix(dpqr, ncol = nrow(private$.modelTable))
       }
       dpqr <- as.data.table(dpqr)
