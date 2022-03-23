@@ -92,6 +92,7 @@ test_that("multivariate", {
 })
 
 test_that("matdist", {
+  set.seed(1)
   pdf <- runif(200)
   mat <- matrix(pdf, 20, 10)
   mat <- t(apply(mat, 1, function(x) x / sum(x)))
