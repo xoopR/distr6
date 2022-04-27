@@ -362,6 +362,7 @@ c.Matdist <- function(...) {
     }
   }
 
+  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
   # new number of rows and columns
   nc <- length(cnms)
 
