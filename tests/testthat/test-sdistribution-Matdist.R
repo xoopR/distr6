@@ -22,10 +22,10 @@ test_that("autottest", {
     mgf = c(wd1$mgf(1), wd2$mgf(1)),
     cf = c(wd1$cf(1), wd2$cf(1)),
     pgf = c(wd1$pgf(1), wd2$pgf(1)),
-    pdf = matrix(c(wd1$pdf(1:3), wd2$pdf(1:3)), 2, 3, TRUE, list(NULL, 1:3)),
-    cdf = matrix(c(wd1$cdf(1:3), wd2$cdf(1:3)), 2, 3, TRUE, list(NULL, 1:3)),
-    quantile = matrix(c(wd1$quantile(c(0.24, 0.42, 0.5)), wd2$quantile(c(0.24, 0.42, 0.5))),
-                      2, 3, TRUE, dimnames = NULL),
+    pdf = t(matrix(c(wd1$pdf(1:3), wd2$pdf(1:3)), 2, 3, TRUE, list(NULL, 1:3))),
+    cdf = t(matrix(c(wd1$cdf(1:3), wd2$cdf(1:3)), 2, 3, TRUE, list(NULL, 1:3))),
+    quantile = t(matrix(c(wd1$quantile(c(0.24, 0.42, 0.5)), wd2$quantile(c(0.24, 0.42, 0.5))),
+                      2, 3, TRUE, dimnames = NULL)),
     vectorise = FALSE
   )
 })
@@ -53,10 +53,10 @@ test_that("autottest improper", {
     mgf = c(wd1$mgf(1), wd2$mgf(1)),
     cf = c(wd1$cf(1), wd2$cf(1)),
     pgf = c(wd1$pgf(1), wd2$pgf(1)),
-    pdf = matrix(c(wd1$pdf(1:3), wd2$pdf(1:3)), 2, 3, TRUE, list(NULL, 1:3)),
-    cdf = matrix(c(wd1$cdf(1:3), wd2$cdf(1:3)), 2, 3, TRUE, list(NULL, 1:3)),
-    quantile = matrix(c(wd1$quantile(c(0.24, 0.42, 0.5)), wd2$quantile(c(0.24, 0.42, 0.5))),
-                      2, 3, TRUE, dimnames = NULL),
+    pdf = t(matrix(c(wd1$pdf(1:3), wd2$pdf(1:3)), 2, 3, TRUE, list(NULL, 1:3))),
+    cdf = t(matrix(c(wd1$cdf(1:3), wd2$cdf(1:3)), 2, 3, TRUE, list(NULL, 1:3))),
+    quantile = t(matrix(c(wd1$quantile(c(0.24, 0.42, 0.5)), wd2$quantile(c(0.24, 0.42, 0.5))),
+                      2, 3, TRUE, dimnames = NULL)),
     vectorise = FALSE
   )
 })
@@ -77,11 +77,11 @@ test_that("c.Matdist", {
   )
   m3 <- c(m1, m2)
 
-  expect_equal(m3$pdf(0:50), rbind(m1$pdf(0:50), m2$pdf(0:50)))
-  expect_equal(m3$cdf(0:50), rbind(m1$cdf(0:50), m2$cdf(0:50)))
-  expect_equal(m3$quantile(0.42), rbind(m1$quantile(0.42), m2$quantile(0.42)))
+  expect_equal(m3$pdf(0:50), cbind(m1$pdf(0:50), m2$pdf(0:50)))
+  expect_equal(m3$cdf(0:50), cbind(m1$cdf(0:50), m2$cdf(0:50)))
+  expect_equal(m3$quantile(0.42), cbind(m1$quantile(0.42), m2$quantile(0.42)))
   r <- m3$rand(50)
-  expect_equal(dim(r), c(40, 50))
+  expect_equal(dim(r), c(50, 40))
   expect_true(all(r <= 20))
   expect_true(all(r >= 1))
 })
@@ -100,9 +100,9 @@ test_that("c.Matdist", {
   expect_distribution(m1, "WeightedDiscrete")
   expect_distribution(m12, "Matdist")
 
-  expect_equal(unname(m$cdf(0:25)[1, ]), unname(m1$cdf(0:25)))
-  expect_equal(unname(m$pdf(0:25)[1, ]), unname(m1$pdf(0:25)))
+  expect_equal(unname(m$cdf(0:25)[, 1]), unname(m1$cdf(0:25)))
+  expect_equal(unname(m$pdf(0:25)[, 1]), unname(m1$pdf(0:25)))
 
-  expect_equal(unname(m$cdf(0:25)[1:2, ]), unname(m12$cdf(0:25)))
-  expect_equal(unname(m$pdf(0:25)[1:2, ]), unname(m12$pdf(0:25)))
+  expect_equal(unname(m$cdf(0:25)[, 1:2]), unname(m12$cdf(0:25)))
+  expect_equal(unname(m$pdf(0:25)[, 1:2]), unname(m12$pdf(0:25)))
 })

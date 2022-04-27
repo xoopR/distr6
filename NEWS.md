@@ -1,3 +1,8 @@
+# distr6 1.6.10
+
+* Fixed bug in Matdist where d/p/q/r were transposed incorrectly
+* Fixed bug in
+
 # distr6 1.6.9
 
 * M1mac fix
