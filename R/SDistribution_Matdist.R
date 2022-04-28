@@ -278,7 +278,7 @@ Matdist <- R6Class("Matdist",
         out <- log(out)
       }
       colnames(out) <- x
-      out
+      t(out)
     },
 
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
@@ -288,7 +288,7 @@ Matdist <- R6Class("Matdist",
         t(cdf), lower.tail, log.p
       ))
       colnames(out) <- x
-      out
+      t(out)
     },
 
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
@@ -296,18 +296,16 @@ Matdist <- R6Class("Matdist",
       out <- t(C_Vec_WeightedDiscreteQuantile(p, matrix(x, ncol(cdf), nrow(cdf)),
           t(cdf), lower.tail, log.p))
       colnames(out) <- NULL
-      out
+      t(out)
     },
 
     .rand = function(n) {
       "*" %=% gprm(self, c("pdf", "x"))
-      t(apply(pdf, 1, function(.y) sample(x, n, TRUE, .y)))
+      apply(pdf, 1, function(.y) sample(x, n, TRUE, .y))
     },
 
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
-
-    .data = "Deprecated - use self$getParameterValue instead.",
     .improper = FALSE
   )
 )
@@ -355,16 +353,16 @@ c.Matdist <- function(...) {
 }
 
 .merge_matpdf_cols <- function(pdfs) {
-  # get column names
-  nc <- unique(viapply(pdfs, ncol))
-  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
 
-  # if unique column name length same as all column length of pdfs then
-  #  already same column names
-  if (nc == 1 && length(cnms) == nc) {
-    return(pdfs)
+  nc <- unique(viapply(pdfs, ncol))
+
+  if (length(nc) == 1) {
+    if (all(vapply(pdfs, colnames, character(nc)) == colnames(pdfs[[1]]))) {
+      return(pdfs)
+    }
   }
 
+  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
   # new number of rows and columns
   nc <- length(cnms)
 

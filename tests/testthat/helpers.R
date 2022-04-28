@@ -13,12 +13,11 @@ expect_rounded_equal <- function(object, expected, dp = 4) {
 }
 
 autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
-                                   mean = NULL, mode = NULL, median = NULL,
-                                   variance = NULL, skewness = NULL, exkur = NULL, entropy = NULL,
-                                   mgf = NULL, cf = NULL,
-                                   pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL,
-                                   vectorise = TRUE) {
-
+                                  mean = NULL, mode = NULL, median = NULL,
+                                  variance = NULL, skewness = NULL, exkur = NULL, entropy = NULL,
+                                  mgf = NULL, cf = NULL,
+                                  pgf = NULL, pdf = NULL, cdf = NULL, quantile = NULL,
+                                  vectorise = TRUE) {
 
   checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description",
                                                         "packages"))
@@ -177,7 +176,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     if (isRand(sdist)) {
       r <- sdist$rand(1:3)
       if (object_class(sdist) == "Matdist") {
-        expect_equal(dim(r), c(2, 3))
+        expect_equal(dim(r), c(3, 2))
       } else {
         expect_equal(length(r), 3)
       }
