@@ -106,6 +106,7 @@ jobs:
       - name: Render rmd
         if: ${{ github.event_name == 'pull_request' && runner.os == 'Linux' && matrix.config.r == 'release'}}
         run: |
+          pak::local_install()
           pak::pkg_install("rmarkdown")
           rmarkdown::render('README.Rmd')
         shell: Rscript {0}
