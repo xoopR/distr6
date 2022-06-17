@@ -69,15 +69,6 @@ decorate(B, "CoreStatistics")
 B$kthmoment(6)
 ```
 
-S3 compatibility to make the interface more flexible for users who are less familiar with OOP
-
-```{r s3}
-B <- Binomial$new()
-mean(B) # B$mean()
-variance(B) # B$variance()
-cdf(B, 2:5) # B$cdf(2:5)
-```
-
 Wrappers including truncation, huberization and product distributions for manipulation and composition of distributions.
 
 ```{r wrappers}
@@ -106,15 +97,22 @@ distr6 has three primary use-cases:
 
 ## Installation
 
-For the latest release on CRAN, install with
+distr6 can be installed from [R-Universe](https://raphaels1.r-universe.dev/ui#package:distr6)
 ```{r eval=FALSE}
-install.packages("distr6")
+# Enable repository from raphaels1
+options(repos = c(
+  raphaels1 = 'https://raphaels1.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
+# Download and install distr6 in R
+install.packages('distr6')
 ```
 
-Otherwise for the latest stable build
+And GitHub
 ```{r eval=FALSE}
 remotes::install_github("alan-turing-institute/distr6")
 ```
+
+distr6 [will not be on CRAN](https://twitter.com/RaphaelS101/status/1506321623250571265) for the forseeable future.
 
 ## Future Plans
 
