@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating an SDistribution</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_sdistribution.rmd"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_sdistribution.rmd" class="external-link"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
       <div class="hidden name"><code>create_sdistribution.rmd</code></div>
 
     </div>
@@ -187,17 +189,17 @@
     
     
 <p>This tutorial assumes that you have a good knowledge of R6 and so we will not be going through the basics of inheritance and private/public methods/variables.</p>
-<div id="sdistribution-class" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sdistribution-class" class="anchor"></a>SDistribution Class</h2>
-<p>All implemented probability distributions (excluding Kernels) in distr6 inherit from the <code>SDistribution</code> class. This means they share a common interface. The only differences between these distributions is that some will have methods missing as no analytic results are available. See the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png">uml diagram</a> for an overview of how this all fits in together. A core design principle in distr6 is that only analytical methods are defined in the SDistribution child classes, all numerical results are available through decorators. See the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html">decorators</a> tutorial for more information on decorators and the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html">analytical and numerical</a> article for further discussions on analytical and numerical methods. The summary is that when creating your own SDistribution class, please do not put any numerical methods in the core interface, if a closed form expression cannot be found, omit the method entirely and it can be imputed with a decorator. If your desired method is not available in one of our decorators but you think it is useful, see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html">creating a decorator</a> extension guidelines.</p>
+<div class="section level2">
+<h2 id="sdistribution-class">SDistribution Class<a class="anchor" aria-label="anchor" href="#sdistribution-class"></a>
+</h2>
+<p>All implemented probability distributions (excluding Kernels) in distr6 inherit from the <code>SDistribution</code> class. This means they share a common interface. The only differences between these distributions is that some will have methods missing as no analytic results are available. See the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml diagram</a> for an overview of how this all fits in together. A core design principle in distr6 is that only analytical methods are defined in the SDistribution child classes, all numerical results are available through decorators. See the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html">decorators</a> tutorial for more information on decorators and the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html">analytical and numerical</a> article for further discussions on analytical and numerical methods. The summary is that when creating your own SDistribution class, please do not put any numerical methods in the core interface, if a closed form expression cannot be found, omit the method entirely and it can be imputed with a decorator. If your desired method is not available in one of our decorators but you think it is useful, see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html">creating a decorator</a> extension guidelines.</p>
 </div>
-<div id="creating-an-sdistribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-an-sdistribution" class="anchor"></a>Creating an SDistribution</h2>
-<div id="sdistribution-variables" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sdistribution-variables" class="anchor"></a>SDistribution Variables</h3>
+<div class="section level2">
+<h2 id="creating-an-sdistribution">Creating an SDistribution<a class="anchor" aria-label="anchor" href="#creating-an-sdistribution"></a>
+</h2>
+<div class="section level3">
+<h3 id="sdistribution-variables">SDistribution Variables<a class="anchor" aria-label="anchor" href="#sdistribution-variables"></a>
+</h3>
 <p>Every class inheriting from SDistribution must have the following public variables:</p>
 <ul>
 <li>name - Full (unique) name of probability distribution</li>
@@ -207,7 +209,7 @@
 </ul>
 <p>For the Normal distribution, the above all looks like</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Normal</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Normal"</span>, inherit <span class="op">=</span> <span class="va">SDistribution</span>, lock_objects <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">Normal</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"Normal"</span>, inherit <span class="op">=</span> <span class="va">SDistribution</span>, lock_objects <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"name"</span>,<span class="st">"Normal"</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"short_name"</span>,<span class="st">"Norm"</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"description"</span>,<span class="st">"Normal Probability Distribution."</span><span class="op">)</span>
@@ -218,9 +220,9 @@
 <li>We use the R6 convention of defining the class as succinctly as possible (class name and inherited classes) and then using the <code>set</code> method to add private/public variables/methods</li>
 </ol>
 </div>
-<div id="sdistribution-methods" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sdistribution-methods" class="anchor"></a>SDistribution Methods</h3>
+<div class="section level3">
+<h3 id="sdistribution-methods">SDistribution Methods<a class="anchor" aria-label="anchor" href="#sdistribution-methods"></a>
+</h3>
 <p>For the full list of methods to (optimally) include see the ‘Statistical Methods’ section in the help pages of SDistribution: <code><a href="../../reference/SDistribution.html">?SDistribution</a></code>. This <strong>does not</strong> include pdf/cdf/quantile/rand, these are defined in the constructor and not in the class. Once again, if there is no closed form analytical expression possible, omit the method completely.</p>
 <p>The following methods are included by default and can therefore by omitted from the class definition:</p>
 <ol style="list-style-type: decimal">
@@ -233,16 +235,16 @@
 <p>Additionally the <code>pgf</code> method returns NaN if omitted but this can be overloaded by including the method in the class definition. Below is an example of adding four methods to the Normal distribution</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"mean"</span>,<span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"variance"</span>,<span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"skewness"</span>,<span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="va">Normal</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"mgf"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span> <span class="op">*</span> <span class="va">t</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span> <span class="op">*</span> <span class="va">t</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span> <span class="op">*</span> <span class="va">t</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span> <span class="op">*</span> <span class="va">t</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
 <p>Note:</p>
 <ol style="list-style-type: decimal">
@@ -251,9 +253,9 @@
 <li>The arguments to the methods are not optional, they must have the names given in the <code><a href="../../reference/SDistribution.html">?SDistribution</a></code> help page, this ensures that the automated S3 dispatch methods run correctly</li>
 </ol>
 </div>
-<div id="the-constructor" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-constructor" class="anchor"></a>The Constructor</h3>
+<div class="section level3">
+<h3 id="the-constructor">The Constructor<a class="anchor" aria-label="anchor" href="#the-constructor"></a>
+</h3>
 <p>The constructor for all SDistribution objects looks the same, below is the constructor for the Normal distribution, which we will talk through as an example.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>initialize =<span class="st"> </span><span class="cf">function</span>(<span class="dt">mean =</span> <span class="ot">NULL</span>, <span class="dt">var =</span> <span class="ot">NULL</span>, <span class="dt">sd =</span> <span class="ot">NULL</span>, <span class="dt">prec =</span> <span class="ot">NULL</span>,</span>
 <span id="cb3-2"><a href="#cb3-2"></a>                      <span class="dt">decorators =</span> <span class="ot">NULL</span>) {</span>
@@ -270,46 +272,46 @@
 </ol>
 <p>And that’s it!</p>
 </div>
-<div id="getparameterset" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getparameterset" class="anchor"></a>getParameterSet</h3>
-<p>In a separate script called getParameterSet.R we have the generic and dispatch methods for every SDistribution. <a href="https://cran.r-project.org/package=param6">param6</a> is used to handle parameter sets. Below is the <code>getParameterSet</code> method for the Normal distribution</p>
+<div class="section level3">
+<h3 id="getparameterset">getParameterSet<a class="anchor" aria-label="anchor" href="#getparameterset"></a>
+</h3>
+<p>In a separate script called getParameterSet.R we have the generic and dispatch methods for every SDistribution. <a href="https://cran.r-project.org/package=param6" class="external-link">param6</a> is used to handle parameter sets. Below is the <code>getParameterSet</code> method for the Normal distribution</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">getParameterSet.Normal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
 <span class="fu">pset</span><span class="op">(</span>
   <span class="fu">prm</span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"reals"</span>, <span class="fl">0</span>, tags <span class="op">=</span> <span class="st">"required"</span><span class="op">)</span>,
-  <span class="fu">prm</span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"posreals"</span>, <span class="fl">1</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu">prm</span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"posreals"</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu">prm</span><span class="op">(</span><span class="st">"prec"</span>, <span class="st">"posreals"</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu">prm</span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"posreals"</span>, <span class="fl">1</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu">prm</span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"posreals"</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu">prm</span><span class="op">(</span><span class="st">"prec"</span>, <span class="st">"posreals"</span>, tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"linked"</span>, <span class="st">"required"</span><span class="op">)</span><span class="op">)</span>,
   trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">self</span><span class="op">)</span> <span class="op">{</span>
 
     <span class="va">vars</span> <span class="op">&lt;-</span> <span class="va">sds</span> <span class="op">&lt;-</span> <span class="va">precs</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
       <span class="va">sds</span> <span class="op">&lt;-</span> <span class="fu">list_element</span><span class="op">(</span><span class="va">x</span>, <span class="st">"sd"</span><span class="op">)</span>
-      <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span>,
-                       <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"var"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"prec"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"var"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"prec"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
       <span class="va">precs</span> <span class="op">&lt;-</span> <span class="fu">list_element</span><span class="op">(</span><span class="va">x</span>, <span class="st">"prec"</span><span class="op">)</span>
-      <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span>,
-                       <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"prec"</span>, <span class="st">"var"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+      <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"prec"</span>, <span class="st">"var"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
 
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
       <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu">list_element</span><span class="op">(</span><span class="va">x</span>, <span class="st">"var"</span><span class="op">)</span>
     <span class="op">}</span>
 
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">sds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                        <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">sds</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">sds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                        <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
 
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">precs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span>,
-                        <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"prec"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">precs</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">precs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span>,
+                        <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"prec"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
 
-    <span class="fu">unique_nlist</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">vars</span>, <span class="va">sds</span>, <span class="va">precs</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu">unique_nlist</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">vars</span>, <span class="va">sds</span>, <span class="va">precs</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">)</span>
 <span class="op">}</span></code></pre></div>
@@ -352,11 +354,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

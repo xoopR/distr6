@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,23 +179,23 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Extension Preliminaries</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/preliminaries.rmd"><code>vignettes/webs/preliminaries.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/preliminaries.rmd" class="external-link"><code>vignettes/webs/preliminaries.rmd</code></a></small>
       <div class="hidden name"><code>preliminaries.rmd</code></div>
 
     </div>
 
     
     
-<div id="here-be-dragons" class="section level2">
-<h2 class="hasAnchor">
-<a href="#here-be-dragons" class="anchor"></a>Here Be Dragons</h2>
+<div class="section level2">
+<h2 id="here-be-dragons">Here Be Dragons<a class="anchor" aria-label="anchor" href="#here-be-dragons"></a>
+</h2>
 <p>When extending SDistributions, Kernels, Wrappers and Decorators, there are no formal checks on the quality or accuracy of your code. Whilst distr6 is modularised in such a way that a new class with a bug in it won’t crash the rest of the package, it is still important that they can be interfaced properly with parent classes. The next few tutorials will go through how to extend the SDistribution, Kernel, Wrapper and Decorator classes but first please make sure you have gone through the preliminary checklist below. Of course, if you don’t intend to make a pull-request to add your extension to the distr6 package, then feel free to go right on ahead and <a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html">start here</a>.</p>
 </div>
-<div id="distr6-pull-request-preliminaries" class="section level2">
-<h2 class="hasAnchor">
-<a href="#distr6-pull-request-preliminaries" class="anchor"></a>distr6 Pull-Request Preliminaries</h2>
+<div class="section level2">
+<h2 id="distr6-pull-request-preliminaries">distr6 Pull-Request Preliminaries<a class="anchor" aria-label="anchor" href="#distr6-pull-request-preliminaries"></a>
+</h2>
 <ul>
 <li>
 <a href="https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html">Analytic and numeric methods</a> for how we separate numeric and analytic methods and where these should go</li>
@@ -204,12 +206,12 @@
 <li>
 <a href="https://alan-turing-institute.github.io/distr6/articles/webs/r6_and_design_patterns.html">R6 and Design patterns</a> for our R6 design pattern workarounds</li>
 <li>
-<a href="https://github.com/alan-turing-institute/distr6/wiki">Project wiki</a> for a summary of the above as well as guidelines on unit tests and file naming</li>
+<a href="https://github.com/alan-turing-institute/distr6/wiki" class="external-link">Project wiki</a> for a summary of the above as well as guidelines on unit tests and file naming</li>
 </ul>
 </div>
-<div id="extension-guidelines" class="section level2">
-<h2 class="hasAnchor">
-<a href="#extension-guidelines" class="anchor"></a>Extension Guidelines</h2>
+<div class="section level2">
+<h2 id="extension-guidelines">Extension Guidelines<a class="anchor" aria-label="anchor" href="#extension-guidelines"></a>
+</h2>
 <ul>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html">SDistribution</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html">Kernel</a></li>
@@ -230,11 +232,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

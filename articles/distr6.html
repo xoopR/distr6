@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>distr6</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/distr6.rmd"><code>vignettes/distr6.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/distr6.rmd" class="external-link"><code>vignettes/distr6.rmd</code></a></small>
       <div class="hidden name"><code>distr6.rmd</code></div>
 
     </div>
@@ -187,13 +189,13 @@
     
     
 <p>distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with distribution construction, full inheritance and more complex design patterns. The API is built to be scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found <a href="https://alan-turing-institute.github.io/distr6/index.html">here</a>. In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The <a href="https://alan-turing-institute.github.io/distr6/index.html">website</a> covers more complex use-cases including composite distributions and decorators for numeric methods.</p>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<div class="section level2">
+<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <p>We think the best place to get started is to pick a probability distribution and work through constructing the distribution via different parameterisations and querying the distribution for different methods. Below is a running example with the Normal distribution.</p>
-<div id="construction-and-parameterisation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#construction-and-parameterisation" class="anchor"></a>Construction and Parameterisation</h3>
+<div class="section level3">
+<h3 id="construction-and-parameterisation">Construction and Parameterisation<a class="anchor" aria-label="anchor" href="#construction-and-parameterisation"></a>
+</h3>
 <p>All distributions are constructed using R6 dollar sign notation The default Normal distribution is the Standard Normal parameterised with mean and var</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -216,9 +218,9 @@
 <span class="co">#&gt; 3:   sd      ℝ+       linked,required</span>
 <span class="co">#&gt; 4:  var      ℝ+     1 linked,required</span></code></pre></div>
 </div>
-<div id="parameters-in-distr6" class="section level3">
-<h3 class="hasAnchor">
-<a href="#parameters-in-distr6" class="anchor"></a>Parameters in distr6</h3>
+<div class="section level3">
+<h3 id="parameters-in-distr6">Parameters in distr6<a class="anchor" aria-label="anchor" href="#parameters-in-distr6"></a>
+</h3>
 <p>Parameters are accessed with getParameterValue and edited with setParameterValue</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
@@ -233,9 +235,9 @@
 <span class="co">#&gt; 3:   sd      ℝ+       linked,required</span>
 <span class="co">#&gt; 4:  var      ℝ+     2 linked,required</span></code></pre></div>
 </div>
-<div id="representing-a-distribution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#representing-a-distribution" class="anchor"></a>Representing a distribution</h3>
+<div class="section level3">
+<h3 id="representing-a-distribution">Representing a distribution<a class="anchor" aria-label="anchor" href="#representing-a-distribution"></a>
+</h3>
 <p>In keeping with R conventions, distributions have a print and summary method to view key details. We have already seen how the print method displays the distribution short_name and the parameterisation.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span>
@@ -291,9 +293,9 @@
 <span class="co">#&gt; $type</span>
 <span class="co">#&gt; ℝ</span></code></pre></div>
 </div>
-<div id="dpqr" class="section level3">
-<h3 class="hasAnchor">
-<a href="#dpqr" class="anchor"></a>d/p/q/r</h3>
+<div class="section level3">
+<h3 id="dpqr">d/p/q/r<a class="anchor" aria-label="anchor" href="#dpqr"></a>
+</h3>
 <p>distr6 is intended not to replace R stats distributions but to be a different way of interfacing them. All distributions in R stats can be found in distr6 and all their d/p/q/r functions which refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing our Normal distribution example:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># dnorm(2)</span>
@@ -320,9 +322,9 @@
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span>, log.p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; [1] -4.077639</span></code></pre></div>
 </div>
-<div id="mathematical-and-statistical-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mathematical-and-statistical-results" class="anchor"></a>Mathematical and Statistical Results</h3>
+<div class="section level3">
+<h3 id="mathematical-and-statistical-results">Mathematical and Statistical Results<a class="anchor" aria-label="anchor" href="#mathematical-and-statistical-results"></a>
+</h3>
 <p>The final part of this tutorial looks at how to access mathematical and statistical results for probability distributions. This is another advantage of distr6 as it collects not only the results for the 17 distributions in R stats but also for all others implemented in distr6. Continuing with the Normal distribution:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span>
@@ -337,12 +339,12 @@
 <span class="co">#&gt; [1] 0.3678794+0i</span></code></pre></div>
 <p>For a full list of methods available use the help documentation for any distribution</p>
 </div>
-<div id="listing-in-distr6" class="section level3">
-<h3 class="hasAnchor">
-<a href="#listing-in-distr6" class="anchor"></a>Listing in distr6</h3>
+<div class="section level3">
+<h3 id="listing-in-distr6">Listing in distr6<a class="anchor" aria-label="anchor" href="#listing-in-distr6"></a>
+</h3>
 <p>Instead of having to worry about remembering every distribution in R, distr6 provides a way of listing all of these, and filtering by traits or package. We only show the first 5 rows of this to save space.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span>
 <span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span>
 <span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span>
@@ -350,11 +352,11 @@
 <span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span>
 <span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span>
 <span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span>
 <span class="co">#&gt; [5] "Binomial"       "Categorical"</span>
 <span class="co"># Lists discrete distributions only</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>valuesupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>valuesupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    ShortName       ClassName Type ValueSupport VariateForm    Package   Tags</span>
 <span class="co">#&gt; 1:      Bern       Bernoulli   ℕ0     discrete  univariate      stats       </span>
 <span class="co">#&gt; 2:     Binom        Binomial   ℕ0     discrete  univariate      stats limits</span>
@@ -364,7 +366,7 @@
 <span class="co">#&gt; 6:       Emp       Empirical    ℝ     discrete  univariate          -</span>
 
 <span class="co"># Multiple filters can be used, note this is case-insensitive</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>VaLueSupport <span class="op">=</span> <span class="st">"continuous"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLueSupport <span class="op">=</span> <span class="st">"continuous"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    ShortName    ClassName    Type ValueSupport  VariateForm    Package     Tags</span>
 <span class="co">#&gt; 1:      Diri    Dirichlet [0,1]^K   continuous multivariate extraDistr         </span>
 <span class="co">#&gt; 2:      Frec      Frechet       ℝ   continuous   univariate extraDistr locscale</span>
@@ -374,13 +376,13 @@
 <span class="co">#&gt; 6:      Pare       Pareto      ℝ+   continuous   univariate extraDistr</span></code></pre></div>
 </div>
 </div>
-<div id="further-documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#further-documentation" class="anchor"></a>Further Documentation</h2>
+<div class="section level2">
+<h2 id="further-documentation">Further Documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a>
+</h2>
 <ul>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html">Tutorials</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html">Extension guidelines</a></li>
-<li><a href="https://github.com/alan-turing-institute/distr6/wiki">Project Wiki</a></li>
+<li><a href="https://github.com/alan-turing-institute/distr6/wiki" class="external-link">Project Wiki</a></li>
 </ul>
 </div>
   </div>
@@ -396,11 +398,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

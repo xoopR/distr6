@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Properties and Traits</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/properties_traits.rmd"><code>vignettes/webs/properties_traits.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/properties_traits.rmd" class="external-link"><code>vignettes/webs/properties_traits.rmd</code></a></small>
       <div class="hidden name"><code>properties_traits.rmd</code></div>
 
     </div>
@@ -187,14 +189,14 @@
     
     
 <p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html">previous tutorial</a> we evaluated the density, distribution and quantile functions from a Standard Normal distributions. As well as sampling from this distribution and accessing various statistical results. In this tutorial we cover how to access distribution properties and traits.</p>
-<div id="properties-vs-traits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#properties-vs-traits" class="anchor"></a>Properties vs Traits</h2>
+<div class="section level2">
+<h2 id="properties-vs-traits">Properties vs Traits<a class="anchor" aria-label="anchor" href="#properties-vs-traits"></a>
+</h2>
 <p>Before discussing how to actually view properties and traits it is worth understand the difference between the two. In computer science and object-oriented programming terms, the difference is that a trait relates to a class whereas a property relates to an object. In terms of a probability distribution, the difference is that a distribution traits holds independently of the parameterisation, whereas a distribution property depends on the parameterisation. For example the Normal distribution is always univariate continuous and the Binomial distribution is always univariate discrete, hence we refer to these as traits. Whereas the Binomial distribution is symmetric if and only if the probability of success is 0.5, otherwise it’s asymmetric, hence we refer to symmetry as a property.</p>
 </div>
-<div id="traits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#traits" class="anchor"></a>Traits</h2>
+<div class="section level2">
+<h2 id="traits">Traits<a class="anchor" aria-label="anchor" href="#traits"></a>
+</h2>
 <p>In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of “continuous”, “discrete” or “mixture”, this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then ‘0’ is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">next tutorial</a>). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).</p>
 <p>To view all the traits of the Normal distribution, call the method <code>traits()</code>,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -220,9 +222,9 @@
 <span class="co">#&gt; $type</span>
 <span class="co">#&gt; ℝ</span></code></pre></div>
 </div>
-<div id="properties" class="section level2">
-<h2 class="hasAnchor">
-<a href="#properties" class="anchor"></a>Properties</h2>
+<div class="section level2">
+<h2 id="properties">Properties<a class="anchor" aria-label="anchor" href="#properties"></a>
+</h2>
 <p>The properties included in distr6 are kurtosis, skewness, symmetry, support.</p>
 <p>Kurtosis is a measure of how heavy a distribution’s tails us. A distribution is one of: mesokurtic (kurtosis equals that of the Normal distribution), leptokurtic (kurtosis is higher than Normal distribution), platykurtic (kurtosis is smaller than Normal distributions). In slightly simpler terms: a platykurtic distribution is likely to produce less outliers (or extreme deviations) than a Normal distribution, a mesokurtic distribution will produce the same amount and a leptokurtic distribution will produce more.</p>
 <p>Skewness is a slightly easier concept to understand. It refers to the shape of the distribution and specifically if a distribution is negative skew (skew &lt; 0) then the ‘tail’ is on the left side of the distribution whereas a positive skew distribution has its ‘tail’ on the right. If a distribution is symmetric there is no skew (although the reverse doesn’t necessarily hold).</p>
@@ -242,9 +244,9 @@
 <span class="co">#&gt; $skewness</span>
 <span class="co">#&gt; [1] "no skew"</span></code></pre></div>
 </div>
-<div id="other-distribution-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-distribution-variables" class="anchor"></a>Other Distribution Variables</h2>
+<div class="section level2">
+<h2 id="other-distribution-variables">Other Distribution Variables<a class="anchor" aria-label="anchor" href="#other-distribution-variables"></a>
+</h2>
 <p>There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parentheses. These are respectively <code>name</code>, <code>short_name</code> and <code>description</code>, hopefully their output is intuitive</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="va">name</span>
@@ -254,9 +256,9 @@
 <span class="va">N</span><span class="op">$</span><span class="va">description</span>
 <span class="co">#&gt; [1] "Normal Probability Distribution."</span></code></pre></div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this tutorial we covered the difference between properties and traits, how to call properties and traits as a list or as individual items, and finally distribution variables. Remember you don’t have to learn all these method and variable names off by heart, it’s all listed in every distribution help page. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">next tutorial</a> we turn to multivariate distributions.</p>
 </div>
   </div>
@@ -272,11 +274,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

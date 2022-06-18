@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,19 +179,19 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Kernel</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/create_kernel.rmd"><code>vignettes/webs/create_kernel.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_kernel.rmd" class="external-link"><code>vignettes/webs/create_kernel.rmd</code></a></small>
       <div class="hidden name"><code>create_kernel.rmd</code></div>
 
     </div>
 
     
     
-<div id="kernel-class" class="section level2">
-<h2 class="hasAnchor">
-<a href="#kernel-class" class="anchor"></a>Kernel Class</h2>
-<p>Similarly to implemented probability distributions, implemented kernels all inherit from a single class ‘kernel’, which in turn inherits from <code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png">uml diagram</a>). But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the <code>kernel</code> parent class. For every kernel the following is true</p>
+<div class="section level2">
+<h2 id="kernel-class">Kernel Class<a class="anchor" aria-label="anchor" href="#kernel-class"></a>
+</h2>
+<p>Similarly to implemented probability distributions, implemented kernels all inherit from a single class ‘kernel’, which in turn inherits from <code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml diagram</a>). But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the <code>kernel</code> parent class. For every kernel the following is true</p>
 <ul>
 <li>
 <code>kernel$mean()</code> == 0</li>
@@ -211,12 +213,12 @@
 </ul>
 <p>And then the d/p/q functions are given in the constructor just like probability distributions.</p>
 </div>
-<div id="creating-a-kernel" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-a-kernel" class="anchor"></a>Creating a Kernel</h2>
-<div id="kernel-variables" class="section level3">
-<h3 class="hasAnchor">
-<a href="#kernel-variables" class="anchor"></a>Kernel Variables</h3>
+<div class="section level2">
+<h2 id="creating-a-kernel">Creating a Kernel<a class="anchor" aria-label="anchor" href="#creating-a-kernel"></a>
+</h2>
+<div class="section level3">
+<h3 id="kernel-variables">Kernel Variables<a class="anchor" aria-label="anchor" href="#kernel-variables"></a>
+</h3>
 <p>These are identical to the SDistribution public variables:</p>
 <ul>
 <li>name - Full (unique) name of kernel</li>
@@ -226,7 +228,7 @@
 </ul>
 <p>For the Epanechnikov kernel, the above all looks like</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Epanechnikov</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"Epanechnikov"</span>, inherit <span class="op">=</span> <span class="va">Kernel</span>, lock_objects <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">Epanechnikov</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"Epanechnikov"</span>, inherit <span class="op">=</span> <span class="va">Kernel</span>, lock_objects <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"name"</span>,<span class="st">"Epanechnikov"</span><span class="op">)</span>
 <span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"short_name"</span>,<span class="st">"Epan"</span><span class="op">)</span>
 <span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"description"</span>,<span class="st">"Epanechnikov Kernel"</span><span class="op">)</span></code></pre></div>
@@ -236,9 +238,9 @@
 <li>The <code>package</code> variable is omitted as it defaults to ‘distr6’</li>
 </ol>
 </div>
-<div id="kernel-methods" class="section level3">
-<h3 class="hasAnchor">
-<a href="#kernel-methods" class="anchor"></a>Kernel Methods</h3>
+<div class="section level3">
+<h3 id="kernel-methods">Kernel Methods<a class="anchor" aria-label="anchor" href="#kernel-methods"></a>
+</h3>
 <p>As stated above, there are fewer methods that need to be implemented in kernels than probability distributions. These include</p>
 <ul>
 <li>variance</li>
@@ -247,10 +249,10 @@
 <p>Again the d/p/q methods are implemented in the constructor. So for the Epanechnikov kernel,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"pdfSquared2Norm"</span>,<span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"variance"</span>,<span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
 <p>Note:</p>
 <ol style="list-style-type: decimal">
@@ -265,22 +267,22 @@
 </li>
 </ol>
 </div>
-<div id="the-constructor" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-constructor" class="anchor"></a>The Constructor</h3>
+<div class="section level3">
+<h3 id="the-constructor">The Constructor<a class="anchor" aria-label="anchor" href="#the-constructor"></a>
+</h3>
 <p>The constructor for kernels is much more simple than that of probability distributions and only need include the d/p/q methods and properties. For the Epanechnikov kernel:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Epanechnikov</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span><span class="op">(</span><span class="va">decorators</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">{</span>
   <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">{</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">0.75</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">x1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">0.75</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">x1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
   <span class="va">cdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">{</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">*</span><span class="va">x1</span> <span class="op">-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">*</span><span class="va">x1</span><span class="op">^</span><span class="fl">3</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">4</span><span class="op">*</span><span class="va">x1</span> <span class="op">-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">*</span><span class="va">x1</span><span class="op">^</span><span class="fl">3</span> <span class="op">+</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>
   <span class="op">}</span>
 
   <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span>decorators <span class="op">=</span> <span class="va">decorators</span>, pdf <span class="op">=</span> <span class="va">pdf</span>, cdf <span class="op">=</span> <span class="va">cdf</span>,
-                   support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,  symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+                   support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,  symmetric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
 <p>Note:</p>
 <ol style="list-style-type: decimal">
@@ -292,9 +294,9 @@
 </ol>
 </div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>Kernels are much simpler to extend than SDistributions. Just remember the following</p>
 <ol style="list-style-type: decimal">
 <li>The 4 public variables: name, short_name, description, package</li>
@@ -302,9 +304,9 @@
 <li>The constructor: Includes d/p/q, the only argument is <code>decorators</code>, and the properties are generally identical</li>
 </ol>
 </div>
-<div id="extension-guidelines" class="section level2">
-<h2 class="hasAnchor">
-<a href="#extension-guidelines" class="anchor"></a>Extension Guidelines</h2>
+<div class="section level2">
+<h2 id="extension-guidelines">Extension Guidelines<a class="anchor" aria-label="anchor" href="#extension-guidelines"></a>
+</h2>
 <ul>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html">SDistribution</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html">Wrapper</a></li>
@@ -324,11 +326,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

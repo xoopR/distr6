@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>S3 and Piping</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/s3_piping.rmd"><code>vignettes/webs/s3_piping.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/s3_piping.rmd" class="external-link"><code>vignettes/webs/s3_piping.rmd</code></a></small>
       <div class="hidden name"><code>s3_piping.rmd</code></div>
 
     </div>
@@ -187,20 +189,20 @@
     
     
 <p>The next set of tutorials focuses on more advanced functionality in distr6. This is not to say that the code itself may be any more complex, but that the use-cases for this functionality is more advanced. Examples of these include composite distributions, decorators for numeric results and piping methods. We start with S3 and piping as these (especially S3) will be familiar concepts to most users, are available in distr6 but are not part of the core functionality.</p>
-<div id="s3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#s3" class="anchor"></a>S3</h2>
+<div class="section level2">
+<h2 id="s3">S3<a class="anchor" aria-label="anchor" href="#s3"></a>
+</h2>
 <p>Using the R62S3 package <span class="citation">(Sonabend 2019)</span> most R6 methods in distr6 can instead be called as an S3 method. Even if you’re not aware of it, you’ve probably used S3 every time you’ve opened R. For example the <code>plot</code> function produces a different plot depending on what object it’s called on, a numeric, a linear regression model, or something more complicated, this is because of the S3 dispatch system. Every distribution, kernel, parameter set, wrapper and decorator method is available through S3. Note that constructors always use R6 syntax, i.e. <code>$new()</code>. Below are some examples, see the documentation help pages for the different S3 and R6 syntax but remember these are almost identical except that the first argument in S3 will be the object whereas this is omitted in the R6 usage.</p>
 <p>You can select which classes to create methods for with R62S3, below we are just interested in methods associated with the <code>Distribution</code> class, but this will work with any R6 class in {distr6}.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## generate methods from the public methods and active bindings of `Distribution`</span>
-<span class="fu">R62S3</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/R62S3/man/R62Fun.html">R62Fun</a></span><span class="op">(</span><span class="va">Distribution</span>, assignEnvir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-topenv.html">topenv</a></span><span class="op">(</span><span class="op">)</span>, scope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"active"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu">R62S3</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/R62S3/man/R62Fun.html" class="external-link">R62Fun</a></span><span class="op">(</span><span class="va">Distribution</span>, assignEnvir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-topenv.html" class="external-link">topenv</a></span><span class="op">(</span><span class="op">)</span>, scope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"active"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="co"># R6</span>
 <span class="co">#&gt; [1] 0.24197072 0.05399097</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="va">N</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="co"># S3</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf</a></span><span class="op">(</span><span class="va">N</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="co"># S3</span>
 <span class="co">#&gt; [1] 0.24197072 0.05399097</span>
 
 <span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span>
@@ -224,7 +226,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Traits:      continuous; univariate</span>
 <span class="co">#&gt; Properties:  symmetric; mesokurtic; no skew</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
 <span class="co">#&gt; Normal Probability Distribution. </span>
 <span class="co">#&gt; Parameterised with:</span>
 <span class="co">#&gt; </span>
@@ -250,39 +252,39 @@
 <span class="fu">getParameterValue</span><span class="op">(</span><span class="va">N</span>, <span class="st">"var"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 2</span></code></pre></div>
 </div>
-<div id="piping" class="section level2">
-<h2 class="hasAnchor">
-<a href="#piping" class="anchor"></a>Piping</h2>
-<p>We won’t go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> notation, from the magrittr package <span class="citation">(Milton Bache and Wickham 2014)</span>. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html">introduction to R6 tutorial</a>. Below are some examples of how piping can be used in distr6.</p>
+<div class="section level2">
+<h2 id="piping">Piping<a class="anchor" aria-label="anchor" href="#piping"></a>
+</h2>
+<p>We won’t go into too much detail about piping because it will be familiar to users who need to make use of it and may not be necessary for others. Piping is the process of calling functions in a set order using the pipe, <code>%&gt;%</code> notation, from the magrittr package <span class="citation">(Milton Bache and Wickham 2014)</span>. We specifically mention piping because it goes hand-in-hand with method chaining, which we discussed in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html">introduction to R6 tutorial</a>. Below are some examples of how piping can be used in distr6.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
+<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 2</span>
 
 
 <span class="co">## generate methods from the public methods and active bindings of `ExoticStatistics`</span>
-<span class="fu">R62S3</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/R62S3/man/R62Fun.html">R62Fun</a></span><span class="op">(</span><span class="va">ExoticStatistics</span>, assignEnvir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-topenv.html">topenv</a></span><span class="op">(</span><span class="op">)</span>, scope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"active"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">R62S3</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/R62S3/man/R62Fun.html" class="external-link">R62Fun</a></span><span class="op">(</span><span class="va">ExoticStatistics</span>, assignEnvir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-topenv.html" class="external-link">topenv</a></span><span class="op">(</span><span class="op">)</span>, scope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"active"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Don't worry about unfamiliar functions used here, we return to this in the next tutorial</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="st">"ExoticStatistics"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">hazard</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="st">"ExoticStatistics"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">hazard</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
 <span class="co">#&gt; [1] 2.373216</span></code></pre></div>
-<p>Notice that usually the S3 methods require the first argument to be the object, in this case <code>N</code> or <code>Normal$new()</code> but by using the pipe notation, this is filled automatically. For a more in-depth tutorial on magrittr <a href="https://magrittr.tidyverse.org/">see here</a>.</p>
+<p>Notice that usually the S3 methods require the first argument to be the object, in this case <code>N</code> or <code>Normal$new()</code> but by using the pipe notation, this is filled automatically. For a more in-depth tutorial on magrittr <a href="https://magrittr.tidyverse.org/" class="external-link">see here</a>.</p>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this tutorial we covered using S3 and piping instead of/as well as R6 syntax in distr6. These allow you to use whichever syntax you’re most comfortable with whilst maintaining the integrity of a well-designed and (hopefully) user-friendly object-oriented interface. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html">next tutorial</a> we look at another big feature in distr6, decorators.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-magrittr">
-<p>Milton Bache, Stefan, and Hadley Wickham. 2014. “Magrittr: A Forward-Pipe Operator for R.” CRAN. <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a>.</p>
+<p>Milton Bache, Stefan, and Hadley Wickham. 2014. “Magrittr: A Forward-Pipe Operator for R.” CRAN. <a href="https://CRAN.R-project.org/package=magrittr" class="external-link">https://CRAN.R-project.org/package=magrittr</a>.</p>
 </div>
 <div id="ref-r62s3">
-<p>Sonabend, Raphael. 2019. “R62S3: Automatic Method Generation from R6.” CRAN. <a href="https://CRAN.R-project.org/package=R62S3">https://CRAN.R-project.org/package=R62S3</a>.</p>
+<p>Sonabend, Raphael. 2019. “R62S3: Automatic Method Generation from R6.” CRAN. <a href="https://CRAN.R-project.org/package=R62S3" class="external-link">https://CRAN.R-project.org/package=R62S3</a>.</p>
 </div>
 </div>
 </div>
@@ -299,11 +301,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

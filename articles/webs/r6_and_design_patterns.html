@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,26 +179,26 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R6 and Design Patterns</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/r6_and_design_patterns.rmd"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/r6_and_design_patterns.rmd" class="external-link"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
       <div class="hidden name"><code>r6_and_design_patterns.rmd</code></div>
 
     </div>
 
     
     
-<div id="oop-and-design-patterns" class="section level2">
-<h2 class="hasAnchor">
-<a href="#oop-and-design-patterns" class="anchor"></a>OOP and Design Patterns</h2>
-<div id="oop-practices-and-definitions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#oop-practices-and-definitions" class="anchor"></a>OOP Practices and Definitions</h3>
+<div class="section level2">
+<h2 id="oop-and-design-patterns">OOP and Design Patterns<a class="anchor" aria-label="anchor" href="#oop-and-design-patterns"></a>
+</h2>
+<div class="section level3">
+<h3 id="oop-practices-and-definitions">OOP Practices and Definitions<a class="anchor" aria-label="anchor" href="#oop-practices-and-definitions"></a>
+</h3>
 <p>Instead of providing a comprehensive glossary of OOP terms (of which many exist) we instead give a very brief overview of the most common OOP practices found in R. Firstly it should be noted that R is a functional language that makes use of dispatch and is not primarily for OOP. Functional programming and dispatch lends it’s hand very naturally to the <strong>Strategy</strong> and <strong>Visitor</strong> design patterns (which we will return to later), the first of R’s OOP style ‘sub-languages’, S3, should not be taken for granted therefore as it provides very powerful workarounds to strict OOP methods. R’s update to S3, S4, formally introduces the fundamentals of OOP: encapsulation, abstraction and inheritance. Combined abstraction and encapsulation refer to only giving the user access to methods and data that they require and hiding everything else, it is the principle of minimising the user-interface (UI) and keeping as much uniformity and efficiency as possible. Inheritance is the process of one class (the child-class) ‘copying’ methods and variables from another (the parent-class). R6 formalises these methods further by clearly defining the notion of a class and creating methods to construct the class (and thereby creating an object). R6 also introduces notions of method chaining and cloning, to allow a chain of methods to be called and removing the need to re-create and duplicate an object each time). More concretely, if a user wants to add the variable <code>y</code> to <code>x</code> and save the result then they would call <code>x = x + y</code> but if <code>x</code> is an R6 object then the user simply calls <code>x + y</code>. Finally, an <strong>abstract</strong> class is defined as a class that cannot be constructed, i.e. an object or instance of the class cannot be created. The purpose of an abstract class is to have multiple child classes all inherit common methods/variables.</p>
 </div>
-<div id="design-patterns" class="section level3">
-<h3 class="hasAnchor">
-<a href="#design-patterns" class="anchor"></a>Design Patterns</h3>
+<div class="section level3">
+<h3 id="design-patterns">Design Patterns<a class="anchor" aria-label="anchor" href="#design-patterns"></a>
+</h3>
 <p>Design Patterns were collated, formalised and introduced in the seminal Design Patterns book (Gamma et al.) and the authors are commonly referred to as the Gang of Four (GoF) <span class="citation">(Gamma et al. 1994)</span>.</p>
 <p>By far the most common design patterns in R toolboxes are the <strong>strategy</strong> and <strong>visitor</strong> design patterns. From GoF:</p>
 <ul>
@@ -212,18 +214,18 @@
 <p>The key difference is that <strong>adapters</strong> change the class interface, <strong>decorators</strong> add methods to the interface and <strong>composites</strong> allow individuals and their composites to be treated the same.</p>
 </div>
 </div>
-<div id="r6-and-oop" class="section level2">
-<h2 class="hasAnchor">
-<a href="#r6-and-oop" class="anchor"></a>R6 and OOP</h2>
+<div class="section level2">
+<h2 id="r6-and-oop">R6 and OOP<a class="anchor" aria-label="anchor" href="#r6-and-oop"></a>
+</h2>
 <p>Despite R6 becoming more commonplace in R packages, we have found no documentation of best practices for using R6 and object-oriented programming (OOP) methods and design patterns. Hence we propose our own R6 snippets and workarounds for common design patterns and other OOP methods. We have implemented the following OOP processes and design patterns thus far:</p>
 <ol style="list-style-type: decimal">
 <li><a href="#abstract-classes">Abstract Classes</a></li>
 <li><a href="#decorators">Decorators</a></li>
 <li><a href="#Adapters">Adapters</a></li>
 </ol>
-<div id="abstract-classes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#abstract-classes" class="anchor"></a>Abstract Classes</h3>
+<div class="section level3">
+<h3 id="abstract-classes">Abstract Classes<a class="anchor" aria-label="anchor" href="#abstract-classes"></a>
+</h3>
 <p>Abstract classes are classes that cannot be instantiated. They are useful for defining hierarchical structures and inheritance in OOP. As well as for the Abstract Factory design pattern.</p>
 <p>Implementation: In R6, all classes are concrete and by default have an <code>initialize</code> method for construction. Therefore to make a class abstract we overload the <code>initialize</code> method as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">&gt;</span><span class="st"> </span>AbstractClass<span class="op">$</span><span class="kw">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(){</span>
@@ -236,9 +238,9 @@
   AbstractClass is an abstract class that can't be initialized.</code></pre>
 <hr>
 </div>
-<div id="decorators" class="section level3">
-<h3 class="hasAnchor">
-<a href="#decorators" class="anchor"></a>Decorators</h3>
+<div class="section level3">
+<h3 id="decorators">Decorators<a class="anchor" aria-label="anchor" href="#decorators"></a>
+</h3>
 <p>From Gamma et al.:</p>
 <blockquote>
 <p>“(Decorators) Attach additional responsibilities to an objects dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.”</p>
@@ -246,18 +248,18 @@
 <p>Implementation: Decorators are particularly complex in R6 for a number of reasons. Firstly inheritance occurs in the class definition and not object definition, therefore we cannot dynamically choose which class to inherit from. Secondly, methods and variables should only be defined before initializing an object and any defined after do not have access to the object itself (i.e. the ‘self’ and ‘private’ accessors). And finally there is no simple way to reference one object dynamically from another without this being hardcoded. Implementation has two key methods, the first via construction of the class to be decorated and secondly via construction of the decorator assuming an object has already been instantiated to decorate it.</p>
 <p><strong>Method 1)</strong> In the class to decorate we copy every public method from the decorators of interest to the class and we add <code>self</code> as an argument to ensure that the decorator methods have the same access level as ‘standard’ methods.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">decorators</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">decorators</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-      <span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">public_methods</span>, <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">inherit</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">public_methods</span><span class="op">)</span> <span class="co"># Combines decorator methods and any parent methods</span>
-      <span class="va">methods</span> <span class="op">&lt;-</span> <span class="va">methods</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"initialize"</span>,<span class="st">"clone"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co"># Ensures initialize and clone aren't copied</span>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">decorators</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">decorators</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+      <span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">public_methods</span>, <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">inherit</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">public_methods</span><span class="op">)</span> <span class="co"># Combines decorator methods and any parent methods</span>
+      <span class="va">methods</span> <span class="op">&lt;-</span> <span class="va">methods</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"initialize"</span>,<span class="st">"clone"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co"># Ensures initialize and clone aren't copied</span>
       <span class="va">aself</span> <span class="op">&lt;-</span> <span class="va">self</span>
-      <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-          <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>self<span class="op">=</span><span class="va">aself</span><span class="op">)</span><span class="op">)</span> <span class="co"># Adds self as default to every decorator ensuring access to the object</span>
-          <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,<span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,envir<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.environment.html">as.environment</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span><span class="op">)</span> <span class="co"># Copies every method from the decorator to the object</span>
+      <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+          <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>self<span class="op">=</span><span class="va">aself</span><span class="op">)</span><span class="op">)</span> <span class="co"># Adds self as default to every decorator ensuring access to the object</span>
+          <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">methods</span><span class="op">)</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,<span class="va">methods</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,envir<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.environment.html" class="external-link">as.environment</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span><span class="op">)</span> <span class="co"># Copies every method from the decorator to the object</span>
       <span class="op">}</span>
     <span class="op">}</span><span class="op">)</span>
   <span class="op">}</span>
-  <span class="va">private</span><span class="op">$</span><span class="va">.decorators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">decorators</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="st">"classname"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="va">private</span><span class="op">$</span><span class="va">.decorators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">decorators</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="st">"classname"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>where we assume <code>decorators</code> is an argument to the constructor given as a list naming the decorator classes and that a private variable called <code>.decorators</code> is a list of decorators already present in the object.</p>
 <p><strong>Method 2)</strong> On construction of a particular decorator, the original object is overwritten with whichever decorators were already added and the new decorator that is being constructed. The decorator object is not saved to local memory.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>DistributionDecorator<span class="op">$</span><span class="kw">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(distribution){</span>
@@ -276,34 +278,34 @@
 <span id="cb4-14"><a href="#cb4-14"></a>})</span></code></pre></div>
 <hr>
 </div>
-<div id="adapters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#adapters" class="anchor"></a>Adapters</h3>
+<div class="section level3">
+<h3 id="adapters">Adapters<a class="anchor" aria-label="anchor" href="#adapters"></a>
+</h3>
 <p>For the wrappers in distr6, our code is closer to that of an adapter than decorator pattern as we adapt the interface of an object and in fact the object class is changed in the process. The implementation of these in distr6 is quite simple, wrappers are classes inheriting from <code>Distribution</code> objects that have an additional method that allows the user to view the internally wrapped models (or distributions). Each wrapper has two parts to its constructor: the parent-class method that ensures all parameters are unique, and the child class method that makes any other changes to the object (usually by editing its pdf and/or cdf)</p>
 <p><strong>Parent Class Constructor</strong></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">DistributionWrapper</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span><span class="op">(</span><span class="va">distlist</span>, <span class="va">prefixParams</span> <span class="op">=</span> <span class="cn">TRUE</span>,<span class="va">...</span><span class="op">)</span><span class="op">{</span>
   <span class="kw">if</span><span class="op">(</span><span class="fu">getR6Class</span><span class="op">(</span><span class="va">self</span><span class="op">)</span> <span class="op">==</span> <span class="st">"DistributionWrapper"</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu">getR6Class</span><span class="op">(</span><span class="va">self</span><span class="op">)</span>, <span class="st">"is an abstract class that can't be initialized."</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu">getR6Class</span><span class="op">(</span><span class="va">self</span><span class="op">)</span>, <span class="st">"is an abstract class that can't be initialized."</span><span class="op">)</span><span class="op">)</span>
 
   <span class="fu"><a href="../../reference/testDistributionList.html">assertDistributionList</a></span><span class="op">(</span><span class="va">distlist</span><span class="op">)</span>
 
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
   <span class="va">private</span><span class="op">$</span><span class="va">.wrappedModels</span> <span class="op">&lt;-</span> <span class="va">distlist</span>
 
   <span class="kw">if</span><span class="op">(</span><span class="va">prefixParams</span><span class="op">)</span><span class="op">{</span>
-    <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">rbindlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">rbindlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
       <span class="va">params</span> <span class="op">=</span> <span class="va">x</span><span class="op">[[</span><span class="st">"parameters"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">as.data.table</span><span class="op">(</span><span class="op">)</span>
-      <span class="va">params</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"short_name"</span><span class="op">]</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">params</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">"_"</span><span class="op">)</span>
-      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span>
+      <span class="va">params</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"short_name"</span><span class="op">]</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">params</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">"_"</span><span class="op">)</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span>
     <span class="op">}</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-    <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://xoopR.github.io/param6/reference/as.ParameterSet.html">as.ParameterSet</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
+    <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://xoopR.github.io/param6/reference/as.ParameterSet.html" class="external-link">as.ParameterSet</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span>
   <span class="op">}</span> <span class="kw">else</span><span class="op">{</span>
-    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">distlist</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">distlist</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
       <span class="va">params</span> <span class="op">&lt;-</span> <span class="va">distlist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
     <span class="kw">else</span>
-      <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+      <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">distlist</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
 
   <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span>parameters <span class="op">=</span> <span class="va">params</span>, <span class="va">...</span><span class="op">)</span>
@@ -314,23 +316,23 @@
                                                          <span class="va">upper</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">{</span>
   <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span>,<span class="va">...</span><span class="op">)</span> <span class="op">{</span>
     <span class="kw">if</span><span class="op">(</span><span class="va">x1</span> <span class="op">&lt;=</span> <span class="va">self</span><span class="op">$</span><span class="fu">inf</span><span class="op">(</span><span class="op">)</span> <span class="op">|</span> <span class="va">x1</span> <span class="op">&gt;</span> <span class="va">self</span><span class="op">$</span><span class="fu">sup</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
     <span class="kw">else</span>
       <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">sup</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">inf</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">pdf</span><span class="op">)</span><span class="op">$</span><span class="va">self</span> <span class="op">&lt;-</span> <span class="va">self</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">pdf</span><span class="op">)</span><span class="op">$</span><span class="va">self</span> <span class="op">&lt;-</span> <span class="va">self</span>
   <span class="va">cdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span>,<span class="va">...</span><span class="op">)</span><span class="op">{</span>
     <span class="va">num</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">x1</span><span class="op">)</span> <span class="op">-</span> <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">inf</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
     <span class="va">den</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">sup</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">self</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="fu">inf</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">num</span><span class="op">/</span><span class="va">den</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">num</span><span class="op">/</span><span class="va">den</span><span class="op">)</span>
   <span class="op">}</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/formals.html">formals</a></span><span class="op">(</span><span class="va">cdf</span><span class="op">)</span><span class="op">$</span><span class="va">self</span> <span class="op">&lt;-</span> <span class="va">self</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">cdf</span><span class="op">)</span><span class="op">$</span><span class="va">self</span> <span class="op">&lt;-</span> <span class="va">self</span>
 
-  <span class="va">name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Truncated"</span>,<span class="va">distribution</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>
-  <span class="va">short_name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Truncated"</span>,<span class="va">distribution</span><span class="op">$</span><span class="va">short_name</span><span class="op">)</span>
+  <span class="va">name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Truncated"</span>,<span class="va">distribution</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>
+  <span class="va">short_name</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Truncated"</span>,<span class="va">distribution</span><span class="op">$</span><span class="va">short_name</span><span class="op">)</span>
 
-  <span class="va">distlist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">distribution</span><span class="op">)</span>
-  <span class="va">description</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">distribution</span><span class="op">$</span><span class="va">description</span>, <span class="st">" Truncated between "</span>,<span class="va">lower</span>,<span class="st">" and "</span>,<span class="va">upper</span>,<span class="st">"."</span><span class="op">)</span>
+  <span class="va">distlist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">distribution</span><span class="op">)</span>
+  <span class="va">description</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">distribution</span><span class="op">$</span><span class="va">description</span>, <span class="st">" Truncated between "</span>,<span class="va">lower</span>,<span class="st">" and "</span>,<span class="va">upper</span>,<span class="st">"."</span><span class="op">)</span>
 
   <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span>distlist <span class="op">=</span> <span class="va">distlist</span>, pdf <span class="op">=</span> <span class="va">pdf</span>, cdf <span class="op">=</span> <span class="va">cdf</span>, name <span class="op">=</span> <span class="va">name</span>,
                    short_name <span class="op">=</span> <span class="va">short_name</span>, support <span class="op">=</span> <span class="va">support</span>,
@@ -339,9 +341,9 @@
 <span class="op">}</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-GoF">
 <p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements of Reusable Object-Oriented Software.” Addison-Wesley.</p>
@@ -361,11 +363,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

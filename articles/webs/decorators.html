@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/decorators.rmd"><code>vignettes/webs/decorators.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/decorators.rmd" class="external-link"><code>vignettes/webs/decorators.rmd</code></a></small>
       <div class="hidden name"><code>decorators.rmd</code></div>
 
     </div>
@@ -188,9 +190,9 @@
     
 <p>The <a href="https://alan-turing-institute.github.io/distr6/articles/webs/s3_piping.html">previous tutorial</a> introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.</p>
 <p>Note: Decorators in distr6 are still maturing, this means the API is still subject to minor changes and the internal computations may be improved, therefore we are aware performance may be sub-optimal.</p>
-<div id="decorators" class="section level2">
-<h2 class="hasAnchor">
-<a href="#decorators" class="anchor"></a>Decorators</h2>
+<div class="section level2">
+<h2 id="decorators">Decorators<a class="anchor" aria-label="anchor" href="#decorators"></a>
+</h2>
 <p>In object-oriented programming it is common to discuss ‘Design Patterns’ as specific methods used to solve coding problems, decorators are one of these ‘patterns’. For full definitions and details about design patterns, we refer the reader to the seminal Design Patterns textbook <span class="citation">(Gamma et al. 1994)</span>. Briefly, the decorator design pattern is used to add functionality to an object. For example, say we have a class that only has a <code>print</code> method and a decorator for <code>summary</code> methods. Then the user can either use the object by itself with the <code>print</code> method only or optionally you can ‘decorate’ the object and thereby use the <code>summary</code> method. This is perhaps confusing in the abstract, so lets work through an example in distr6. We will go through a quick example and then return to which decorators are available and how they are used in distr6:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -208,9 +210,9 @@
 <li>Decorated the distribution with the <code>ExoticStatistics</code> decorator</li>
 <li>Successfully evaluated the survival function</li>
 </ol>
-<div id="corestatistics" class="section level3">
-<h3 class="hasAnchor">
-<a href="#corestatistics" class="anchor"></a>CoreStatistics</h3>
+<div class="section level3">
+<h3 id="corestatistics">CoreStatistics<a class="anchor" aria-label="anchor" href="#corestatistics"></a>
+</h3>
 <p>The CoreStatistics decorator includes methods for numeric calculations, a generalised moments <code>kthmoment</code> function and a generalised expectation method <code>genExp</code>. All methods can be viewed using <code><a href="../../reference/CoreStatistics.html">?CoreStatistics</a></code>. In distr6 we have a strict design principle that only analytic results should be provided as methods in distributions, i.e. we only return results for which we know the output is 100% accurate. The <code>CoreStatistics</code> decorator allows you to return numeric results when analytic ones aren’t available. For example,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Weibull.html">Weibull</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -229,9 +231,9 @@
 <span class="co">#&gt; [1] 0.0384616+0.1923076i</span></code></pre></div>
 <p>The decorator also introduces generalised moment and expectation methods. The help documentation for these <code>?kthmoment</code> and <code>?genExp</code> give a full overview to these methods, but both are very useful for modelling, inference and deriving other numeric results.</p>
 </div>
-<div id="exoticstatistics" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exoticstatistics" class="anchor"></a>ExoticStatistics</h3>
+<div class="section level3">
+<h3 id="exoticstatistics">ExoticStatistics<a class="anchor" aria-label="anchor" href="#exoticstatistics"></a>
+</h3>
 <p>The ExoticStatistics decorator includes more complex numeric methods as well as survival, hazard and cumulative hazard that may or may not be analytic expressions (depending what is available in the distribution object). Once again all the methods added by this decorator can be viewed using <code><a href="../../reference/ExoticStatistics.html">?ExoticStatistics</a></code>. For example,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
@@ -252,21 +254,21 @@
 <span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="co">#&gt; [1] 0.3755628</span></code></pre></div>
 </div>
-<div id="functionimputation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functionimputation" class="anchor"></a>FunctionImputation</h3>
+<div class="section level3">
+<h3 id="functionimputation">FunctionImputation<a class="anchor" aria-label="anchor" href="#functionimputation"></a>
+</h3>
 <p>The final implemented decorator is used to impute missing d/p/q/r methods. We will return to the <code>FunctionImputation</code> decorator in a <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html">future tutorial</a> which looks at constructing custom distributions.</p>
 </div>
 </div>
-<div id="how-to-decorate" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-to-decorate" class="anchor"></a>How to Decorate</h2>
+<div class="section level2">
+<h2 id="how-to-decorate">How to Decorate<a class="anchor" aria-label="anchor" href="#how-to-decorate"></a>
+</h2>
 <p>There are two main ways to decorate distributions in distr6, either in construction or after construction. We show these by example:</p>
 <p>In Construction</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1)</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span>
+<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>After Construction</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -274,16 +276,16 @@
 <span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
 <span class="co">#&gt; Normal is now decorated with CoreStatistics</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
-<p>And that’s all there is to it! If you forget which decorators are available, just run <code><a href="../../reference/listDecorators.html">listDecorators()</a></code>, or <code><a href="../../reference/listDecorators.html">listDecorators(simplify = FALSE)</a></code> if you want to see which methods they include at the same time.</p>
+<p>And that’s all there is to it! If you forget which decorators are available, just run <code><a href="../../reference/listDecorators.html">listDecorators()</a></code>, or <code>listDecorators(simplify = FALSE)</code> if you want to see which methods they include at the same time.</p>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing d/p/q/r functions. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html">next tutorial</a> we look at the next big feature in distr6, wrappers.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-GoF">
 <p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements of Reusable Object-Oriented Software.” Addison-Wesley.</p>
@@ -303,11 +305,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Constructing a Distribution</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/constructing_a_distribution.rmd"><code>vignettes/webs/constructing_a_distribution.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/constructing_a_distribution.rmd" class="external-link"><code>vignettes/webs/constructing_a_distribution.rmd</code></a></small>
       <div class="hidden name"><code>constructing_a_distribution.rmd</code></div>
 
     </div>
@@ -188,15 +190,15 @@
     
 <p>First and foremost, distr6 is a package for probability distributions in R. Currently there are 36 distributions implemented in distr6 and another 11 kernels. These tutorials try to follow the journey for using, editing and analysing a probability distribution. Don’t worry if you’ve never used R6 before, these tutorials assume no prior knowledge of R6. If you’re interested in learning the basics of R6, see the tutorial “Introduction to R6”, this tutorial is particularly useful for understanding how to copy (or clone) distributions in R.</p>
 <p>We will use the Normal probability distribution as a running example.</p>
-<div id="constructing-a-distribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#constructing-a-distribution" class="anchor"></a>Constructing a Distribution</h2>
+<div class="section level2">
+<h2 id="constructing-a-distribution">Constructing a Distribution<a class="anchor" aria-label="anchor" href="#constructing-a-distribution"></a>
+</h2>
 <p>All distributions are constructed using the distribution name, followed by <code>$new(...)</code> where <code>...</code> are arguments to the constructor. This is different from base R in which a function is called directly. To construct a Standard Normal distribution,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Printing the distribution shows the distribution name and parameterisation. Notice how printing works the same as always in R, i.e. with <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
+<p>Printing the distribution shows the distribution name and parameterisation. Notice how printing works the same as always in R, i.e. with <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
 <span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
 <p>To access useful statistics, distr6 includes a summary method</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -222,9 +224,9 @@
 <span class="co">#&gt; Traits:      continuous; univariate</span>
 <span class="co">#&gt; Properties:  symmetric; mesokurtic; no skew</span></code></pre></div>
 </div>
-<div id="alternative-parameterisations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#alternative-parameterisations" class="anchor"></a>Alternative Parameterisations</h2>
+<div class="section level2">
+<h2 id="alternative-parameterisations">Alternative Parameterisations<a class="anchor" aria-label="anchor" href="#alternative-parameterisations"></a>
+</h2>
 <p>The distribution parameterisation refers to the parameters that are used to define the distribution. The choice of parameterisation often depends on how you want to the distribution to be interpreted and if fitting procedures will be utilised.</p>
 <p>In the case of the Normal distribution, several parameterisations are possible. These include with mean and variance, standard deviation or precision. The parameterisation is specified in construction by naming the parameters, for example mean and standard deviation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -239,9 +241,9 @@
 <code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span>, var <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">3</span>, prec <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; Error in .return_fail(msg = "Multiple linked parameters are set.", error_on_fail): Multiple linked parameters are set.</span></code></pre></div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this tutorial we looked at constructing a distribution with different parameterisations. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html">next tutorial</a> we look at getting and setting parameters and how this functions with your chosen parameterisation.</p>
 </div>
   </div>
@@ -257,11 +259,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

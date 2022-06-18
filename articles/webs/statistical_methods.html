@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical Methods</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/statistical_methods.rmd"><code>vignettes/webs/statistical_methods.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/statistical_methods.rmd" class="external-link"><code>vignettes/webs/statistical_methods.rmd</code></a></small>
       <div class="hidden name"><code>statistical_methods.rmd</code></div>
 
     </div>
@@ -187,9 +189,9 @@
     
     
 <p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html">previous tutorial</a> we constructed a Normal distribution and accessed and updated its parameters for a variety of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the <code>dnorm/pnorm/qnorm/rnorm</code> equivalents in distr6.</p>
-<div id="dpqr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dpqr" class="anchor"></a>d/p/q/r</h2>
+<div class="section level2">
+<h2 id="dpqr">d/p/q/r<a class="anchor" aria-label="anchor" href="#dpqr"></a>
+</h2>
 <p>The advantage of distr6 over R stats is that once a distribution is constructed, it’s very easy to find properties and results from the distribution by changing very little. For simple distributions like the Normal distribution, this may not seem like a big difference, but for more complicated ones with multiple parameters, you’ll find yourself saving a lot of time!</p>
 <p>Once again we start with constructing the Standard Normal distribution</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -205,9 +207,9 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="co"># 5 samples from the Normal distribution</span>
 <span class="co">#&gt; [1]  1.3709584 -0.5646982  0.3631284  0.6328626  0.4042683</span></code></pre></div>
 </div>
-<div id="other-mathematical-and-statistical-methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-mathematical-and-statistical-methods" class="anchor"></a>Other Mathematical and Statistical Methods</h2>
+<div class="section level2">
+<h2 id="other-mathematical-and-statistical-methods">Other Mathematical and Statistical Methods<a class="anchor" aria-label="anchor" href="#other-mathematical-and-statistical-methods"></a>
+</h2>
 <p>We have seen in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html">first tutorial</a> how the <code>summary</code> method can be used to view quick statistics about a probability distribution, i.e.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span>
@@ -246,9 +248,9 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">mgf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 7.389056</span></code></pre></div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this tutorial we looked at using the d/p/q/r functions in distr6 and accessing other statistical results. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html">next tutorial</a> we take a quick look at distribution properties and traits, whilst trying not to get into too big a discussion about object-oriented programming!</p>
 </div>
   </div>
@@ -264,11 +266,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

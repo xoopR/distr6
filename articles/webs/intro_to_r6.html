@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,14 +42,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
      
     <span class="caret"></span>
@@ -77,7 +79,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
      
     <span class="caret"></span>
@@ -98,7 +100,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Extension Guidelines
      
     <span class="caret"></span>
@@ -122,14 +124,14 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf">Cheatsheet</a>
+      <a href="https://raphaels1.github.io/pdfs/distr6Cheatsheet.pdf" class="external-link">Cheatsheet</a>
     </li>
     <li>
       <a href="../../articles/webs/api_lifecycle.html">API Lifecycle</a>
@@ -151,7 +153,7 @@
   <a href="../../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/RaphaelS1/distr6">
+  <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -177,9 +179,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to R6</h1>
             
-            <h4 class="date">2021-10-29</h4>
+            <h4 data-toc-skip class="date">2022-06-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/master/vignettes/webs/intro_to_r6.rmd"><code>vignettes/webs/intro_to_r6.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/intro_to_r6.rmd" class="external-link"><code>vignettes/webs/intro_to_r6.rmd</code></a></small>
       <div class="hidden name"><code>intro_to_r6.rmd</code></div>
 
     </div>
@@ -187,22 +189,22 @@
     
     
 <p>The purpose of this tutorial is to give a very brief introduction to R6, limited to the functionality needed to go through the basic tutorials that are in this website. This includes: dollar sign notation, construction, methods &amp; chaining, and cloning.</p>
-<div id="what-is-r6" class="section level2">
-<h2 class="hasAnchor">
-<a href="#what-is-r6" class="anchor"></a>What is R6?</h2>
+<div class="section level2">
+<h2 id="what-is-r6">What is R6?<a class="anchor" aria-label="anchor" href="#what-is-r6"></a>
+</h2>
 <p>We won’t go into a full history of R here but we will give a very quick overview. R is a functional programming language that contains some object-oriented paradigms, namely S3, S4, R5 and R6. This means that whilst the majority of your time in R will be spent calling functions on variables with different arguments, it is also possible to create ‘objects’ that store data and are editable via methods. A method is essentially a function that is stored and acts on the object.</p>
-<div id="classes-and-objects-in-r6" class="section level3">
-<h3 class="hasAnchor">
-<a href="#classes-and-objects-in-r6" class="anchor"></a>Classes and Objects in R6</h3>
+<div class="section level3">
+<h3 id="classes-and-objects-in-r6">Classes and Objects in R6<a class="anchor" aria-label="anchor" href="#classes-and-objects-in-r6"></a>
+</h3>
 <p>An object is an instance of a class, an instance is created by construction. In simpler and more practical terms: probability distributions in distr6 are stored as ‘classes’ and to use these distributions they have to be ‘constructed’. We will cover the construction of distributions in distr6 in the next tutorial, so for now we just focus on the R6 specifics.</p>
 </div>
 </div>
-<div id="constructing-a-class" class="section level2">
-<h2 class="hasAnchor">
-<a href="#constructing-a-class" class="anchor"></a>Constructing a Class</h2>
+<div class="section level2">
+<h2 id="constructing-a-class">Constructing a Class<a class="anchor" aria-label="anchor" href="#constructing-a-class"></a>
+</h2>
 <p>Every distribution in distr6 is stored as a class, we will take the Normal distribution as an example. Note the R class type is an <code>R6ClassGenerator</code> this tells us that this is a class to be constructed (as opposed to an object that can be manipulated).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">Normal</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">Normal</span><span class="op">)</span>
 <span class="co">#&gt; [1] "R6ClassGenerator"</span></code></pre></div>
 <p>Constructing a class in R6 is always done using the same syntax <code>$new(...)</code> but the arguments passed to this function depend on the class. Just like functions in R these arguments can be named or un-named and a default may or may not be provided. In this case there is a default so the following does not produce an error</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -214,15 +216,15 @@
 <span class="co">#&gt; Norm(mean = 0, var = 2)</span></code></pre></div>
 <p>See the help documentation for the specific arguments to pass to the constructor.</p>
 </div>
-<div id="methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#methods" class="anchor"></a>Methods</h2>
+<div class="section level2">
+<h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
+</h2>
 <p>Methods work in the exact same way as functions except that again the dollar sign notation is used, e.g. <code>object$method(...)</code>. Notice that the constructor <code>$new()</code> is used for <em>classes</em> whereas methods are called on <em>objects</em>. For example let’s construct a Normal distribution object and save this</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Notice the R class is now 'Normal'</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Normal"        "SDistribution" "Distribution"  "R6"</span></code></pre></div>
 <p>To call the method <code>mean</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -240,9 +242,9 @@
 <span class="va">N</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 5</span></code></pre></div>
 <p>Don’t worry about the particulars of these methods just yet, we will return to them in later tutorials. For now just remember that <code>setParameterValue()</code> will update the object <code>N</code> without us having to manually save this.</p>
-<div id="method-chaining" class="section level3">
-<h3 class="hasAnchor">
-<a href="#method-chaining" class="anchor"></a>Method Chaining</h3>
+<div class="section level3">
+<h3 id="method-chaining">Method Chaining<a class="anchor" aria-label="anchor" href="#method-chaining"></a>
+</h3>
 <p>Method chaining is a slightly more advanced topic and therefore we will only very briefly discuss it here. It is essentially the act of combining multiple methods into one line (or chain), for example:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"var"</span><span class="op">)</span>
@@ -250,10 +252,10 @@
 <p>See how we simply added one method to the end of the other using the same dollar sign syntax. Not all methods can be chained and do not worry if you don’t feel comfortable doing this, we’re just highlighting it for users more familiar with object-oriented programming.</p>
 </div>
 </div>
-<div id="active-bindings" class="section level2">
-<h2 class="hasAnchor">
-<a href="#active-bindings" class="anchor"></a>Active Bindings</h2>
-<p>Active bindings are similar to public variables, they are accessed using <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>, and make the R6 object look as if its a list. In <code>distr6</code> all active bindings are read-only, and exist for object properties and traits. They differ from public methods as no <code>()</code> is required.</p>
+<div class="section level2">
+<h2 id="active-bindings">Active Bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a>
+</h2>
+<p>Active bindings are similar to public variables, they are accessed using <code>$</code>, and make the R6 object look as if its a list. In <code>distr6</code> all active bindings are read-only, and exist for object properties and traits. They differ from public methods as no <code>()</code> is required.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">b</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 
@@ -275,15 +277,15 @@
 <span class="co">#&gt; [1] 5</span></code></pre></div>
 <p>In distr6, all mathematical functions are public methods (e.g. mean, variance, kurtosis), whereas all properties and traits are active bindings (e.g. kurtosisType, symmetry, inf, sup).</p>
 </div>
-<div id="cloning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cloning" class="anchor"></a>Cloning</h2>
+<div class="section level2">
+<h2 id="cloning">Cloning<a class="anchor" aria-label="anchor" href="#cloning"></a>
+</h2>
 <p>The final thing we discuss is an advanced topic but is very important in R6. The best way to demonstrate cloning is by example but don’t worry we won’t go into any of the technical details.</p>
 <p>First we create a class called “adder”, again ignore the technicals here. Adder is a class with one method, which adds numbers to itself.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adder</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"adder"</span>,public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>add <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">{</span>
+<code class="sourceCode R"><span class="va">adder</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"adder"</span>,public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>add <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">{</span>
   <span class="va">self</span><span class="op">$</span><span class="va">x</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span><span class="op">}</span>, x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span><span class="op">}</span>, x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">a</span> <span class="op">=</span> <span class="va">adder</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Here’s an example of it in action, see how the internal value is automatically updated without the object having to be re-saved.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -318,7 +320,7 @@
 <span class="co">#&gt; [1] 4</span>
 <span class="va">a</span><span class="op">$</span><span class="va">x</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
-<p>This can be a tricky concept to get your head around but try not to worry too much about it and just remember that copying using <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code> or <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> will lead to the values of both variables being updated to always be the same; whereas copying using <code>$clone()</code> creates a completely separate object that is identical at the time of cloning but then remains independent.</p>
+<p>This can be a tricky concept to get your head around but try not to worry too much about it and just remember that copying using <code>=</code> or <code>&lt;-</code> will lead to the values of both variables being updated to always be the same; whereas copying using <code>$clone()</code> creates a completely separate object that is identical at the time of cloning but then remains independent.</p>
 </div>
   </div>
 
@@ -333,11 +335,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Raphael Sonabend, Franz Kiraly.</p>
+  <p></p>
+<p>Developed by Raphael Sonabend, Franz Kiraly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>
