@@ -15,7 +15,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com
 
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
-[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6))
+[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6)
 [![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -66,36 +66,42 @@ B$kurtosis()
 B$rand(5)
 #> [1] 7 7 4 7 6
 summary(B)
-#> Binomial Probability Distribution. Parameterised with:
-#>   prob = 0.5, qprob = 0.5, size = 10
-#>
-#>   Quick Statistics
+#> Binomial Probability Distribution. 
+#> Parameterised with:
+#> 
+#>       Id Support Value            Tags
+#> 1:  prob   [0,1]   0.5 linked,required
+#> 2: qprob   [0,1]       linked,required
+#> 3:  size      ℕ+    10        required
+#> 
+#> 
+#> Quick Statistics
 #>  Mean:       5
 #>  Variance:   2.5
 #>  Skewness:   0
 #>  Ex. Kurtosis:   -0.2
-#>
-#>  Support: {0, 1,...,9, 10}   Scientific Type: ℕ0
-#>
-#>  Traits: discrete; univariate
-#>  Properties: symmetric; platykurtic; no skew
+#> 
+#> Support: {0, 1,...,9, 10}    Scientific Type: ℕ0 
+#> 
+#> Traits:      discrete; univariate
+#> Properties:  symmetric; platykurtic; no skew
 ```
 
 Flexible construction of distributions for common parameterisations
 
 ``` r
 Exponential$new(rate = 2)
-#> Exp(rate = 2, scale = 0.5)
+#> Exp(rate = 2)
 Exponential$new(scale = 2)
-#> Exp(rate = 0.5, scale = 2)
+#> Exp(scale = 2)
 Normal$new(mean = 0, prec = 2)
-#> Norm(mean = 0, var = 0.5, sd = 0.707106781186548, prec = 2)
+#> Norm(mean = 0, prec = 2)
 Normal$new(mean = 0, sd = 3)$parameters()
-#>      id     value support                                 description
-#> 1: mean         0       ℝ                   Mean - Location Parameter
-#> 2:  var         9      ℝ+          Variance - Squared Scale Parameter
-#> 3:   sd         3      ℝ+        Standard Deviation - Scale Parameter
-#> 4: prec 0.1111111      ℝ+ Precision - Inverse Squared Scale Parameter
+#>      Id Support Value            Tags
+#> 1: mean       ℝ     0        required
+#> 2: prec      ℝ+       linked,required
+#> 3:   sd      ℝ+     3 linked,required
+#> 4:  var      ℝ+       linked,required
 ```
 
 Decorators for extending functionality of distributions to more complex
@@ -105,28 +111,15 @@ modelling methods
 B <- Binomial$new()
 decorate(B, "ExoticStatistics")
 #> Binomial is now decorated with ExoticStatistics
-#> Binom(prob = 0.5, qprob = 0.5, size = 10)
+#> Binom(prob = 0.5, size = 10)
 B$survival(2)
 #> [1] 0.9453125
 decorate(B, "CoreStatistics")
 #> Binomial is now decorated with CoreStatistics
-#> Binom(prob = 0.5, qprob = 0.5, size = 10)
+#> Binom(prob = 0.5, size = 10)
 B$kthmoment(6)
 #> Results from numeric calculations are approximate only. Better results may be available.
 #> [1] 190
-```
-
-S3 compatibility to make the interface more flexible for users who are
-less familiar with OOP
-
-``` r
-B <- Binomial$new()
-mean(B) # B$mean()
-#> [1] 5
-variance(B) # B$variance()
-#> [1] 2.5
-cdf(B, 2:5) # B$cdf(2:5)
-#> [1] 0.0546875 0.1718750 0.3769531 0.6230469
 ```
 
 Wrappers including truncation, huberization and product distributions
@@ -135,7 +128,7 @@ for manipulation and composition of distributions.
 ``` r
 B <- Binomial$new()
 TruncatedDistribution$new(B, lower = 2, upper = 5) #Or: truncate(B,2,5)
-#> TruncBinom(Binom__prob = 0.5, Binom__qprob = 0.5,...,trunc__lower = 2, trunc__upper = 5)
+#> TruncBinom(Binom__prob = 0.5, Binom__size = 10, trunc__lower = 2, trunc__upper = 5)
 N <- Normal$new()
 MixtureDistribution$new(list(B,N), weights = c(0.1, 0.9))
 #> Binom wX Norm
@@ -172,17 +165,27 @@ distr6 has three primary use-cases:
 
 ## Installation
 
-For the latest release on CRAN, install with
+distr6 can be installed from
+[R-Universe](https://raphaels1.r-universe.dev/ui#package:distr6)
 
 ``` r
-install.packages("distr6")
+# Enable repository from raphaels1
+options(repos = c(
+  raphaels1 = 'https://raphaels1.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
+# Download and install distr6 in R
+install.packages('distr6')
 ```
 
-Otherwise for the latest stable build
+And GitHub
 
 ``` r
 remotes::install_github("alan-turing-institute/distr6")
 ```
+
+distr6 [will not be on
+CRAN](https://twitter.com/RaphaelS101/status/1506321623250571265) for
+the forseeable future.
 
 ## Future Plans
 
