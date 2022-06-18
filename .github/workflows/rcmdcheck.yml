@@ -101,20 +101,3 @@ jobs:
           install.packages('covr')
           covr::codecov()
         shell: Rscript {0}
-
-      - name: Render rmd
-        if: ${{ github.event_name == 'pull_request' && runner.os == 'Linux' && matrix.config.r == 'release'}}
-        run: |
-          pak::local_install()
-          pak::pkg_install("rmarkdown")
-          rmarkdown::render('README.Rmd')
-        shell: Rscript {0}
-
-      - name: Commit changes
-        if: ${{ github.event_name == 'pull_request' && runner.os == 'Linux' && matrix.config.r == 'release'}}
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: github-actions
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: 'Update README.md'
-          add: 'README.md'
