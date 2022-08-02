@@ -684,7 +684,7 @@ decorator to numerically estimate this.")
     #' and is more prone to error. Used primarily by decorators.
     workingSupport = function() {
 
-      if (testCountablyFinite(support <- private$.properties$support)) {
+      if (testCountablyFinite(support <- self$properties$support)) {
         return(support)
       }
 

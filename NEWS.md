@@ -1,3 +1,7 @@
+# distr6 1.6.12
+
+* Fix bug in workingSupport method
+
 # distr6 1.6.10
 
 * Fixed bug in Matdist where d/p/q/r were transposed incorrectly
