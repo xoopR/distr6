@@ -269,7 +269,7 @@ Michael P. McLaughlin.</p>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/EmpiricalMV.html">EmpiricalMV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NULL</span>, decorators <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/EmpiricalMV.html">EmpiricalMV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NULL</span>, decorators <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -289,7 +289,7 @@ Decorators to add to the distribution during construction.</p></dd>
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/EmpiricalMV.html">EmpiricalMV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va"><a href="../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/EmpiricalMV.html">EmpiricalMV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va"><a href="../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -299,7 +299,7 @@ Decorators to add to the distribution during construction.</p></dd>
 $$E_X(X) = \sum p_X(x)*x$$
 with an integration analogue for continuous distributions.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -318,7 +318,7 @@ $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">variance</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">variance</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -334,12 +334,12 @@ covariance matrix is returned.</p><div class="section">
 <h3 id="method-setparametervalue-">Method <code>setParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-setparametervalue-"></a></h3>
 <p>Sets the value(s) of the given parameter(s).</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>
-  <span class="va">...</span>,
-  lst <span class="op">=</span> <span class="cn">NULL</span>,
-  error <span class="op">=</span> <span class="st">"warn"</span>,
-  resolveConflicts <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  lst <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  error <span class="op">=</span> <span class="st">"warn"</span>,</span>
+<span>  resolveConflicts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -373,7 +373,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -391,20 +391,20 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `EmpiricalMV$new`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va"><a href="MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EmpMV(data = list(V1 = c(-0.0290109577755925, -0.241550048129946, 0.256287458305406, 0.119555153005476, 0.326141099539435, 1.08761646252913, -0.102966633526244, -0.820758642010537, -0.118876362263798, 1.75849211063752, -0.970742543227393, -0.559034682729756, -1.05328265785021, -0.997353062471174, -0.255557940262004, 0.477088909625192, -0.654694242495169, -0.0872411333052404, 0.223651215525312, -0.195815922027442, -0.863013443940584, 0.248597299607706, -0.432383624094251, -1.25467589722441, -0.722499740223063, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.673220985988657, -0.342901630775118, 0.998464402615891, 0.278065946763894, 1.02644620113021, 1.05745324677106, -0.746591118598612, -1.33813087233629, -0.913318317552213, -0.83074524462044, 0.908452832728488, 1.02455595252402, 1.98892437990213, -1.93654781775067, 1.8473803910064, -0.535159178439921, -1.21214116033028, 0.412495614171615, -0.0745760135032256, -1.57968077732426, -0.166288560610293, 0.123587886727401, 1.9630856141905, 0.919502859691651, 0.923261900048766, 0.643265681090735, 0.0112340568468301, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.27859686385473, -1.23233527442821, -0.627537564323144, -0.243820177677716, 0.837422772358503, 0.631167509073085, 1.29274353741305, 1.81866452582711, 1.02326318360867, 1.16528832778126, -0.959672848912439, 1.09795390856759, 2.61674072200011, -1.33262075317538, -0.305957561420459, -0.720710174436771, 0.40427521932967, -2.57258319556837, 0.819931100971951, -0.412637403819077, -0.380072478628379, -0.353244497827511, 1.18302977752458, -0.931673446588525, -0.908822939471373, 0.713508384060619, 0.660189906978485, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.70802352592212, 0.340337391487458, -0.183879728105514, 0.847904801428716, -0.764054629703193, 0.904137531522735, 2.68071617734997, -0.573312577447629, -0.823836154714572, -1.64955914795893, 0.401636976516163, 1.17333172491818, 0.427812653159683, 0.52718908624297, -0.429885187746492, -0.101681245967574, 0.147937292617591, -1.18704621069336, -0.0101582264390412, 1.73148214222042, -0.0691131988717182), V2 = c(0.696748042752967, -0.469239832690861, -0.308748775327411, 0.429153329547558, -2.27392074272105, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.642959717721736, 0.076667268162846, -1.81482261418891, 1.03699343758322, -0.87114146593656, 0.864906832423908, 0.591406787124421, 1.424057951663, -1.51184890171118, 0.722814820782642, 0.384110637685382, 0.0508993188685625, -0.700043745912132, -0.437969337789567, 0.774936799001206, 0.0900279667601025, -1.04974969175663, -1.02279895261843, -1.40803290090847, 0.0176426058008263, 1.22385350194356, -0.178953923148725, -2.29811218359426, 0.968922924573932, 0.052017176658381, -0.145031429035071, 0.885385445963931, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2.22499221428661, 0.00831268935399553, -1.33209880961217, -0.965347821713765, 0.16656493197326, -1.03680859685487, -0.136633415807846, 0.882538345223882, -0.100557252697717, -0.773750008285092, -0.84108111097611, 0.34740129668846, -0.689365486271215, -1.68233238016735, 0.595912763778021, 0.913388289188435, 0.432074793437008, 0.137096352135023, -0.767805726472867, 0.396619902205121, 0.375482022013399, -3.15274270059976, 1.48439799888997, 0.214697197028393, 1.16650870553363, -1.08334714606775, 0.182864350032979, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.36108996504507, 1.08200221827936, 0.968384959896541, -1.30735406661551, 0.547715072112437, 2.1091500471822, 0.927401168199027, -0.61051694896795, -1.02659388336234, -0.969338665135188, 0.162765579884929, 0.90112746734328, -0.66458773911119, -0.0300169383771376, -0.314180330108961, 0.846660611756703, -1.41950046401461, -0.63912421099916, 1.22876566385868, 0.191920398869598, 0.545097823063094, 0.934470728255266, -0.547931707580772, -1.74377779541875, 1.03823217729584, 0.533447786728735, 0.0353725797322219, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.820920633303204, -0.455768115283281, -0.019378971272091, -0.89957972435765, -0.551199078566705, -1.68525276846963, 1.74790673163299, 1.20267424746552, 2.19113757734979, -0.662553644085087, 0.361518540902673, -0.773154267010229, 0.34492749912158, -2.00322350541254))) </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `EmpiricalMV$new`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va"><a href="MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EmpMV(data = list(V1 = c(0.22937983061936, 1.08772412292698, -1.15358374878894, 0.16608182772591, -1.34629253685627, -1.56337716354878, -1.5210661440967, -0.961658048729195, -0.00645902029677694, 1.70740771339183, -0.548034781977879, -1.07279601216163, 0.638123117051715, -0.0128968179985383, -0.267551801506355, 0.186895446374848, 0.790674387639591, -0.443426887168016, -1.62824815730324, -0.851102552456538, -1.18110083459944, 1.18445919447556, 2.73077393485864, -0.881946149853676, 0.218711706739932, 0.424983085429723, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.585226764916949, 0.0768199783812276, -0.181115355814895, 0.556627416559226, -0.509930398850035, -0.814490395951992, -0.36790638510374, 0.732862811692697, -0.276611998573556, 1.05293872262895, 1.80347342831626, 0.918890986816372, 0.972140761607491, -0.596009760297862, -1.19001799680111, -0.154063525472861, -0.472561477706578, -0.644950779594499, 0.402045375679341, -0.866490815112575, 0.236763953970777, 1.34274938596801, -0.127585749455451, -0.507189963289687, -1.2702102260326, 2.61117313753434, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.0675094117375778, 0.921797417818397, 0.45060400243515, 0.879840120567386, 1.10407074213687, 1.03798436665241, 0.620830904934007, 0.111616007467444, 2.57692538524467, 0.768593025560695, -0.793948540359842, 1.00222131774124, 0.201683698103046, 1.84393335603767, -0.753858793968665, -1.80414174020848, -0.113344654793982, -0.906206187132212, -0.774979774492452, 0.106622125815461, -0.210217400752497, 1.48040170415345, -0.430196999730344, 1.22318479566081, -1.99553340222587, 0.284377117426172, 0.404432518362089, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.670442262865623, 0.601469564166075, 1.14627751365903, 2.20280187713145, -1.02285511162278, 0.35004722520985, 0.89124864264481, -0.0571127525990205, 0.774807258517168, -0.616887960652529, -0.376854506920488, -0.351093573753556, 1.50258319068093, -1.6159910809334, -0.927588904396562, -0.278873795428208, -0.376035193156607, 1.58727446037728, -0.408815275560144, 0.868645255845715, 0.354509523798161), V2 = c(-0.453148113808571, -0.232330307948015, 2.19514931352005, 1.1236763275416, 0.784377300782209, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.10410118144967, -0.234876544615213, -0.982674282010725, 1.11397704653124, 0.385180706969924, 0.22118208753303, 0.619879273006188, 0.222392706781953, 0.795555687927007, -0.504261009024517, -0.570812637533326, 0.475750826742818, -0.325122401042321, -0.379507138203503, -0.151762807804345, 0.305847820727077, 0.100586682271528, 0.0739435169112632, -0.655850160570353, 1.01228095232777, -1.92354180693265, -0.459725595402209, -0.480815412796471, -1.39579130859426, 0.91032795189015, -0.503703775543864, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.05715742325543, -1.11749997066303, 1.97876317167887, 2.07345063127717, 0.792848745156527, 0.36527695136543, -0.772186741459147, -0.110913137797055, -2.24928427116217, -0.849292826372623, -0.685846863608114, -0.769157334962593, -0.311665233752906, 0.963412990456524, 0.652832584652018, -2.300310489544, -0.100106972761191, 0.469573227142107, -0.661105709722121, 0.634885756096219, 0.58127899406351, 1.19783209396896, -0.680084928287123, -0.10569001392609, -0.956438033897315, -1.01555059496017, -0.633621951611198, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.526995282877664, -0.241935167558465, -0.111105428312494, -0.107584261279317, 0.138667497611603, -0.0443124807009647, 1.1342271190503, -0.961494345762157, 0.855396258043174, 1.71028803225771, -0.411468530499358, 0.128566290814567, -2.39307705460783, 0.526815646710703, 0.370632596541976, 0.0375027231337462, 1.21149104085079, 0.429016885935165, 2.38828273416173, 0.51985980381795, 1.28513800404296, 0.0660536809135812, -0.288970898352309, 0.717955082639062, 0.114738457926509, 0.88648583654486, 0.453832734660678, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.528453822220628, 0.143976697760483, 0.35275497970552, -0.774788214385702, 0.269846080295534, 1.47237621504572, 0.421474037352262, -1.72315576232896, -0.821069455720154, -0.710335271994395, -2.59636672635305, -1.9080738771684, 1.36189500386616, -0.785251560214315, -0.182763624101349))) </span>
 </code></pre></div>
     </div>
   </div>
@@ -419,7 +419,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

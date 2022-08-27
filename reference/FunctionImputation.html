@@ -200,7 +200,7 @@ numerical results are used with a message.</p>
 <h3 id="method-decorate-">Method <code><a href="decorate.html">decorate()</a></code><a class="anchor" aria-label="anchor" href="#method-decorate-"></a></h3>
 <p>Decorates the given distribution with the methods available in this decorator.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va">distribution</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va">distribution</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -224,7 +224,7 @@ means worse accuracy and faster computation.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -242,42 +242,42 @@ means worse accuracy and faster computation.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GoFKernel"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pracma"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">1</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span>
-<span class="r-in">  pdf <span class="op">=</span> <span class="va">pdf</span>,</span>
-<span class="r-in">  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span>
-<span class="r-in">  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="decorate.html">decorate</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"FunctionImputation"</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span>
-<span class="r-in">  pdf <span class="op">=</span> <span class="va">pdf</span>,</span>
-<span class="r-in">  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span>
-<span class="r-in">  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">  decorators <span class="op">=</span> <span class="st">"FunctionImputation"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span>
-<span class="r-in">  pdf <span class="op">=</span> <span class="va">pdf</span>,</span>
-<span class="r-in">  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span>
-<span class="r-in">  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="fu">quantile</span><span class="op">(</span><span class="fl">0.42</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GoFKernel"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pracma"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">1</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span></span>
+<span class="r-in"><span>  pdf <span class="op">=</span> <span class="va">pdf</span>,</span></span>
+<span class="r-in"><span>  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="decorate.html">decorate</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"FunctionImputation"</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span></span>
+<span class="r-in"><span>  pdf <span class="op">=</span> <span class="va">pdf</span>,</span></span>
+<span class="r-in"><span>  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  decorators <span class="op">=</span> <span class="st">"FunctionImputation"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va"><a href="Distribution.html">Distribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"Test"</span>,</span></span>
+<span class="r-in"><span>  pdf <span class="op">=</span> <span class="va">pdf</span>,</span></span>
+<span class="r-in"><span>  support <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Interval.html" class="external-link">Interval</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, class <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  type <span class="op">=</span> <span class="fu">set6</span><span class="fu">::</span><span class="va"><a href="https://xoopR.github.io/set6/reference/Naturals.html" class="external-link">Naturals</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">FunctionImputation</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">quantile</span><span class="op">(</span><span class="fl">0.42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Test is now decorated with FunctionImputation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Test is now decorated with FunctionImputation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Results from numeric calculations are approximate only. Better results may be available.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 3 6 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 8 5 4</span>
 </code></pre></div>
     </div>
   </div>
@@ -292,7 +292,7 @@ means worse accuracy and faster computation.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

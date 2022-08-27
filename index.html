@@ -207,78 +207,78 @@
 <p>distr6 is not intended to replace the base R distributions function but instead to give an alternative that focuses on distributions as objects that can be manipulated and accessed as required. The main features therefore centre on OOP practices, design patterns and API design. Of particular note:</p>
 <p>All distributions in base R introduced as objects with methods for common statistical functions including pdf, cdf, inverse cdf, simulation, mean, variance, skewness and kurtosis</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>prob <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="va">B</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500</span>
-<span class="co">#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</span>
-<span class="va">B</span><span class="op">$</span><span class="fu">kurtosis</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] -0.2</span>
-<span class="va">B</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 7 7 4 7 6</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
-<span class="co">#&gt; Binomial Probability Distribution. </span>
-<span class="co">#&gt; Parameterised with:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       Id Support Value            Tags</span>
-<span class="co">#&gt; 1:  prob   [0,1]   0.5 linked,required</span>
-<span class="co">#&gt; 2: qprob   [0,1]       linked,required</span>
-<span class="co">#&gt; 3:  size      ℕ+    10        required</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Quick Statistics</span>
-<span class="co">#&gt;  Mean:       5</span>
-<span class="co">#&gt;  Variance:   2.5</span>
-<span class="co">#&gt;  Skewness:   0</span>
-<span class="co">#&gt;  Ex. Kurtosis:   -0.2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Support: {0, 1,...,9, 10}    Scientific Type: ℕ0 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Traits:      discrete; univariate</span>
-<span class="co">#&gt; Properties:  symmetric; platykurtic; no skew</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>prob <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">B</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 0.0097656250 0.0439453125 0.1171875000 0.2050781250 0.2460937500</span></span>
+<span><span class="co">#&gt;  [6] 0.2050781250 0.1171875000 0.0439453125 0.0097656250 0.0009765625</span></span>
+<span><span class="va">B</span><span class="op">$</span><span class="fu">kurtosis</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -0.2</span></span>
+<span><span class="va">B</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 7 7 4 7 6</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Binomial Probability Distribution. </span></span>
+<span><span class="co">#&gt; Parameterised with:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       Id Support Value            Tags</span></span>
+<span><span class="co">#&gt; 1:  prob   [0,1]   0.5 linked,required</span></span>
+<span><span class="co">#&gt; 2: qprob   [0,1]       linked,required</span></span>
+<span><span class="co">#&gt; 3:  size      ℕ+    10        required</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Quick Statistics</span></span>
+<span><span class="co">#&gt;  Mean:       5</span></span>
+<span><span class="co">#&gt;  Variance:   2.5</span></span>
+<span><span class="co">#&gt;  Skewness:   0</span></span>
+<span><span class="co">#&gt;  Ex. Kurtosis:   -0.2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Support: {0, 1,...,9, 10}    Scientific Type: ℕ0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Traits:      discrete; univariate</span></span>
+<span><span class="co">#&gt; Properties:  symmetric; platykurtic; no skew</span></span></code></pre></div>
 <p>Flexible construction of distributions for common parameterisations</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="reference/Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Exp(rate = 2)</span>
-<span class="va"><a href="reference/Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Exp(scale = 2)</span>
-<span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, prec = 2)</span>
-<span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;      Id Support Value            Tags</span>
-<span class="co">#&gt; 1: mean       ℝ     0        required</span>
-<span class="co">#&gt; 2: prec      ℝ+       linked,required</span>
-<span class="co">#&gt; 3:   sd      ℝ+     3 linked,required</span>
-<span class="co">#&gt; 4:  var      ℝ+       linked,required</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="reference/Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Exp(rate = 2)</span></span>
+<span><span class="va"><a href="reference/Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Exp(scale = 2)</span></span>
+<span><span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, prec = 2)</span></span>
+<span><span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
+<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
+<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
+<span><span class="co">#&gt; 3:   sd      ℝ+     3 linked,required</span></span>
+<span><span class="co">#&gt; 4:  var      ℝ+       linked,required</span></span></code></pre></div>
 <p>Decorators for extending functionality of distributions to more complex modelling methods</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Binomial is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
-<span class="va">B</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.9453125</span>
-<span class="fu"><a href="reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Binomial is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Binom(prob = 0.5, size = 10)</span>
-<span class="va">B</span><span class="op">$</span><span class="fu">kthmoment</span><span class="op">(</span><span class="fl">6</span><span class="op">)</span>
-<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="co">#&gt; [1] 190</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Binomial is now decorated with ExoticStatistics</span></span>
+<span><span class="co">#&gt; Binom(prob = 0.5, size = 10)</span></span>
+<span><span class="va">B</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9453125</span></span>
+<span><span class="fu"><a href="reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">B</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Binomial is now decorated with CoreStatistics</span></span>
+<span><span class="co">#&gt; Binom(prob = 0.5, size = 10)</span></span>
+<span><span class="va">B</span><span class="op">$</span><span class="fu">kthmoment</span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span></span>
+<span><span class="co">#&gt; [1] 190</span></span></code></pre></div>
 <p>Wrappers including truncation, huberization and product distributions for manipulation and composition of distributions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va"><a href="reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">B</span>, lower <span class="op">=</span> <span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co">#Or: truncate(B,2,5)</span>
-<span class="co">#&gt; TruncBinom(Binom__prob = 0.5, Binom__size = 10, trunc__lower = 2, trunc__upper = 5)</span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va"><a href="reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">B</span>,<span class="va">N</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Binom wX Norm</span>
-<span class="va"><a href="reference/ProductDistribution.html">ProductDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">B</span>,<span class="va">N</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Binom X Norm</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va"><a href="reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">B</span>, lower <span class="op">=</span> <span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co">#Or: truncate(B,2,5)</span></span>
+<span><span class="co">#&gt; TruncBinom(Binom__prob = 0.5, Binom__size = 10, trunc__lower = 2, trunc__upper = 5)</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va"><a href="reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">B</span>,<span class="va">N</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Binom wX Norm</span></span>
+<span><span class="va"><a href="reference/ProductDistribution.html">ProductDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">B</span>,<span class="va">N</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Binom X Norm</span></span></code></pre></div>
 <p>Additionally <a href="https://CRAN.R-project.org/package=set6" class="external-link">set6</a> is used for symbolic representation of sets for Distribution typing</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">type</span>
-<span class="co">#&gt; ℕ0</span>
-<span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">support</span>
-<span class="co">#&gt; {0, 1,...,9, 10}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">type</span></span>
+<span><span class="co">#&gt; ℕ0</span></span>
+<span><span class="va"><a href="reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">support</span></span>
+<span><span class="co">#&gt; {0, 1,...,9, 10}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -298,15 +298,15 @@
 </h2>
 <p>distr6 can be installed from <a href="https://raphaels1.r-universe.dev/ui#package:distr6" class="external-link">R-Universe</a></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Enable repository from raphaels1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  raphaels1 <span class="op">=</span> <span class="st">'https://raphaels1.r-universe.dev'</span>,
-  CRAN <span class="op">=</span> <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># Download and install distr6 in R</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'distr6'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Enable repository from raphaels1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  raphaels1 <span class="op">=</span> <span class="st">'https://raphaels1.r-universe.dev'</span>,</span>
+<span>  CRAN <span class="op">=</span> <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Download and install distr6 in R</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'distr6'</span><span class="op">)</span></span></code></pre></div>
 <p>And GitHub</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alan-turing-institute/distr6"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alan-turing-institute/distr6"</span><span class="op">)</span></span></code></pre></div>
 <p>distr6 <a href="https://twitter.com/RaphaelS101/status/1506321623250571265" class="external-link">will not be on CRAN</a> for the forseeable future.</p>
 </div>
 <div class="section level2">
@@ -390,7 +390,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

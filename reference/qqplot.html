@@ -150,7 +150,7 @@ reference distributions.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">qqplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, npoints <span class="op">=</span> <span class="fl">3000</span>, idline <span class="op">=</span> <span class="cn">TRUE</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qqplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, npoints <span class="op">=</span> <span class="fl">3000</span>, idline <span class="op">=</span> <span class="cn">TRUE</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -197,14 +197,14 @@ are equivalent to the the Type 1 method in <code><a href="https://rdrr.io/r/stat
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">qqplot</span><span class="op">(</span><span class="va"><a href="Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">15</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span>, <span class="va"><a href="ChiSquared.html">ChiSquared</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>df <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">qqplot</span><span class="op">(</span><span class="va"><a href="Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">15</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span>, <span class="va"><a href="ChiSquared.html">ChiSquared</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>df <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqplot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">qqplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">rt</a></span><span class="op">(</span><span class="fl">200</span>, df <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">rt</a></span><span class="op">(</span><span class="fl">300</span>, df <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span class="r-in">  main <span class="op">=</span> <span class="st">"QQ-Plot"</span>, xlab <span class="op">=</span> <span class="st">"t-200"</span>,</span>
-<span class="r-in">  ylab <span class="op">=</span> <span class="st">"t-300"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">qqplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">rt</a></span><span class="op">(</span><span class="fl">200</span>, df <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">rt</a></span><span class="op">(</span><span class="fl">300</span>, df <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  main <span class="op">=</span> <span class="st">"QQ-Plot"</span>, xlab <span class="op">=</span> <span class="st">"t-200"</span>,</span></span>
+<span class="r-in"><span>  ylab <span class="op">=</span> <span class="st">"t-300"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqplot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">qqplot</span><span class="op">(</span><span class="va"><a href="Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">qqplot</span><span class="op">(</span><span class="va"><a href="Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqplot-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -220,7 +220,7 @@ are equivalent to the the Type 1 method in <code><a href="https://rdrr.io/r/stat
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

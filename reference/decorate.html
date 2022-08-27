@@ -146,7 +146,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">decorate</span><span class="op">(</span><span class="va">distribution</span>, <span class="va">decorators</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">decorate</span><span class="op">(</span><span class="va">distribution</span>, <span class="va">decorators</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -192,13 +192,13 @@ class.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">decorate</span><span class="op">(</span><span class="va">B</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">decorate</span><span class="op">(</span><span class="va">B</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Binomial is now decorated with CoreStatistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom(prob = 0.5, size = 10) </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">E</span> <span class="op">&lt;-</span> <span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">decorate</span><span class="op">(</span><span class="va">E</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">E</span> <span class="op">&lt;-</span> <span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">decorate</span><span class="op">(</span><span class="va">E</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Exponential is now decorated with CoreStatistics, ExoticStatistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Exp(rate = 1) </span>
 </code></pre></div>
@@ -215,7 +215,7 @@ class.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -190,7 +190,7 @@ numerical results are used with a message.</p>
 where X is the distribution, \(F_X\) is the cdf of the distribution \(X\) and
 \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cdfAntiDeriv</span><span class="op">(</span>lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cdfAntiDeriv</span><span class="op">(</span>lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -215,7 +215,7 @@ $$as(a, b) = \int_a^b S_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function of the distribution
 \(X\) and \(a, b\) are the <code>lower</code> and <code>upper</code> limits of integration.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survivalAntiDeriv</span><span class="op">(</span>lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survivalAntiDeriv</span><span class="op">(</span>lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -240,7 +240,7 @@ $$S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx$$
 where X is the distribution, \(S_X\) is the survival function, \(F_X\) is the cdf
 and \(f_X\) is the pdf.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -281,7 +281,7 @@ to the distribution in the vector to evaluate.</p></dd>
 $$h_X(x) = \frac{f_X}{S_X}$$
 where X is the distribution, \(S_X\) is the survival function and \(f_X\) is the pdf.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -322,7 +322,7 @@ to the distribution in the vector to evaluate.</p></dd>
 $$H_X(x) = -log(S_X)$$
 where X is the distribution and \(S_X\) is the survival function.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cumHazard</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cumHazard</span><span class="op">(</span><span class="va">...</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -365,7 +365,7 @@ where X is the distribution, \(F_X\) is the cdf and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cdfPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">cdfPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -396,7 +396,7 @@ where X is the distribution, \(f_X\) is the pdf and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">pdfPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">pdfPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -427,7 +427,7 @@ where X is the distribution, \(S_X\) is the survival function and \(a, b\)
 are the <code>lower</code> and <code>upper</code> limits of integration.</p>
 <p>Returns NULL if distribution is not continuous.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survivalPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">survivalPNorm</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="cn">NULL</span>, upper <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -454,7 +454,7 @@ Upper bounds of integral.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -472,12 +472,12 @@ Upper bounds of integral.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="decorate.html">decorate</a></span><span class="op">(</span><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="decorate.html">decorate</a></span><span class="op">(</span><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Exponential is now decorated with ExoticStatistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Exp(rate = 1) </span>
-<span class="r-in"><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"ExoticStatistics"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Exp(rate = 1) </span>
-<span class="r-in"><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">decorate</span><span class="op">(</span><span class="va"><a href="Exponential.html">Exponential</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Exponential is now decorated with ExoticStatistics</span>
 </code></pre></div>
     </div>
@@ -493,7 +493,7 @@ Upper bounds of integral.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

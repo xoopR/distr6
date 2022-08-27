@@ -146,14 +146,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">testSymmetric</span><span class="op">(</span><span class="va">object</span>, errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">checkSymmetric</span><span class="op">(</span><span class="va">object</span>, errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">assertSymmetric</span><span class="op">(</span>
-  <span class="va">object</span>,
-  errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">testSymmetric</span><span class="op">(</span><span class="va">object</span>, errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">checkSymmetric</span><span class="op">(</span><span class="va">object</span>, errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">assertSymmetric</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  errormsg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">short_name</span>, <span class="st">"is not symmetric"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -179,7 +179,7 @@ an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">testSymmetric</span><span class="op">(</span><span class="va"><a href="Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># FALSE</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">testSymmetric</span><span class="op">(</span><span class="va"><a href="Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># FALSE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
@@ -195,7 +195,7 @@ an error message as string, <code>test</code> returns <code>FALSE</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

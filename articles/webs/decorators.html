@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Decorators</h1>
             
-            <h4 data-toc-skip class="date">2022-06-18</h4>
+            <h4 data-toc-skip class="date">2022-08-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/decorators.rmd" class="external-link"><code>vignettes/webs/decorators.rmd</code></a></small>
       <div class="hidden name"><code>decorators.rmd</code></div>
@@ -195,14 +195,14 @@
 </h2>
 <p>In object-oriented programming it is common to discuss ‘Design Patterns’ as specific methods used to solve coding problems, decorators are one of these ‘patterns’. For full definitions and details about design patterns, we refer the reader to the seminal Design Patterns textbook <span class="citation">(Gamma et al. 1994)</span>. Briefly, the decorator design pattern is used to add functionality to an object. For example, say we have a class that only has a <code>print</code> method and a decorator for <code>summary</code> methods. Then the user can either use the object by itself with the <code>print</code> method only or optionally you can ‘decorate’ the object and thereby use the <code>summary</code> method. This is perhaps confusing in the abstract, so lets work through an example in distr6. We will go through a quick example and then return to which decorators are available and how they are used in distr6:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.1586553</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span></span>
+<span><span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Normal is now decorated with ExoticStatistics</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="fu">survival</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.1586553</span></span></code></pre></div>
 <p>In the example above we:</p>
 <ol style="list-style-type: decimal">
 <li>Constructed a Normal distribution</li>
@@ -215,20 +215,20 @@
 </h3>
 <p>The CoreStatistics decorator includes methods for numeric calculations, a generalised moments <code>kthmoment</code> function and a generalised expectation method <code>genExp</code>. All methods can be viewed using <code><a href="../../reference/CoreStatistics.html">?CoreStatistics</a></code>. In distr6 we have a strict design principle that only analytic results should be provided as methods in distributions, i.e. we only return results for which we know the output is 100% accurate. The <code>CoreStatistics</code> decorator allows you to return numeric results when analytic ones aren’t available. For example,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Weibull.html">Weibull</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Error as the characteristic function doesn't exist</span>
-<span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">w</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Weibull is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Weibull(scale = 1, shape = 1)</span>
-
-<span class="co"># Warning as numerical integration used</span>
-<span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="co">#&gt; [1] 0.0384616+0.1923076i</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Weibull.html">Weibull</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Error as the characteristic function doesn't exist</span></span>
+<span><span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span></span>
+<span><span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">w</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Weibull is now decorated with CoreStatistics</span></span>
+<span><span class="co">#&gt; Weibull(scale = 1, shape = 1)</span></span>
+<span></span>
+<span><span class="co"># Warning as numerical integration used</span></span>
+<span><span class="va">w</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span></span>
+<span><span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span></span>
+<span><span class="co">#&gt; [1] 0.0384616+0.1923076i</span></span></code></pre></div>
 <p>The decorator also introduces generalised moment and expectation methods. The help documentation for these <code>?kthmoment</code> and <code>?genExp</code> give a full overview to these methods, but both are very useful for modelling, inference and deriving other numeric results.</p>
 </div>
 <div class="section level3">
@@ -236,23 +236,23 @@
 </h3>
 <p>The ExoticStatistics decorator includes more complex numeric methods as well as survival, hazard and cumulative hazard that may or may not be analytic expressions (depending what is available in the distribution object). Once again all the methods added by this decorator can be viewed using <code><a href="../../reference/ExoticStatistics.html">?ExoticStatistics</a></code>. For example,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Error as the characteristic function doesn't exist</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Normal is now decorated with ExoticStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
-
-<span class="co"># No warning as an analytic expression using pdf and cdf are used</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1.525135</span>
-
-<span class="co"># Warning as numeric calculations are used</span>
-<span class="va">N</span><span class="op">$</span><span class="fu">pdfPNorm</span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">4</span><span class="op">)</span>
-<span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span>
-<span class="co">#&gt; [1] 0.3755628</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Error as the characteristic function doesn't exist</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</span></span>
+<span><span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Normal is now decorated with ExoticStatistics</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span>
+<span></span>
+<span><span class="co"># No warning as an analytic expression using pdf and cdf are used</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="fu">hazard</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.525135</span></span>
+<span></span>
+<span><span class="co"># Warning as numeric calculations are used</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="fu">pdfPNorm</span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Results from numeric calculations are approximate only. Better results may be available.</span></span>
+<span><span class="co">#&gt; [1] 0.3755628</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="functionimputation">FunctionImputation<a class="anchor" aria-label="anchor" href="#functionimputation"></a>
@@ -266,16 +266,16 @@
 <p>There are two main ways to decorate distributions in distr6, either in construction or after construction. We show these by example:</p>
 <p>In Construction</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"CoreStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="st">"CoreStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span>
+<span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>decorators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, <span class="st">"ExoticStatistics"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span></code></pre></div>
 <p>After Construction</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span>
-<span class="co">#&gt; Normal is now decorated with CoreStatistics</span>
-<span class="co">#&gt; Norm(mean = 0, var = 1)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/decorate.html">decorate</a></span><span class="op">(</span><span class="va">N</span>, <span class="st">"CoreStatistics"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Normal is now decorated with CoreStatistics</span></span>
+<span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span></code></pre></div>
 <p>And that’s all there is to it! If you forget which decorators are available, just run <code><a href="../../reference/listDecorators.html">listDecorators()</a></code>, or <code>listDecorators(simplify = FALSE)</code> if you want to see which methods they include at the same time.</p>
 </div>
 <div class="section level2">
@@ -311,7 +311,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

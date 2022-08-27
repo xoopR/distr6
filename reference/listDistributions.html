@@ -148,7 +148,7 @@ traits, implemented package, and tags.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">listDistributions</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">listDistributions</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -176,7 +176,7 @@ otherwise returns distribution names as characters.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">listDistributions</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName    Type ValueSupport  VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:         Arc                 Arcsine       ℝ   continuous   univariate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:        Bern               Bernoulli      ℕ0     discrete   univariate</span>
@@ -273,9 +273,9 @@ otherwise returns distribution names as characters.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 45:      stats         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 46:          -         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Filter list</span></span>
-<span class="r-in"><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VariateForm <span class="op">=</span> <span class="st">"univariate"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Filter list</span></span></span>
+<span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VariateForm <span class="op">=</span> <span class="st">"univariate"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName Type ValueSupport VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:         Arc                 Arcsine    ℝ   continuous  univariate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:        Bern               Bernoulli   ℕ0     discrete  univariate</span>
@@ -364,9 +364,9 @@ otherwise returns distribution names as characters.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 41:      stats         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 42:          -         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Filter is case-insensitive</span></span>
-<span class="r-in"><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Filter is case-insensitive</span></span></span>
+<span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ShortName        ClassName Type ValueSupport  VariateForm    Package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:       Bern        Bernoulli   ℕ0     discrete   univariate      stats</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:      Binom         Binomial   ℕ0     discrete   univariate      stats</span>
@@ -399,9 +399,9 @@ otherwise returns distribution names as characters.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13: limits</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14:       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15:       </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Multiple filters</span></span>
-<span class="r-in"><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multiple filters</span></span></span>
+<span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ShortName       ClassName Type ValueSupport  VariateForm    Package   Tags</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:     DUnif DiscreteUniform    ℤ     discrete   univariate extraDistr limits</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:       Log     Logarithmic   ℕ0     discrete   univariate extraDistr       </span>
@@ -420,7 +420,7 @@ otherwise returns distribution names as characters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

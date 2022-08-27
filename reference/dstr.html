@@ -148,9 +148,9 @@ or <a href="VectorDistribution.html">VectorDistribution</a> (with <code>dstrs</c
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dstr</span><span class="op">(</span><span class="va">d</span>, <span class="va">...</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>, decorators <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">dstrs</span><span class="op">(</span><span class="va">d</span>, pars <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dstr</span><span class="op">(</span><span class="va">d</span>, <span class="va">...</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>, decorators <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dstrs</span><span class="op">(</span><span class="va">d</span>, pars <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -178,45 +178,45 @@ Passed to distribution constructor.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Construct standard Normal and  distribution</span></span>
-<span class="r-in"><span class="fu">dstr</span><span class="op">(</span><span class="st">"Norm"</span><span class="op">)</span> <span class="co"># ShortName</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Construct standard Normal and  distribution</span></span></span>
+<span class="r-in"><span><span class="fu">dstr</span><span class="op">(</span><span class="st">"Norm"</span><span class="op">)</span> <span class="co"># ShortName</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Norm(mean = 0, var = 1) </span>
-<span class="r-in"><span class="fu">dstr</span><span class="op">(</span><span class="st">"Normal"</span><span class="op">)</span> <span class="co"># ClassName</span></span>
+<span class="r-in"><span><span class="fu">dstr</span><span class="op">(</span><span class="st">"Normal"</span><span class="op">)</span> <span class="co"># ClassName</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Norm(mean = 0, var = 1) </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Construct Binomial(5, 0.1)</span></span>
-<span class="r-in"><span class="fu">dstr</span><span class="op">(</span><span class="st">"Binomial"</span>, size <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Construct Binomial(5, 0.1)</span></span></span>
+<span class="r-in"><span><span class="fu">dstr</span><span class="op">(</span><span class="st">"Binomial"</span>, size <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom(prob = 0.1, size = 5) </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Construct decorated Gamma(2, 1)</span></span>
-<span class="r-in"><span class="fu">dstr</span><span class="op">(</span><span class="st">"Gamma"</span>, shape <span class="op">=</span> <span class="fl">2</span>, rate <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">     decorators <span class="op">=</span> <span class="st">"ExoticStatistics"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Construct decorated Gamma(2, 1)</span></span></span>
+<span class="r-in"><span><span class="fu">dstr</span><span class="op">(</span><span class="st">"Gamma"</span>, shape <span class="op">=</span> <span class="fl">2</span>, rate <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>     decorators <span class="op">=</span> <span class="st">"ExoticStatistics"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma(rate = 1, shape = 2) </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Or with a list</span></span>
-<span class="r-in"><span class="fu">dstr</span><span class="op">(</span><span class="st">"Gamma"</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">2</span>, rate <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or with a list</span></span></span>
+<span class="r-in"><span><span class="fu">dstr</span><span class="op">(</span><span class="st">"Gamma"</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">2</span>, rate <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gamma(rate = 4, shape = 2) </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Construct vector with dstrs</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Binomial and Gamma with default parameters</span></span>
-<span class="r-in"><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Construct vector with dstrs</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Binomial and Gamma with default parameters</span></span></span>
+<span class="r-in"><span><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom Gamma </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Binomial with set parameters and Gamma with</span></span>
-<span class="r-in"><span class="co">#  default parameters</span></span>
-<span class="r-in"><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Binomial with set parameters and Gamma with</span></span></span>
+<span class="r-in"><span><span class="co">#  default parameters</span></span></span>
+<span class="r-in"><span><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom Gamma </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Binomial and Gamma with set parameters</span></span>
-<span class="r-in"><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,</span>
-<span class="r-in">     <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Binomial and Gamma with set parameters</span></span></span>
+<span class="r-in"><span><span class="fu">dstrs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Binom"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom Gamma </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Multiple Binomials</span></span>
-<span class="r-in"><span class="fu">dstrs</span><span class="op">(</span><span class="st">"Binom"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multiple Binomials</span></span></span>
+<span class="r-in"><span><span class="fu">dstrs</span><span class="op">(</span><span class="st">"Binom"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Binom1 Binom2 ... Binom4 Binom5 </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -231,7 +231,7 @@ Passed to distribution constructor.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

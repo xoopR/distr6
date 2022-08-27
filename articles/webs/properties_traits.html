@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Properties and Traits</h1>
             
-            <h4 data-toc-skip class="date">2022-06-18</h4>
+            <h4 data-toc-skip class="date">2022-08-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/properties_traits.rmd" class="external-link"><code>vignettes/webs/properties_traits.rmd</code></a></small>
       <div class="hidden name"><code>properties_traits.rmd</code></div>
@@ -200,27 +200,27 @@
 <p>In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of “continuous”, “discrete” or “mixture”, this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then ‘0’ is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">next tutorial</a>). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).</p>
 <p>To view all the traits of the Normal distribution, call the method <code>traits()</code>,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">N</span><span class="op">$</span><span class="va">traits</span>
-<span class="co">#&gt; $valueSupport</span>
-<span class="co">#&gt; [1] "continuous"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $variateForm</span>
-<span class="co">#&gt; [1] "univariate"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $type</span>
-<span class="co">#&gt; ℝ</span>
-
-<span class="co"># You can also do the above in one line</span>
-<span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">traits</span>
-<span class="co">#&gt; $valueSupport</span>
-<span class="co">#&gt; [1] "continuous"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $variateForm</span>
-<span class="co">#&gt; [1] "univariate"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $type</span>
-<span class="co">#&gt; ℝ</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="va">traits</span></span>
+<span><span class="co">#&gt; $valueSupport</span></span>
+<span><span class="co">#&gt; [1] "continuous"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $variateForm</span></span>
+<span><span class="co">#&gt; [1] "univariate"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $type</span></span>
+<span><span class="co">#&gt; ℝ</span></span>
+<span></span>
+<span><span class="co"># You can also do the above in one line</span></span>
+<span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">traits</span></span>
+<span><span class="co">#&gt; $valueSupport</span></span>
+<span><span class="co">#&gt; [1] "continuous"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $variateForm</span></span>
+<span><span class="co">#&gt; [1] "univariate"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $type</span></span>
+<span><span class="co">#&gt; ℝ</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="properties">Properties<a class="anchor" aria-label="anchor" href="#properties"></a>
@@ -231,30 +231,30 @@
 <p>Symmetry is one of ‘symmetric’ or ‘asymmetric’ and is an informal way of identifying if the pdf of the distribution is symmetric about a single point (the median). Informally, the distribution support is the set of values that produce a non-zero results when supplied to the pdf.</p>
 <p>To view properties in distr6, we use the <code>properties()</code> method</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">properties</span>
-<span class="co">#&gt; $support</span>
-<span class="co">#&gt; ℝ </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $symmetry</span>
-<span class="co">#&gt; [1] "symmetric"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $kurtosis</span>
-<span class="co">#&gt; [1] "mesokurtic"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $skewness</span>
-<span class="co">#&gt; [1] "no skew"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">properties</span></span>
+<span><span class="co">#&gt; $support</span></span>
+<span><span class="co">#&gt; ℝ </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $symmetry</span></span>
+<span><span class="co">#&gt; [1] "symmetric"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $kurtosis</span></span>
+<span><span class="co">#&gt; [1] "mesokurtic"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $skewness</span></span>
+<span><span class="co">#&gt; [1] "no skew"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="other-distribution-variables">Other Distribution Variables<a class="anchor" aria-label="anchor" href="#other-distribution-variables"></a>
 </h2>
 <p>There are three other variables that can be accessed from a distribution. Once again a variable differs from a method in that it relates to the class and is called without parentheses. These are respectively <code>name</code>, <code>short_name</code> and <code>description</code>, hopefully their output is intuitive</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span><span class="op">$</span><span class="va">name</span>
-<span class="co">#&gt; [1] "Normal"</span>
-<span class="va">N</span><span class="op">$</span><span class="va">short_name</span>
-<span class="co">#&gt; [1] "Norm"</span>
-<span class="va">N</span><span class="op">$</span><span class="va">description</span>
-<span class="co">#&gt; [1] "Normal Probability Distribution."</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="va">name</span></span>
+<span><span class="co">#&gt; [1] "Normal"</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="va">short_name</span></span>
+<span><span class="co">#&gt; [1] "Norm"</span></span>
+<span><span class="va">N</span><span class="op">$</span><span class="va">description</span></span>
+<span><span class="co">#&gt; [1] "Normal Probability Distribution."</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -280,7 +280,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

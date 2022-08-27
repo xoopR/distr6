@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multivariate Distributions</h1>
             
-            <h4 data-toc-skip class="date">2022-06-18</h4>
+            <h4 data-toc-skip class="date">2022-08-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/multivariates.rmd" class="external-link"><code>vignettes/webs/multivariates.rmd</code></a></small>
       <div class="hidden name"><code>multivariates.rmd</code></div>
@@ -194,36 +194,36 @@
 </h2>
 <p>Construction of a multivariate distribution is identical to a univariate distribution, except that a vector input is likely to be required for one of the parameters. In keeping with our running Normal example, we will now use the Multivariate Normal distribution.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">MN</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="co"># This is in fact the default</span>
-<span class="co">#&gt; MultiNorm(cov = c(1, 0, 0, 1), mean = c(0, 0))</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">MN</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="co"># This is in fact the default</span></span>
+<span><span class="co">#&gt; MultiNorm(cov = c(1, 0, 0, 1), mean = c(0, 0))</span></span></code></pre></div>
 <p>Notice how this is almost identical to constructing a univariate Normal distribution. We even allow multiple parameterisations</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; MultiNorm(mean = c(0, 0), prec = c(1, 0, 0, 1))</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="../../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; MultiNorm(mean = c(0, 0), prec = c(1, 0, 0, 1))</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="dpqr">d/p/q/r<a class="anchor" aria-label="anchor" href="#dpqr"></a>
 </h2>
 <p>The biggest difference between univariate and multivariate distributions is in how arguments are passed to the d/p/q/r methods. This differs slightly from R stats. For example to evaluate the pdf of the multinomial distribution at (1,2) in R stats we would run</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Multinom.html" class="external-link">dmultinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.384</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Multinom.html" class="external-link">dmultinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.384</span></span></code></pre></div>
 <p>Whereas in distr6, each point is its own argument</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va"><a href="../../reference/Multinomial.html">Multinomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.384</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va"><a href="../../reference/Multinomial.html">Multinomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.384</span></span></code></pre></div>
 <p>There is a very important reason for this: vectorisation. In R stats there is no way to generate multiple points from a multivariate distribution, whereas in distr6…</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">MN</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.0130642333 0.0002392798</span>
-<span class="va">MN</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt;           V1          V2</span>
-<span class="co">#&gt; 1: 1.3709584 -0.56469817</span>
-<span class="co">#&gt; 2: 0.3631284  0.63286260</span>
-<span class="co">#&gt; 3: 0.4042683 -0.10612452</span>
-<span class="co">#&gt; 4: 1.5115220 -0.09465904</span>
-<span class="co">#&gt; 5: 2.0184237 -0.06271410</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">MN</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.0130642333 0.0002392798</span></span>
+<span><span class="va">MN</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           V1          V2</span></span>
+<span><span class="co">#&gt; 1: 1.3709584 -0.56469817</span></span>
+<span><span class="co">#&gt; 2: 0.3631284  0.63286260</span></span>
+<span><span class="co">#&gt; 3: 0.4042683 -0.10612452</span></span>
+<span><span class="co">#&gt; 4: 1.5115220 -0.09465904</span></span>
+<span><span class="co">#&gt; 5: 2.0184237 -0.06271410</span></span></code></pre></div>
 <p>Note: <code>cdf()</code> and <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code> are often omitted from multivariate distributions n distr6 as no closed form analytic expression exists.</p>
 </div>
 <div class="section level2">
@@ -250,7 +250,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

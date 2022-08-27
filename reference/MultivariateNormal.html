@@ -302,12 +302,12 @@ doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.</p>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.
 Number of variables cannot be changed after construction.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,
-  cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,
-  prec <span class="op">=</span> <span class="cn">NULL</span>,
-  decorators <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  prec <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  decorators <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -344,7 +344,7 @@ Decorators to add to the distribution during construction.</p></dd>
 $$E_X(X) = \sum p_X(x)*x$$
 with an integration analogue for continuous distributions.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -362,7 +362,7 @@ with an integration analogue for continuous distributions.</p><div class="sectio
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
 maxima).</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mode</span><span class="op">(</span>which <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mode</span><span class="op">(</span>which <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -383,7 +383,7 @@ $$var_X = E[X^2] - E[X]^2$$
 where \(E_X\) is the expectation of distribution X. If the distribution is multivariate the
 covariance matrix is returned.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">variance</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">variance</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -402,7 +402,7 @@ $$- \sum (f_X)log(f_X)$$
 where \(f_X\) is the pdf of distribution X, with an integration analogue for
 continuous distributions.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">entropy</span><span class="op">(</span>base <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">entropy</span><span class="op">(</span>base <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -425,7 +425,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 $$mgf_X(t) = E_X[exp(xt)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mgf</span><span class="op">(</span><span class="va">t</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">mgf</span><span class="op">(</span><span class="va">t</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -448,7 +448,7 @@ t integer to evaluate function at.</p></dd>
 $$cf_X(t) = E_X[exp(xti)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="va">t</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">cf</span><span class="op">(</span><span class="va">t</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -471,7 +471,7 @@ t integer to evaluate function at.</p></dd>
 $$pgf_X(z) = E_X[exp(z^x)]$$
 where X is the distribution and \(E_X\) is the expectation of the distribution X.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">pgf</span><span class="op">(</span><span class="va">z</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">pgf</span><span class="op">(</span><span class="va">z</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -492,7 +492,7 @@ z integer to evaluate probability generating function at.</p></dd>
 <h3 id="method-getparametervalue-">Method <code>getParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-getparametervalue-"></a></h3>
 <p>Returns the value of the supplied parameter.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="va">id</span>, error <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="va">id</span>, error <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -514,12 +514,12 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 <h3 id="method-setparametervalue-">Method <code>setParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-setparametervalue-"></a></h3>
 <p>Sets the value(s) of the given parameter(s).</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>
-  <span class="va">...</span>,
-  lst <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,
-  error <span class="op">=</span> <span class="st">"warn"</span>,
-  resolveConflicts <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  lst <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>  error <span class="op">=</span> <span class="st">"warn"</span>,</span>
+<span>  resolveConflicts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -553,7 +553,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MultivariateNormal</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -581,7 +581,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
