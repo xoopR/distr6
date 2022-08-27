@@ -101,6 +101,9 @@ Suggests:
     R62S3,
     rmarkdown,
     testthat
+Remotes:
+    xoopR/set6,
+    xoopR/param6
 LinkingTo:
     Rcpp
 VignetteBuilder:
