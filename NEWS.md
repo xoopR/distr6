@@ -1,3 +1,7 @@
+# distr6 1.6.12
+
+* Fix minor bug causing decorators not to be carried forward when using `rep`
+
 # distr6 1.6.10
 
 * Fixed bug in Matdist where d/p/q/r were transposed incorrectly
