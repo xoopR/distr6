@@ -1,6 +1,7 @@
 # distr6 1.6.12
 
 * Fix minor bug causing decorators not to be carried forward when using `rep`
+* Fix bug causing vector distributions not to be able to be extracted
 
 # distr6 1.6.10
 
