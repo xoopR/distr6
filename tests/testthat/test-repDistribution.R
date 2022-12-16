@@ -20,3 +20,9 @@ test_that("rep kernel", {
   expect_silent(rep(Epanechnikov$new(), 5))
   expect_silent(rep(UniformKernel$new(), 2, "prod"))
 })
+
+
+test_that("rep keeps decorators", {
+  r <- dstr("Exp", decorators = c("CoreStatistics", "ExoticStatistics"))
+  expect_equal(rep(r, 2)$decorators, c("CoreStatistics", "ExoticStatistics"))
+})
