@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="wrappers_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Wrappers</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/wrappers.rmd" class="external-link"><code>vignettes/webs/wrappers.rmd</code></a></small>
       <div class="hidden name"><code>wrappers.rmd</code></div>
@@ -188,23 +188,38 @@
 
     
     
-<p>The <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html">previous tutorial</a> introduced decorators in distr6. These are used to add numeric and more complex methods to the distribution interface. Wrappers are the next big distr6 feature and serve a similar purpose.</p>
+<p>The <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html">previous
+tutorial</a> introduced decorators in distr6. These are used to add
+numeric and more complex methods to the distribution interface. Wrappers
+are the next big distr6 feature and serve a similar purpose.</p>
 <div class="section level2">
 <h2 id="wrappers">Wrappers<a class="anchor" aria-label="anchor" href="#wrappers"></a>
 </h2>
-<p>Just like decorators, wrappers are a design pattern commonly used in object-oriented programming. For people interested in these principles, we are specifically using the ‘Adapter’ pattern from Design Patterns <span class="citation">(Gamma et al. 1994)</span>. Instead of simply adding methods, as decorators do, wrappers also slightly alter the interface of the object and usually result in a slightly different object being created. For example,</p>
+<p>Just like decorators, wrappers are a design pattern commonly used in
+object-oriented programming. For people interested in these principles,
+we are specifically using the ‘Adapter’ pattern from Design Patterns
+<span class="citation">(Gamma et al. 1994)</span>. Instead of simply
+adding methods, as decorators do, wrappers also slightly alter the
+interface of the object and usually result in a slightly different
+object being created. For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Normal"        "SDistribution" "Distribution"  "R6"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "TruncatedDistribution" "DistributionWrapper"   "Distribution"         </span></span>
 <span><span class="co">#&gt; [4] "R6"</span></span></code></pre></div>
-<p>See how the Normal distribution becomes an object of class <code>TruncatedDistribution</code> which in itself is of class <code>DistributionWrapper</code>. This tells the machine to expect a slightly different interface but it still recognises the original Normal distribution that is being wrapped.</p>
+<p>See how the Normal distribution becomes an object of class
+<code>TruncatedDistribution</code> which in itself is of class
+<code>DistributionWrapper</code>. This tells the machine to expect a
+slightly different interface but it still recognises the original Normal
+distribution that is being wrapped.</p>
 </div>
 <div class="section level2">
 <h2 id="accessing-wrapped-models">Accessing Wrapped Models<a class="anchor" aria-label="anchor" href="#accessing-wrapped-models"></a>
 </h2>
-<p>All wrappers share a common method <code>wrappedModels()</code>. More often than not this is used internally but it’s still useful if you want to remind yourself of the original wrapped model.</p>
+<p>All wrappers share a common method <code>wrappedModels()</code>. More
+often than not this is used internally but it’s still useful if you want
+to remind yourself of the original wrapped model.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $Norm</span></span>
@@ -213,7 +228,8 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Norm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span></code></pre></div>
-<p>A slightly quicker approach is to use the <code>description</code> variable which is updated each time a distribution is wrapped</p>
+<p>A slightly quicker approach is to use the <code>description</code>
+variable which is updated each time a distribution is wrapped</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">description</span></span>
 <span><span class="co">#&gt; [1] "Normal Probability Distribution. Truncated between -1 and 1."</span></span>
@@ -227,19 +243,32 @@
 <div class="section level2">
 <h2 id="wrappers-in-distr6">Wrappers in distr6<a class="anchor" aria-label="anchor" href="#wrappers-in-distr6"></a>
 </h2>
-<p>There are currently 8 wrappers in distr6, these can be listed with <code><a href="../../reference/listWrappers.html">listWrappers()</a></code>. They can be sectioned into two groups: composite wrappers and transformer wrappers. Composite wrappers create composite distributions, i.e. distributions that use internal functions to combine multiple distributions. Transformation wrappers perform some form of transformation on the distribution, e.g. scaling the distribution to a given mean or variance. We will look at three of these in detail and hopefully understanding the others will follow intuitively.</p>
-<p>Note: The Convolution and Scale wrappers are still in an experimental lifecycle, meaning that we are aware they may be sub-optimal or bugs may be present.</p>
+<p>There are currently 8 wrappers in distr6, these can be listed with
+<code><a href="../../reference/listWrappers.html">listWrappers()</a></code>. They can be sectioned into two groups:
+composite wrappers and transformer wrappers. Composite wrappers create
+composite distributions, i.e. distributions that use internal functions
+to combine multiple distributions. Transformation wrappers perform some
+form of transformation on the distribution, e.g. scaling the
+distribution to a given mean or variance. We will look at three of these
+in detail and hopefully understanding the others will follow
+intuitively.</p>
+<p>Note: The Convolution and Scale wrappers are still in an experimental
+lifecycle, meaning that we are aware they may be sub-optimal or bugs may
+be present.</p>
 <div class="section level3">
 <h3 id="truncateddistribution">TruncatedDistribution<a class="anchor" aria-label="anchor" href="#truncateddistribution"></a>
 </h3>
-<p>This is perhaps the simplest wrapper in distr6. It can be constructed in one of two ways:</p>
+<p>This is perhaps the simplest wrapper in distr6. It can be constructed
+in one of two ways:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va"><a href="../../reference/TruncatedDistribution.html">TruncatedDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1, trunc__lower = -2, trunc__upper = 2)</span></span>
 <span><span class="fu"><a href="../../reference/truncate.html">truncate</a></span><span class="op">(</span><span class="va">N</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; TruncNorm(Norm__mean = 0, Norm__var = 1, trunc__lower = -2, trunc__upper = 2)</span></span></code></pre></div>
-<p>In both cases, the result has to be saved to truncate the distribution as these are not methods in the Normal distribution class, i.e. to use the truncated normal distribution:</p>
+<p>In both cases, the result has to be saved to truncate the
+distribution as these are not methods in the Normal distribution class,
+i.e. to use the truncated normal distribution:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># This is a good example of when piping is clean and effective</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
@@ -247,7 +276,9 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">tn</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "TruncatedDistribution" "DistributionWrapper"   "Distribution"         </span></span>
 <span><span class="co">#&gt; [4] "R6"</span></span></code></pre></div>
-<p>In the example above we are truncating the Normal distribution between the limits -2 and 2, this updates the distribution support accordingly and re-distributes the weights of the pdf and cdf</p>
+<p>In the example above we are truncating the Normal distribution
+between the limits -2 and 2, this updates the distribution support
+accordingly and re-distributes the weights of the pdf and cdf</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tn</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
@@ -257,7 +288,12 @@
 <div class="section level3">
 <h3 id="productdistribution">ProductDistribution<a class="anchor" aria-label="anchor" href="#productdistribution"></a>
 </h3>
-<p>A product distribution is a composite distribution in which two or more independent distributions are combined into a single joint distribution. Details about the maths behind this can be found in <code><a href="../../reference/ProductDistribution.html">?ProductDistribution</a></code>. For now we use this as an example of the composite distributions in distr6. Say we want the product distribution of the binomial and normal distributions,</p>
+<p>A product distribution is a composite distribution in which two or
+more independent distributions are combined into a single joint
+distribution. Details about the maths behind this can be found in
+<code><a href="../../reference/ProductDistribution.html">?ProductDistribution</a></code>. For now we use this as an example of
+the composite distributions in distr6. Say we want the product
+distribution of the binomial and normal distributions,</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">2</span>, var <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
@@ -269,7 +305,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "ProductDistribution" "VectorDistribution"  "DistributionWrapper"</span></span>
 <span><span class="co">#&gt; [4] "Distribution"        "R6"</span></span></code></pre></div>
-<p>Now we can treat <code>P</code> like any other multivariate distribution</p>
+<p>Now we can treat <code>P</code> like any other multivariate
+distribution</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">P</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.0495556</span></span>
@@ -292,7 +329,11 @@
 <div class="section level3">
 <h3 id="mixturedistribution">MixtureDistribution<a class="anchor" aria-label="anchor" href="#mixturedistribution"></a>
 </h3>
-<p>A mixture distribution is a weighted sum of component distributions. By default the weights are assumed to follow the uniform distribution, i.e. the probability of each distribution is identical, but this can be edited. Below we take the mixture of Binomial, Normal and Exponential distributions.</p>
+<p>A mixture distribution is a weighted sum of component distributions.
+By default the weights are assumed to follow the uniform distribution,
+i.e. the probability of each distribution is identical, but this can be
+edited. Below we take the mixture of Binomial, Normal and Exponential
+distributions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
@@ -313,14 +354,23 @@
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>There are plenty other wrappers to explore, including vector distributions that combine distributions into one vector and array distributions that are a type of product distribution for k-dimensional distributions of a specific type. The tools learnt from this tutorial are all applicable to every other wrapper and we hope you find the rest intuitive to use. In the next and <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html">final tutorial</a> we conclude with running through how to construct your own custom distribution.</p>
+<p>There are plenty other wrappers to explore, including vector
+distributions that combine distributions into one vector and array
+distributions that are a type of product distribution for k-dimensional
+distributions of a specific type. The tools learnt from this tutorial
+are all applicable to every other wrapper and we hope you find the rest
+intuitive to use. In the next and <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html">final
+tutorial</a> we conclude with running through how to construct your own
+custom distribution.</p>
 </div>
 <div class="section level2 unnumbered">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-GoF">
-<p>Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994. “Design Patterns: Elements of Reusable Object-Oriented Software.” Addison-Wesley.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-GoF" class="csl-entry">
+Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994.
+<span>“Design Patterns: Elements of Reusable Object-Oriented
+Software.”</span> Addison-Wesley.
 </div>
 </div>
 </div>
@@ -343,7 +393,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

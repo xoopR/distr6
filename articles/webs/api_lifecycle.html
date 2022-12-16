@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="api_lifecycle_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>API Lifecycle</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/api_lifecycle.rmd" class="external-link"><code>vignettes/webs/api_lifecycle.rmd</code></a></small>
       <div class="hidden name"><code>api_lifecycle.rmd</code></div>
@@ -188,14 +188,27 @@
 
     
     
-<p>distr6 v1 is now live and most of the API is stable however some aspects are still ‘maturing’ or ‘experimental’. This means that whilst the core feature API, such as the distribution interface, is stable and is unlikely to change, other aspects such as specific decorators may be subject to future change. This page is used to detail the lifecycle of different parts of the distr6 package API. Note that this documents changes in the API and not the exact methodology, i.e. developments to the front-end UI. Please refer to <a href="https://www.tidyverse.org/lifecycle/" class="external-link">this website</a> for the tidyverse definitions of different lifecycle stages. For us these mean:</p>
+<p>distr6 v1 is now live and most of the API is stable however some
+aspects are still ‘maturing’ or ‘experimental’. This means that whilst
+the core feature API, such as the distribution interface, is stable and
+is unlikely to change, other aspects such as specific decorators may be
+subject to future change. This page is used to detail the lifecycle of
+different parts of the distr6 package API. Note that this documents
+changes in the API and not the exact methodology, i.e. developments to
+the front-end UI. Please refer to <a href="https://www.tidyverse.org/lifecycle/" class="external-link">this website</a> for the
+tidyverse definitions of different lifecycle stages. For us these
+mean:</p>
 <ol style="list-style-type: decimal">
 <li>
-<a href="#maturing-classes-and-methods">Maturing</a> - Functioning but the internal methodology needs tweaking, API is unlikely to change</li>
+<a href="#maturing-classes-and-methods">Maturing</a> - Functioning
+but the internal methodology needs tweaking, API is unlikely to
+change</li>
 <li>
-<a href="#maturing-classes-and-methods">Stable</a> - Functioning as expected and (hopefully) bug free</li>
+<a href="#maturing-classes-and-methods">Stable</a> - Functioning as
+expected and (hopefully) bug free</li>
 </ol>
-<p>The lists below use the headings name from the <a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions">reference page</a> of the website.</p>
+<p>The lists below use the headings name from the <a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions">reference
+page</a> of the website.</p>
 <div class="section level2">
 <h2 id="maturing-classes-and-methods">Maturing Classes and Methods <img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"><a class="anchor" aria-label="anchor" href="#maturing-classes-and-methods"></a>
 </h2>
@@ -209,15 +222,22 @@
 <ul>
 <li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-distributions">Distributions</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-kernels">Kernels</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical">Mathematical and Statistical</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-distribution-accessors">Distribution Accessors</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-mathematical-and-statistical">Mathematical
+and Statistical</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-distribution-accessors">Distribution
+Accessors</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-decorators">Decorators</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-decorators">Wrappers, except Scale and Convolution</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions">Univariate Discrete Distributions</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-continuous-distributions">Univariate Continuous Distributions</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions">Multivariate Distributions</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-decorators">Wrappers,
+except Scale and Convolution</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-discrete-distributions">Univariate
+Discrete Distributions</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-univariate-continuous-distributions">Univariate
+Continuous Distributions</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-multivariate-distributions">Multivariate
+Distributions</a></li>
 <li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-assertions">Assertions</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions">Helper Functions</a></li>
+<li><a href="https://alan-turing-institute.github.io/distr6/reference/#section-helper-functions">Helper
+Functions</a></li>
 </ul>
 </div>
   </div>
@@ -239,7 +259,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

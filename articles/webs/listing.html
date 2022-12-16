@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="listing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Listing</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/listing.rmd" class="external-link"><code>vignettes/webs/listing.rmd</code></a></small>
       <div class="hidden name"><code>listing.rmd</code></div>
@@ -188,16 +188,33 @@
 
     
     
-<p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">previous tutorial</a> we looked at multivariate distributions and how to use the d/p/q/r functions to evaluate multiple points of these. This tutorial concludes the ‘Basic’ set of tutorials with the use of ‘listing’ in distr6.</p>
+<p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html">previous
+tutorial</a> we looked at multivariate distributions and how to use the
+d/p/q/r functions to evaluate multiple points of these. This tutorial
+concludes the ‘Basic’ set of tutorials with the use of ‘listing’ in
+distr6.</p>
 <div class="section level2">
 <h2 id="listing">Listing<a class="anchor" aria-label="anchor" href="#listing"></a>
 </h2>
-<p>Currently distr6 includes 5 listing functions: <code>listDistributions(), listDecorators(), listWrappers(), listKernels(), listSpecialSets()</code>. These are essentially ways of listing the R6 classes implemented in the R6 API. We will only discuss the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code> function here as the others cover classes that we haven’t discussed yet, but hopefully are intuitive to you and have a similar interface to <code><a href="../../reference/listDistributions.html">listDistributions()</a></code>.</p>
+<p>Currently distr6 includes 5 listing functions:
+<code>listDistributions(), listDecorators(), listWrappers(), listKernels(), listSpecialSets()</code>.
+These are essentially ways of listing the R6 classes implemented in the
+R6 API. We will only discuss the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code>
+function here as the others cover classes that we haven’t discussed yet,
+but hopefully are intuitive to you and have a similar interface to
+<code><a href="../../reference/listDistributions.html">listDistributions()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="listdistributions">listDistributions<a class="anchor" aria-label="anchor" href="#listdistributions"></a>
 </h2>
-<p><code><a href="../../reference/listDistributions.html">listDistributions()</a></code> is used to list every implemented probability distribution in distr6. The default parameters return a data.table of every implemented distribution including their traits and the package that their d/p/q/r methods are implemented in. For example a distribution with package <code>stats</code> means that the d/p/q/r methods interface the R stats functions whereas a distribution with package <code>distr6</code> means the methods are written in distr6. We’ve added the <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> method just to save space.</p>
+<p><code><a href="../../reference/listDistributions.html">listDistributions()</a></code> is used to list every implemented
+probability distribution in distr6. The default parameters return a
+data.table of every implemented distribution including their traits and
+the package that their d/p/q/r methods are implemented in. For example a
+distribution with package <code>stats</code> means that the d/p/q/r
+methods interface the R stats functions whereas a distribution with
+package <code>distr6</code> means the methods are written in distr6.
+We’ve added the <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> method just to save space.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span></span>
@@ -207,12 +224,14 @@
 <span><span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
 <span><span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
 <span><span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span></span></code></pre></div>
-<p>To see a simplified version of the list, add the <code>simplify = TRUE</code> argument</p>
+<p>To see a simplified version of the list, add the
+<code>simplify = TRUE</code> argument</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span></span>
 <span><span class="co">#&gt; [5] "Binomial"       "Categorical"</span></span></code></pre></div>
-<p>Finally this list can be filtered to help you find a distribution with specific traits, for example for a multivariate distribution</p>
+<p>Finally this list can be filtered to help you find a distribution
+with specific traits, for example for a multivariate distribution</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>variateform <span class="op">=</span> <span class="st">"multivariate"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName          ClassName    Type ValueSupport  VariateForm    Package</span></span>
@@ -248,7 +267,15 @@
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>In this tutorial we looked at the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code> function so that you don’t have to remember which are implemented in distr6. In this set of tutorials we covered the basics of constructing a (univariate) distribution, getting and setting parameters, evaluating statistical results and extending all this to multivariate distributions. The next set of tutorials cover more advanced functionality including decorators for numeric results, wrappers for composite distributions, custom distributions, S3 functionality, and symbolic sets.</p>
+<p>In this tutorial we looked at the <code><a href="../../reference/listDistributions.html">listDistributions()</a></code>
+function so that you don’t have to remember which are implemented in
+distr6. In this set of tutorials we covered the basics of constructing a
+(univariate) distribution, getting and setting parameters, evaluating
+statistical results and extending all this to multivariate
+distributions. The next set of tutorials cover more advanced
+functionality including decorators for numeric results, wrappers for
+composite distributions, custom distributions, S3 functionality, and
+symbolic sets.</p>
 </div>
   </div>
 
@@ -269,7 +296,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

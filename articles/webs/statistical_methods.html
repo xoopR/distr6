@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="statistical_methods_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical Methods</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/statistical_methods.rmd" class="external-link"><code>vignettes/webs/statistical_methods.rmd</code></a></small>
       <div class="hidden name"><code>statistical_methods.rmd</code></div>
@@ -188,15 +188,30 @@
 
     
     
-<p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html">previous tutorial</a> we constructed a Normal distribution and accessed and updated its parameters for a variety of parameterisations. In this tutorial we cover how to access mathematical and statistical methods of the Normal distribution including the <code>dnorm/pnorm/qnorm/rnorm</code> equivalents in distr6.</p>
+<p>In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html">previous
+tutorial</a> we constructed a Normal distribution and accessed and
+updated its parameters for a variety of parameterisations. In this
+tutorial we cover how to access mathematical and statistical methods of
+the Normal distribution including the
+<code>dnorm/pnorm/qnorm/rnorm</code> equivalents in distr6.</p>
 <div class="section level2">
 <h2 id="dpqr">d/p/q/r<a class="anchor" aria-label="anchor" href="#dpqr"></a>
 </h2>
-<p>The advantage of distr6 over R stats is that once a distribution is constructed, it’s very easy to find properties and results from the distribution by changing very little. For simple distributions like the Normal distribution, this may not seem like a big difference, but for more complicated ones with multiple parameters, you’ll find yourself saving a lot of time!</p>
-<p>Once again we start with constructing the Standard Normal distribution</p>
+<p>The advantage of distr6 over R stats is that once a distribution is
+constructed, it’s very easy to find properties and results from the
+distribution by changing very little. For simple distributions like the
+Normal distribution, this may not seem like a big difference, but for
+more complicated ones with multiple parameters, you’ll find yourself
+saving a lot of time!</p>
+<p>Once again we start with constructing the Standard Normal
+distribution</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>For simplicity, we refer to both the probability density functions of continuous distributions and probability mass functions of discrete distributions, as the “pdf” function. This is in line with R stats using “d” for “density”. The other statistical methods from R stats are referred to as “cdf”, “quantile” and “rand”, the same as in R stats:</p>
+<p>For simplicity, we refer to both the probability density functions of
+continuous distributions and probability mass functions of discrete
+distributions, as the “pdf” function. This is in line with R stats using
+“d” for “density”. The other statistical methods from R stats are
+referred to as “cdf”, “quantile” and “rand”, the same as in R stats:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="co"># Density evaluated at points '1' and '2'</span></span>
 <span><span class="co">#&gt; [1] 0.24197072 0.05399097</span></span>
@@ -210,7 +225,9 @@
 <div class="section level2">
 <h2 id="other-mathematical-and-statistical-methods">Other Mathematical and Statistical Methods<a class="anchor" aria-label="anchor" href="#other-mathematical-and-statistical-methods"></a>
 </h2>
-<p>We have seen in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html">first tutorial</a> how the <code>summary</code> method can be used to view quick statistics about a probability distribution, i.e.</p>
+<p>We have seen in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html">first
+tutorial</a> how the <code>summary</code> method can be used to view
+quick statistics about a probability distribution, i.e.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Normal Probability Distribution. </span></span>
@@ -233,7 +250,12 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Traits:      continuous; univariate</span></span>
 <span><span class="co">#&gt; Properties:  symmetric; mesokurtic; no skew</span></span></code></pre></div>
-<p>But all these statistics can be accessed individually as well. To see the full list of available methods view the ‘Statistical Methods’ section of the distribution help page, <code><a href="../../reference/Normal.html">?Normal</a></code>. All probability distributions have the same methods available if possible, i.e. If there is an analytic expression for a statistical result, then we provide it! Below are just a few examples</p>
+<p>But all these statistics can be accessed individually as well. To see
+the full list of available methods view the ‘Statistical Methods’
+section of the distribution help page, <code><a href="../../reference/Normal.html">?Normal</a></code>. All
+probability distributions have the same methods available if possible,
+i.e. If there is an analytic expression for a statistical result, then
+we provide it! Below are just a few examples</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
@@ -251,7 +273,11 @@
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>In this tutorial we looked at using the d/p/q/r functions in distr6 and accessing other statistical results. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html">next tutorial</a> we take a quick look at distribution properties and traits, whilst trying not to get into too big a discussion about object-oriented programming!</p>
+<p>In this tutorial we looked at using the d/p/q/r functions in distr6
+and accessing other statistical results. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html">next
+tutorial</a> we take a quick look at distribution properties and traits,
+whilst trying not to get into too big a discussion about object-oriented
+programming!</p>
 </div>
   </div>
 
@@ -272,7 +298,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

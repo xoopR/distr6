@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="create_wrapper_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Wrapper</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_wrapper.rmd" class="external-link"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
       <div class="hidden name"><code>create_wrapper.rmd</code></div>
@@ -191,12 +191,28 @@
 <div class="section level2">
 <h2 id="distributionwrapper-class">DistributionWrapper Class<a class="anchor" aria-label="anchor" href="#distributionwrapper-class"></a>
 </h2>
-<p>Wrappers may the hardest class to extend in distr6, simply due to the fact that there are no set rules for what can and can’t go in a wrapper. Every implemented wrapper inherits from the <code>DistributionWrapper</code> class which in turn inherits from <code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml diagram</a>). The <code>DistributionWrapper</code> class introduces its own constructor, the <code>wrappedModels</code> method and overloads the <code>setParameterValue</code> method. We will briefly discuss why these three methods are important to all implemented methods.</p>
+<p>Wrappers may the hardest class to extend in distr6, simply due to the
+fact that there are no set rules for what can and can’t go in a wrapper.
+Every implemented wrapper inherits from the
+<code>DistributionWrapper</code> class which in turn inherits from
+<code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml
+diagram</a>). The <code>DistributionWrapper</code> class introduces its
+own constructor, the <code>wrappedModels</code> method and overloads the
+<code>setParameterValue</code> method. We will briefly discuss why these
+three methods are important to all implemented methods.</p>
 <div class="section level3">
 <h3 id="the-constructor">The Constructor<a class="anchor" aria-label="anchor" href="#the-constructor"></a>
 </h3>
-<p>The <code>DistributionWrapper</code> constructor takes one named argument and has <code>...</code> for named arguments to passed to the <code>Distribution</code> constructor. The named argument is <code>distlist</code>, a list of distributions to wrap. Internally the constructor combines all <code>ParameterSet</code> from every distribution into one <code>ParameterSet</code> that the user can see and query.</p>
-<p>For example, say we use the <code>MixtureDistribution</code> wrapper on two Binomial distributions, see how the parameter names are automatically updated</p>
+<p>The <code>DistributionWrapper</code> constructor takes one named
+argument and has <code>...</code> for named arguments to passed to the
+<code>Distribution</code> constructor. The named argument is
+<code>distlist</code>, a list of distributions to wrap. Internally the
+constructor combines all <code>ParameterSet</code> from every
+distribution into one <code>ParameterSet</code> that the user can see
+and query.</p>
+<p>For example, say we use the <code>MixtureDistribution</code> wrapper
+on two Binomial distributions, see how the parameter names are
+automatically updated</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
@@ -212,10 +228,18 @@
 <div class="section level3">
 <h3 id="setparametervalue">setParameterValue<a class="anchor" aria-label="anchor" href="#setparametervalue"></a>
 </h3>
-<p>As the constructor may change the names of parameters, the <code>setParameterValue</code> is overloaded to ensure the correct <code>ParameterSet</code> from the corresponding distribution is updated. So given the example above, if a user wants to update the first Binomial distribution</p>
+<p>As the constructor may change the names of parameters, the
+<code>setParameterValue</code> is overloaded to ensure the correct
+<code>ParameterSet</code> from the corresponding distribution is
+updated. So given the example above, if a user wants to update the first
+Binomial distribution</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>Binom1__prob <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
-<p>And internally the parameter name is split at the underscore and updates the parameter of the first Binomial distribution, notice now that both the external representation of the combined <code>ParameterSet</code> is updated as well as the one in the internal model</p>
+<p>And internally the parameter name is split at the underscore and
+updates the parameter of the first Binomial distribution, notice now
+that both the external representation of the combined
+<code>ParameterSet</code> is updated as well as the one in the internal
+model</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               Id               Support   Value                    Tags</span></span>
@@ -235,17 +259,28 @@
 <div class="section level3">
 <h3 id="wrappedmodels">wrappedModels<a class="anchor" aria-label="anchor" href="#wrappedmodels"></a>
 </h3>
-<p>We saw above the use of <code>wrappedModels</code>, this is a simple accessor found in all implemented wrappers that ensure the underlying models can be accessed, which is usually required for the new methods in wrappers, which we will see more below.</p>
+<p>We saw above the use of <code>wrappedModels</code>, this is a simple
+accessor found in all implemented wrappers that ensure the underlying
+models can be accessed, which is usually required for the new methods in
+wrappers, which we will see more below.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="creating-a-wrapper">Creating a Wrapper<a class="anchor" aria-label="anchor" href="#creating-a-wrapper"></a>
 </h2>
-<p>Now we have a background of the <code>DistributionWrapper</code> class we can discuss actually creating a wrapper. As discussed in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html">wrappers tutorial</a>, there are multiple types of wrappers, each will be implemented slightly differently. Therefore we’re just going to look at one quick example from each example and point you to the source code for further examples.</p>
+<p>Now we have a background of the <code>DistributionWrapper</code>
+class we can discuss actually creating a wrapper. As discussed in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html">wrappers
+tutorial</a>, there are multiple types of wrappers, each will be
+implemented slightly differently. Therefore we’re just going to look at
+one quick example from each example and point you to the source code for
+further examples.</p>
 <div class="section level3">
 <h3 id="truncateddistribution">TruncatedDistribution<a class="anchor" aria-label="anchor" href="#truncateddistribution"></a>
 </h3>
-<p>An implemented wrapper should consist of two parts: the wrapper definition and the wrapper constructor. In the case of the <code>TruncatedDistribution</code>, a slightly abridged version looks like</p>
+<p>An implemented wrapper should consist of two parts: the wrapper
+definition and the wrapper constructor. In the case of the
+<code>TruncatedDistribution</code>, a slightly abridged version looks
+like</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">TruncatedDistribution</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"TruncatedDistribution"</span>, inherit <span class="op">=</span> <span class="va">DistributionWrapper</span>, lock_objects <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -275,20 +310,32 @@
 <span>                   type <span class="op">=</span> <span class="va">distribution</span><span class="op">$</span><span class="fu">type</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                   description <span class="op">=</span> <span class="va">description</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>All wrappers should pass the following to the parent-class constructor:</p>
+<p>All wrappers should pass the following to the parent-class
+constructor:</p>
 <ol style="list-style-type: decimal">
 <li>Name - New name after wrapping</li>
 <li>short_name - New short_name after wrapping</li>
 <li>distlist - The named list of distributions (even if just one)</li>
 <li>description - Optional, updated description after wrapping</li>
 </ol>
-<p>And then any other arguments that may be changed by wrapping, remember that any arguments passed to the <code>DistributionWrapper</code> constructor are in turn passed to the <code>Distribution</code> constructor, hence we can think of implemented wrappers as custom distributions. Read the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.rmd">custom distribution tutorial</a> for more information about the arguments passed to the <code>Distribution</code> constructor.</p>
-<p>Notice also that the new <code>pdf</code> and <code>cdf</code> methods reference the original model using the <code>wrappedModels</code> method. This will generally be the case with all wrappers.</p>
+<p>And then any other arguments that may be changed by wrapping,
+remember that any arguments passed to the
+<code>DistributionWrapper</code> constructor are in turn passed to the
+<code>Distribution</code> constructor, hence we can think of implemented
+wrappers as custom distributions. Read the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.rmd">custom
+distribution tutorial</a> for more information about the arguments
+passed to the <code>Distribution</code> constructor.</p>
+<p>Notice also that the new <code>pdf</code> and <code>cdf</code>
+methods reference the original model using the
+<code>wrappedModels</code> method. This will generally be the case with
+all wrappers.</p>
 </div>
 <div class="section level3">
 <h3 id="mixturedistribution">MixtureDistribution<a class="anchor" aria-label="anchor" href="#mixturedistribution"></a>
 </h3>
-<p>The <code>MixtureDistribution</code> wrapper is slightly different in that it takes a composition of multiple distributions and it adds a private variable</p>
+<p>The <code>MixtureDistribution</code> wrapper is slightly different in
+that it takes a composition of multiple distributions and it adds a
+private variable</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MixtureDistribution</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"MixtureDistribution"</span>, inherit <span class="op">=</span> <span class="va">DistributionWrapper</span>, lock_objects <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">MixtureDistribution</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="kw">function</span><span class="op">(</span><span class="va">distlist</span>, <span class="va">weights</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
@@ -315,12 +362,22 @@
 <span>                   support <span class="op">=</span> <span class="va">support</span>, valueSupport <span class="op">=</span> <span class="st">"mixture"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">MixtureDistribution</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"private"</span>,<span class="st">".weights"</span>,<span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Again this is a shortened version of the code. Note the following in the above</p>
+<p>Again this is a shortened version of the code. Note the following in
+the above</p>
 <ol style="list-style-type: decimal">
-<li>As multiple distributions are wrapped we first call <code>makeUniqueDistributions</code>, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem (<a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html">see here</a>).</li>
-<li>We add a private variable <code>.weights</code> which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.</li>
-<li>The type and support are updated to account for multiple distributions.</li>
-<li>All implemented wrappers inherit from <code>DistributionWrapper</code> and again <code>lock_objects = FALSE</code>
+<li>As multiple distributions are wrapped we first call
+<code>makeUniqueDistributions</code>, a helper function that ensures the
+IDs of the distributions are unique. This automatically clones all
+distributions passed to it to prevent the R6 copying problem (<a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html">see
+here</a>).</li>
+<li>We add a private variable <code>.weights</code> which is accessed in
+the pdf/cdf. In general we allow additional private variables and
+methods to be added to wrappers, but not public ones.</li>
+<li>The type and support are updated to account for multiple
+distributions.</li>
+<li>All implemented wrappers inherit from
+<code>DistributionWrapper</code> and again
+<code>lock_objects = FALSE</code>
 </li>
 </ol>
 </div>
@@ -329,9 +386,12 @@
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li>Implementing wrappers is similar to implementing a SDistribution or Kernel but generally more flexible</li>
-<li>We can add private methods/variables to a wrapper, but if possible, not public methods/variables</li>
-<li>Wrappers automatically add methods for accessing internally models and correctly getting/setting parameters</li>
+<li>Implementing wrappers is similar to implementing a SDistribution or
+Kernel but generally more flexible</li>
+<li>We can add private methods/variables to a wrapper, but if possible,
+not public methods/variables</li>
+<li>Wrappers automatically add methods for accessing internally models
+and correctly getting/setting parameters</li>
 </ol>
 </div>
 <div class="section level2">
@@ -362,7 +422,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

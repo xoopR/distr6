@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="create_decorator_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Decorator</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_decorator.rmd" class="external-link"><code>vignettes/webs/create_decorator.rmd</code></a></small>
       <div class="hidden name"><code>create_decorator.rmd</code></div>
@@ -191,18 +191,37 @@
 <div class="section level2">
 <h2 id="distributiondecorator-class">DistributionDecorator Class<a class="anchor" aria-label="anchor" href="#distributiondecorator-class"></a>
 </h2>
-<p>Implementing your own decorator is the easiest extension you can make to distr6, the only difficulty arises in determining what should go in your decorator. If you plan on making a pull-request with a new decorator to distr6 then we would expect the following:</p>
+<p>Implementing your own decorator is the easiest extension you can make
+to distr6, the only difficulty arises in determining what should go in
+your decorator. If you plan on making a pull-request with a new
+decorator to distr6 then we would expect the following:</p>
 <ol style="list-style-type: decimal">
-<li>A description of your decorator including what problem it solves and why it is required</li>
-<li>A description of methodology including the choice of numerical methods and a description of any packages depended on including how their code is written (e.g. have you seen their code, is it in R or C, are there references).</li>
-<li>A decorator that adds at least three methods. We do not want a clutter of decorators in distr6.</li>
+<li>A description of your decorator including what problem it solves and
+why it is required</li>
+<li>A description of methodology including the choice of numerical
+methods and a description of any packages depended on including how
+their code is written (e.g. have you seen their code, is it in R or C,
+are there references).</li>
+<li>A decorator that adds at least three methods. We do not want a
+clutter of decorators in distr6.</li>
 </ol>
-<p>The <code>DistributionDecorator</code> class is an abstract class that doesn’t add any methods or variables, its sole purpose is to define decorators in an abstract sense as a way to collate them. Decorators could function as named lists, for example the <code>CoreStatistics</code> decorator could instead be a list called ‘CoreStatistics’ with each named element being one of the added methods. However lists provide slightly less flexibility and would need to be created as the package is loaded, as opposed to a relatively small class that sits in the package namespace.</p>
+<p>The <code>DistributionDecorator</code> class is an abstract class
+that doesn’t add any methods or variables, its sole purpose is to define
+decorators in an abstract sense as a way to collate them. Decorators
+could function as named lists, for example the
+<code>CoreStatistics</code> decorator could instead be a list called
+‘CoreStatistics’ with each named element being one of the added methods.
+However lists provide slightly less flexibility and would need to be
+created as the package is loaded, as opposed to a relatively small class
+that sits in the package namespace.</p>
 </div>
 <div class="section level2">
 <h2 id="creating-a-decorator">Creating a decorator<a class="anchor" aria-label="anchor" href="#creating-a-decorator"></a>
 </h2>
-<p>A decorator is just a class, inheriting from <code>DistributionDecorator</code>, with public methods that are added to a distribution when decorated. For example, the <code>CoreStatistics</code> decorator has a definition:</p>
+<p>A decorator is just a class, inheriting from
+<code>DistributionDecorator</code>, with public methods that are added
+to a distribution when decorated. For example, the
+<code>CoreStatistics</code> decorator has a definition:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CoreStatistics</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"CoreStatistics"</span>, inherit <span class="op">=</span> <span class="va">DistributionDecorator</span><span class="op">)</span></span></code></pre></div>
 <p>and methods (below are just two, again shortened)</p>
@@ -224,8 +243,15 @@
 <span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">xs</span> <span class="op">*</span> <span class="va">pdfs</span><span class="op">)</span></span>
 <span>    <span class="op">}</span>, lower <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">inf</span><span class="op">(</span><span class="op">)</span>, upper <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">sup</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>We don’t have too many requirements in defining decorators apart from insisting on using the global ‘.distr6$message_numeric’ string as a message to tell users that numeric results may not be exact. We use messages instead of warnings as warnings stack, which quickly becomes annoying.</p>
-<p>Finally, we just want to point you in the direction of useful <code>Distribution</code> private variables that are rarely used outside of decorators, as an example take the <code>survival</code> method from the <code>ExoticStatistics</code> class</p>
+<p>We don’t have too many requirements in defining decorators apart from
+insisting on using the global ‘.distr6$message_numeric’ string as a
+message to tell users that numeric results may not be exact. We use
+messages instead of warnings as warnings stack, which quickly becomes
+annoying.</p>
+<p>Finally, we just want to point you in the direction of useful
+<code>Distribution</code> private variables that are rarely used outside
+of decorators, as an example take the <code>survival</code> method from
+the <code>ExoticStatistics</code> class</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ExoticStatistics</span><span class="op">$</span><span class="fu">set</span><span class="op">(</span><span class="st">"public"</span>, <span class="st">"survival"</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x1</span>, <span class="va">log.p</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span><span class="op">(</span><span class="va">private</span><span class="op">$</span><span class="va">.isCdf</span><span class="op">)</span></span>
@@ -239,18 +265,35 @@
 <span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">surv</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>Note the use of <code>private$.isCdf</code>, this checks to see if the <code>cdf</code> method is defined in the <code>Distribution</code>. Remember that every <code>Distribution</code> object always have public d/p/q/r methods defined but do not necessarily have a private d/p/q/r method which actually does all the work. Therefore every <code>Distribution</code> includes flags for whether or not the d/p/q/r method is defined. To test this yourself, create a custom distribution object with a pdf only, and see what happens when you call the <code>cdf</code> method (it will return NULL).</p>
-<p>Therefore the use of <code>private$.isCdf</code> tells the decorator whether it can use analytical results or if numeric integration is required.</p>
-<p>Note: if the user has already decorated their distribution with <code>FunctionImputation</code> then even if your decorator thinks the results are analytical, they are not. However this is taken into account by the printed message in the imputed d/p/q/r methods.</p>
+<p>Note the use of <code>private$.isCdf</code>, this checks to see if
+the <code>cdf</code> method is defined in the <code>Distribution</code>.
+Remember that every <code>Distribution</code> object always have public
+d/p/q/r methods defined but do not necessarily have a private d/p/q/r
+method which actually does all the work. Therefore every
+<code>Distribution</code> includes flags for whether or not the d/p/q/r
+method is defined. To test this yourself, create a custom distribution
+object with a pdf only, and see what happens when you call the
+<code>cdf</code> method (it will return NULL).</p>
+<p>Therefore the use of <code>private$.isCdf</code> tells the decorator
+whether it can use analytical results or if numeric integration is
+required.</p>
+<p>Note: if the user has already decorated their distribution with
+<code>FunctionImputation</code> then even if your decorator thinks the
+results are analytical, they are not. However this is taken into account
+by the printed message in the imputed d/p/q/r methods.</p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li>Decorators are simple to implement, just define a new class inheriting from <code>DistributionDecorator</code>
+<li>Decorators are simple to implement, just define a new class
+inheriting from <code>DistributionDecorator</code>
 </li>
-<li>Add as many public methods as you want, but remember to include messages for numerical integration</li>
-<li>Make use of the private <code>.isCdf</code>, <code>.isPdf</code>, <code>.isQuantile</code>, <code>.isRand</code> methods to exploit analytical results.</li>
+<li>Add as many public methods as you want, but remember to include
+messages for numerical integration</li>
+<li>Make use of the private <code>.isCdf</code>, <code>.isPdf</code>,
+<code>.isQuantile</code>, <code>.isRand</code> methods to exploit
+analytical results.</li>
 </ol>
 </div>
 <div class="section level2">
@@ -281,7 +324,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.12</span>
       </span>
     </div>
 
@@ -174,12 +174,12 @@
 
       
 
-      </header><script src="parameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting and Setting Parameters</h1>
             
-            <h4 data-toc-skip class="date">2022-08-27</h4>
+            <h4 data-toc-skip class="date">2022-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/parameters.rmd" class="external-link"><code>vignettes/webs/parameters.rmd</code></a></small>
       <div class="hidden name"><code>parameters.rmd</code></div>
@@ -188,14 +188,20 @@
 
     
     
-<p>In our <a href="https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html">previous tutorial</a> we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them. Parameters are handled by <a href="https://cran.r-project.org/package=param6" class="external-link">param6</a>, full documentation can be found at the package <a href="https://xoopr.github.io/param6/" class="external-link">website</a>.</p>
+<p>In our <a href="https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html">previous
+tutorial</a> we constructed a Normal distribution with a variety of
+parameterisations. Now we will look at how to access the parameters of
+the distribution and how to update them. Parameters are handled by <a href="https://cran.r-project.org/package=param6" class="external-link">param6</a>, full
+documentation can be found at the package <a href="https://xoopr.github.io/param6/" class="external-link">website</a>.</p>
 <div class="section level2">
 <h2 id="accessing-parameters">Accessing Parameters<a class="anchor" aria-label="anchor" href="#accessing-parameters"></a>
 </h2>
-<p>First we will construct the Standard Normal distribution, the default parameterisation</p>
+<p>First we will construct the Standard Normal distribution, the default
+parameterisation</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/Normal.html">Normal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>To view all parameters in the distribution we use the <code>parameters</code> method</p>
+<p>To view all parameters in the distribution we use the
+<code>parameters</code> method</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      Id Support Value            Tags</span></span>
@@ -203,7 +209,10 @@
 <span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
 <span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
 <span><span class="co">#&gt; 4:  var      ℝ+     1 linked,required</span></span></code></pre></div>
-<p>Notice how not only the parameters in the given parameterisation are displayed, but all the ones possible. Individual values can be obtained with <code>getParameterValue</code>, which is a wrapper around <code>get_values</code>.</p>
+<p>Notice how not only the parameters in the given parameterisation are
+displayed, but all the ones possible. Individual values can be obtained
+with <code>getParameterValue</code>, which is a wrapper around
+<code>get_values</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">getParameterValue</span><span class="op">(</span><span class="st">"prec"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
@@ -211,7 +220,9 @@
 <div class="section level2">
 <h2 id="updating-parameters">Updating Parameters<a class="anchor" aria-label="anchor" href="#updating-parameters"></a>
 </h2>
-<p>Any parameter can be updated in distr6 using the <code>setParameterValue</code> method and all others are updated accordingly. For example,</p>
+<p>Any parameter can be updated in distr6 using the
+<code>setParameterValue</code> method and all others are updated
+accordingly. For example,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
@@ -220,7 +231,9 @@
 <span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
 <span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
 <span><span class="co">#&gt; 4:  var      ℝ+     2 linked,required</span></span></code></pre></div>
-<p>Not only has the variance been updated, but so too have the precision and standard deviation parameters. But be careful not to set conflicting parameterisations.</p>
+<p>Not only has the variance been updated, but so too have the precision
+and standard deviation parameters. But be careful not to set conflicting
+parameterisations.</p>
 <p>The wrong way:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -228,7 +241,9 @@
 <p>The right way:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>prec <span class="op">=</span> <span class="fl">2</span>, var <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
-<p>Internal checks ensure that only valid parameter values are allowed, for example setting the precision to a negative number will throw an error.</p>
+<p>Internal checks ensure that only valid parameter values are allowed,
+for example setting the precision to a negative number will throw an
+error.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>prec <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in sqrt(unlist(vars)): NaNs produced</span></span>
@@ -246,7 +261,10 @@
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>In this tutorial we looked at getting and setting parameters for the Normal distribution. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html">next tutorial</a> we look at accessing mathematical and statistical methods including the d/p/q/r functions.</p>
+<p>In this tutorial we looked at getting and setting parameters for the
+Normal distribution. In the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html">next
+tutorial</a> we look at accessing mathematical and statistical methods
+including the d/p/q/r functions.</p>
 </div>
   </div>
 
@@ -267,7 +285,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
