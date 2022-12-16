@@ -25,18 +25,18 @@ rep.Distribution <- function(x, times, class = c("vector", "product", "mixture")
   class <- match.arg(class)
 
   if (getR6Class(x) == "Distribution") {
-    x = get(paste0(toproper(class), "Distribution"))$new(distlist = rep(list(x), times))
+    out = get(paste0(toproper(class), "Distribution"))$new(distlist = rep(list(x), times))
   } else {
     ## TODO: Can make more efficient using param6$rep
-    x = get(paste0(toproper(class), "Distribution"))$new(
+    out = get(paste0(toproper(class), "Distribution"))$new(
       distribution = getR6Class(x),
       params = rep(list(x$parameters()$values), times)
     )
   }
 
   if (!is.null(x$decorators)) {
-    x = suppressMessages(decorate(x, x$decorators))
+    suppressMessages(decorate(out, x$decorators))
   }
 
-  x
+  out
 }
