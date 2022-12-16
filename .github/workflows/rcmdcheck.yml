@@ -17,7 +17,6 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'devel'}
           - {os: ubuntu-20.04, r: 'release'}
 
     env:
