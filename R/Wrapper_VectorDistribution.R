@@ -1133,7 +1133,10 @@ or `distlist` should be used.")
     checkmate::assertSubset(i, as.character(unlist(vecdist$modelTable$shortname)))
     i <- match(i, as.character(unlist(vecdist$modelTable$shortname)), 0)
   }
-  i <- i[i %in% (seq_len(nrow(vecdist$modelTable)))]
+  if (is.logical(i)) {
+    i <- which(i)
+  }
+  i <- i[i %in% seq_len(nrow(vecdist$modelTable))]
   if (length(i) == 0) {
     stop("Index i too large, should be less than or equal to ", nrow(vecdist$modelTable))
   }
@@ -1151,7 +1154,7 @@ or `distlist` should be used.")
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
       pars <- vecdist$parameters()$values
-      pars <- pars[grepl(paste0(id, collapse = "|"), names(pars))]
+      pars <- pars[grepl(paste0("^", id, "__", collapse = "|"), names(pars))]
 
       return(VectorDistribution$new(
         distribution = distribution, params = pars,
