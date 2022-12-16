@@ -3,27 +3,18 @@ distr6
 
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-[![CRAN Status
-Badge](https://www.r-pkg.org/badges/version-ago/distr6)](https://cran.r-project.org/package=distr6)
-[![CRAN
-Checks](https://cranchecks.info/badges/worst/distr6)](https://cran.r-project.org/web/checks/check_results_distr6.html)
+[![distr6 status badge](https://raphaels1.r-universe.dev/badges/distr6)](https://raphaels1.r-universe.dev)
 [![tic](https://github.com/alan-turing-institute/distr6/workflows/tic/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
 
 [![Repo
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/alan-turing-institute/distr6)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
 
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/distr6)](https://cran.r-project.org/package=distr6)
-[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/master/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6)
-[![dependencies](https://tinyverse.netlify.com/badge/distr6)](https://CRAN.R-project.org/package=distr6)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![arXiv](https://img.shields.io/badge/arXiv-2009.02993-brightgreen.svg)](https://arxiv.org/abs/2009.02993)
-[![DOI](https://zenodo.org/badge/177962537.svg)](https://zenodo.org/badge/latestdoi/177962537)
-[![Gitter
-chat](https://badges.gitter.im/xoopR/distr6.png)](https://gitter.im/xoopR/distr6)
+[![Paper](https://img.shields.io/badge/The%20R%20Journal-10.32614%2FRJ--2021--055-informational)](https://journal.r-project.org/archive/2021/RJ-2021-055/index.html)
+[![Zenodo](https://zenodo.org/badge/177962537.svg)](https://zenodo.org/badge/latestdoi/177962537)
 
 ## What is distr6?
 
