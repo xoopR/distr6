@@ -1153,7 +1153,7 @@ or `distlist` should be used.")
       return(dist)
     } else {
       id <- as.character(unlist(vecdist$modelTable[i, 2]))
-      pars <- vecdist$parameters()$values
+      pars <- private(vecdist$parameters())$.value
       pars <- pars[grepl(paste0("^", id, "__", collapse = "|"), names(pars))]
 
       return(VectorDistribution$new(
