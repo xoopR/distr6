@@ -86,7 +86,7 @@ test_that("c.Matdist", {
   expect_true(all(r >= 1))
 })
 
-test_that("c.Matdist", {
+test_that("[.Matdist", {
   set.seed(1)
   m <- as.Distribution(
     t(apply(matrix(runif(200), 20, 10, FALSE,
@@ -95,9 +95,16 @@ test_that("c.Matdist", {
     fun = "pdf"
   )
 
+  expect_equal(m$strprint(), "Matdist(20)")
+
+  expect_error(m[logical(20)], "empty")
+
   m1 <- m[1]
   m12 <- m[1:2]
+
   expect_distribution(m1, "WeightedDiscrete")
+  expect_distribution(m[!logical(20)], "Matdist")
+  expect_distribution(m[c(TRUE, logical(19))], "WeightedDiscrete")
   expect_distribution(m12, "Matdist")
 
   expect_equal(unname(m$cdf(0:25)[, 1]), unname(m1$cdf(0:25)))
