@@ -95,13 +95,16 @@ test_that("[.Matdist", {
     fun = "pdf"
   )
 
-  expect_error(m[c(FALSE, FALSE)], "empty")
+  expect_equal(m$strprint(), "Matdist(20)")
+
+  expect_error(m[logical(20)], "empty")
 
   m1 <- m[1]
   m12 <- m[1:2]
 
   expect_distribution(m1, "WeightedDiscrete")
-  expect_distribution(m[c(TRUE, FALSE)], "WeightedDiscrete")
+  expect_distribution(m[!logical(20)], "Matdist")
+  expect_distribution(m[c(TRUE, logical(19))], "WeightedDiscrete")
   expect_distribution(m12, "Matdist")
 
   expect_equal(unname(m$cdf(0:25)[, 1]), unname(m1$cdf(0:25)))
