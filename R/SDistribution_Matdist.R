@@ -72,6 +72,7 @@ Matdist <- R6Class("Matdist",
         support = Set$new(1, class = "numeric")^"n",
         type = Reals$new()^"n"
       )
+      private$.ndists <- nrow(gprm(self, "pdf"))
       invisible(self)
     },
 
@@ -80,7 +81,7 @@ Matdist <- R6Class("Matdist",
     #' @param n `(integer(1))` \cr
     #' Ignored.
     strprint = function(n = 2) {
-      "Matdist()"
+      sprintf("Matdist(%s)", private$.ndists)
     },
 
     # stats
@@ -128,7 +129,7 @@ Matdist <- R6Class("Matdist",
       "*" %=% gprm(self, c("x", "pdf"))
       mean <- self$mean()
 
-      vnapply(seq(nrow(pdf)), function(i) {
+      vnapply(seq_len(private$.ndists), function(i) {
         if (mean[[i]] == Inf) {
           Inf
         } else {
@@ -149,7 +150,7 @@ Matdist <- R6Class("Matdist",
       mean <- self$mean()
       sd <- self$stdev()
 
-      vnapply(seq(nrow(pdf)), function(i) {
+      vnapply(seq_len(private$.ndists), function(i) {
         if (mean[[i]] == Inf) {
           Inf
         } else {
@@ -171,7 +172,7 @@ Matdist <- R6Class("Matdist",
       mean <- self$mean()
       sd <- self$stdev()
 
-      kurt <- vnapply(seq(nrow(pdf)), function(i) {
+      kurt <- vnapply(seq_len(private$.ndists), function(i) {
         if (mean[[i]] == Inf) {
           Inf
         } else {
@@ -209,8 +210,8 @@ Matdist <- R6Class("Matdist",
       if (length(t) == 1) {
         mgf <- apply(pdf, 1, function(.y) sum(exp(x * t) * .y))
       } else {
-        stopifnot(length(z) == nrow(pdf))
-        mgf <- vnapply(seq(nrow(pdf)),
+        stopifnot(length(z) == private$.ndists)
+        mgf <- vnapply(seq_len(private$.ndists),
                         function(i) sum(exp(x * t[[i]]) * pdf[i, ]))
       }
 
@@ -228,8 +229,8 @@ Matdist <- R6Class("Matdist",
       if (length(t) == 1) {
         cf <- apply(pdf, 1, function(.y) sum(exp(x * t * 1i) * .y))
       } else {
-        stopifnot(length(z) == nrow(pdf))
-        cf <- vnapply(seq(nrow(pdf)),
+        stopifnot(length(z) == private$.ndists)
+        cf <- vnapply(seq_len(private$.ndists),
                         function(i) sum(exp(x * t[[i]] * 1i) * pdf[i, ]))
       }
 
@@ -247,8 +248,8 @@ Matdist <- R6Class("Matdist",
       if (length(z) == 1) {
         pgf <- apply(pdf, 1, function(.y) sum((z^x) * .y))
       } else {
-        stopifnot(length(z) == nrow(pdf))
-        pgf <- vnapply(seq(nrow(pdf)),
+        stopifnot(length(z) == private$.ndists)
+        pgf <- vnapply(seq_len(private$.ndists),
                         function(i) sum((z[[i]]^x) * pdf[i, ]))
       }
 
@@ -271,7 +272,7 @@ Matdist <- R6Class("Matdist",
     .pdf = function(x, log = FALSE) {
       "pdf, data" %=% gprm(self, c("pdf", "x"))
       out <- t(C_Vec_WeightedDiscretePdf(
-        x, matrix(data, ncol(pdf), nrow(pdf)),
+        x, matrix(data, ncol(pdf), private$.ndists),
         t(pdf)
       ))
       if (log) {
@@ -306,7 +307,8 @@ Matdist <- R6Class("Matdist",
 
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
-    .improper = FALSE
+    .improper = FALSE,
+    .ndists = 0
   )
 )
 
@@ -392,7 +394,12 @@ c.Matdist <- function(...) {
 #' m[1:2]
 #' @export
 "[.Matdist" <- function(md, i) {
-  if (length(i) == 1) {
+  if (is.logical(i)) {
+    i <- which(i)
+  }
+  if (length(i) == 0) {
+    stop("Can't create an empty distribution.")
+  } else if (length(i) == 1) {
     pdf <- gprm(md, "pdf")[i, ]
     dstr("WeightedDiscrete", x = as.numeric(names(pdf)), pdf = pdf,
           decorators = md$decorators)
