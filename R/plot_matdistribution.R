@@ -37,5 +37,12 @@ plot.Matdist <- function(x,
     val <- -log(1 - gprm(x, "cdf"))
   }
 
-  graphics::matplot(t(val), type = "l", ...)
+  times <- as.numeric(colnames(val))
+  graphics::matplot(t(val), type = "l", xaxt = "n", ...)
+  axis(
+    1,
+    seq(0, length(times), length.out = 5),
+    round(seq(min(times), max(times), length.out = 5))
+  )
+
 }
