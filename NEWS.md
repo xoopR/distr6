@@ -1,3 +1,7 @@
+# distr6 1.6.15
+
+* Fix bug in `plot.Matdist` x limits
+
 # distr6 1.6.14
 
 * Fix bug when extracting a single distribution with a logical vector from `MatDist`
