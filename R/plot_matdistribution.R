@@ -38,11 +38,8 @@ plot.Matdist <- function(x,
   }
 
   times <- as.numeric(colnames(val))
-  graphics::matplot(t(val), type = "l", xaxt = "n", ...)
-  axis(
-    1,
-    seq(0, length(times), length.out = 5),
-    round(seq(min(times), max(times), length.out = 5))
-  )
+  graphics::matplot(t(val), type = "l", xaxt = "n", xlab = "T", ylab = "S(T)", ...)
+  where <- round(seq(1, length(times), length.out = 5))
+  axis(1, where, times[where])
 
 }
