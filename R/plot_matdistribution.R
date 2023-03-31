@@ -38,7 +38,7 @@ plot.Matdist <- function(x,
   }
 
   times <- as.numeric(colnames(val))
-  graphics::matplot(t(val), type = "l", xaxt = "n", xlab = "T", ylab = "S(T)", ...)
+  graphics::matplot(t(val), type = "l", xaxt = "n", ...)
   where <- round(seq(1, length(times), length.out = 5))
   axis(1, where, times[where])
 
