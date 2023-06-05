@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R6 and Design Patterns</h1>
             
-            <h4 data-toc-skip class="date">2023-03-31</h4>
+            <h4 data-toc-skip class="date">2023-06-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/r6_and_design_patterns.rmd" class="external-link"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
       <div class="hidden name"><code>r6_and_design_patterns.rmd</code></div>
@@ -196,32 +196,35 @@
 </h3>
 <p>Instead of providing a comprehensive glossary of OOP terms (of which
 many exist) we instead give a very brief overview of the most common OOP
-practices found in R. Firstly it should be noted that R is a functional
-language that makes use of dispatch and is not primarily for OOP.
-Functional programming and dispatch lends it’s hand very naturally to
-the <strong>Strategy</strong> and <strong>Visitor</strong> design
-patterns (which we will return to later), the first of R’s OOP style
+practices found in R.</p>
+<p>Firstly, it should be noted that R is a functional language that
+makes use of dispatch and is not primarily for OOP. Functional
+programming and dispatch lends it’s hand very naturally to the
+<strong>Strategy</strong> and <strong>Visitor</strong> design patterns
+(which we will return to later), the first of R’s OOP style
 ‘sub-languages’, S3, should not be taken for granted therefore as it
-provides very powerful workarounds to strict OOP methods. R’s update to
-S3, S4, formally introduces the fundamentals of OOP: encapsulation,
-abstraction and inheritance. Combined abstraction and encapsulation
-refer to only giving the user access to methods and data that they
-require and hiding everything else, it is the principle of minimising
-the user-interface (UI) and keeping as much uniformity and efficiency as
-possible. Inheritance is the process of one class (the child-class)
-‘copying’ methods and variables from another (the parent-class). R6
-formalises these methods further by clearly defining the notion of a
-class and creating methods to construct the class (and thereby creating
-an object). R6 also introduces notions of method chaining and cloning,
-to allow a chain of methods to be called and removing the need to
-re-create and duplicate an object each time). More concretely, if a user
-wants to add the variable <code>y</code> to <code>x</code> and save the
-result then they would call <code>x = x + y</code> but if <code>x</code>
-is an R6 object then the user simply calls <code>x + y</code>. Finally,
-an <strong>abstract</strong> class is defined as a class that cannot be
-constructed, i.e. an object or instance of the class cannot be created.
-The purpose of an abstract class is to have multiple child classes all
-inherit common methods/variables.</p>
+provides very powerful workarounds to strict OOP methods.</p>
+<p>R’s update to S3, S4, formally introduces the fundamentals of OOP:
+encapsulation, abstraction and inheritance. Combined abstraction and
+encapsulation refer to only giving the user access to methods and data
+that they require and hiding everything else, it is the principle of
+minimising the user-interface (UI) and keeping as much uniformity and
+efficiency as possible. Inheritance is the process of one class (the
+child-class) ‘copying’ methods and variables from another (the
+parent-class).</p>
+<p>R6 formalises these methods further by clearly defining the notion of
+a class and creating methods to construct the class (and thereby
+creating an object). R6 also introduces notions of method chaining and
+cloning, to allow a chain of methods to be called and removing the need
+to re-create and duplicate an object each time). More concretely, if a
+user wants to add the variable <code>y</code> to <code>x</code> and save
+the result then they would call <code>x = x + y</code> but if
+<code>x</code> is an R6 object then the user simply calls
+<code>x + y</code>.</p>
+<p>Finally, an <strong>abstract</strong> class is defined as a class
+that cannot be constructed, i.e. an object or instance of the class
+cannot be created. The purpose of an abstract class is to have multiple
+child classes all inherit common methods/variables.</p>
 </div>
 <div class="section level3">
 <h3 id="design-patterns">Design Patterns<a class="anchor" aria-label="anchor" href="#design-patterns"></a>
@@ -249,9 +252,9 @@ one of two design patterns and ‘composite’ is a pattern in itself. The
 term wrapper usually refers to either the <strong>decorator</strong> or
 <strong>adapter</strong> design pattern, again from GoF:</p>
 <ul>
-<li>The <strong>decorator</strong> pattern is a structural pattern than
+<li>The <strong>decorator</strong> pattern is a structural pattern that
 “attaches additional responsibilities to an object dynamically”</li>
-<li>The <strong>adapter</strong> pattern is a structural pattern
+<li>The <strong>adapter</strong> pattern is a structural pattern that
 “converts the interface of a class into another interface clients
 expect”</li>
 <li>The <strong>composite</strong> pattern is a structural pattern that
@@ -268,11 +271,10 @@ treated the same.</p>
 <h2 id="r6-and-oop">R6 and OOP<a class="anchor" aria-label="anchor" href="#r6-and-oop"></a>
 </h2>
 <p>Despite R6 becoming more commonplace in R packages, we have found no
-documentation of best practices for using R6 and object-oriented
-programming (OOP) methods and design patterns. Hence we propose our own
-R6 snippets and workarounds for common design patterns and other OOP
-methods. We have implemented the following OOP processes and design
-patterns thus far:</p>
+documentation of best practices for using R6 and OOP methods and design
+patterns. Hence we propose our own R6 snippets and workarounds for
+common design patterns and other OOP methods. We have implemented the
+following OOP processes and design patterns thus far:</p>
 <ol style="list-style-type: decimal">
 <li><a href="#abstract-classes">Abstract Classes</a></li>
 <li><a href="#decorators">Decorators</a></li>
@@ -282,10 +284,10 @@ patterns thus far:</p>
 <h3 id="abstract-classes">Abstract Classes<a class="anchor" aria-label="anchor" href="#abstract-classes"></a>
 </h3>
 <p>Abstract classes are classes that cannot be instantiated. They are
-useful for defining hierarchical structures and inheritance in OOP. As
-well as for the Abstract Factory design pattern.</p>
+useful for defining hierarchical structures and inheritance in OOP, as
+well as for the <strong>abstract factory</strong> design pattern.</p>
 <p>Implementation: In R6, all classes are concrete and by default have
-an <code>initialize</code> method for construction. Therefore to make a
+an <code>initialize</code> method for construction. Therefore, to make a
 class abstract we overload the <code>initialize</code> method as
 follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AbstractClass<span class="sc">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(){</span>
@@ -308,16 +310,16 @@ dynamically. Decorators provide a flexible alternative to subclassing
 for extending functionality.”</p>
 </blockquote>
 <p>Implementation: Decorators are particularly complex in R6 for a
-number of reasons. Firstly inheritance occurs in the class definition
+number of reasons. Firstly, inheritance occurs in the class definition
 and not object definition, therefore we cannot dynamically choose which
 class to inherit from. Secondly, methods and variables should only be
 defined before initializing an object and any defined after do not have
 access to the object itself (i.e. the ‘self’ and ‘private’ accessors).
 And finally there is no simple way to reference one object dynamically
 from another without this being hardcoded. Implementation has two key
-methods, the first via construction of the class to be decorated and
-secondly via construction of the decorator assuming an object has
-already been instantiated to decorate it.</p>
+methods, the first via construction of the class to be decorated and the
+second via construction of the decorator assuming an object has already
+been instantiated to decorate it.</p>
 <p><strong>Method 1)</strong> In the class to decorate we copy every
 public method from the decorators of interest to the class and we add
 <code>self</code> as an argument to ensure that the decorator methods
@@ -335,7 +337,7 @@ have the same access level as ‘standard’ methods.</p>
 <span>    <span class="op">}</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="va">private</span><span class="op">$</span><span class="va">.decorators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">decorators</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="st">"classname"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>where we assume <code>decorators</code> is an argument to the
+<p>Here we assume <code>decorators</code> is an argument to the
 constructor given as a list naming the decorator classes and that a
 private variable called <code>.decorators</code> is a list of decorators
 already present in the object.</p>
