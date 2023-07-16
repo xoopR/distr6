@@ -34,8 +34,8 @@ dparse <- function(toparse) {
   # Locate correct class
   d6s <- listDistributions()[,c("ShortName", "ClassName", "Alias")]
   class <- d6s[tolower(ShortName) == tolower(dist) |
-                 tolower(ClassName) == tolower(dist) |
-                 tolower(Alias)     == tolower(dist),][["ClassName"]]
+               tolower(ClassName) == tolower(dist) |
+               tolower(Alias)     == tolower(dist),][["ClassName"]]
   # Distribution not found
   if (length(class) == 0) {
     stop(sprintf("Call '%s' could not be evaluated because distribution '%s' was not found.",
