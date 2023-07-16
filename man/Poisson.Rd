@@ -137,46 +137,46 @@ Other univariate distributions:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Poisson$new()}}
-\item \href{#method-mean}{\code{Poisson$mean()}}
-\item \href{#method-mode}{\code{Poisson$mode()}}
-\item \href{#method-variance}{\code{Poisson$variance()}}
-\item \href{#method-skewness}{\code{Poisson$skewness()}}
-\item \href{#method-kurtosis}{\code{Poisson$kurtosis()}}
-\item \href{#method-mgf}{\code{Poisson$mgf()}}
-\item \href{#method-cf}{\code{Poisson$cf()}}
-\item \href{#method-pgf}{\code{Poisson$pgf()}}
-\item \href{#method-clone}{\code{Poisson$clone()}}
+\item \href{#method-Poisson-new}{\code{Poisson$new()}}
+\item \href{#method-Poisson-mean}{\code{Poisson$mean()}}
+\item \href{#method-Poisson-mode}{\code{Poisson$mode()}}
+\item \href{#method-Poisson-variance}{\code{Poisson$variance()}}
+\item \href{#method-Poisson-skewness}{\code{Poisson$skewness()}}
+\item \href{#method-Poisson-kurtosis}{\code{Poisson$kurtosis()}}
+\item \href{#method-Poisson-mgf}{\code{Poisson$mgf()}}
+\item \href{#method-Poisson-cf}{\code{Poisson$cf()}}
+\item \href{#method-Poisson-pgf}{\code{Poisson$pgf()}}
+\item \href{#method-Poisson-clone}{\code{Poisson$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-Distribution-cdf'><code>distr6::Distribution$cdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href='../../distr6/html/Distribution.html#method-Distribution-median'><code>distr6::Distribution$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-Distribution-pdf'><code>distr6::Distribution$pdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-Distribution-quantile'><code>distr6::Distribution$quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-Distribution-rand'><code>distr6::Distribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-Distribution-strprint'><code>distr6::Distribution$strprint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Poisson-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -196,8 +196,8 @@ Decorators to add to the distribution during construction.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mean"></a>}}
-\if{latex}{\out{\hypertarget{method-mean}{}}}
+\if{html}{\out{<a id="method-Poisson-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-mean}{}}}
 \subsection{Method \code{mean()}}{
 The arithmetic mean of a (discrete) probability distribution X is the expectation
 \deqn{E_X(X) = \sum p_X(x)*x}
@@ -215,8 +215,8 @@ with an integration analogue for continuous distributions.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-mode}{}}}
+\if{html}{\out{<a id="method-Poisson-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-mode}{}}}
 \subsection{Method \code{mode()}}{
 The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
@@ -236,8 +236,8 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-variance"></a>}}
-\if{latex}{\out{\hypertarget{method-variance}{}}}
+\if{html}{\out{<a id="method-Poisson-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-variance}{}}}
 \subsection{Method \code{variance()}}{
 The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
@@ -256,8 +256,8 @@ covariance matrix is returned.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\if{html}{\out{<a id="method-Poisson-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-skewness}{}}}
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
@@ -276,8 +276,8 @@ distribution and \eqn{\sigma} is the standard deviation of the distribution.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kurtosis"></a>}}
-\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
+\if{html}{\out{<a id="method-Poisson-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-kurtosis}{}}}
 \subsection{Method \code{kurtosis()}}{
 The kurtosis of a distribution is defined by the fourth standardised moment,
 \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
@@ -300,8 +300,8 @@ If \code{TRUE} (default) excess kurtosis returned.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mgf"></a>}}
-\if{latex}{\out{\hypertarget{method-mgf}{}}}
+\if{html}{\out{<a id="method-Poisson-mgf"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-mgf}{}}}
 \subsection{Method \code{mgf()}}{
 The moment generating function is defined by
 \deqn{mgf_X(t) = E_X[exp(xt)]}
@@ -322,8 +322,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cf"></a>}}
-\if{latex}{\out{\hypertarget{method-cf}{}}}
+\if{html}{\out{<a id="method-Poisson-cf"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-cf}{}}}
 \subsection{Method \code{cf()}}{
 The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
@@ -344,8 +344,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pgf"></a>}}
-\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\if{html}{\out{<a id="method-Poisson-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-pgf}{}}}
 \subsection{Method \code{pgf()}}{
 The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
@@ -366,8 +366,8 @@ z integer to evaluate probability generating function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Poisson-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Poisson-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
