@@ -161,6 +161,6 @@ Gompertz <- R6Class("Gompertz",
     ShortName = "Gomp", ClassName = "Gompertz",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", ParseNames = "GPZ"
   )
 )

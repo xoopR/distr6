@@ -216,6 +216,6 @@ Erlang <- R6Class("Erlang",
     ShortName = "Erlang", ClassName = "Erlang",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", ParseNames = "ER"
   )
 )

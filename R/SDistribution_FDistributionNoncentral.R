@@ -183,6 +183,6 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     ShortName = "FNC", ClassName = "FDistributionNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", ParseNames = "FDC"
   )
 )

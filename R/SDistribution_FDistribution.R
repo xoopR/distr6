@@ -250,6 +250,6 @@ FDistribution <- R6Class("FDistribution",
     ShortName = "F", ClassName = "FDistribution",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", ParseNames = "FD"
   )
 )

@@ -210,6 +210,6 @@ StudentT <- R6Class("StudentT",
     ShortName = "T", ClassName = "StudentT",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", ParseNames = "ST"
   )
 )

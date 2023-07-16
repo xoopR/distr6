@@ -318,7 +318,7 @@ Matdist <- R6Class("Matdist",
     ShortName = "Matdist", ClassName = "Matdist",
     Type = "\u211D^K", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", ParseNames = "MD"
   )
 )
 

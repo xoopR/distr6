@@ -13,7 +13,7 @@
 .distr6$distributions <- data.table(
   ShortName = NULL, ClassName = NULL, Type = NULL,
   ValueSupport = NULL, VariateForm = NULL, Package = NULL,
-  Tags = NULL
+  Tags = NULL, ParseNames = NULL
 )
 .distr6$kernels <- data.table(ShortName = NULL, ClassName = NULL, Support = NULL, Packages = NULL)
 

@@ -218,10 +218,10 @@ Normal <- R6Class("Normal",
 
 .distr6$distributions <- rbind(
   .distr6$distributions,
-  data.table(
+  data.table::data.table(
     ShortName = "Norm", ClassName = "Normal",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale"
+    Package = "stats", Tags = "locscale", ParseNames = "N"
   )
 )
