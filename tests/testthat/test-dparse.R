@@ -8,3 +8,10 @@ test_that("Every distribution can be created", {
   d6 <- paste0(d6, "()")
   expect_invisible(invisible(sapply(d6, dparse)))
 })
+
+test_that("Invalid distributions are not accepted", {
+  expect_error(dparse("Norm"))
+  expect_error(dparse("T("))
+  expect_error(dparse("LN)"))
+  expect_error(dparse("Ga2ma"))
+})
