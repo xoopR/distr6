@@ -198,6 +198,7 @@ Collate:
     'distr6-package.R'
     'distr6.news.R'
     'distrSimulate.R'
+    'dparse.R'
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'
