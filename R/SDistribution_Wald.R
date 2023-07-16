@@ -208,6 +208,6 @@ Wald <- R6Class("Wald",
     ShortName = "Wald", ClassName = "Wald",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "", ParseNames = "W"
+    Package = "extraDistr", Tags = "", Shortcut = "W"
   )
 )

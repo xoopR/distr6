@@ -223,6 +223,6 @@ Gamma <- R6Class("Gamma",
     ShortName = "Gamma", ClassName = "Gamma",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", ParseNames = "G"
+    Package = "stats", Tags = "", Shortcut = "G"
   )
 )

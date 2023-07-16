@@ -323,6 +323,6 @@ Categorical <- R6Class("Categorical",
     ShortName = "Cat", ClassName = "Categorical",
     Type = "V", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "", ParseNames = "C"
+    Package = "-", Tags = "", Shortcut = "C"
   )
 )

@@ -293,6 +293,6 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     ShortName = "DUnif", ClassName = "DiscreteUniform",
     Type = "\u2124", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "limits", ParseNames = "DU"
+    Package = "extraDistr", Tags = "limits", Shortcut = "DU"
   )
 )

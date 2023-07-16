@@ -221,6 +221,6 @@ Logistic <- R6Class("Logistic",
     ShortName = "Logis", ClassName = "Logistic",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale", ParseNames = "LG"
+    Package = "stats", Tags = "locscale", Shortcut = "LG"
   )
 )

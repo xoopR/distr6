@@ -222,6 +222,6 @@ Loglogistic <- R6Class("Loglogistic",
     ShortName = "LLogis", ClassName = "Loglogistic",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "actuar", Tags = "", ParseNames = "LL"
+    Package = "actuar", Tags = "", Shortcut = "LL"
   )
 )

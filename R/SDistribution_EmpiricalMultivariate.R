@@ -144,6 +144,6 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     ShortName = "EmpMV", ClassName = "EmpiricalMV",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "multivariate",
-    Package = "-", Tags = "", ParseNames = "EMV"
+    Package = "-", Tags = "", Shortcut = "EMV"
   )
 )

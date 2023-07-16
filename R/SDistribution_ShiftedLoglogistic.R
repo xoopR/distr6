@@ -185,6 +185,6 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     ShortName = "ShiftLLogis", ClassName = "ShiftedLoglogistic",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "-", Tags = "", ParseNames = "SLL"
+    Package = "-", Tags = "", Shortcut = "SLL"
   )
 )

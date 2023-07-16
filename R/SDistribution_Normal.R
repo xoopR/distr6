@@ -222,6 +222,6 @@ Normal <- R6Class("Normal",
     ShortName = "Norm", ClassName = "Normal",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale", ParseNames = "N"
+    Package = "stats", Tags = "locscale", Shortcut = "N"
   )
 )

@@ -240,6 +240,6 @@ Uniform <- R6Class("Uniform",
     ShortName = "Unif", ClassName = "Uniform",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits", ParseNames = "U"
+    Package = "stats", Tags = "limits", Shortcut = "U"
   )
 )
