@@ -270,6 +270,6 @@ Multinomial <- R6Class("Multinomial",
     ShortName = "Multinom", ClassName = "Multinomial",
     Type = "\u21150^K", ValueSupport = "discrete",
     VariateForm = "multivariate",
-    Package = "extraDistr", Tags = "limits", Shortcut = "MN"
+    Package = "extraDistr", Tags = "limits", Alias = "MN"
   )
 )

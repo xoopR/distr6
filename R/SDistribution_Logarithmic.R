@@ -220,6 +220,6 @@ Logarithmic <- R6Class("Logarithmic",
     ShortName = "Log", ClassName = "Logarithmic",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "", Shortcut = "L"
+    Package = "extraDistr", Tags = "", Alias = "L"
   )
 )

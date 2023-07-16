@@ -266,6 +266,6 @@ Geometric <- R6Class("Geometric",
     ShortName = "Geom", ClassName = "Geometric",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Shortcut = "GM"
+    Package = "stats", Tags = "", Alias = "GM"
   )
 )

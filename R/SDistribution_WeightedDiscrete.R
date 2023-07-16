@@ -444,7 +444,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     ShortName = "WeightDisc", ClassName = "WeightedDiscrete",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "", Shortcut = "WD"
+    Package = "-", Tags = "", Alias = "WD"
   )
 )
 

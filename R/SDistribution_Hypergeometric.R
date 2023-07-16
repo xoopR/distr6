@@ -248,6 +248,6 @@ Hypergeometric <- R6Class("Hypergeometric",
     ShortName = "Hyper", ClassName = "Hypergeometric",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits", Shortcut = "HGM"
+    Package = "stats", Tags = "limits", Alias = "HGM"
   )
 )

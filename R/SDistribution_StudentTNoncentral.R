@@ -158,6 +158,6 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     ShortName = "TNC", ClassName = "StudentTNoncentral",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Shortcut = "STNC"
+    Package = "stats", Tags = "", Alias = "STNC"
   )
 )

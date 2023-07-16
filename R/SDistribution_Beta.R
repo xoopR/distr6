@@ -260,6 +260,6 @@ Beta <- R6Class("Beta",
     ShortName = "Beta", ClassName = "Beta",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Shortcut = "BT"
+    Package = "stats", Tags = "", Alias = "BT"
   )
 )

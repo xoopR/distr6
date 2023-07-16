@@ -181,6 +181,6 @@ Poisson <- R6Class("Poisson",
     ShortName = "Pois", ClassName = "Poisson",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Shortcut = "P"
+    Package = "stats", Tags = "", Alias = "P"
   )
 )

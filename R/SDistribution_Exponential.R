@@ -203,6 +203,6 @@ Exponential <- R6Class("Exponential",
     ShortName = "Exp", ClassName = "Exponential",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "scale", Shortcut = "EXP"
+    Package = "stats", Tags = "scale", Alias = "EXP"
   )
 )

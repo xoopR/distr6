@@ -276,6 +276,6 @@ Pareto <- R6Class("Pareto",
     ShortName = "Pare", ClassName = "Pareto",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "", Shortcut = "PR"
+    Package = "extraDistr", Tags = "", Alias = "PR"
   )
 )
