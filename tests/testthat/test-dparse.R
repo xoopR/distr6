@@ -1,3 +1,11 @@
+test_that("Parsing works correctly", {
+  #TODO: Add more per Github review
+  expect_s3_class(dparse("n()"), "Normal")
+  expect_s3_class(dparse("T()"), "StudentT")
+  expect_s3_class(dparse("LoGNOrmAl(meanlog = 3)"), "Lognormal")
+  expect_s3_class(dparse("Gamma(rate = 3, shape = 8)"), "Gamma")
+})
+
 test_that("ShortName, ClassName and Alias are unique between distributions", {
   d6 <- listDistributions()[,(ids = paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", "))]
   d6 <- strsplit(d6, ",")
@@ -7,6 +15,7 @@ test_that("ShortName, ClassName and Alias are unique between distributions", {
 })
 
 test_that("Every distribution is created with it's propper S3 class", {
+  # TODO: Smarter way?
   # Get calls
   d6 <- listDistributions()[,(ids = paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", "))]
   calls <- strsplit(d6, ",")
