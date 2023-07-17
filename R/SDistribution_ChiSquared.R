@@ -215,6 +215,6 @@ ChiSquared <- R6Class("ChiSquared",
     ShortName = "ChiSq", ClassName = "ChiSquared",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = "CSQ"
+    Package = "stats", Tags = "", Alias = c("CSQ", "CHI", "C2")
   )
 )
