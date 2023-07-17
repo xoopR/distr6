@@ -23,23 +23,20 @@
 #' dparse("chisq(df = 3)")
 #' @export
 dparse <- function(toparse) {
-  # Check correct format
-  match <- grepl("^[a-zA-Z]+\\(.*\\)$", toparse)
-  if (!match) stop(sprintf("Call '%s' is not valid. The required structure is: Distributino([params]), e.g. T() or Normal(mean = 3).",
-                           toparse))
   # Extract distribution and parameters
   dist <- gsub("(^.*)\\(.*", "\\1", toparse)
   params <- tolower(gsub(".*\\((.*)\\)$", "\\1", toparse))
-  # Locate correct class
-  d6s <- listDistributions()[,c("ShortName", "ClassName", "Alias")]
-  class <- d6s[tolower(ShortName) == tolower(dist) |
-               tolower(ClassName) == tolower(dist) |
-               tolower(Alias)     == tolower(dist),][["ClassName"]]
+  # Join all identifiers and locate the correct class
+  d6s <- listDistributions()
+  d6s <- d6s[, ids := paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", ")]
+  toparse_word <- paste0("\\b", toparse, "\\b")
+  classrow <- which(grepl(toparse_word, d6s$ids))
   # Distribution not found
-  if (length(class) == 0) {
+  if (length(classrow) != 1) {
     stop(sprintf("Call '%s' could not be evaluated as distribution '%s' not found.",
                  toparse, dist))
   }
+  class <- d6s[[classrow, "ClassName"]]
   # Call and evaluate
   call <- sprintf("distr6::%s$new(%s)", class, params)
 eval(parse(text = call))
