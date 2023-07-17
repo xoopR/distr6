@@ -238,6 +238,6 @@ InverseGamma <- R6Class("InverseGamma",
     ShortName = "InvGamma", ClassName = "InverseGamma",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "", Alias = c("IG", "InvGam")
+    Package = "extraDistr", Tags = "", Alias = paste("IG", "InvGam", sep = ", ")
   )
 )

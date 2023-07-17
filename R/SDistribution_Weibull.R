@@ -232,6 +232,6 @@ Weibull <- R6Class("Weibull",
     ShortName = "Weibull", ClassName = "Weibull",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = c("WB", "Weib")
+    Package = "stats", Tags = "", Alias = paste("WB", "Weib", sep = ", ")
   )
 )

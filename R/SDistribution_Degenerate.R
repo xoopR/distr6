@@ -188,6 +188,6 @@ Degenerate <- R6Class("Degenerate",
     ShortName = "Degen", ClassName = "Degenerate",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "limits", Alias = c("DGN", "Deg", "Delta", "Dirac")
+    Package = "-", Tags = "limits", Alias = paste("DGN", "Deg", "Delta", "Dirac", sep = ", ")
   )
 )
