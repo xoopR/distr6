@@ -1,26 +1,25 @@
-#' @title String parses
+#' @title Parse Distributions Represented as Strings
 #' @description Parse a custom string that represents an R6 distribution
 #' @details Transform a custom (user) input to a R6 object.
 #'
 #' This function is specially useful when you expect a user input which should
 #' result in specific distribution. The distribution name must be the
-#' ShortName, ClassName or Alias listed in the package. You can list them
-#' using the \link{listDistributions} function.
+#' ShortName, ClassName or Alias listed in the package, which can be found with
+#' [listDistributions()].
 #'
-#' Text call must be in the following format: Distribution(\[params\]), e.g.
-#' T() or Normal(mean = 3).
+#' @param toparse `(character(1))`\cr
+#' String to parse, which should be in the format Distribution(\[params\]), see examples.
 #'
-#' The parameters can be entered in any order, but they must be named. If no
-#' parameter is given, the default parametrization provided in $new() call
-#' is used.
-#'
-#' @param toparse character
-#'
-#' @return Returns an R6 distribution object
+#' @return Returns an R6 [Distribution]
 #'
 #' @examples
 #' dparse("N()")
+#' dparse("norm(0, sd = 2)")
+#' # lower and upper case work
+#' dparse("n(sd = 1, mean = 4)")
 #' dparse("T(df = 4)")
+#' # be careful to escape strings properly
+#' dparse("C(list('A', 'B'), c(0.5, 0.5))")
 #' dparse("chisq(df = 3)")
 #' @export
 dparse <- function(toparse) {
@@ -38,11 +37,10 @@ dparse <- function(toparse) {
                tolower(Alias)     == tolower(dist),][["ClassName"]]
   # Distribution not found
   if (length(class) == 0) {
-    stop(sprintf("Call '%s' could not be evaluated because distribution '%s' was not found.",
+    stop(sprintf("Call '%s' could not be evaluated as distribution '%s' not found.",
                  toparse, dist))
   }
   # Call and evaluate
   call <- sprintf("distr6::%s$new(%s)", class, params)
-  r <- eval(parse(text = call))
-  return(r)
+eval(parse(text = call))
 }
