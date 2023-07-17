@@ -246,6 +246,6 @@ Gumbel <- R6Class("Gumbel",
     ShortName = "Gumb", ClassName = "Gumbel",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "locscale", Alias = "GB"
+    Package = "extraDistr", Tags = "locscale", Alias = c("GB", "Gum")
   )
 )

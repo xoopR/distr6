@@ -239,6 +239,6 @@ Binomial <- R6Class("Binomial",
     ShortName = "Binom", ClassName = "Binomial",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits", Alias = "BM"
+    Package = "stats", Tags = "limits", Alias = c("BM", "Bin")
   )
 )
