@@ -29,8 +29,8 @@ dparse <- function(toparse) {
   # Join all identifiers and locate the correct class
   d6s <- listDistributions()
   d6s <- d6s[, ids := paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", ")]
-  toparse_word <- paste0("\\b", toparse, "\\b")
-  classrow <- which(grepl(toparse_word, d6s$ids))
+  dist_word <- paste0("\\b", tolower(dist), "\\b")
+  classrow <- which(grepl(dist_word, d6s$ids))
   # Distribution not found
   if (length(classrow) != 1) {
     stop(sprintf("Call '%s' could not be evaluated as distribution '%s' not found.",
@@ -39,5 +39,5 @@ dparse <- function(toparse) {
   class <- d6s[[classrow, "ClassName"]]
   # Call and evaluate
   call <- sprintf("distr6::%s$new(%s)", class, params)
-eval(parse(text = call))
+  eval(parse(text = call))
 }
