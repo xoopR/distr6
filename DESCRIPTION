@@ -64,7 +64,11 @@ Authors@R:
       person(given = "Qian",
              family = "Zhou",
              role = "ctb",
-             email = "zcakqz1@ucl.ac.uk"))
+             email = "zcakqz1@ucl.ac.uk"),
+      person(given = "Michal",
+             family = "Lauer",
+             role = "ctb",
+             email = "michal.lauer.25@gmail.com"))
 Description: An R6 object oriented distributions package. Unified
     interface for 42 probability distributions and 11 kernels including
     functionality for multiple scientific types. Additionally
