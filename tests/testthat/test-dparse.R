@@ -1,10 +1,29 @@
-test_that("Parsing works correctly", {
+test_that("Function only accepts valid structures", {
+  expect_error(dparse("t"), "Call 't' does not have a valid format. See documentation.")
+  expect_error(dparse("n("), "Call 'n\\(' does not have a valid format. See documentation.")
+  expect_error(dparse("GaMmA)"), "Call 'GaMmA)' does not have a valid format. See documentation.")
+  expect_error(dparse("c2)("), "Call 'c2\\)\\(' does not have a valid format. See documentation.")
+})
+
+test_that("Parameter parsing works correctly", {
   #TODO: Add more per Github review
-  expect_s3_class(dparse("n()"), "Normal")
+  expect_equal(dparse("n()")$strprint(), "Norm(mean = 0, var = 1)")
+  expect_equal(dparse("n(mean = -1)")$strprint(), "Norm(mean = -1, var = 1)")
+  expect_equal(dparse("n(var = 8)")$strprint(), "Norm(mean = 0, var = 8)")
+  expect_equal(dparse("n(mean=-1,var=1)")$strprint(), "Norm(mean = -1, var = 1)")
+})
+
+test_that("Distribution parsing works correctly", {
   expect_s3_class(dparse("T()"), "StudentT")
   expect_s3_class(dparse("LoGNOrmAl(meanlog = 3)"), "Lognormal")
-  expect_s3_class(dparse("Gamma(rate = 3, shape = 8)"), "Gamma")
+  expect_s3_class(dparse("GaMMa(rate = 3, shape = 8)"), "Gamma")
+  expect_s3_class(dparse("C2(df = 2)"), "ChiSquared")
 })
+
+
+
+
+
 
 test_that("ShortName, ClassName and Alias are unique between distributions", {
   d6 <- listDistributions()[,(ids = paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", "))]
@@ -36,7 +55,7 @@ test_that("Every distribution is created with it's propper S3 class", {
 })
 
 test_that("Invalid distributions are not accepted", {
-  expect_error(dparse("Norm"))
+  expect_error(dparse("Norm"), regex = "Call ")
   expect_error(dparse("T("))
   expect_error(dparse("LN)"))
   expect_error(dparse("Ga2ma"))
