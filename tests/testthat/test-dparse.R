@@ -6,11 +6,21 @@ test_that("Function only accepts valid structures", {
 })
 
 test_that("Parameter parsing works correctly", {
-  #TODO: Add more per Github review
   expect_equal(dparse("n()")$strprint(), "Norm(mean = 0, var = 1)")
   expect_equal(dparse("n(mean = -1)")$strprint(), "Norm(mean = -1, var = 1)")
   expect_equal(dparse("n(var = 8)")$strprint(), "Norm(mean = 0, var = 8)")
   expect_equal(dparse("n(mean=-1,var=1)")$strprint(), "Norm(mean = -1, var = 1)")
+})
+
+test_that("Categorical parameters work correctly", {
+  expect_equal(dparse("CAT()")$strprint(),
+               "Cat(elements = 1, probs = 1)")
+  expect_equal(dparse("Cat(elements = c('a'), probs = c(0.3))")$strprint(),
+               "Cat(elements = a, probs = 0.3)")
+  expect_equal(dparse("Cat(elements = c('a', 'b'), probs = c(0.3, 0.7))")$strprint(),
+               "Cat(elements = c(\"a\", \"b\"), probs = c(0.3, 0.7))")
+  expect_equal(dparse("Cat(c('a', 'b', 'c'), c(0.3, 0.5, 0.2))")$strprint(),
+               "Cat(elements = c(\"a\", \"b\", \"c\"), probs = c(0.3, 0.5, 0.2))")
 })
 
 test_that("Distribution parsing works correctly", {
