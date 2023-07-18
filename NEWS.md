@@ -1,3 +1,7 @@
+# distr6 1.7
+
+* Added `dparse()`
+
 # distr6 1.6.15
 
 * Fix bug in `plot.Matdist` x limits
