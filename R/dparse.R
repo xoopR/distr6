@@ -23,6 +23,11 @@
 #' dparse("chisq(df = 3)")
 #' @export
 dparse <- function(toparse) {
+  # Check that the input is in a valid format
+  if (!grepl("^[a-zA-Z0-9]+\\(.*\\)$", toparse)) {
+    stop(sprintf("Call '%s' does not have a valid format. See documentation.",
+                 toparse))
+  }
   # Extract distribution and parameters
   dist <- gsub("(^.*)\\(.*", "\\1", toparse)
   params <- tolower(gsub(".*\\((.*)\\)$", "\\1", toparse))
