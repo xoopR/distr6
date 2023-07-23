@@ -18,9 +18,10 @@
 #' # lower and upper case work
 #' dparse("n(sd = 1, mean = 4)")
 #' dparse("T(df = 4)")
+#' dparse("cHiSq(df = 3)")
 #' # be careful to escape strings properly
 #' dparse("C(list('A', 'B'), c(0.5, 0.5))")
-#' dparse("chisq(df = 3)")
+#' dparse("Cat(elements = c('A', 'B'), probs = c(0.5, 0.5))")
 #' @export
 dparse <- function(toparse) {
   # Check that the input is in a valid format
@@ -29,8 +30,8 @@ dparse <- function(toparse) {
                  toparse))
   }
   # Extract distribution and parameters
-  dist <- gsub("(^.*)\\(.*", "\\1", toparse)
-  params <- tolower(gsub(".*\\((.*)\\)$", "\\1", toparse))
+  dist <- gsub("(^.*?)\\(.*", "\\1", toparse)
+  params <- tolower(gsub(".*?\\((.*)\\)$", "\\1", toparse))
   # Join all identifiers and locate the correct class
   d6s <- listDistributions()
   d6s <- d6s[, ids := paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", ")]

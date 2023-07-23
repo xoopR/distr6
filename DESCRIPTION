@@ -232,5 +232,4 @@ Collate:
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'sugar.R'
-    'dparse.R'
     'zzz.R'
