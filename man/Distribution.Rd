@@ -109,32 +109,32 @@ mvn$rand(5)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-Distribution-new}{\code{Distribution$new()}}
-\item \href{#method-Distribution-strprint}{\code{Distribution$strprint()}}
-\item \href{#method-Distribution-print}{\code{Distribution$print()}}
-\item \href{#method-Distribution-summary}{\code{Distribution$summary()}}
-\item \href{#method-Distribution-parameters}{\code{Distribution$parameters()}}
-\item \href{#method-Distribution-getParameterValue}{\code{Distribution$getParameterValue()}}
-\item \href{#method-Distribution-setParameterValue}{\code{Distribution$setParameterValue()}}
-\item \href{#method-Distribution-pdf}{\code{Distribution$pdf()}}
-\item \href{#method-Distribution-cdf}{\code{Distribution$cdf()}}
-\item \href{#method-Distribution-quantile}{\code{Distribution$quantile()}}
-\item \href{#method-Distribution-rand}{\code{Distribution$rand()}}
-\item \href{#method-Distribution-prec}{\code{Distribution$prec()}}
-\item \href{#method-Distribution-stdev}{\code{Distribution$stdev()}}
-\item \href{#method-Distribution-median}{\code{Distribution$median()}}
-\item \href{#method-Distribution-iqr}{\code{Distribution$iqr()}}
-\item \href{#method-Distribution-confidence}{\code{Distribution$confidence()}}
-\item \href{#method-Distribution-correlation}{\code{Distribution$correlation()}}
-\item \href{#method-Distribution-liesInSupport}{\code{Distribution$liesInSupport()}}
-\item \href{#method-Distribution-liesInType}{\code{Distribution$liesInType()}}
-\item \href{#method-Distribution-workingSupport}{\code{Distribution$workingSupport()}}
-\item \href{#method-Distribution-clone}{\code{Distribution$clone()}}
+\item \href{#method-new}{\code{Distribution$new()}}
+\item \href{#method-strprint}{\code{Distribution$strprint()}}
+\item \href{#method-print}{\code{Distribution$print()}}
+\item \href{#method-summary}{\code{Distribution$summary()}}
+\item \href{#method-parameters}{\code{Distribution$parameters()}}
+\item \href{#method-getParameterValue}{\code{Distribution$getParameterValue()}}
+\item \href{#method-setParameterValue}{\code{Distribution$setParameterValue()}}
+\item \href{#method-pdf}{\code{Distribution$pdf()}}
+\item \href{#method-cdf}{\code{Distribution$cdf()}}
+\item \href{#method-quantile}{\code{Distribution$quantile()}}
+\item \href{#method-rand}{\code{Distribution$rand()}}
+\item \href{#method-prec}{\code{Distribution$prec()}}
+\item \href{#method-stdev}{\code{Distribution$stdev()}}
+\item \href{#method-median}{\code{Distribution$median()}}
+\item \href{#method-iqr}{\code{Distribution$iqr()}}
+\item \href{#method-confidence}{\code{Distribution$confidence()}}
+\item \href{#method-correlation}{\code{Distribution$correlation()}}
+\item \href{#method-liesInSupport}{\code{Distribution$liesInSupport()}}
+\item \href{#method-liesInType}{\code{Distribution$liesInType()}}
+\item \href{#method-workingSupport}{\code{Distribution$workingSupport()}}
+\item \href{#method-clone}{\code{Distribution$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -214,8 +214,8 @@ Used internally.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-strprint"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-strprint}{}}}
+\if{html}{\out{<a id="method-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Printable string representation of the \code{Distribution}. Primarily used internally.
 \subsection{Usage}{
@@ -232,8 +232,8 @@ Number of parameters to display when printing.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-print"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-print}{}}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the \code{Distribution}.
 \subsection{Usage}{
@@ -253,8 +253,8 @@ Unused. Added for consistency.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-summary}{}}}
+\if{html}{\out{<a id="method-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-summary}{}}}
 \subsection{Method \code{summary()}}{
 Prints a summary of the \code{Distribution}.
 \subsection{Usage}{
@@ -275,8 +275,8 @@ Unused. Added for consistency.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-parameters"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-parameters}{}}}
+\if{html}{\out{<a id="method-parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-parameters}{}}}
 \subsection{Method \code{parameters()}}{
 Returns the full parameter details for the supplied parameter.
 \subsection{Usage}{
@@ -292,8 +292,8 @@ Returns the full parameter details for the supplied parameter.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-getParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-getParameterValue}{}}}
+\if{html}{\out{<a id="method-getParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
 \subsection{Method \code{getParameterValue()}}{
 Returns the value of the supplied parameter.
 \subsection{Usage}{
@@ -313,8 +313,8 @@ If \code{"warn"} then returns a warning on error, otherwise breaks if \code{"sto
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-setParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-setParameterValue}{}}}
+\if{html}{\out{<a id="method-setParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValue}{}}}
 \subsection{Method \code{setParameterValue()}}{
 Sets the value(s) of the given parameter(s).
 \subsection{Usage}{
@@ -357,8 +357,8 @@ b$setParameterValue(lst = list(size = 4, prob = 0.4))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-pdf"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-pdf}{}}}
+\if{html}{\out{<a id="method-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-pdf}{}}}
 \subsection{Method \code{pdf()}}{
 For discrete distributions the probability mass function (pmf) is returned, defined as
 \deqn{p_X(x) = P(X = x)}
@@ -415,8 +415,8 @@ mvn$pdf(data = matrix(1:4, nrow = 2), simplify = FALSE)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-cdf"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-cdf}{}}}
+\if{html}{\out{<a id="method-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-cdf}{}}}
 \subsection{Method \code{cdf()}}{
 The (lower tail) cumulative distribution function, \eqn{F_X}, is defined as
 \deqn{F_X(x) = P(X \le x)}
@@ -476,8 +476,8 @@ b$cdf(data = matrix(1:10))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-quantile"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-quantile}{}}}
+\if{html}{\out{<a id="method-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-quantile}{}}}
 \subsection{Method \code{quantile()}}{
 The quantile function, \eqn{q_X}, is the inverse cdf, i.e.
 \deqn{q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}}{q_X(p) = F^(-1)_X(p) = inf{x \epsilon R: F_X(x) \ge p}} #nolint
@@ -537,8 +537,8 @@ b$quantile(data = matrix(c(0.1,0.2)))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-rand"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-rand}{}}}
+\if{html}{\out{<a id="method-rand"></a>}}
+\if{latex}{\out{\hypertarget{method-rand}{}}}
 \subsection{Method \code{rand()}}{
 The rand function draws \code{n} simulations from the distribution.
 
@@ -576,8 +576,8 @@ mvn$rand(5)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-prec"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-prec}{}}}
+\if{html}{\out{<a id="method-prec"></a>}}
+\if{latex}{\out{\hypertarget{method-prec}{}}}
 \subsection{Method \code{prec()}}{
 Returns the precision of the distribution as \code{1/self$variance()}.
 \subsection{Usage}{
@@ -586,8 +586,8 @@ Returns the precision of the distribution as \code{1/self$variance()}.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-stdev"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-stdev}{}}}
+\if{html}{\out{<a id="method-stdev"></a>}}
+\if{latex}{\out{\hypertarget{method-stdev}{}}}
 \subsection{Method \code{stdev()}}{
 Returns the standard deviation of the distribution as \code{sqrt(self$variance())}.
 \subsection{Usage}{
@@ -596,8 +596,8 @@ Returns the standard deviation of the distribution as \code{sqrt(self$variance()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-median"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-median}{}}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
 \subsection{Method \code{median()}}{
 Returns the median of the distribution. If an analytical expression is available
 returns distribution median, otherwise if symmetric returns \code{self$mean}, otherwise
@@ -619,8 +619,8 @@ Ignored, addded for consistency.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-iqr"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-iqr}{}}}
+\if{html}{\out{<a id="method-iqr"></a>}}
+\if{latex}{\out{\hypertarget{method-iqr}{}}}
 \subsection{Method \code{iqr()}}{
 Inter-quartile range of the distribution. Estimated as
 \code{self$quantile(0.75) - self$quantile(0.25)}.
@@ -630,8 +630,8 @@ Inter-quartile range of the distribution. Estimated as
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-confidence"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-confidence}{}}}
+\if{html}{\out{<a id="method-confidence"></a>}}
+\if{latex}{\out{\hypertarget{method-confidence}{}}}
 \subsection{Method \code{confidence()}}{
 1 or 2-sided confidence interval around distribution.
 \subsection{Usage}{
@@ -651,8 +651,8 @@ Inter-quartile range of the distribution. Estimated as
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-correlation"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-correlation}{}}}
+\if{html}{\out{<a id="method-correlation"></a>}}
+\if{latex}{\out{\hypertarget{method-correlation}{}}}
 \subsection{Method \code{correlation()}}{
 If univariate returns \code{1}, otherwise returns the distribution correlation.
 \subsection{Usage}{
@@ -661,8 +661,8 @@ If univariate returns \code{1}, otherwise returns the distribution correlation.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-liesInSupport"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-liesInSupport}{}}}
+\if{html}{\out{<a id="method-liesInSupport"></a>}}
+\if{latex}{\out{\hypertarget{method-liesInSupport}{}}}
 \subsection{Method \code{liesInSupport()}}{
 Tests if the given values lie in the support of the distribution.
 Uses \verb{[set6::Set]$contains}.
@@ -689,8 +689,8 @@ otherwise tests if \code{x} lie between the maximum and minimum of the distribut
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-liesInType"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-liesInType}{}}}
+\if{html}{\out{<a id="method-liesInType"></a>}}
+\if{latex}{\out{\hypertarget{method-liesInType}{}}}
 \subsection{Method \code{liesInType()}}{
 Tests if the given values lie in the type of the distribution.
 Uses \verb{[set6::Set]$contains}.
@@ -717,8 +717,8 @@ otherwise tests if \code{x} lie between the maximum and minimum of the distribut
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-workingSupport"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-workingSupport}{}}}
+\if{html}{\out{<a id="method-workingSupport"></a>}}
+\if{latex}{\out{\hypertarget{method-workingSupport}{}}}
 \subsection{Method \code{workingSupport()}}{
 Returns an estimate for the computational support of the distribution.
 If an analytical cdf is available, then this is computed as the smallest interval
@@ -732,8 +732,8 @@ and is more prone to error. Used primarily by decorators.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Distribution-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-Distribution-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

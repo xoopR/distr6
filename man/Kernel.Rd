@@ -24,43 +24,43 @@ Abstract class that cannot be constructed directly.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-Kernel-new}{\code{Kernel$new()}}
-\item \href{#method-Kernel-mode}{\code{Kernel$mode()}}
-\item \href{#method-Kernel-mean}{\code{Kernel$mean()}}
-\item \href{#method-Kernel-median}{\code{Kernel$median()}}
-\item \href{#method-Kernel-pdfSquared2Norm}{\code{Kernel$pdfSquared2Norm()}}
-\item \href{#method-Kernel-cdfSquared2Norm}{\code{Kernel$cdfSquared2Norm()}}
-\item \href{#method-Kernel-skewness}{\code{Kernel$skewness()}}
-\item \href{#method-Kernel-clone}{\code{Kernel$clone()}}
+\item \href{#method-new}{\code{Kernel$new()}}
+\item \href{#method-mode}{\code{Kernel$mode()}}
+\item \href{#method-mean}{\code{Kernel$mean()}}
+\item \href{#method-median}{\code{Kernel$median()}}
+\item \href{#method-pdfSquared2Norm}{\code{Kernel$pdfSquared2Norm()}}
+\item \href{#method-cdfSquared2Norm}{\code{Kernel$cdfSquared2Norm()}}
+\item \href{#method-skewness}{\code{Kernel$skewness()}}
+\item \href{#method-clone}{\code{Kernel$clone()}}
 }
 }
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-Distribution-cdf'><code>distr6::Distribution$cdf()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-Distribution-pdf'><code>distr6::Distribution$pdf()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-Distribution-quantile'><code>distr6::Distribution$quantile()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-Distribution-rand'><code>distr6::Distribution$rand()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-Distribution-strprint'><code>distr6::Distribution$strprint()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -80,8 +80,8 @@ Support of the distribution.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-mode}{}}}
+\if{html}{\out{<a id="method-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-mode}{}}}
 \subsection{Method \code{mode()}}{
 Calculates the mode of the distribution.
 \subsection{Usage}{
@@ -99,8 +99,8 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-mean"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-mean}{}}}
+\if{html}{\out{<a id="method-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-mean}{}}}
 \subsection{Method \code{mean()}}{
 Calculates the mean (expectation) of the distribution.
 \subsection{Usage}{
@@ -116,8 +116,8 @@ Calculates the mean (expectation) of the distribution.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-median"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-median}{}}}
+\if{html}{\out{<a id="method-median"></a>}}
+\if{latex}{\out{\hypertarget{method-median}{}}}
 \subsection{Method \code{median()}}{
 Calculates the median of the distribution.
 \subsection{Usage}{
@@ -126,8 +126,8 @@ Calculates the median of the distribution.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-pdfSquared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-pdfSquared2Norm}{}}}
+\if{html}{\out{<a id="method-pdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfSquared2Norm}{}}}
 \subsection{Method \code{pdfSquared2Norm()}}{
 The squared 2-norm of the pdf is defined by
 \deqn{\int_a^b (f_X(u))^2 du}
@@ -150,8 +150,8 @@ Upper limit of the integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-cdfSquared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-cdfSquared2Norm}{}}}
+\if{html}{\out{<a id="method-cdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfSquared2Norm}{}}}
 \subsection{Method \code{cdfSquared2Norm()}}{
 The squared 2-norm of the cdf is defined by
 \deqn{\int_a^b (F_X(u))^2 du}
@@ -174,8 +174,8 @@ Upper limit of the integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-skewness}{}}}
+\if{html}{\out{<a id="method-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-skewness}{}}}
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
@@ -194,8 +194,8 @@ distribution and \eqn{\sigma} is the standard deviation of the distribution.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Kernel-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-Kernel-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

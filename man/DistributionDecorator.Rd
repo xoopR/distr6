@@ -40,14 +40,14 @@ of Reusable Object-Oriented Software.” Addison-Wesley.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-DistributionDecorator-new}{\code{DistributionDecorator$new()}}
-\item \href{#method-DistributionDecorator-decorate}{\code{DistributionDecorator$decorate()}}
-\item \href{#method-DistributionDecorator-clone}{\code{DistributionDecorator$clone()}}
+\item \href{#method-new}{\code{DistributionDecorator$new()}}
+\item \href{#method-decorate}{\code{DistributionDecorator$decorate()}}
+\item \href{#method-clone}{\code{DistributionDecorator$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DistributionDecorator-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DistributionDecorator-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -56,8 +56,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DistributionDecorator-decorate"></a>}}
-\if{latex}{\out{\hypertarget{method-DistributionDecorator-decorate}{}}}
+\if{html}{\out{<a id="method-decorate"></a>}}
+\if{latex}{\out{\hypertarget{method-decorate}{}}}
 \subsection{Method \code{decorate()}}{
 Decorates the given distribution with the methods available in this decorator.
 \subsection{Usage}{
@@ -77,8 +77,8 @@ Extra arguments passed down to specific decorators.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DistributionDecorator-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-DistributionDecorator-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

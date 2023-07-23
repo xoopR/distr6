@@ -31,31 +31,31 @@ Other decorators:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-CoreStatistics-mgf}{\code{CoreStatistics$mgf()}}
-\item \href{#method-CoreStatistics-cf}{\code{CoreStatistics$cf()}}
-\item \href{#method-CoreStatistics-pgf}{\code{CoreStatistics$pgf()}}
-\item \href{#method-CoreStatistics-entropy}{\code{CoreStatistics$entropy()}}
-\item \href{#method-CoreStatistics-skewness}{\code{CoreStatistics$skewness()}}
-\item \href{#method-CoreStatistics-kurtosis}{\code{CoreStatistics$kurtosis()}}
-\item \href{#method-CoreStatistics-variance}{\code{CoreStatistics$variance()}}
-\item \href{#method-CoreStatistics-kthmoment}{\code{CoreStatistics$kthmoment()}}
-\item \href{#method-CoreStatistics-genExp}{\code{CoreStatistics$genExp()}}
-\item \href{#method-CoreStatistics-mode}{\code{CoreStatistics$mode()}}
-\item \href{#method-CoreStatistics-mean}{\code{CoreStatistics$mean()}}
-\item \href{#method-CoreStatistics-clone}{\code{CoreStatistics$clone()}}
+\item \href{#method-mgf}{\code{CoreStatistics$mgf()}}
+\item \href{#method-cf}{\code{CoreStatistics$cf()}}
+\item \href{#method-pgf}{\code{CoreStatistics$pgf()}}
+\item \href{#method-entropy}{\code{CoreStatistics$entropy()}}
+\item \href{#method-skewness}{\code{CoreStatistics$skewness()}}
+\item \href{#method-kurtosis}{\code{CoreStatistics$kurtosis()}}
+\item \href{#method-variance}{\code{CoreStatistics$variance()}}
+\item \href{#method-kthmoment}{\code{CoreStatistics$kthmoment()}}
+\item \href{#method-genExp}{\code{CoreStatistics$genExp()}}
+\item \href{#method-mode}{\code{CoreStatistics$mode()}}
+\item \href{#method-mean}{\code{CoreStatistics$mean()}}
+\item \href{#method-clone}{\code{CoreStatistics$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href='../../distr6/html/DistributionDecorator.html#method-DistributionDecorator-decorate'><code>distr6::DistributionDecorator$decorate()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-DistributionDecorator-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate">}\href{../../distr6/html/DistributionDecorator.html#method-decorate}{\code{distr6::DistributionDecorator$decorate()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-mgf"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-mgf}{}}}
+\if{html}{\out{<a id="method-mgf"></a>}}
+\if{latex}{\out{\hypertarget{method-mgf}{}}}
 \subsection{Method \code{mgf()}}{
 Numerically estimates the moment-generating function.
 \subsection{Usage}{
@@ -75,8 +75,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-cf"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-cf}{}}}
+\if{html}{\out{<a id="method-cf"></a>}}
+\if{latex}{\out{\hypertarget{method-cf}{}}}
 \subsection{Method \code{cf()}}{
 Numerically estimates the characteristic function.
 \subsection{Usage}{
@@ -96,8 +96,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-pgf"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-pgf}{}}}
+\if{html}{\out{<a id="method-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-pgf}{}}}
 \subsection{Method \code{pgf()}}{
 Numerically estimates the probability-generating function.
 \subsection{Usage}{
@@ -117,8 +117,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-entropy"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-entropy}{}}}
+\if{html}{\out{<a id="method-entropy"></a>}}
+\if{latex}{\out{\hypertarget{method-entropy}{}}}
 \subsection{Method \code{entropy()}}{
 Numerically estimates the entropy function.
 \subsection{Usage}{
@@ -138,8 +138,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-skewness}{}}}
+\if{html}{\out{<a id="method-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-skewness}{}}}
 \subsection{Method \code{skewness()}}{
 Numerically estimates the distribution skewness.
 \subsection{Usage}{
@@ -156,8 +156,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-kurtosis"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-kurtosis}{}}}
+\if{html}{\out{<a id="method-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
 \subsection{Method \code{kurtosis()}}{
 Numerically estimates the distribution kurtosis.
 \subsection{Usage}{
@@ -177,8 +177,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-variance"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-variance}{}}}
+\if{html}{\out{<a id="method-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-variance}{}}}
 \subsection{Method \code{variance()}}{
 Numerically estimates the distribution variance.
 \subsection{Usage}{
@@ -195,8 +195,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-kthmoment"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-kthmoment}{}}}
+\if{html}{\out{<a id="method-kthmoment"></a>}}
+\if{latex}{\out{\hypertarget{method-kthmoment}{}}}
 \subsection{Method \code{kthmoment()}}{
 The kth central moment of a distribution is defined by
 \deqn{CM(k)_X = E_X[(x - \mu)^k]}
@@ -226,8 +226,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-genExp"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-genExp}{}}}
+\if{html}{\out{<a id="method-genExp"></a>}}
+\if{latex}{\out{\hypertarget{method-genExp}{}}}
 \subsection{Method \code{genExp()}}{
 Numerically estimates \eqn{E[f(X)]} for some function \eqn{f}.
 \subsection{Usage}{
@@ -250,8 +250,8 @@ Passed to \link[cubature:cubintegrate]{cubature::cubintegrate}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-mode}{}}}
+\if{html}{\out{<a id="method-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-mode}{}}}
 \subsection{Method \code{mode()}}{
 Numerically estimates the distribution mode.
 \subsection{Usage}{
@@ -269,8 +269,8 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-mean"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-mean}{}}}
+\if{html}{\out{<a id="method-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-mean}{}}}
 \subsection{Method \code{mean()}}{
 Numerically estimates the distribution mean.
 \subsection{Usage}{
@@ -287,8 +287,8 @@ Passed to \verb{$genExp}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CoreStatistics-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-CoreStatistics-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

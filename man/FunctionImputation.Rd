@@ -75,20 +75,20 @@ Other decorators:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-FunctionImputation-decorate}{\code{FunctionImputation$decorate()}}
-\item \href{#method-FunctionImputation-clone}{\code{FunctionImputation$clone()}}
+\item \href{#method-decorate}{\code{FunctionImputation$decorate()}}
+\item \href{#method-clone}{\code{FunctionImputation$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-DistributionDecorator-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FunctionImputation-decorate"></a>}}
-\if{latex}{\out{\hypertarget{method-FunctionImputation-decorate}{}}}
+\if{html}{\out{<a id="method-decorate"></a>}}
+\if{latex}{\out{\hypertarget{method-decorate}{}}}
 \subsection{Method \code{decorate()}}{
 Decorates the given distribution with the methods available in this decorator.
 \subsection{Usage}{
@@ -110,8 +110,8 @@ means worse accuracy and faster computation.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FunctionImputation-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-FunctionImputation-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

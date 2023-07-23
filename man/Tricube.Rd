@@ -43,44 +43,44 @@ Other kernels:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-Tricube-pdfSquared2Norm}{\code{Tricube$pdfSquared2Norm()}}
-\item \href{#method-Tricube-cdfSquared2Norm}{\code{Tricube$cdfSquared2Norm()}}
-\item \href{#method-Tricube-variance}{\code{Tricube$variance()}}
-\item \href{#method-Tricube-clone}{\code{Tricube$clone()}}
+\item \href{#method-pdfSquared2Norm}{\code{Tricube$pdfSquared2Norm()}}
+\item \href{#method-cdfSquared2Norm}{\code{Tricube$cdfSquared2Norm()}}
+\item \href{#method-variance}{\code{Tricube$variance()}}
+\item \href{#method-clone}{\code{Tricube$clone()}}
 }
 }
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-Distribution-cdf'><code>distr6::Distribution$cdf()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-Distribution-pdf'><code>distr6::Distribution$pdf()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-Distribution-quantile'><code>distr6::Distribution$quantile()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-Distribution-rand'><code>distr6::Distribution$rand()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-Distribution-strprint'><code>distr6::Distribution$strprint()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize"><a href='../../distr6/html/Kernel.html#method-Kernel-initialize'><code>distr6::Kernel$initialize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean"><a href='../../distr6/html/Kernel.html#method-Kernel-mean'><code>distr6::Kernel$mean()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median"><a href='../../distr6/html/Kernel.html#method-Kernel-median'><code>distr6::Kernel$median()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode"><a href='../../distr6/html/Kernel.html#method-Kernel-mode'><code>distr6::Kernel$mode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness"><a href='../../distr6/html/Kernel.html#method-Kernel-skewness'><code>distr6::Kernel$skewness()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize">}\href{../../distr6/html/Kernel.html#method-initialize}{\code{distr6::Kernel$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean">}\href{../../distr6/html/Kernel.html#method-mean}{\code{distr6::Kernel$mean()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median">}\href{../../distr6/html/Kernel.html#method-median}{\code{distr6::Kernel$median()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode">}\href{../../distr6/html/Kernel.html#method-mode}{\code{distr6::Kernel$mode()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness">}\href{../../distr6/html/Kernel.html#method-skewness}{\code{distr6::Kernel$skewness()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tricube-pdfSquared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-Tricube-pdfSquared2Norm}{}}}
+\if{html}{\out{<a id="method-pdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfSquared2Norm}{}}}
 \subsection{Method \code{pdfSquared2Norm()}}{
 The squared 2-norm of the pdf is defined by
 \deqn{\int_a^b (f_X(u))^2 du}
@@ -103,8 +103,8 @@ Upper limit of the integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tricube-cdfSquared2Norm"></a>}}
-\if{latex}{\out{\hypertarget{method-Tricube-cdfSquared2Norm}{}}}
+\if{html}{\out{<a id="method-cdfSquared2Norm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfSquared2Norm}{}}}
 \subsection{Method \code{cdfSquared2Norm()}}{
 The squared 2-norm of the cdf is defined by
 \deqn{\int_a^b (F_X(u))^2 du}
@@ -127,8 +127,8 @@ Upper limit of the integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tricube-variance"></a>}}
-\if{latex}{\out{\hypertarget{method-Tricube-variance}{}}}
+\if{html}{\out{<a id="method-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-variance}{}}}
 \subsection{Method \code{variance()}}{
 The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
@@ -147,8 +147,8 @@ covariance matrix is returned.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Tricube-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-Tricube-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

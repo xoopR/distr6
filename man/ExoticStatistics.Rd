@@ -32,28 +32,28 @@ Other decorators:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ExoticStatistics-cdfAntiDeriv}{\code{ExoticStatistics$cdfAntiDeriv()}}
-\item \href{#method-ExoticStatistics-survivalAntiDeriv}{\code{ExoticStatistics$survivalAntiDeriv()}}
-\item \href{#method-ExoticStatistics-survival}{\code{ExoticStatistics$survival()}}
-\item \href{#method-ExoticStatistics-hazard}{\code{ExoticStatistics$hazard()}}
-\item \href{#method-ExoticStatistics-cumHazard}{\code{ExoticStatistics$cumHazard()}}
-\item \href{#method-ExoticStatistics-cdfPNorm}{\code{ExoticStatistics$cdfPNorm()}}
-\item \href{#method-ExoticStatistics-pdfPNorm}{\code{ExoticStatistics$pdfPNorm()}}
-\item \href{#method-ExoticStatistics-survivalPNorm}{\code{ExoticStatistics$survivalPNorm()}}
-\item \href{#method-ExoticStatistics-clone}{\code{ExoticStatistics$clone()}}
+\item \href{#method-cdfAntiDeriv}{\code{ExoticStatistics$cdfAntiDeriv()}}
+\item \href{#method-survivalAntiDeriv}{\code{ExoticStatistics$survivalAntiDeriv()}}
+\item \href{#method-survival}{\code{ExoticStatistics$survival()}}
+\item \href{#method-hazard}{\code{ExoticStatistics$hazard()}}
+\item \href{#method-cumHazard}{\code{ExoticStatistics$cumHazard()}}
+\item \href{#method-cdfPNorm}{\code{ExoticStatistics$cdfPNorm()}}
+\item \href{#method-pdfPNorm}{\code{ExoticStatistics$pdfPNorm()}}
+\item \href{#method-survivalPNorm}{\code{ExoticStatistics$survivalPNorm()}}
+\item \href{#method-clone}{\code{ExoticStatistics$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href='../../distr6/html/DistributionDecorator.html#method-DistributionDecorator-decorate'><code>distr6::DistributionDecorator$decorate()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href='../../distr6/html/DistributionDecorator.html#method-DistributionDecorator-initialize'><code>distr6::DistributionDecorator$initialize()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate">}\href{../../distr6/html/DistributionDecorator.html#method-decorate}{\code{distr6::DistributionDecorator$decorate()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize">}\href{../../distr6/html/DistributionDecorator.html#method-initialize}{\code{distr6::DistributionDecorator$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-cdfAntiDeriv"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-cdfAntiDeriv}{}}}
+\if{html}{\out{<a id="method-cdfAntiDeriv"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfAntiDeriv}{}}}
 \subsection{Method \code{cdfAntiDeriv()}}{
 The cdf anti-derivative is defined by \deqn{acdf(a, b) = \int_a^b F_X(x) dx}
 where X is the distribution, \eqn{F_X} is the cdf of the distribution \eqn{X} and
@@ -75,8 +75,8 @@ Upper bounds of integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-survivalAntiDeriv"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-survivalAntiDeriv}{}}}
+\if{html}{\out{<a id="method-survivalAntiDeriv"></a>}}
+\if{latex}{\out{\hypertarget{method-survivalAntiDeriv}{}}}
 \subsection{Method \code{survivalAntiDeriv()}}{
 The survival anti-derivative is defined by
 \deqn{as(a, b) = \int_a^b S_X(x) dx}
@@ -99,8 +99,8 @@ Upper bounds of integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-survival"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-survival}{}}}
+\if{html}{\out{<a id="method-survival"></a>}}
+\if{latex}{\out{\hypertarget{method-survival}{}}}
 \subsection{Method \code{survival()}}{
 The survival function is defined by
 \deqn{S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx}
@@ -136,8 +136,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-hazard"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-hazard}{}}}
+\if{html}{\out{<a id="method-hazard"></a>}}
+\if{latex}{\out{\hypertarget{method-hazard}{}}}
 \subsection{Method \code{hazard()}}{
 The hazard function is defined by
 \deqn{h_X(x) = \frac{f_X}{S_X}}{h_X(x) = f_X/S_X}
@@ -172,8 +172,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-cumHazard"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-cumHazard}{}}}
+\if{html}{\out{<a id="method-cumHazard"></a>}}
+\if{latex}{\out{\hypertarget{method-cumHazard}{}}}
 \subsection{Method \code{cumHazard()}}{
 The cumulative hazard function is defined analytically by
 \deqn{H_X(x) = -log(S_X)}
@@ -208,8 +208,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-cdfPNorm"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-cdfPNorm}{}}}
+\if{html}{\out{<a id="method-cdfPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-cdfPNorm}{}}}
 \subsection{Method \code{cdfPNorm()}}{
 The p-norm of the cdf is defined by
 \deqn{(\int_a^b |F_X|^p d\mu)^{1/p}}
@@ -237,8 +237,8 @@ Upper bounds of integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-pdfPNorm"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-pdfPNorm}{}}}
+\if{html}{\out{<a id="method-pdfPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-pdfPNorm}{}}}
 \subsection{Method \code{pdfPNorm()}}{
 The p-norm of the pdf is defined by
 \deqn{(\int_a^b |f_X|^p d\mu)^{1/p}}
@@ -266,8 +266,8 @@ Upper bounds of integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-survivalPNorm"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-survivalPNorm}{}}}
+\if{html}{\out{<a id="method-survivalPNorm"></a>}}
+\if{latex}{\out{\hypertarget{method-survivalPNorm}{}}}
 \subsection{Method \code{survivalPNorm()}}{
 The p-norm of the survival function is defined by
 \deqn{(\int_a^b |S_X|^p d\mu)^{1/p}}
@@ -295,8 +295,8 @@ Upper bounds of integral.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ExoticStatistics-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ExoticStatistics-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -65,6 +65,7 @@ Other contributors:
   \item Runlong Yu \email{edwinyurl@hotmail.com} [contributor]
   \item Chijing Zeng \email{britneyzenguk@gmail.com} [contributor]
   \item Qian Zhou \email{zcakqz1@ucl.ac.uk} [contributor]
+  \item Michal Lauer \email{michal.lauer.25@gmail.com} [contributor]
 }
 
 }
