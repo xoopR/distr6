@@ -37,6 +37,7 @@ Pareto <- R6Class("Pareto",
     name = "Pareto",
     short_name = "Pare",
     description = "Pareto (Type I) Probability Distribution.",
+    alias = "PR, Par",
     packages = c("extraDistr", "pracma"),
 
     # Public methods
@@ -276,6 +277,6 @@ Pareto <- R6Class("Pareto",
     ShortName = "Pare", ClassName = "Pareto",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "", Alias = paste("PR", "Par", sep = ", ")
+    Package = "extraDistr", Tags = "", Alias = "PR, Par"
   )
 )

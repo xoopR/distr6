@@ -33,6 +33,7 @@ Normal <- R6Class("Normal",
     name = "Normal",
     short_name = "Norm",
     description = "Normal Probability Distribution.",
+    alias = "N",
     packages = "stats",
 
     # Public methods

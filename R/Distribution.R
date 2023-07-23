@@ -25,7 +25,9 @@ Distribution <- R6Class("Distribution",
   public = list(
     name = character(0),
     short_name = character(0),
+    alias = character(0),
     description = NULL,
+
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -33,6 +35,8 @@ Distribution <- R6Class("Distribution",
     #' Full name of distribution.
     #' @param short_name `character(1)` \cr
     #' Short name of distribution for printing.
+    #' @param alias `character(1)` \cr
+    #' Alias of distribution for parsing.
     #' @param type `([set6::Set])` \cr
     #' Distribution type.
     #' @param support `([set6::Set])` \cr

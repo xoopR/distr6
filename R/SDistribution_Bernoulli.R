@@ -35,6 +35,7 @@ Bernoulli <- R6Class("Bernoulli",
     name = "Bernoulli",
     short_name = "Bern",
     description = "Bernoulli Probability Distribution.",
+    alias = "B",
     packages = "stats",
 
     # Public methods

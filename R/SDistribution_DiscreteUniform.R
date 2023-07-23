@@ -32,6 +32,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     name = "DiscreteUniform",
     short_name = "DUnif",
     description = "Discrete Uniform Probability Distribution.",
+    alias = "DU",
     packages = "extraDistr",
 
     # Public methods

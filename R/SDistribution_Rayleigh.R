@@ -31,6 +31,7 @@ Rayleigh <- R6Class("Rayleigh",
     name = "Rayleigh",
     short_name = "Rayl",
     description = "Rayleigh Probability Distribution.",
+    alias = "RY, Ray",
     packages = "extraDistr",
 
     # Public methods
@@ -213,6 +214,6 @@ Rayleigh <- R6Class("Rayleigh",
     ShortName = "Rayl", ClassName = "Rayleigh",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "scale", Alias = paste("RY", "Ray", sep = ", ")
+    Package = "extraDistr", Tags = "scale", Alias = "RY, Ray"
   )
 )

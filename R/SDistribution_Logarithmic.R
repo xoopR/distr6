@@ -31,6 +31,7 @@ Logarithmic <- R6Class("Logarithmic",
     name = "Logarithmic",
     short_name = "Log",
     description = "Logarithmic Probability Distribution.",
+    alias = "L",
     packages = "extraDistr",
 
     # Public methods

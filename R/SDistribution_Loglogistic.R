@@ -35,6 +35,7 @@ Loglogistic <- R6Class("Loglogistic",
     name = "Loglogistic",
     short_name = "LLogis",
     description = "Loglogistic Probability Distribution.",
+    alias = "LL, LLG",
     packages = "actuar",
 
     # Public methods
@@ -222,6 +223,6 @@ Loglogistic <- R6Class("Loglogistic",
     ShortName = "LLogis", ClassName = "Loglogistic",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "actuar", Tags = "", Alias = paste("LL", "LLG", sep = ", ")
+    Package = "actuar", Tags = "", Alias = "LL, LLG"
   )
 )

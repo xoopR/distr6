@@ -37,6 +37,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     name = "EmpiricalMV",
     short_name = "EmpMV",
     description = "Multivariate Empirical Probability Distribution.",
+    alias = "EMV",
 
     # Public methods
     # initialize

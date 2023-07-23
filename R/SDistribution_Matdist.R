@@ -52,6 +52,7 @@ Matdist <- R6Class("Matdist",
     name = "Matdist",
     short_name = "Matdist",
     description = "Matrix Probability Distribution.",
+    alias = "MD",
 
     # Public methods
     # initialize

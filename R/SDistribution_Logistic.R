@@ -32,6 +32,7 @@ Logistic <- R6Class("Logistic",
     name = "Logistic",
     short_name = "Logis",
     description = "Logistic Probability Distribution.",
+    alias = "LG",
     packages = "stats",
 
     # Public methods

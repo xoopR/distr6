@@ -33,6 +33,7 @@ Multinomial <- R6Class("Multinomial",
     name = "Multinomial",
     short_name = "Multinom",
     description = "Multinomial Probability Distribution.",
+    alias = "MN",
     packages = "extraDistr",
 
     # Public methods

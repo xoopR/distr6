@@ -33,6 +33,7 @@ Cauchy <- R6Class("Cauchy",
     name = "Cauchy",
     short_name = "Cauchy",
     description = "Cauchy Probability Distribution.",
+    alias = "CH",
     packages = "stats",
 
     # Public methods

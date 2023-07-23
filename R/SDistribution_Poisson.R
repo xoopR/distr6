@@ -32,6 +32,7 @@ Poisson <- R6Class("Poisson",
     name = "Poisson",
     short_name = "Pois",
     description = "Poisson Probability Distribution.",
+    alias = "P, Poi, Pois",
     packages = "stats",
 
     # Public methods
@@ -181,6 +182,6 @@ Poisson <- R6Class("Poisson",
     ShortName = "Pois", ClassName = "Poisson",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("P", "Poi", "Pois", sep = ", ")
+    Package = "stats", Tags = "", Alias = "P, Poi, Pois"
   )
 )

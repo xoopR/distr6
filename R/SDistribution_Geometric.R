@@ -37,6 +37,7 @@ Geometric <- R6Class("Geometric",
     name = "Geometric",
     short_name = "Geom",
     description = "Geometric Probability Distribution.",
+    alias = "GM, Geo",
     packages = "stats",
 
     # Public methods
@@ -266,6 +267,6 @@ Geometric <- R6Class("Geometric",
     ShortName = "Geom", ClassName = "Geometric",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("GM", "Geo", sep = ", ")
+    Package = "stats", Tags = "", Alias = "GM, Geo"
   )
 )

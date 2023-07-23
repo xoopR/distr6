@@ -32,6 +32,7 @@ Arcsine <- R6Class("Arcsine",
     name = "Arcsine",
     short_name = "Arc",
     description = "Arcsine Probability Distribution.",
+    alias = "AS",
 
     # Public methods
     # initialize

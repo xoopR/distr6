@@ -51,6 +51,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     name = "WeightedDiscrete",
     short_name = "WeightDisc",
     description = "Weighted Discrete Probability Distribution.",
+    alias = "WD",
 
     # Public methods
     # initialize

@@ -36,6 +36,7 @@ Frechet <- R6Class("Frechet",
     name = "Frechet",
     short_name = "Frec",
     description = "Frechet Probability Distribution.",
+    alias = "FR",
     packages = "extraDistr",
 
     # Public methods

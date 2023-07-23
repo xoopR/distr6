@@ -33,6 +33,7 @@ StudentT <- R6Class("StudentT",
     name = "StudentT",
     short_name = "T",
     description = "Student's T Probability Distribution.",
+    alias = "ST",
     packages = "stats",
 
     # Public methods

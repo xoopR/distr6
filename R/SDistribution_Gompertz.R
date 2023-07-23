@@ -33,6 +33,7 @@ Gompertz <- R6Class("Gompertz",
     name = "Gompertz",
     short_name = "Gomp",
     description = "Gompertz Probability Distribution.",
+    alias = "GPZ, Gom",
     packages = "extraDistr",
 
     # Public methods
@@ -161,6 +162,6 @@ Gompertz <- R6Class("Gompertz",
     ShortName = "Gomp", ClassName = "Gompertz",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "-", Tags = "", Alias = paste("GPZ", "Gom", sep = ", ")
+    Package = "-", Tags = "", Alias = "GPZ, Gom"
   )
 )

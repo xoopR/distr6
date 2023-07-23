@@ -46,6 +46,7 @@ Dirichlet <- R6Class("Dirichlet",
     name = "Dirichlet",
     short_name = "Diri",
     description = "Dirichlet Probability Distribution.",
+    alias = "DRC",
     packages = "extraDistr",
 
     # Public methods

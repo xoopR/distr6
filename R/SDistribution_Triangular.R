@@ -36,6 +36,7 @@ Triangular <- R6Class("Triangular",
     name = "Triangular",
     short_name = "Tri",
     description = "Triangular Probability Distribution.",
+    alias = "TR",
     packages = "extraDistr",
 
     # Public methods

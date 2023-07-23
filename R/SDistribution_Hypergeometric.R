@@ -32,6 +32,7 @@ Hypergeometric <- R6Class("Hypergeometric",
     name = "Hypergeometric",
     short_name = "Hyper",
     description = "Hypergeometric Probability Distribution.",
+    alias = "HGM",
     packages = "stats",
 
     # Public methods

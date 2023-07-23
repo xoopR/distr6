@@ -35,6 +35,7 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     name = "ShiftedLoglogistic",
     short_name = "ShiftLLogis",
     description = "Shifted Loglogistic Probability Distribution.",
+    alias = "SLL",
     packages = "pracma",
 
     # Public methods

@@ -32,6 +32,7 @@ Erlang <- R6Class("Erlang",
     name = "Erlang",
     short_name = "Erlang",
     description = "Erlang Probability Distribution.",
+    alias = "ER",
     packages = "stats",
 
     # Public methods

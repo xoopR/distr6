@@ -35,6 +35,7 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     name = "ChiSquaredNoncentral",
     short_name = "ChiSqNC",
     description = "Non-central ChiSquared Probability Distribution.",
+    alias = "CSQNC, CHINC, C2NC",
     packages = "stats",
 
     # Public methods
@@ -213,6 +214,6 @@ ChiSquaredNoncentral <- R6Class("ChiSquaredNoncentral",
     ShortName = "ChiSqNC", ClassName = "ChiSquaredNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("CSQNC", "CHINC", "C2NC", sep = ", ")
+    Package = "stats", Tags = "", Alias = "CSQNC, CHINC, C2NC"
   )
 )

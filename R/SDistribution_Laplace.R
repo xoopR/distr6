@@ -32,6 +32,7 @@ Laplace <- R6Class("Laplace",
     name = "Laplace",
     short_name = "Lap",
     description = "Laplace Probability Distribution.",
+    alias = "LP",
     packages = "extraDistr",
 
     # Public methods

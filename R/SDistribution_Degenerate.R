@@ -33,6 +33,7 @@ Degenerate <- R6Class("Degenerate",
     # Public fields
     name = "Degenerate",
     short_name = "Degen",
+    alias = "DGN, Deg, Delta, Dirac",
     description = "Degenerate Probability Distribution.",
 
     # Public methods
@@ -188,6 +189,6 @@ Degenerate <- R6Class("Degenerate",
     ShortName = "Degen", ClassName = "Degenerate",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "limits", Alias = paste("DGN", "Deg", "Delta", "Dirac", sep = ", ")
+    Package = "-", Tags = "limits", Alias = "DGN, Deg, Delta, Dirac"
   )
 )

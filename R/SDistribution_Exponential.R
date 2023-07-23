@@ -32,6 +32,7 @@ Exponential <- R6Class("Exponential",
     name = "Exponential",
     short_name = "Exp",
     description = "Exponential Probability Distribution.",
+    alias = "EX",
     packages = "stats",
 
     # Public methods
@@ -203,6 +204,6 @@ Exponential <- R6Class("Exponential",
     ShortName = "Exp", ClassName = "Exponential",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "scale", Alias = "Ex"
+    Package = "stats", Tags = "scale", Alias = "EX"
   )
 )

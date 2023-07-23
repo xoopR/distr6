@@ -33,6 +33,7 @@ Gamma <- R6Class("Gamma",
     name = "Gamma",
     short_name = "Gamma",
     description = "Gamma Probability Distribution.",
+    alias = "G, Gam",
     packages = "stats",
 
     # Public methods
@@ -223,6 +224,6 @@ Gamma <- R6Class("Gamma",
     ShortName = "Gamma", ClassName = "Gamma",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("G", "Gam", sep = ", ")
+    Package = "stats", Tags = "", Alias = "G, Gam"
   )
 )

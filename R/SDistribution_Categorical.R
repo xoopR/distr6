@@ -39,6 +39,7 @@ Categorical <- R6Class("Categorical",
     name = "Categorical",
     short_name = "Cat",
     description = "Categorical Probability Distribution.",
+    alias = "C",
 
     # Public methods
     # initialize

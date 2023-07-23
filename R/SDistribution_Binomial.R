@@ -33,6 +33,7 @@ Binomial <- R6Class("Binomial",
     name = "Binomial",
     short_name = "Binom",
     description = "Binomial Probability Distribution.",
+    alias = "BM, Bin",
     packages = "stats",
 
     # Public methods
@@ -239,6 +240,6 @@ Binomial <- R6Class("Binomial",
     ShortName = "Binom", ClassName = "Binomial",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits", Alias = paste("BM", "Bin", sep = ", ")
+    Package = "stats", Tags = "limits", Alias = "BM, Bin"
   )
 )

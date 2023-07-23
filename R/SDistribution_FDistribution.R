@@ -32,6 +32,7 @@ FDistribution <- R6Class("FDistribution",
     name = "FDistribution",
     short_name = "F",
     description = "F Probability Distribution.",
+    alias = "FD",
     packages = "stats",
 
     # Public methods

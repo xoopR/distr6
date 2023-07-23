@@ -43,6 +43,7 @@ Wald <- R6Class("Wald",
     name = "Wald",
     short_name = "Wald",
     description = "Wald Probability Distribution.",
+    alias = "W",
     packages = "extraDistr",
 
     # Public methods

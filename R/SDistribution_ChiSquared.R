@@ -33,6 +33,7 @@ ChiSquared <- R6Class("ChiSquared",
     name = "ChiSquared",
     short_name = "ChiSq",
     description = "ChiSquared Probability Distribution.",
+    alias = "CSQ, CHI, C2",
     packages = "stats",
 
     # Public methods
@@ -215,6 +216,6 @@ ChiSquared <- R6Class("ChiSquared",
     ShortName = "ChiSq", ClassName = "ChiSquared",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("CSQ", "CHI", "C2", sep = ", ")
+    Package = "stats", Tags = "", Alias = "CSQ, CHI, C2"
   )
 )

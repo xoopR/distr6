@@ -34,6 +34,7 @@ BetaNoncentral <- R6Class("BetaNoncentral",
     name = "BetaNoncentral",
     short_name = "BetaNC",
     description = "BetaNoncentral Probability Distribution.",
+    alias = "BTNC",
     packages = "stats",
 
     # Public methods

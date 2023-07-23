@@ -38,6 +38,7 @@ Empirical <- R6Class("Empirical",
     name = "Empirical",
     short_name = "Emp",
     description = "Empirical Probability Distribution.",
+    alias = "E",
 
     # Public methods
     # initialize

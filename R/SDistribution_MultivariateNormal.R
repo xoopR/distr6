@@ -43,6 +43,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     name = "MultivariateNormal",
     short_name = "MultiNorm",
     description = "Multivariate Normal Probability Distribution.",
+    alias = "MVN",
 
     # Public methods
     # initialize

@@ -33,6 +33,7 @@ Lognormal <- R6Class("Lognormal",
     name = "Lognormal",
     short_name = "Lnorm",
     description = "Lognormal Probability Distribution.",
+    alias = "LN",
     packages = "stats",
 
     # Public methods

@@ -35,6 +35,7 @@ Uniform <- R6Class("Uniform",
     name = "Uniform",
     short_name = "Unif",
     description = "Uniform Probability Distribution.",
+    alias = "U, Uni",
     packages = "stats",
 
     # Public methods
@@ -240,6 +241,6 @@ Uniform <- R6Class("Uniform",
     ShortName = "Unif", ClassName = "Uniform",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits", Alias = paste("U", "Uni", sep = ", ")
+    Package = "stats", Tags = "limits", Alias = "U, Uni"
   )
 )

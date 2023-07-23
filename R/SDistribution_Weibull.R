@@ -34,6 +34,7 @@ Weibull <- R6Class("Weibull",
     name = "Weibull",
     short_name = "Weibull",
     description = "Weibull Probability Distribution.",
+    alias = "WB, Weib",
     packages = "stats",
 
     # Public methods
@@ -232,6 +233,6 @@ Weibull <- R6Class("Weibull",
     ShortName = "Weibull", ClassName = "Weibull",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "", Alias = paste("WB", "Weib", sep = ", ")
+    Package = "stats", Tags = "", Alias = "WB, Weib"
   )
 )

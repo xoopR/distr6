@@ -32,6 +32,7 @@ Beta <- R6Class("Beta",
     name = "Beta",
     short_name = "Beta",
     description = "Beta Probability Distribution.",
+    alias = "BT",
     packages = "stats",
 
     # Public methods

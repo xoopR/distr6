@@ -44,6 +44,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     name = "NegativeBinomial",
     short_name = "NBinom",
     description = "Negative Binomial Probability Distribution.",
+    alias = "NB",
     packages = "stats",
 
     # Public methods

@@ -34,6 +34,7 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     name = "FDistributionNoncentral",
     short_name = "FNC",
     description = "Non-central F Probability Distribution.",
+    alias = "FDNC",
     packages = "stats",
 
     # Public methods

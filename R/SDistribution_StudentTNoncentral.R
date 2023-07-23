@@ -34,6 +34,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     name = "StudentTNoncentral",
     short_name = "TNS",
     description = "Non-central Student's T Probability Distribution.",
+    alias = "STNC",
     packages = "stats",
 
     # Public methods
