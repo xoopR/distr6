@@ -24,10 +24,10 @@ test_that("Categorical parameters work correctly", {
 })
 
 test_that("Distribution parsing works correctly", {
-  expect_s3_class(dparse("T()"), "StudentT")
-  expect_s3_class(dparse("LoGNOrmAl(meanlog = 3)"), "Lognormal")
-  expect_s3_class(dparse("GaMMa(rate = 3, shape = 8)"), "Gamma")
-  expect_s3_class(dparse("C2(df = 2)"), "ChiSquared")
+  expect_R6_class(dparse("T()"), "StudentT")
+  expect_R6_class(dparse("LoGNOrmAl(meanlog = 3)"), "Lognormal")
+  expect_R6_class(dparse("GaMMa(rate = 3, shape = 8)"), "Gamma")
+  expect_R6_class(dparse("C2(df = 2)"), "ChiSquared")
 })
 
 test_that("ShortName, ClassName and Alias are unique between distributions", {
@@ -50,6 +50,6 @@ test_that("Every distribution is created with it's propper S3 class", {
   classes <- unlist(counts, use.names = F)
   # Evaluate
   for (i in seq_along(classes)) {
-    expect_s3_class(dparse(calls[i]), classes[i])
+    expect_R6_class(dparse(calls[i]), classes[i])
   }
 })
