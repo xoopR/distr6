@@ -12,6 +12,7 @@
 #' @templateVar default location = 0, scale = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

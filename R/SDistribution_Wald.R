@@ -26,6 +26,7 @@
 #' The American Statistician, 30(2), 88-90.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

@@ -13,6 +13,7 @@
 #' @templateVar default df1 = 1, df2 = 1, location = 0
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

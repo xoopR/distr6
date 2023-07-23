@@ -18,6 +18,7 @@
 #' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

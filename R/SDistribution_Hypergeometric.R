@@ -12,6 +12,7 @@
 #' @templateVar default size = 50, successes = 5, draws = 10
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

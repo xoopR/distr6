@@ -22,6 +22,7 @@
 #' Springer-Verlag. ISBN 0-387-96305-7.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis

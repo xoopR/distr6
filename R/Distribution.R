@@ -16,6 +16,7 @@
 #' @template param_n
 #' @template param_paramid
 #' @template class_distribution
+#' @template field_alias
 #'
 #' @return Returns R6 object of class Distribution.
 #'

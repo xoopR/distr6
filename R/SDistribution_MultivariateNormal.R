@@ -24,6 +24,7 @@
 #' doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
