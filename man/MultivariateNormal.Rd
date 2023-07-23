@@ -101,6 +101,8 @@ Other multivariate distributions:
 \item{\code{short_name}}{Short name of distribution for printing.}
 
 \item{\code{description}}{Brief description of the distribution.}
+
+\item{\code{alias}}{Alias of the distribution.}
 }
 \if{html}{\out{</div>}}
 }

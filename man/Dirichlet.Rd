@@ -105,6 +105,8 @@ Other multivariate distributions:
 
 \item{\code{description}}{Brief description of the distribution.}
 
+\item{\code{alias}}{Alias of the distribution.}
+
 \item{\code{packages}}{Packages required to be installed in order to construct the distribution.}
 }
 \if{html}{\out{</div>}}
