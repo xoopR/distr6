@@ -38,7 +38,7 @@ test_that("ShortName, ClassName and Alias are unique between distributions", {
   expect_equal(length(d6), length(unique(d6)))
 })
 
-test_that("Every distribution is created with it's propper S3 class", {
+test_that("Every distribution is created with it's propper R6 class", {
   # Get calls
   d6 <- listDistributions()[,(ids = paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", "))]
   calls <- strsplit(d6, ",")
@@ -51,5 +51,13 @@ test_that("Every distribution is created with it's propper S3 class", {
   # Evaluate
   for (i in seq_along(classes)) {
     expect_R6_class(dparse(calls[i]), classes[i])
+  }
+})
+
+test_that("Aliases are same within distirbution and listDistribution", {
+  d6 <- listDistributions()[, c("ClassName", "Alias")]
+  for (i in seq_len(nrow(d6))) {
+    distr <- eval(parse(text = paste0("distr6::", d6[[i,"ClassName"]], "$new()")))
+    expect_equal(distr$alias, d6[[i, "Alias"]])
   }
 })
