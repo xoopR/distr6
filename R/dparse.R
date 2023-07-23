@@ -34,7 +34,8 @@ dparse <- function(toparse) {
   params <- tolower(gsub(".*?\\((.*)\\)$", "\\1", toparse))
   # Join all identifiers and locate the correct class
   d6s <- listDistributions()
-  d6s <- d6s[, ids := paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", ")]
+  d6s$ids <- paste(tolower(d6s$ShortName), tolower(d6s$ClassName), tolower(d6s$Alias),
+                   sep = ", ")
   dist_word <- paste0("\\b", tolower(dist), "\\b")
   classrow <- which(grepl(dist_word, d6s$ids))
   # Distribution not found
