@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Listing</h1>
             
-            <h4 data-toc-skip class="date">2023-06-05</h4>
+            <h4 data-toc-skip class="date">2023-07-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/listing.rmd" class="external-link"><code>vignettes/webs/listing.rmd</code></a></small>
       <div class="hidden name"><code>listing.rmd</code></div>
@@ -223,7 +223,14 @@ We’ve added the <code><a href="https://rdrr.io/r/utils/head.html" class="exter
 <span><span class="co">#&gt; 3:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
 <span><span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
 <span><span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
-<span><span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -</span></span></code></pre></div>
+<span><span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt;      Alias</span></span>
+<span><span class="co">#&gt; 1:      AS</span></span>
+<span><span class="co">#&gt; 2:       B</span></span>
+<span><span class="co">#&gt; 3:      BT</span></span>
+<span><span class="co">#&gt; 4:    BTNC</span></span>
+<span><span class="co">#&gt; 5: BM, Bin</span></span>
+<span><span class="co">#&gt; 6:       C</span></span></code></pre></div>
 <p>To see a simplified version of the list, add the
 <code>simplify = TRUE</code> argument</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -239,11 +246,11 @@ with specific traits, for example for a multivariate distribution</p>
 <span><span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span></span>
 <span><span class="co">#&gt; 3:  Multinom        Multinomial    ℕ0^K     discrete multivariate extraDistr</span></span>
 <span><span class="co">#&gt; 4: MultiNorm MultivariateNormal     ℝ^K   continuous multivariate          -</span></span>
-<span><span class="co">#&gt;        Tags</span></span>
-<span><span class="co">#&gt; 1:         </span></span>
-<span><span class="co">#&gt; 2:         </span></span>
-<span><span class="co">#&gt; 3:   limits</span></span>
-<span><span class="co">#&gt; 4: locscale</span></span>
+<span><span class="co">#&gt;        Tags Alias</span></span>
+<span><span class="co">#&gt; 1:            DRC</span></span>
+<span><span class="co">#&gt; 2:            EMV</span></span>
+<span><span class="co">#&gt; 3:   limits    MN</span></span>
+<span><span class="co">#&gt; 4: locscale   MVN</span></span>
 <span></span>
 <span><span class="co"># The trait name is case-insensitive</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaRiAtEfORm <span class="op">=</span> <span class="st">"multivariate"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -252,17 +259,20 @@ with specific traits, for example for a multivariate distribution</p>
 <span><span class="co">#&gt; 2:     EmpMV        EmpiricalMV       ℝ     discrete multivariate          -</span></span>
 <span><span class="co">#&gt; 3:  Multinom        Multinomial    ℕ0^K     discrete multivariate extraDistr</span></span>
 <span><span class="co">#&gt; 4: MultiNorm MultivariateNormal     ℝ^K   continuous multivariate          -</span></span>
-<span><span class="co">#&gt;        Tags</span></span>
-<span><span class="co">#&gt; 1:         </span></span>
-<span><span class="co">#&gt; 2:         </span></span>
-<span><span class="co">#&gt; 3:   limits</span></span>
-<span><span class="co">#&gt; 4: locscale</span></span></code></pre></div>
+<span><span class="co">#&gt;        Tags Alias</span></span>
+<span><span class="co">#&gt; 1:            DRC</span></span>
+<span><span class="co">#&gt; 2:            EMV</span></span>
+<span><span class="co">#&gt; 3:   limits    MN</span></span>
+<span><span class="co">#&gt; 4: locscale   MVN</span></span></code></pre></div>
 <p>Or for multiple filters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>variateform <span class="op">=</span> <span class="st">"multivariate"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName   ClassName    Type ValueSupport  VariateForm    Package   Tags</span></span>
 <span><span class="co">#&gt; 1:      Diri   Dirichlet [0,1]^K   continuous multivariate extraDistr       </span></span>
-<span><span class="co">#&gt; 2:  Multinom Multinomial    ℕ0^K     discrete multivariate extraDistr limits</span></span></code></pre></div>
+<span><span class="co">#&gt; 2:  Multinom Multinomial    ℕ0^K     discrete multivariate extraDistr limits</span></span>
+<span><span class="co">#&gt;    Alias</span></span>
+<span><span class="co">#&gt; 1:   DRC</span></span>
+<span><span class="co">#&gt; 2:    MN</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
