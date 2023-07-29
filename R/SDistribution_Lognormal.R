@@ -14,6 +14,7 @@
 #' @templateVar default meanlog = 0, varlog = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Lognormal <- R6Class("Lognormal",
     name = "Lognormal",
     short_name = "Lnorm",
     description = "Lognormal Probability Distribution.",
+    alias = "LN",
     packages = "stats",
 
     # Public methods
@@ -240,6 +242,6 @@ Lognormal <- R6Class("Lognormal",
     ShortName = "Lnorm", ClassName = "Lognormal",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "LN"
   )
 )

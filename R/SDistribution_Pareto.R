@@ -15,6 +15,7 @@
 #' gamma function with complex inputs implementation could be found.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -37,6 +38,7 @@ Pareto <- R6Class("Pareto",
     name = "Pareto",
     short_name = "Pare",
     description = "Pareto (Type I) Probability Distribution.",
+    alias = "PR, Par",
     packages = c("extraDistr", "pracma"),
 
     # Public methods
@@ -270,13 +272,12 @@ Pareto <- R6Class("Pareto",
     .traits = list(valueSupport = "continuous", variateForm = "univariate")
   )
 )
-
 .distr6$distributions <- rbind(
   .distr6$distributions,
   data.table::data.table(
     ShortName = "Pare", ClassName = "Pareto",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = ""
+    Package = "extraDistr", Tags = "", Alias = "PR, Par"
   )
 )

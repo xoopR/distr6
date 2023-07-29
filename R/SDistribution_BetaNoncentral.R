@@ -13,6 +13,7 @@
 #' @templateVar default shape1 = 1, shape2 = 1, location = 0
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -34,6 +35,7 @@ BetaNoncentral <- R6Class("BetaNoncentral",
     name = "BetaNoncentral",
     short_name = "BetaNC",
     description = "BetaNoncentral Probability Distribution.",
+    alias = "BTNC",
     packages = "stats",
 
     # Public methods
@@ -153,6 +155,6 @@ BetaNoncentral <- R6Class("BetaNoncentral",
     ShortName = "BetaNC", ClassName = "BetaNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "BTNC"
   )
 )

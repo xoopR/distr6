@@ -12,6 +12,7 @@
 #' @templateVar default df1 = 1, df2 = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ FDistribution <- R6Class("FDistribution",
     name = "FDistribution",
     short_name = "F",
     description = "F Probability Distribution.",
+    alias = "FD",
     packages = "stats",
 
     # Public methods
@@ -250,6 +252,6 @@ FDistribution <- R6Class("FDistribution",
     ShortName = "F", ClassName = "FDistribution",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "FD"
   )
 )

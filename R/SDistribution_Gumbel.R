@@ -12,6 +12,7 @@
 #' @templateVar default location = 0, scale = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Gumbel <- R6Class("Gumbel",
     name = "Gumbel",
     short_name = "Gumb",
     description = "Gumbel Probability Distribution.",
+    alias = "GB, Gum",
     packages = c("extraDistr", "pracma"),
 
     # Public methods
@@ -246,6 +248,6 @@ Gumbel <- R6Class("Gumbel",
     ShortName = "Gumb", ClassName = "Gumbel",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "locscale"
+    Package = "extraDistr", Tags = "locscale", Alias = "GB, Gum"
   )
 )

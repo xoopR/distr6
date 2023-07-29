@@ -20,6 +20,7 @@
 # nolint end
 #
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -39,6 +40,7 @@ Categorical <- R6Class("Categorical",
     name = "Categorical",
     short_name = "Cat",
     description = "Categorical Probability Distribution.",
+    alias = "C",
 
     # Public methods
     # initialize
@@ -323,6 +325,6 @@ Categorical <- R6Class("Categorical",
     ShortName = "Cat", ClassName = "Categorical",
     Type = "V", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "C"
   )
 )

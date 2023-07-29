@@ -24,6 +24,7 @@
 #' doi:10.1007/978-0-387-98144-4. ISBN 978-0-387-98143-7.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -43,6 +44,7 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     name = "MultivariateNormal",
     short_name = "MultiNorm",
     description = "Multivariate Normal Probability Distribution.",
+    alias = "MVN",
 
     # Public methods
     # initialize
@@ -291,6 +293,6 @@ MultivariateNormal <- R6Class("MultivariateNormal",
     ShortName = "MultiNorm", ClassName = "MultivariateNormal",
     Type = "\u211D^K", ValueSupport = "continuous",
     VariateForm = "multivariate",
-    Package = "-", Tags = "locscale"
+    Package = "-", Tags = "locscale", Alias = "MVN"
   )
 )

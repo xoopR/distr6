@@ -13,6 +13,7 @@
 #' @templateVar default df = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ StudentT <- R6Class("StudentT",
     name = "StudentT",
     short_name = "T",
     description = "Student's T Probability Distribution.",
+    alias = "ST",
     packages = "stats",
 
     # Public methods
@@ -210,6 +212,6 @@ StudentT <- R6Class("StudentT",
     ShortName = "T", ClassName = "StudentT",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "ST"
   )
 )

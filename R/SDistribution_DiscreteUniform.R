@@ -12,6 +12,7 @@
 #' @templateVar default lower = 0, upper = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     name = "DiscreteUniform",
     short_name = "DUnif",
     description = "Discrete Uniform Probability Distribution.",
+    alias = "DU",
     packages = "extraDistr",
 
     # Public methods
@@ -293,6 +295,6 @@ DiscreteUniform <- R6Class("DiscreteUniform",
     ShortName = "DUnif", ClassName = "DiscreteUniform",
     Type = "\u2124", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "limits"
+    Package = "extraDistr", Tags = "limits", Alias = "DU"
   )
 )

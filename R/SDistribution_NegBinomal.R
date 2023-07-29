@@ -24,6 +24,7 @@
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -44,6 +45,7 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     name = "NegativeBinomial",
     short_name = "NBinom",
     description = "Negative Binomial Probability Distribution.",
+    alias = "NB",
     packages = "stats",
 
     # Public methods
@@ -393,6 +395,6 @@ NegativeBinomial <- R6Class("NegativeBinomial",
     ShortName = "NBinom", ClassName = "NegativeBinomial",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "limits"
+    Package = "-", Tags = "limits", Alias = "NB"
   )
 )

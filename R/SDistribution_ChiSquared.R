@@ -12,6 +12,7 @@
 #' @templateVar default df = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ ChiSquared <- R6Class("ChiSquared",
     name = "ChiSquared",
     short_name = "ChiSq",
     description = "ChiSquared Probability Distribution.",
+    alias = "CSQ, CHI, C2",
     packages = "stats",
 
     # Public methods
@@ -215,6 +217,6 @@ ChiSquared <- R6Class("ChiSquared",
     ShortName = "ChiSq", ClassName = "ChiSquared",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "CSQ, CHI, C2"
   )
 )

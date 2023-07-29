@@ -18,6 +18,7 @@
 #' (otherwise the results are meaningless).
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -37,6 +38,7 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     name = "EmpiricalMV",
     short_name = "EmpMV",
     description = "Multivariate Empirical Probability Distribution.",
+    alias = "EMV",
 
     # Public methods
     # initialize
@@ -144,6 +146,6 @@ EmpiricalMV <- R6Class("EmpiricalMV",
     ShortName = "EmpMV", ClassName = "EmpiricalMV",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "multivariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "EMV"
   )
 )

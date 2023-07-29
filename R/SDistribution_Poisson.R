@@ -12,6 +12,7 @@
 #' @templateVar default rate = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Poisson <- R6Class("Poisson",
     name = "Poisson",
     short_name = "Pois",
     description = "Poisson Probability Distribution.",
+    alias = "P, Poi, Pois",
     packages = "stats",
 
     # Public methods
@@ -181,6 +183,6 @@ Poisson <- R6Class("Poisson",
     ShortName = "Pois", ClassName = "Poisson",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "P, Poi, Pois"
   )
 )

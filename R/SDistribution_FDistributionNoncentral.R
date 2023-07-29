@@ -13,6 +13,7 @@
 #' @templateVar default df1 = 1, df2 = 1, location = 0
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -34,6 +35,7 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     name = "FDistributionNoncentral",
     short_name = "FNC",
     description = "Non-central F Probability Distribution.",
+    alias = "FDNC",
     packages = "stats",
 
     # Public methods
@@ -183,6 +185,6 @@ FDistributionNoncentral <- R6Class("FDistributionNoncentral",
     ShortName = "FNC", ClassName = "FDistributionNoncentral",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "FDNC"
   )
 )

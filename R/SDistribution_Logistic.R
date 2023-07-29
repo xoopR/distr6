@@ -12,6 +12,7 @@
 #' @templateVar default mean = 0, scale = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Logistic <- R6Class("Logistic",
     name = "Logistic",
     short_name = "Logis",
     description = "Logistic Probability Distribution.",
+    alias = "LG",
     packages = "stats",
 
     # Public methods
@@ -221,6 +223,6 @@ Logistic <- R6Class("Logistic",
     ShortName = "Logis", ClassName = "Logistic",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale"
+    Package = "stats", Tags = "locscale", Alias = "LG"
   )
 )

@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.6.15
+Version: 1.7.0
 Authors@R:
     c(person(given = "Raphael",
              family = "Sonabend",
@@ -64,7 +64,11 @@ Authors@R:
       person(given = "Qian",
              family = "Zhou",
              role = "ctb",
-             email = "zcakqz1@ucl.ac.uk"))
+             email = "zcakqz1@ucl.ac.uk"),
+      person(given = "Michal",
+             family = "Lauer",
+             role = "ctb",
+             email = "michal.lauer.25@gmail.com"))
 Description: An R6 object oriented distributions package. Unified
     interface for 42 probability distributions and 11 kernels including
     functionality for multiple scientific types. Additionally
@@ -198,6 +202,7 @@ Collate:
     'distr6-package.R'
     'distr6.news.R'
     'distrSimulate.R'
+    'dparse.R'
     'exkurtosisType.R'
     'generalPNorm.R'
     'getParameterSet.R'

@@ -12,6 +12,7 @@
 #' @templateVar default size = 50, successes = 5, draws = 10
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Hypergeometric <- R6Class("Hypergeometric",
     name = "Hypergeometric",
     short_name = "Hyper",
     description = "Hypergeometric Probability Distribution.",
+    alias = "HGM",
     packages = "stats",
 
     # Public methods
@@ -248,6 +250,6 @@ Hypergeometric <- R6Class("Hypergeometric",
     ShortName = "Hyper", ClassName = "Hypergeometric",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits"
+    Package = "stats", Tags = "limits", Alias = "HGM"
   )
 )

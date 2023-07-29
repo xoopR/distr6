@@ -18,6 +18,7 @@
 #' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -52,6 +53,7 @@ Matdist <- R6Class("Matdist",
     name = "Matdist",
     short_name = "Matdist",
     description = "Matrix Probability Distribution.",
+    alias = "MD",
 
     # Public methods
     # initialize
@@ -318,7 +320,7 @@ Matdist <- R6Class("Matdist",
     ShortName = "Matdist", ClassName = "Matdist",
     Type = "\u211D^K", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "MD"
   )
 )
 

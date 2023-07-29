@@ -14,6 +14,7 @@
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Binomial <- R6Class("Binomial",
     name = "Binomial",
     short_name = "Binom",
     description = "Binomial Probability Distribution.",
+    alias = "BM, Bin",
     packages = "stats",
 
     # Public methods
@@ -239,6 +241,6 @@ Binomial <- R6Class("Binomial",
     ShortName = "Binom", ClassName = "Binomial",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits"
+    Package = "stats", Tags = "limits", Alias = "BM, Bin"
   )
 )

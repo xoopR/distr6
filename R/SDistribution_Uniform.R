@@ -13,6 +13,7 @@
 #' @templateVar default lower = 0, upper = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -35,6 +36,7 @@ Uniform <- R6Class("Uniform",
     name = "Uniform",
     short_name = "Unif",
     description = "Uniform Probability Distribution.",
+    alias = "U, Uni",
     packages = "stats",
 
     # Public methods
@@ -240,6 +242,6 @@ Uniform <- R6Class("Uniform",
     ShortName = "Unif", ClassName = "Uniform",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "limits"
+    Package = "stats", Tags = "limits", Alias = "U, Uni"
   )
 )

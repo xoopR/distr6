@@ -13,6 +13,7 @@
 #' @templateVar default location = 0, scale = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Cauchy <- R6Class("Cauchy",
     name = "Cauchy",
     short_name = "Cauchy",
     description = "Cauchy Probability Distribution.",
+    alias = "CH",
     packages = "stats",
 
     # Public methods
@@ -206,6 +208,6 @@ Cauchy <- R6Class("Cauchy",
     ShortName = "Cauchy", ClassName = "Cauchy",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale"
+    Package = "stats", Tags = "locscale", Alias = "CH"
   )
 )

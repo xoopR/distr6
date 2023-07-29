@@ -12,6 +12,7 @@
 #' @templateVar default shape = 1, scale = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Gompertz <- R6Class("Gompertz",
     name = "Gompertz",
     short_name = "Gomp",
     description = "Gompertz Probability Distribution.",
+    alias = "GPZ, Gom",
     packages = "extraDistr",
 
     # Public methods
@@ -161,6 +163,6 @@ Gompertz <- R6Class("Gompertz",
     ShortName = "Gomp", ClassName = "Gompertz",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "GPZ, Gom"
   )
 )

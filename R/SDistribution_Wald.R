@@ -26,6 +26,7 @@
 #' The American Statistician, 30(2), 88-90.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -43,6 +44,7 @@ Wald <- R6Class("Wald",
     name = "Wald",
     short_name = "Wald",
     description = "Wald Probability Distribution.",
+    alias = "W",
     packages = "extraDistr",
 
     # Public methods
@@ -208,6 +210,6 @@ Wald <- R6Class("Wald",
     ShortName = "Wald", ClassName = "Wald",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = ""
+    Package = "extraDistr", Tags = "", Alias = "W"
   )
 )

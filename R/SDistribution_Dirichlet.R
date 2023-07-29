@@ -22,6 +22,7 @@
 #' Springer-Verlag. ISBN 0-387-96305-7.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -46,6 +47,7 @@ Dirichlet <- R6Class("Dirichlet",
     name = "Dirichlet",
     short_name = "Diri",
     description = "Dirichlet Probability Distribution.",
+    alias = "DRC",
     packages = "extraDistr",
 
     # Public methods
@@ -231,6 +233,6 @@ Dirichlet <- R6Class("Dirichlet",
     ShortName = "Diri", ClassName = "Dirichlet",
     Type = "[0,1]^K", ValueSupport = "continuous",
     VariateForm = "multivariate",
-    Package = "extraDistr", Tags = ""
+    Package = "extraDistr", Tags = "", Alias = "DRC"
   )
 )

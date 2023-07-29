@@ -12,6 +12,7 @@
 #' @templateVar default mean = 0, scale = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Laplace <- R6Class("Laplace",
     name = "Laplace",
     short_name = "Lap",
     description = "Laplace Probability Distribution.",
+    alias = "LP",
     packages = "extraDistr",
 
     # Public methods
@@ -221,6 +223,6 @@ Laplace <- R6Class("Laplace",
     ShortName = "Lap", ClassName = "Laplace",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "locscale"
+    Package = "extraDistr", Tags = "locscale", Alias = "LP"
   )
 )

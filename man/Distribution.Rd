@@ -70,6 +70,8 @@ mvn$rand(5)
 \item{\code{short_name}}{Short name of distribution for printing.}
 
 \item{\code{description}}{Brief description of the distribution.}
+
+\item{\code{alias}}{Alias of the distribution.}
 }
 \if{html}{\out{</div>}}
 }
@@ -209,6 +211,9 @@ Optional short description of the distribution.}
 
 \item{\code{.suppressChecks}}{\code{(logical(1))} \cr
 Used internally.}
+
+\item{\code{alias}}{\code{character(1)} \cr
+Alias of distribution for parsing.}
 }
 \if{html}{\out{</div>}}
 }

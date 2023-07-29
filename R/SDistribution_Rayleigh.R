@@ -12,6 +12,7 @@
 #' @templateVar default mode = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -31,6 +32,7 @@ Rayleigh <- R6Class("Rayleigh",
     name = "Rayleigh",
     short_name = "Rayl",
     description = "Rayleigh Probability Distribution.",
+    alias = "RY, Ray",
     packages = "extraDistr",
 
     # Public methods
@@ -213,6 +215,6 @@ Rayleigh <- R6Class("Rayleigh",
     ShortName = "Rayl", ClassName = "Rayleigh",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "scale"
+    Package = "extraDistr", Tags = "scale", Alias = "RY, Ray"
   )
 )

@@ -12,6 +12,7 @@
 #' @templateVar default scale = 1, shape = 1, location = 0
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -35,6 +36,7 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     name = "ShiftedLoglogistic",
     short_name = "ShiftLLogis",
     description = "Shifted Loglogistic Probability Distribution.",
+    alias = "SLL",
     packages = "pracma",
 
     # Public methods
@@ -185,6 +187,6 @@ ShiftedLoglogistic <- R6Class("ShiftedLoglogistic",
     ShortName = "ShiftLLogis", ClassName = "ShiftedLoglogistic",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "SLL"
   )
 )

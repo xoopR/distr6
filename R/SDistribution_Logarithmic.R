@@ -12,6 +12,7 @@
 #' @templateVar default theta = 0.5
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -31,6 +32,7 @@ Logarithmic <- R6Class("Logarithmic",
     name = "Logarithmic",
     short_name = "Log",
     description = "Logarithmic Probability Distribution.",
+    alias = "L",
     packages = "extraDistr",
 
     # Public methods
@@ -220,6 +222,6 @@ Logarithmic <- R6Class("Logarithmic",
     ShortName = "Log", ClassName = "Logarithmic",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = ""
+    Package = "extraDistr", Tags = "", Alias = "L"
   )
 )

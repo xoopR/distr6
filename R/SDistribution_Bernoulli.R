@@ -15,6 +15,7 @@
 #' @template param_prob
 #' @template param_qprob
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -35,6 +36,7 @@ Bernoulli <- R6Class("Bernoulli",
     name = "Bernoulli",
     short_name = "Bern",
     description = "Bernoulli Probability Distribution.",
+    alias = "B",
     packages = "stats",
 
     # Public methods
@@ -277,6 +279,6 @@ Bernoulli <- R6Class("Bernoulli",
     ShortName = "Bern", ClassName = "Bernoulli",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "B"
   )
 )

@@ -13,6 +13,7 @@
 #' @templateVar default df = 1, location = 0
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -34,6 +35,7 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     name = "StudentTNoncentral",
     short_name = "TNS",
     description = "Non-central Student's T Probability Distribution.",
+    alias = "STNC",
     packages = "stats",
 
     # Public methods
@@ -158,6 +160,6 @@ StudentTNoncentral <- R6Class("StudentTNoncentral",
     ShortName = "TNC", ClassName = "StudentTNoncentral",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "STNC"
   )
 )

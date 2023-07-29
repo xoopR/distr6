@@ -19,6 +19,7 @@
 #' elements are supplied in an indexed order (otherwise the results are meaningless).
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -38,6 +39,7 @@ Empirical <- R6Class("Empirical",
     name = "Empirical",
     short_name = "Emp",
     description = "Empirical Probability Distribution.",
+    alias = "E",
 
     # Public methods
     # initialize
@@ -259,6 +261,6 @@ Empirical <- R6Class("Empirical",
     ShortName = "Emp", ClassName = "Empirical",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "E"
   )
 )

@@ -12,6 +12,7 @@
 #' @templateVar default shape1 = 1, shape2 = 1
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Beta <- R6Class("Beta",
     name = "Beta",
     short_name = "Beta",
     description = "Beta Probability Distribution.",
+    alias = "BT",
     packages = "stats",
 
     # Public methods
@@ -260,6 +262,6 @@ Beta <- R6Class("Beta",
     ShortName = "Beta", ClassName = "Beta",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "BT"
   )
 )

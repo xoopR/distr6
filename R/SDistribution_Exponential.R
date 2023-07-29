@@ -12,6 +12,7 @@
 #' @templateVar default rate = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Exponential <- R6Class("Exponential",
     name = "Exponential",
     short_name = "Exp",
     description = "Exponential Probability Distribution.",
+    alias = "EX",
     packages = "stats",
 
     # Public methods
@@ -203,6 +205,6 @@ Exponential <- R6Class("Exponential",
     ShortName = "Exp", ClassName = "Exponential",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "scale"
+    Package = "stats", Tags = "scale", Alias = "EX"
   )
 )

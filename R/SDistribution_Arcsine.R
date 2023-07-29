@@ -13,6 +13,7 @@
 #' @template param_lower
 #' @template param_upper
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Arcsine <- R6Class("Arcsine",
     name = "Arcsine",
     short_name = "Arc",
     description = "Arcsine Probability Distribution.",
+    alias = "AS",
 
     # Public methods
     # initialize
@@ -194,6 +196,6 @@ Arcsine <- R6Class("Arcsine",
   data.table::data.table(
     ShortName = "Arc", ClassName = "Arcsine",
     Type = "\u211D", ValueSupport = "continuous", VariateForm = "univariate",
-    Package = "-", Tags = "limits"
+    Package = "-", Tags = "limits", Alias = "AS"
   )
 )

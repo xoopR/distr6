@@ -14,6 +14,7 @@
 #' @aliases Fisk
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -35,6 +36,7 @@ Loglogistic <- R6Class("Loglogistic",
     name = "Loglogistic",
     short_name = "LLogis",
     description = "Loglogistic Probability Distribution.",
+    alias = "LL, LLG",
     packages = "actuar",
 
     # Public methods
@@ -222,6 +224,6 @@ Loglogistic <- R6Class("Loglogistic",
     ShortName = "LLogis", ClassName = "Loglogistic",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "actuar", Tags = ""
+    Package = "actuar", Tags = "", Alias = "LL, LLG"
   )
 )

@@ -12,6 +12,7 @@
 #' @templateVar default shape = 1, rate = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Gamma <- R6Class("Gamma",
     name = "Gamma",
     short_name = "Gamma",
     description = "Gamma Probability Distribution.",
+    alias = "G, Gam",
     packages = "stats",
 
     # Public methods
@@ -223,6 +225,6 @@ Gamma <- R6Class("Gamma",
     ShortName = "Gamma", ClassName = "Gamma",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "G, Gam"
   )
 )

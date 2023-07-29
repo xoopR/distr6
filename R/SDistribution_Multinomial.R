@@ -13,6 +13,7 @@
 #' @templateVar default size = 10, probs = c(0.5, 0.5)
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Multinomial <- R6Class("Multinomial",
     name = "Multinomial",
     short_name = "Multinom",
     description = "Multinomial Probability Distribution.",
+    alias = "MN",
     packages = "extraDistr",
 
     # Public methods
@@ -270,6 +272,6 @@ Multinomial <- R6Class("Multinomial",
     ShortName = "Multinom", ClassName = "Multinomial",
     Type = "\u21150^K", ValueSupport = "discrete",
     VariateForm = "multivariate",
-    Package = "extraDistr", Tags = "limits"
+    Package = "extraDistr", Tags = "limits", Alias = "MN"
   )
 )

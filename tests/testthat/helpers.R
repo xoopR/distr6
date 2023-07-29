@@ -20,12 +20,13 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
                                   vectorise = TRUE) {
 
   checkmate::assertSubset(names(sdist$public_fields), c("name", "short_name", "description",
-                                                        "packages"))
+                                                        "alias", "packages"))
   expect_equal(as.character(sdist$inherit), "SDistribution")
   checkmate::expect_names(c(
     sdist$public_fields$name,
     sdist$public_fields$short_name,
-    sdist$public_fields$description
+    sdist$public_fields$description,
+    sdist$public_fields$alias
   ))
   expect_true(length(strsplit(sdist$public_fields$short_name, " ")[[1]]) == 1)
   if (!is.null(sdist$public_fields$packages)) {

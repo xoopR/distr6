@@ -14,6 +14,7 @@
 #' @aliases InverseWeibull
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -36,6 +37,7 @@ Frechet <- R6Class("Frechet",
     name = "Frechet",
     short_name = "Frec",
     description = "Frechet Probability Distribution.",
+    alias = "FR",
     packages = "extraDistr",
 
     # Public methods
@@ -282,6 +284,6 @@ Frechet <- R6Class("Frechet",
     ShortName = "Frec", ClassName = "Frechet",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "locscale"
+    Package = "extraDistr", Tags = "locscale", Alias = "FR"
   )
 )

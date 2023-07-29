@@ -12,6 +12,7 @@
 #' @templateVar default shape = 1, scale = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ InverseGamma <- R6Class("InverseGamma",
     name = "InverseGamma",
     short_name = "InvGamma",
     description = "Inverse Gamma Probability Distribution.",
+    alias = "IG, InvGam",
     packages = "extraDistr",
 
     # Public methods
@@ -238,6 +240,6 @@ InverseGamma <- R6Class("InverseGamma",
     ShortName = "InvGamma", ClassName = "InverseGamma",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = ""
+    Package = "extraDistr", Tags = "", Alias = "IG, InvGam"
   )
 )

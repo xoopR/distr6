@@ -14,6 +14,7 @@
 #' @aliases Gaussian
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -33,6 +34,7 @@ Normal <- R6Class("Normal",
     name = "Normal",
     short_name = "Norm",
     description = "Normal Probability Distribution.",
+    alias = "N",
     packages = "stats",
 
     # Public methods
@@ -218,10 +220,10 @@ Normal <- R6Class("Normal",
 
 .distr6$distributions <- rbind(
   .distr6$distributions,
-  data.table(
+  data.table::data.table(
     ShortName = "Norm", ClassName = "Normal",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = "locscale"
+    Package = "stats", Tags = "locscale", Alias = "N"
   )
 )

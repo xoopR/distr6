@@ -16,6 +16,7 @@
 # nolint end
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -37,6 +38,7 @@ Geometric <- R6Class("Geometric",
     name = "Geometric",
     short_name = "Geom",
     description = "Geometric Probability Distribution.",
+    alias = "GM, Geo",
     packages = "stats",
 
     # Public methods
@@ -266,6 +268,6 @@ Geometric <- R6Class("Geometric",
     ShortName = "Geom", ClassName = "Geometric",
     Type = "\u21150", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "GM, Geo"
   )
 )

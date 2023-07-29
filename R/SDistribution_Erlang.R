@@ -12,6 +12,7 @@
 #' @templateVar default shape = 1, rate = 1
 # nolint end
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -32,6 +33,7 @@ Erlang <- R6Class("Erlang",
     name = "Erlang",
     short_name = "Erlang",
     description = "Erlang Probability Distribution.",
+    alias = "ER",
     packages = "stats",
 
     # Public methods
@@ -216,6 +218,6 @@ Erlang <- R6Class("Erlang",
     ShortName = "Erlang", ClassName = "Erlang",
     Type = "\u211D+", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "stats", Tags = ""
+    Package = "stats", Tags = "", Alias = "ER"
   )
 )

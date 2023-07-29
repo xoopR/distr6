@@ -17,6 +17,7 @@
 #' The number of points in the distribution cannot be changed after construction.
 #'
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -51,6 +52,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     name = "WeightedDiscrete",
     short_name = "WeightDisc",
     description = "Weighted Discrete Probability Distribution.",
+    alias = "WD",
 
     # Public methods
     # initialize
@@ -444,7 +446,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     ShortName = "WeightDisc", ClassName = "WeightedDiscrete",
     Type = "\u211D", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = ""
+    Package = "-", Tags = "", Alias = "WD"
   )
 )
 

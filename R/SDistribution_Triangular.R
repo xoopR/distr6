@@ -16,6 +16,7 @@
 #' @template param_lower
 #' @template param_upper
 #' @template class_distribution
+#' @template field_alias
 #' @template method_mode
 #' @template method_entropy
 #' @template method_kurtosis
@@ -36,6 +37,7 @@ Triangular <- R6Class("Triangular",
     name = "Triangular",
     short_name = "Tri",
     description = "Triangular Probability Distribution.",
+    alias = "TR",
     packages = "extraDistr",
 
     # Public methods
@@ -333,6 +335,6 @@ Triangular <- R6Class("Triangular",
     ShortName = "Tri", ClassName = "Triangular",
     Type = "\u211D", ValueSupport = "continuous",
     VariateForm = "univariate",
-    Package = "extraDistr", Tags = "limits"
+    Package = "extraDistr", Tags = "limits", Alias = "TR"
   )
 )
