@@ -750,7 +750,7 @@ getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
       assert_cdf_array(cdf)
 
       if (x$which.curve < 1) {
-        x$which.curve = as.numeric(ceiling(quantile(seq(dim(pdf)[3L]), which.curve)))
+        x$which.curve = as.numeric(ceiling(quantile(seq(dim(pdf)[3L]), x$which.curve)))
       } else if (x$which.curve > dim(pdf)[3L]) {
         stop(sprintf("Length is %s on third dimension but curve '%s' requested, change 'which.curve'
 parameter.", dim(pdf)[3L], x$which.curve))

@@ -44,6 +44,21 @@
 #' x$variance()
 #'
 #' summary(x)
+#'
+#' # Changing which.curve
+#' arr <- array(runif(90), c(3, 2, 5), list(NULL, 1:2, NULL))
+#' arr <- aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+#' arr[, , 1:3]
+#' x <- Arrdist$new(arr)
+#' x$mean() # default 0.5 quantile (in this case index 3)
+#' x$setParameterValue(which.curve = 3) # equivalently
+#' x$mean()
+#' # 1% quantile
+#' x$setParameterValue(which.curve = 0.01)
+#' x$mean()
+#' # 5th index
+#' x$setParameterValue(which.curve = 5)
+#' x$mean()
 #' @export
 Arrdist <- R6Class("Arrdist",
   inherit = SDistribution, lock_objects = F,
@@ -67,6 +82,9 @@ Arrdist <- R6Class("Arrdist",
     #' @param cdf `numeric()`\cr
     #' Cumulative distribution function for corresponding samples, should be same length `x`. If
     #' given then `pdf` calculated as difference of `cdf`s.
+    #' @param which.curve `numeric(1)` \cr
+    #' Which curve (third dimension) should results be displayed for? If
+    #' between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index. See examples.
     initialize = function(pdf = NULL, cdf = NULL, which.curve = 0.5, decorators = NULL) {
       super$initialize(
         decorators = decorators,
