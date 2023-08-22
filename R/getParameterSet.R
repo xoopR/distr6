@@ -727,3 +727,37 @@ getParameterSet.Matdist <- function(object, ...) { # nolint
     }
   )
 }
+
+getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
+  pset(
+    prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
+    prm("cdf", Interval$new(0, 1)^"n",
+        array(0.5, c(2, 2, 3), dimnames = list(NULL, 1:2, NULL)),
+        tags = c("required", "linked")),
+    prm("x", "integers", tags = "immutable"),
+    prm("which.curve", Interval$new(0, 1, type = "()") + Integers$new(), which.curve, tags = "required"),
+    trafo = function(x, self) {
+
+      pdf <- list_element(x, "pdf")$pdf
+      cdf <- list_element(x, "cdf")$cdf
+
+      if (length(pdf)) {
+        cdf <- aperm(apply(pdf, c(1, 3), cumsum), c(2, 1, 3))
+      } else {
+        pdf <- aperm(apply(cdf, c(1, 3), function(.y) c(.y[1], diff(.y))), c(2, 1, 3))
+      }
+
+      assert_cdf_array(cdf)
+
+      if (x$which.curve < 1) {
+        x$which.curve = as.numeric(ceiling(quantile(seq(dim(pdf)[3L]), which.curve)))
+      } else if (x$which.curve > dim(pdf)[3L]) {
+        stop(sprintf("Length is %s on third dimension but curve '%s' requested, change 'which.curve'
+parameter.", dim(pdf)[3L], x$which.curve))
+      }
+
+      list(pdf = pdf, cdf = cdf, x = as.numeric(colnames(pdf)),
+        which.curve = x$which.curve)
+    }
+  )
+}

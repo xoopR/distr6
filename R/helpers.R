@@ -323,6 +323,29 @@ assert_cdf_matrix <- function (x) {
   invisible(NULL)
 }
 
+assert_cdf_array <- function (x) {
+
+  x <- round(x, 14L) # M1 fix
+
+  if (!all(x <= 1 & x >= 0)) {
+      stop("Cdf probabilities, x, must be 0 <= x <= 1")
+  }
+  if (is.null(colnames(x)) || !identical(
+    order(as.numeric(colnames(x))),
+    seq(ncol(x))
+  )) {
+    stop("Cdf matrix column names must be increasing numeric")
+  }
+
+  apply(x, c(1, 3), function(.x) {
+    if (!identical(order(.x), seq(ncol(x)))) {
+      stop("Cdf must be (non-strictly) increasing")
+    }
+  })
+
+  invisible(NULL)
+}
+
 `%=%` <- function(l, r) {
     l <- trimws(strsplit(l, ",", TRUE)[[1]])
     if (all(l == "USE.NAMES") || all(l == "*") || all(l == "?")) {

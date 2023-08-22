@@ -88,48 +88,48 @@ Other wrappers:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ProductDistribution$new()}}
-\item \href{#method-strprint}{\code{ProductDistribution$strprint()}}
-\item \href{#method-pdf}{\code{ProductDistribution$pdf()}}
-\item \href{#method-cdf}{\code{ProductDistribution$cdf()}}
-\item \href{#method-quantile}{\code{ProductDistribution$quantile()}}
-\item \href{#method-clone}{\code{ProductDistribution$clone()}}
+\item \href{#method-ProductDistribution-new}{\code{ProductDistribution$new()}}
+\item \href{#method-ProductDistribution-strprint}{\code{ProductDistribution$strprint()}}
+\item \href{#method-ProductDistribution-pdf}{\code{ProductDistribution$pdf()}}
+\item \href{#method-ProductDistribution-cdf}{\code{ProductDistribution$cdf()}}
+\item \href{#method-ProductDistribution-quantile}{\code{ProductDistribution$quantile()}}
+\item \href{#method-ProductDistribution-clone}{\code{ProductDistribution$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf">}\href{../../distr6/html/VectorDistribution.html#method-cf}{\code{distr6::VectorDistribution$cf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy">}\href{../../distr6/html/VectorDistribution.html#method-entropy}{\code{distr6::VectorDistribution$entropy()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue">}\href{../../distr6/html/VectorDistribution.html#method-getParameterValue}{\code{distr6::VectorDistribution$getParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis">}\href{../../distr6/html/VectorDistribution.html#method-kurtosis}{\code{distr6::VectorDistribution$kurtosis()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean">}\href{../../distr6/html/VectorDistribution.html#method-mean}{\code{distr6::VectorDistribution$mean()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="median">}\href{../../distr6/html/VectorDistribution.html#method-median}{\code{distr6::VectorDistribution$median()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mgf">}\href{../../distr6/html/VectorDistribution.html#method-mgf}{\code{distr6::VectorDistribution$mgf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mode">}\href{../../distr6/html/VectorDistribution.html#method-mode}{\code{distr6::VectorDistribution$mode()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="pgf">}\href{../../distr6/html/VectorDistribution.html#method-pgf}{\code{distr6::VectorDistribution$pgf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="rand">}\href{../../distr6/html/VectorDistribution.html#method-rand}{\code{distr6::VectorDistribution$rand()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="skewness">}\href{../../distr6/html/VectorDistribution.html#method-skewness}{\code{distr6::VectorDistribution$skewness()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="variance">}\href{../../distr6/html/VectorDistribution.html#method-variance}{\code{distr6::VectorDistribution$variance()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="wrappedModels">}\href{../../distr6/html/VectorDistribution.html#method-wrappedModels}{\code{distr6::VectorDistribution$wrappedModels()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="cf"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-cf'><code>distr6::VectorDistribution$cf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="entropy"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-entropy'><code>distr6::VectorDistribution$entropy()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="getParameterValue"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-getParameterValue'><code>distr6::VectorDistribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="kurtosis"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-kurtosis'><code>distr6::VectorDistribution$kurtosis()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mean"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-mean'><code>distr6::VectorDistribution$mean()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="median"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-median'><code>distr6::VectorDistribution$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mgf"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-mgf'><code>distr6::VectorDistribution$mgf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="mode"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-mode'><code>distr6::VectorDistribution$mode()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="pgf"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-pgf'><code>distr6::VectorDistribution$pgf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="rand"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-rand'><code>distr6::VectorDistribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="skewness"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-skewness'><code>distr6::VectorDistribution$skewness()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="variance"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-variance'><code>distr6::VectorDistribution$variance()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="VectorDistribution" data-id="wrappedModels"><a href='../../distr6/html/VectorDistribution.html#method-VectorDistribution-wrappedModels'><code>distr6::VectorDistribution$wrappedModels()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -217,8 +217,8 @@ ProductDistribution$new(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-strprint"></a>}}
-\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Printable string representation of the \code{ProductDistribution}. Primarily used internally.
 \subsection{Usage}{
@@ -235,8 +235,8 @@ Number of distributions to include when printing.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pdf"></a>}}
-\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-pdf}{}}}
 \subsection{Method \code{pdf()}}{
 Probability density function of the product distribution. Computed by
 \deqn{f_P(X1 = x1,...,XN = xN) = \prod_{i} f_{Xi}(xi)}
@@ -284,8 +284,8 @@ p$pdf(1:2)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cdf"></a>}}
-\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-cdf}{}}}
 \subsection{Method \code{cdf()}}{
 Cumulative distribution function of the product distribution. Computed by
 \deqn{F_P(X1 = x1,...,XN = xN) = \prod_{i} F_{Xi}(xi)}
@@ -342,8 +342,8 @@ p$cdf(1:2)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-quantile"></a>}}
-\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-quantile}{}}}
 \subsection{Method \code{quantile()}}{
 The quantile function is not implemented for product distributions.
 \subsection{Usage}{
@@ -385,8 +385,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ProductDistribution-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ProductDistribution-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

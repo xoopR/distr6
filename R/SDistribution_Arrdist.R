@@ -1,21 +1,20 @@
-#' @name Matdist
+#' @name Arrdist
 #' @template SDist
-#' @templateVar ClassName Matdist
-#' @templateVar DistName Matdist
-#' @templateVar uses in vectorised empirical estimators such as Kaplan-Meier
+#' @templateVar ClassName Arrdist
+#' @templateVar DistName Arrdist
+#' @templateVar uses in matrixed Bayesian estimators such as Kaplan-Meier with confidence bounds over arbitrary dimensions
 #' @templateVar pdfpmf pmf
-#' @templateVar pdfpmfeq \deqn{f(x_{ij}) = p_{ij}}
-#' @templateVar paramsupport \eqn{p_{ij}, i = 1,\ldots,k, j = 1,\ldots,n; \sum_i p_{ij} = 1}
-#' @templateVar distsupport \eqn{x_{11},...,x_{kn}}
-#' @templateVar default matrix(0.5, 2, 2, dimnames = list(NULL, 1:2))
+#' @templateVar pdfpmfeq \deqn{f(x_{ijk}) = p_{ijk}}
+#' @templateVar paramsupport \eqn{p_{ijk}, i = 1,\ldots,a, j = 1,\ldots,b; \sum_i p_{ijk} = 1}
+#' @templateVar distsupport \eqn{x_{111},...,x_{abc}}
+#' @templateVar default array(0.5, c(2, 2, 2), list(NULL, 1:2, NULL))
 #' @details
-#' This is a special case distribution in distr6 which is technically a vectorised distribution
-#' but is treated as if it is not. Therefore we only allow evaluation of all functions at
-#' the same value, e.g. `$pdf(1:2)` evaluates all samples at '1' and '2'.
+#' This is a generalised case of [Matdist] with a third dimension over an arbitrary length.
+#' By default all results are returned for the median curve as determined by
+#' `(dim(a)[3L] + 1)/2` where `a` is the array and assuming third dimension is odd,
+#' this can be changed by setting the `which.curve` parameter.
 #'
-#' Sampling from this distribution is performed with the [sample] function with the elements given
-#' as the x values and the pdf as the probabilities. The cdf and quantile assume that the
-#' elements are supplied in an indexed order (otherwise the results are meaningless).
+#' Given the complexity in construction, this distribution is not mutable (cannot be updated after construction).
 #'
 #' @template class_distribution
 #' @template field_alias
@@ -31,12 +30,12 @@
 #' @family univariate distributions
 #'
 #' @examples
-#' x <- Matdist$new(pdf = matrix(0.5, 3, 2, dimnames = list(NULL, 1:2)))
-#' Matdist$new(cdf = matrix(c(0.5, 1), 3, 2, TRUE, dimnames = list(NULL, 1:2))) # equivalently
+#' x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4), dimnames = list(NULL, 1:2, NULL)))
+#' Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4), dimnames = list(NULL, 1:2, NULL))) # equivalently
 #'
 #' # d/p/q/r
-#' x$pdf(1:5)
-#' x$cdf(1:5) # Assumes ordered in construction
+#' x$pdf(1)
+#' x$cdf(1:2) # Assumes ordered in construction
 #' x$quantile(0.42) # Assumes ordered in construction
 #' x$rand(10)
 #'
@@ -46,14 +45,14 @@
 #'
 #' summary(x)
 #' @export
-Matdist <- R6Class("Matdist",
+Arrdist <- R6Class("Arrdist",
   inherit = SDistribution, lock_objects = F,
   public = list(
     # Public fields
-    name = "Matdist",
-    short_name = "Matdist",
-    description = "Matrix Probability Distribution.",
-    alias = "MD",
+    name = "Arrdist",
+    short_name = "Arrdist",
+    description = "Array Probability Distribution.",
+    alias = "AD",
 
     # Public methods
     # initialize
@@ -68,14 +67,16 @@ Matdist <- R6Class("Matdist",
     #' @param cdf `numeric()`\cr
     #' Cumulative distribution function for corresponding samples, should be same length `x`. If
     #' given then `pdf` calculated as difference of `cdf`s.
-    initialize = function(pdf = NULL, cdf = NULL, decorators = NULL) {
+    initialize = function(pdf = NULL, cdf = NULL, which.curve = 0.5, decorators = NULL) {
       super$initialize(
         decorators = decorators,
         support = Set$new(1, class = "numeric")^"n",
         type = Reals$new()^"n"
       )
-      private$.ndists <- nrow(gprm(self, "pdf"))
-      private$.ncols <- ncol(gprm(self, "pdf"))
+      d = dim(gprm(self, "pdf"))
+      private$.ndists <- d[1L]
+      private$.ncol <- d[2L]
+      private$.ndims <- d[3L]
       invisible(self)
     },
 
@@ -84,7 +85,8 @@ Matdist <- R6Class("Matdist",
     #' @param n `(integer(1))` \cr
     #' Ignored.
     strprint = function(n = 2) {
-      sprintf("Matdist(%sx%s)", private$.ndists, private$.ncols)
+      sprintf("Arrdist(%sx%sx%s)", private$.ndists, private$.ncol,
+        private$.ndims)
     },
 
     # stats
@@ -96,8 +98,8 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then E_X(x) = Inf).
     #' @param ... Unused.
     mean = function(...) {
-      "*" %=% gprm(self, c("x", "pdf", "cdf"))
-      .set_improper(apply(pdf, 1, function(.x) sum(.x * x)), cdf)
+      "*" %=% gprm(self, c("x", "pdf", "cdf", "which.curve"))
+      .set_improper(apply(pdf[, , which.curve], 1, function(.x) sum(.x * x)), cdf[, , which.curve])
     },
 
     #' @description
@@ -117,8 +119,8 @@ Matdist <- R6Class("Matdist",
         stop("`which` cannot be `'all'` when vectorising.")
       }
 
-      "*" %=% gprm(self, c("x", "pdf"))
-      x[apply(pdf, 1, which.max)]
+      "*" %=% gprm(self, c("x", "pdf", "which.curve"))
+      x[apply(pdf[, , which.curve], 1, which.max)]
     },
 
     #' @description
@@ -129,14 +131,14 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then var_X(x) = Inf).
     #' @param ... Unused.
     variance = function(...) {
-      "*" %=% gprm(self, c("x", "pdf"))
+      "*" %=% gprm(self, c("x", "pdf", "which.curve"))
       mean <- self$mean()
 
       vnapply(seq_len(private$.ndists), function(i) {
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum((x - mean[i])^2 * pdf[i, ])
+          sum((x - mean[i])^2 * pdf[i, , which.curve])
         }
       })
     },
@@ -149,7 +151,7 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then sk_X(x) = Inf).
     #' @param ... Unused.
     skewness = function(...) {
-      "*" %=% gprm(self, c("x", "pdf"))
+      "*" %=% gprm(self, c("x", "pdf", "which.curve"))
       mean <- self$mean()
       sd <- self$stdev()
 
@@ -157,7 +159,7 @@ Matdist <- R6Class("Matdist",
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum(((x - mean[i]) / sd[i])^3 * pdf[i, ])
+          sum(((x - mean[i]) / sd[i])^3 * pdf[i, , which.curve])
         }
       })
     },
@@ -171,7 +173,7 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then k_X(x) = Inf).
     #' @param ... Unused.
     kurtosis = function(excess = TRUE, ...) {
-      "*" %=% gprm(self, c("x", "pdf"))
+      "*" %=% gprm(self, c("x", "pdf", "which.curve"))
       mean <- self$mean()
       sd <- self$stdev()
 
@@ -179,7 +181,7 @@ Matdist <- R6Class("Matdist",
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum(((x - mean[i]) / sd[i])^4 * pdf[i, ])
+          sum(((x - mean[i]) / sd[i])^4 * pdf[i, , which.curve])
         }
       })
 
@@ -198,8 +200,11 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper then entropy is Inf.
     #' @param ... Unused.
     entropy = function(base = 2, ...) {
-      "*" %=% gprm(self, c("cdf", "pdf"))
-      .set_improper(apply(pdf, 1, function(.x) -sum(.x * log(.x, base))), cdf)
+      "*" %=% gprm(self, c("cdf", "pdf", "which.curve"))
+      .set_improper(apply(
+        pdf[, , which.curve], 1,
+        function(.x) -sum(.x * log(.x, base))
+      ), cdf[, , which.curve])
     },
 
     #' @description The moment generating function is defined by
@@ -208,17 +213,17 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then mgf_X(x) = Inf).
     #' @param ... Unused.
     mgf = function(t, ...) {
-      "*" %=% gprm(self, c("cdf", "pdf", "x"))
+      "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(t) == 1) {
-        mgf <- apply(pdf, 1, function(.y) sum(exp(x * t) * .y))
+        mgf <- apply(pdf[, , which.curve], 1, function(.y) sum(exp(x * t) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
         mgf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum(exp(x * t[[i]]) * pdf[i, ]))
+                        function(i) sum(exp(x * t[[i]]) * pdf[i, , which.curve]))
       }
 
-      .set_improper(mgf, cdf)
+      .set_improper(mgf, cdf[, , which.curve])
     },
 
     #' @description The characteristic function is defined by
@@ -227,17 +232,17 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then cf_X(x) = Inf).
     #' @param ... Unused.
     cf = function(t, ...) {
-      "*" %=% gprm(self, c("cdf", "pdf", "x"))
+      "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(t) == 1) {
-        cf <- apply(pdf, 1, function(.y) sum(exp(x * t * 1i) * .y))
+        cf <- apply(pdf[, , which.curve], 1, function(.y) sum(exp(x * t * 1i) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
         cf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum(exp(x * t[[i]] * 1i) * pdf[i, ]))
+                        function(i) sum(exp(x * t[[i]] * 1i) * pdf[i, , which.curve]))
       }
 
-      .set_improper(cf, cdf)
+      .set_improper(cf, cdf[, , which.curve])
     },
 
     #' @description The probability generating function is defined by
@@ -246,17 +251,17 @@ Matdist <- R6Class("Matdist",
     #' If distribution is improper (F(Inf) != 1, then pgf_X(x) = Inf).
     #' @param ... Unused.
     pgf = function(z, ...) {
-      "*" %=% gprm(self, c("cdf", "pdf", "x"))
+      "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(z) == 1) {
-        pgf <- apply(pdf, 1, function(.y) sum((z^x) * .y))
+        pgf <- apply(pdf[, , which.curve], 1, function(.y) sum((z^x) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
         pgf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum((z[[i]]^x) * pdf[i, ]))
+                        function(i) sum((z[[i]]^x) * pdf[i, , which.curve]))
       }
 
-      .set_improper(pgf, cdf)
+      .set_improper(pgf, cdf[, , which.curve])
     }
   ),
 
@@ -273,10 +278,10 @@ Matdist <- R6Class("Matdist",
   private = list(
     # dpqr
     .pdf = function(x, log = FALSE) {
-      "pdf, data" %=% gprm(self, c("pdf", "x"))
+      "pdf, data, wc" %=% gprm(self, c("pdf", "x", "which.curve"))
       out <- t(C_Vec_WeightedDiscretePdf(
-        x, matrix(data, ncol(pdf), private$.ndists),
-        t(pdf)
+        x, matrix(data, ncol(pdf[, , wc]), private$.ndists),
+        t(pdf[, , wc])
       ))
       if (log) {
         out <- log(out)
@@ -286,67 +291,69 @@ Matdist <- R6Class("Matdist",
     },
 
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
-      "cdf, data" %=% gprm(self, c("cdf", "x"))
+      "cdf, data, wc" %=% gprm(self, c("cdf", "x", "which.curve"))
       out <- t(C_Vec_WeightedDiscreteCdf(
-        x, matrix(data, ncol(cdf), nrow(cdf)),
-        t(cdf), lower.tail, log.p
+        x, matrix(data, ncol(cdf[, , wc]), nrow(cdf[, , wc])),
+        t(cdf[, , wc]), lower.tail, log.p
       ))
       colnames(out) <- x
       t(out)
     },
 
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
-      "*" %=% gprm(self, c("cdf", "x"))
-      out <- t(C_Vec_WeightedDiscreteQuantile(p, matrix(x, ncol(cdf), nrow(cdf)),
-          t(cdf), lower.tail, log.p))
+      "*" %=% gprm(self, c("cdf", "x", "which.curve"))
+      out <- t(C_Vec_WeightedDiscreteQuantile(p,
+      matrix(x, ncol(cdf[, , which.curve]), nrow(cdf[, , which.curve])),
+          t(cdf[, , which.curve]), lower.tail, log.p))
       colnames(out) <- NULL
       t(out)
     },
 
     .rand = function(n) {
-      "*" %=% gprm(self, c("pdf", "x"))
-      apply(pdf, 1, function(.y) sample(x, n, TRUE, .y))
+      "*" %=% gprm(self, c("pdf", "x", "which.curve"))
+      apply(pdf[, , which.curve], 1, function(.y) sample(x, n, TRUE, .y))
     },
 
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
     .improper = FALSE,
+    .ncol = 0,
     .ndists = 0,
-    .ncols = 0
+    .ndims = 0
   )
 )
 
 .distr6$distributions <- rbind(
   .distr6$distributions,
   data.table::data.table(
-    ShortName = "Matdist", ClassName = "Matdist",
+    ShortName = "Arrdist", ClassName = "Arrdist",
     Type = "\u211D^K", ValueSupport = "discrete",
     VariateForm = "univariate",
-    Package = "-", Tags = "", Alias = "MD"
+    Package = "-", Tags = "", Alias = "AD"
   )
 )
 
 .set_improper <- function(val, cdf) {
-  which_improper <- cdf[, ncol(cdf)] < 1
+  which_improper <- cdf[, ncol(cdf), ] < 1
   val[which_improper] <- Inf
   val
 }
 
-#' @title Combine Matrix Distributions into a Matdist
-#' @description Helper function for quickly combining distributions into a [Matdist].
-#' @param ... matrix distributions to be concatenated.
-#' @return [Matdist]
+#' @title Combine Array Distributions into a Arrdist
+#' @description Helper function for quickly combining distributions into a [Arrdist].
+#' @param ... array distributions to be concatenated.
+#' @return [Arrdist]
 #' @examples
-#' # create three matrix distributions with different column names
-#' mats <- replicate(3, {
-#'   pdf <- runif(200)
-#'   mat <- matrix(pdf, 20, 10, FALSE, list(NULL, sort(sample(1:20, 10))))
-#'   mat <- t(apply(mat, 1, function(x) x / sum(x)))
-#'   as.Distribution(mat, fun = "pdf")
+#' # create three array distributions with different column names
+#' arr <- replicate(3, {
+#'   pdf <- runif(400)
+#'   arr <- array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
+#'   arr <- aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+#'   as.Distribution(arr, fun = "pdf")
 #' })
-#' do.call(c, mats)
+#' do.call(c, arr)
 #' @export
-c.Matdist <- function(...) {
+c.Arrdist <- function(...) {
   # get the pdfs and decorators
   pdfdec <- unlist(lapply(list(...), function(x) list(gprm(x, "pdf"), x$decorators)),
     recursive = FALSE
@@ -354,12 +361,18 @@ c.Matdist <- function(...) {
   pdfs <- pdfdec[seq.int(1, length(pdfdec), by = 2)]
   decs <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
 
-  as.Distribution(do.call(rbind, .merge_matpdf_cols(pdfs)), fun = "pdf",
-                  decorators = decs)
+  nt <- unique(vapply(pdfs, function(.x) dim(.x)[3L], integer(1)))
+  if (length(nt) > 1) {
+    stop("Can't combine array distributions with different lengths on third dimension.")
+  }
+
+  pdfs = .merge_arrpdf_cols(pdfs)
+  pdfs = do.call(abind::abind, list(what = pdfs, along = 1))
+
+  as.Distribution(pdfs, fun = "pdf", decorators = decs)
 }
 
-.merge_matpdf_cols <- function(pdfs) {
-
+.merge_arrpdf_cols <- function(pdfs) {
   nc <- unique(viapply(pdfs, ncol))
 
   if (length(nc) == 1) {
@@ -371,44 +384,53 @@ c.Matdist <- function(...) {
   cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
   # new number of rows and columns
   nc <- length(cnms)
+  nl <- dim(pdfs[[1]])[3L]
 
   lapply(pdfs, function(.x) {
-    out <- matrix(0, nrow(.x), nc, FALSE, list(NULL, cnms))
-    out[, match(as.numeric(colnames(.x)), cnms)] <- .x
+    out <- array(0, c(nrow(.x), nc, nl), list(NULL, cnms, NULL))
+    out[, match(as.numeric(colnames(.x)), cnms), ] <- .x
     out
   })
 }
 
-
-#' @title Extract one or more Distributions from a Matdist
-#' @description Extract a [WeightedDiscrete] or [Matdist] from a [Matdist].
-#' @param md [Matdist] from which to extract Distributions.
-#' @param i indices specifying distributions to extract.
-#' @return If `length(i) == 1` then returns a [WeightedDiscrete] otherwise
-#' returns a [Matdist].
-#' @usage \method{[}{Matdist}(md, i)
+#' @title Extract one or more Distributions from an Array distribution
+#' @description Extract a [WeightedDiscrete] or [Matdist] or [Arrdist] from a [Arrdist].
+#' @param ad [Arrdist] from which to extract Distributions.
+#' @param i indices specifying distributions (first dimension) to extract, all returned if NULL.
+#' @param j indices specifying curves (third dimension) to extract, all returned if NULL.
+#' @return If `length(i) == 1` and `length(j) == 1` then returns a [WeightedDiscrete] otherwise if
+#' `j` is `NULL` returns an [Arrdist]. If `length(i)` is greater than 1 or `NULL` returns a
+#' [Matdist] if `length(j) == 1`.
+#' @usage \method{[}{Arrdist}(md, i = NULL, j = NULL)
 #' @examples
-#' m <- as.Distribution(
-#'   t(apply(matrix(runif(200), 20, 10, FALSE,
-#'                   list(NULL, sort(sample(1:20, 10)))), 1,
-#'           function(x) x / sum(x))),
-#'   fun = "pdf"
-#' )
-#' m[1]
-#' m[1:2]
+#' pdf <- runif(400)
+#' arr <- array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
+#' arr <- aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+#' darr <- as.Distribution(arr, fun = "pdf")
+#' # WeightDisc
+#' darr[1, 1]
+#' # Matdist
+#' darr[1:2, 1]
+#' # Arrdist
+#' darr[1:3, 1:2]
+#' darr[1, 1:2]
 #' @export
-"[.Matdist" <- function(md, i) {
-  if (is.logical(i)) {
+"[.Arrdist" <- function(ad, i = NULL, j = NULL) {
+  if (is.null(i) && is.null(j)) {
+    return(ad)
+  } else if (!is.null(i) && is.logical(i)) {
     i <- which(i)
+  } else if (!is.null(j) && is.logical(j)) {
+    j <- which(j)
   }
-  if (length(i) == 0) {
-    stop("Can't create an empty distribution.")
-  } else if (length(i) == 1) {
-    pdf <- gprm(md, "pdf")[i, ]
+
+  if (length(i) == 1 && length(j) == 1) {
+    pdf <- gprm(ad, "pdf")[i, , j]
     dstr("WeightedDiscrete", x = as.numeric(names(pdf)), pdf = pdf,
-          decorators = md$decorators)
+          decorators = ad$decorators)
   } else {
-    pdf <- gprm(md, "pdf")[i, ]
-    as.Distribution(pdf, fun = "pdf", decorators = md$decorators)
+    # drop if moving to Matdist
+    pdf <- gprm(ad, "pdf")[i, , j, drop = !(length(j) > 1)]
+    as.Distribution(pdf, fun = "pdf", decorators = ad$decorators)
   }
 }

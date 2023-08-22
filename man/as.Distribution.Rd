@@ -3,11 +3,14 @@
 \name{as.Distribution}
 \alias{as.Distribution}
 \alias{as.Distribution.matrix}
+\alias{as.Distribution.array}
 \title{Coerce matrix to vector of WeightedDiscrete or Matrix Distribution}
 \usage{
 as.Distribution(obj, fun, decorators = NULL, vector = FALSE)
 
 \method{as.Distribution}{matrix}(obj, fun, decorators = NULL, vector = FALSE)
+
+\method{as.Distribution}{array}(obj, fun, decorators = NULL)
 }
 \arguments{
 \item{obj}{\link{matrix}. Column names correspond to \code{x} in \link{WeightedDiscrete},

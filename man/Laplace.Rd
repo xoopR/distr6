@@ -75,6 +75,7 @@ Other continuous distributions:
 
 Other univariate distributions: 
 \code{\link{Arcsine}},
+\code{\link{Arrdist}},
 \code{\link{Bernoulli}},
 \code{\link{BetaNoncentral}},
 \code{\link{Beta}},
@@ -139,47 +140,47 @@ Other univariate distributions:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Laplace$new()}}
-\item \href{#method-mean}{\code{Laplace$mean()}}
-\item \href{#method-mode}{\code{Laplace$mode()}}
-\item \href{#method-variance}{\code{Laplace$variance()}}
-\item \href{#method-skewness}{\code{Laplace$skewness()}}
-\item \href{#method-kurtosis}{\code{Laplace$kurtosis()}}
-\item \href{#method-entropy}{\code{Laplace$entropy()}}
-\item \href{#method-mgf}{\code{Laplace$mgf()}}
-\item \href{#method-cf}{\code{Laplace$cf()}}
-\item \href{#method-pgf}{\code{Laplace$pgf()}}
-\item \href{#method-clone}{\code{Laplace$clone()}}
+\item \href{#method-Laplace-new}{\code{Laplace$new()}}
+\item \href{#method-Laplace-mean}{\code{Laplace$mean()}}
+\item \href{#method-Laplace-mode}{\code{Laplace$mode()}}
+\item \href{#method-Laplace-variance}{\code{Laplace$variance()}}
+\item \href{#method-Laplace-skewness}{\code{Laplace$skewness()}}
+\item \href{#method-Laplace-kurtosis}{\code{Laplace$kurtosis()}}
+\item \href{#method-Laplace-entropy}{\code{Laplace$entropy()}}
+\item \href{#method-Laplace-mgf}{\code{Laplace$mgf()}}
+\item \href{#method-Laplace-cf}{\code{Laplace$cf()}}
+\item \href{#method-Laplace-pgf}{\code{Laplace$pgf()}}
+\item \href{#method-Laplace-clone}{\code{Laplace$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf">}\href{../../distr6/html/Distribution.html#method-cdf}{\code{distr6::Distribution$cdf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue">}\href{../../distr6/html/Distribution.html#method-getParameterValue}{\code{distr6::Distribution$getParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median">}\href{../../distr6/html/Distribution.html#method-median}{\code{distr6::Distribution$median()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf">}\href{../../distr6/html/Distribution.html#method-pdf}{\code{distr6::Distribution$pdf()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile">}\href{../../distr6/html/Distribution.html#method-quantile}{\code{distr6::Distribution$quantile()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand">}\href{../../distr6/html/Distribution.html#method-rand}{\code{distr6::Distribution$rand()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint">}\href{../../distr6/html/Distribution.html#method-strprint}{\code{distr6::Distribution$strprint()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href='../../distr6/html/Distribution.html#method-Distribution-cdf'><code>distr6::Distribution$cdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-getParameterValue'><code>distr6::Distribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href='../../distr6/html/Distribution.html#method-Distribution-median'><code>distr6::Distribution$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href='../../distr6/html/Distribution.html#method-Distribution-pdf'><code>distr6::Distribution$pdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href='../../distr6/html/Distribution.html#method-Distribution-quantile'><code>distr6::Distribution$quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href='../../distr6/html/Distribution.html#method-Distribution-rand'><code>distr6::Distribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href='../../distr6/html/Distribution.html#method-Distribution-strprint'><code>distr6::Distribution$strprint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Laplace-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -206,8 +207,8 @@ Decorators to add to the distribution during construction.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mean"></a>}}
-\if{latex}{\out{\hypertarget{method-mean}{}}}
+\if{html}{\out{<a id="method-Laplace-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-mean}{}}}
 \subsection{Method \code{mean()}}{
 The arithmetic mean of a (discrete) probability distribution X is the expectation
 \deqn{E_X(X) = \sum p_X(x)*x}
@@ -225,8 +226,8 @@ with an integration analogue for continuous distributions.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-mode}{}}}
+\if{html}{\out{<a id="method-Laplace-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-mode}{}}}
 \subsection{Method \code{mode()}}{
 The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
@@ -246,8 +247,8 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-variance"></a>}}
-\if{latex}{\out{\hypertarget{method-variance}{}}}
+\if{html}{\out{<a id="method-Laplace-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-variance}{}}}
 \subsection{Method \code{variance()}}{
 The variance of a distribution is defined by the formula
 \deqn{var_X = E[X^2] - E[X]^2}
@@ -266,8 +267,8 @@ covariance matrix is returned.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\if{html}{\out{<a id="method-Laplace-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-skewness}{}}}
 \subsection{Method \code{skewness()}}{
 The skewness of a distribution is defined by the third standardised moment,
 \deqn{sk_X = E_X[\frac{x - \mu}{\sigma}^3]}{sk_X = E_X[((x - \mu)/\sigma)^3]}
@@ -286,8 +287,8 @@ distribution and \eqn{\sigma} is the standard deviation of the distribution.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kurtosis"></a>}}
-\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
+\if{html}{\out{<a id="method-Laplace-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-kurtosis}{}}}
 \subsection{Method \code{kurtosis()}}{
 The kurtosis of a distribution is defined by the fourth standardised moment,
 \deqn{k_X = E_X[\frac{x - \mu}{\sigma}^4]}{k_X = E_X[((x - \mu)/\sigma)^4]}
@@ -310,8 +311,8 @@ If \code{TRUE} (default) excess kurtosis returned.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-entropy"></a>}}
-\if{latex}{\out{\hypertarget{method-entropy}{}}}
+\if{html}{\out{<a id="method-Laplace-entropy"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-entropy}{}}}
 \subsection{Method \code{entropy()}}{
 The entropy of a (discrete) distribution is defined by
 \deqn{- \sum (f_X)log(f_X)}
@@ -333,8 +334,8 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mgf"></a>}}
-\if{latex}{\out{\hypertarget{method-mgf}{}}}
+\if{html}{\out{<a id="method-Laplace-mgf"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-mgf}{}}}
 \subsection{Method \code{mgf()}}{
 The moment generating function is defined by
 \deqn{mgf_X(t) = E_X[exp(xt)]}
@@ -355,8 +356,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cf"></a>}}
-\if{latex}{\out{\hypertarget{method-cf}{}}}
+\if{html}{\out{<a id="method-Laplace-cf"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-cf}{}}}
 \subsection{Method \code{cf()}}{
 The characteristic function is defined by
 \deqn{cf_X(t) = E_X[exp(xti)]}
@@ -377,8 +378,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pgf"></a>}}
-\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\if{html}{\out{<a id="method-Laplace-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-pgf}{}}}
 \subsection{Method \code{pgf()}}{
 The probability generating function is defined by
 \deqn{pgf_X(z) = E_X[exp(z^x)]}
@@ -399,8 +400,8 @@ z integer to evaluate probability generating function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Laplace-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Laplace-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
