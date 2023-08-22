@@ -43,8 +43,10 @@ N/A
 }
 
 \examples{
-x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4), dimnames = list(NULL, 1:2, NULL)))
-Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4), dimnames = list(NULL, 1:2, NULL))) # equivalently
+x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4),
+                 dimnames = list(NULL, 1:2, NULL)))
+Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4),
+                        dimnames = list(NULL, 1:2, NULL))) # equivalently
 
 # d/p/q/r
 x$pdf(1)

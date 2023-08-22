@@ -30,8 +30,10 @@
 #' @family univariate distributions
 #'
 #' @examples
-#' x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4), dimnames = list(NULL, 1:2, NULL)))
-#' Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4), dimnames = list(NULL, 1:2, NULL))) # equivalently
+#' x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4),
+#'                  dimnames = list(NULL, 1:2, NULL)))
+#' Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4),
+#'                         dimnames = list(NULL, 1:2, NULL))) # equivalently
 #'
 #' # d/p/q/r
 #' x$pdf(1)
@@ -419,7 +421,7 @@ c.Arrdist <- function(...) {
 #' @return If `length(i) == 1` and `length(j) == 1` then returns a [WeightedDiscrete] otherwise if
 #' `j` is `NULL` returns an [Arrdist]. If `length(i)` is greater than 1 or `NULL` returns a
 #' [Matdist] if `length(j) == 1`.
-#' @usage \method{[}{Arrdist}(md, i = NULL, j = NULL)
+#' @usage \method{[}{Arrdist}(ad, i = NULL, j = NULL)
 #' @examples
 #' pdf <- runif(400)
 #' arr <- array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))

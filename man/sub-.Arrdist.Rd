@@ -4,7 +4,7 @@
 \alias{[.Arrdist}
 \title{Extract one or more Distributions from an Array distribution}
 \usage{
-\method{[}{Arrdist}(md, i = NULL, j = NULL)
+\method{[}{Arrdist}(ad, i = NULL, j = NULL)
 }
 \arguments{
 \item{ad}{\link{Arrdist} from which to extract Distributions.}
