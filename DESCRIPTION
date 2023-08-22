@@ -95,6 +95,7 @@ Imports:
     set6 (>= 0.2.3),
     stats
 Suggests:
+    abind,
     actuar,
     cubature,
     extraDistr,
