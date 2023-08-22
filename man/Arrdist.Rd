@@ -43,12 +43,12 @@ N/A
 }
 
 \examples{
-x <- Arrdist$new(pdf = array(0.5, c(2, 2, 3), dimnames = list(NULL, 1:2, NULL)))
-Arrdist$new(cdf = array(c(0.5, 0.5, 1, 1), c(2, 2, 3), dimnames = list(NULL, 1:2, NULL))) # equivalently
+x <- Arrdist$new(pdf = array(0.5, c(3, 2, 4), dimnames = list(NULL, 1:2, NULL)))
+Arrdist$new(cdf = array(c(0.5, 0.5, 0.5, 1, 1, 1), c(3, 2, 4), dimnames = list(NULL, 1:2, NULL))) # equivalently
 
 # d/p/q/r
-x$pdf(1:5)
-x$cdf(1:5) # Assumes ordered in construction
+x$pdf(1)
+x$cdf(1:2) # Assumes ordered in construction
 x$quantile(0.42) # Assumes ordered in construction
 x$rand(10)
 
@@ -57,6 +57,21 @@ x$mean()
 x$variance()
 
 summary(x)
+
+# Changing which.curve
+arr <- array(runif(90), c(3, 2, 5), list(NULL, 1:2, NULL))
+arr <- aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+arr[, , 1:3]
+x <- Arrdist$new(arr)
+x$mean() # default 0.5 quantile (in this case index 3)
+x$setParameterValue(which.curve = 3) # equivalently
+x$mean()
+# 1\% quantile
+x$setParameterValue(which.curve = 0.01)
+x$mean()
+# 5th index
+x$setParameterValue(which.curve = 5)
+x$mean()
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -208,6 +223,10 @@ If \code{cdf} is not given then calculated as \code{cumsum(pdf)}.}
 \item{\code{cdf}}{\code{numeric()}\cr
 Cumulative distribution function for corresponding samples, should be same length \code{x}. If
 given then \code{pdf} calculated as difference of \code{cdf}s.}
+
+\item{\code{which.curve}}{\code{numeric(1)} \cr
+Which curve (third dimension) should results be displayed for? If
+between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index. See examples.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}

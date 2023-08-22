@@ -25,7 +25,12 @@ Extract a \link{WeightedDiscrete} or \link{Matdist} or \link{Arrdist} from a \li
 pdf <- runif(400)
 arr <- array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
 arr <- aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
-arr <- as.Distribution(arr, fun = "pdf")
-m[1]
-m[1:2]
+darr <- as.Distribution(arr, fun = "pdf")
+# WeightDisc
+darr[1, 1]
+# Matdist
+darr[1:2, 1]
+# Arrdist
+darr[1:3, 1:2]
+darr[1, 1:2]
 }
