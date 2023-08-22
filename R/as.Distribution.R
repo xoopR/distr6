@@ -61,6 +61,6 @@ as.Distribution.matrix <- function(obj, fun, decorators = NULL, vector = FALSE) 
 
 #' @rdname as.Distribution
 #' @export
-as.Distribution.array <- function(obj, fun, decorators = NULL) {
+as.Distribution.array <- function(obj, fun, decorators = NULL, vector = FALSE) {
   dstr("Arrdist", pars = setNames(list(obj), fun), decorators = decorators)
 }
