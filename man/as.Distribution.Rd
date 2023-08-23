@@ -10,7 +10,7 @@ as.Distribution(obj, fun, decorators = NULL, vector = FALSE)
 
 \method{as.Distribution}{matrix}(obj, fun, decorators = NULL, vector = FALSE)
 
-\method{as.Distribution}{array}(obj, fun, decorators = NULL)
+\method{as.Distribution}{array}(obj, fun, decorators = NULL, vector = FALSE)
 }
 \arguments{
 \item{obj}{\link{matrix}. Column names correspond to \code{x} in \link{WeightedDiscrete},
