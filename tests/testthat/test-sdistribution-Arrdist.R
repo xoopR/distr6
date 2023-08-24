@@ -21,7 +21,7 @@ test_that("c.Arrdist", {
   expect_true(all(r >= 1))
 })
 
-test_that("[.Matdist", {
+test_that("[.Arrdist", {
   set.seed(1)
   pdf = runif(400)
   arr = array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
