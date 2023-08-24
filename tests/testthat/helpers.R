@@ -496,5 +496,7 @@ expect_distribution <- function(d, class) {
 }
 
 expect_R6_class <- function(obj, what) { # nolint
-  expect_true(inherits(obj, c(what, "R6")))
+  vec = inherits(obj, c(what, "R6"), which = TRUE)
+  expect_true(length(vec) == length(what) + 1)
+  expect_true(all(vec != 0))
 }
