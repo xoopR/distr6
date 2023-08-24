@@ -1,3 +1,25 @@
+test_that("c.Arrdist", {
+  set.seed(1)
+  arr_list = replicate(3, {
+    pdf = runif(400)
+    arr = array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
+    arr = aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+    as.Distribution(arr, fun = "pdf")
+  })
+  arr1 = arr_list[[1]]
+  arr2 = arr_list[[2]]
+  arr3 = arr_list[[3]]
+  carr = do.call(c, arr_list)
+
+  expect_equal(carr$pdf(0:30), cbind(arr1$pdf(0:30), arr2$pdf(0:30), arr3$pdf(0:30)))
+  expect_equal(carr$cdf(0:30), cbind(arr1$cdf(0:30), arr2$cdf(0:30), arr3$cdf(0:30)))
+  expect_equal(carr$quantile(0.42),
+               cbind(arr1$quantile(0.42), arr2$quantile(0.42), arr3$quantile(0.42)))
+  r = carr$rand(50)
+  expect_equal(dim(r), c(50, 60))
+  expect_true(all(r <= 20))
+  expect_true(all(r >= 1))
+})
 
 test_that("[.Matdist", {
   set.seed(1)
