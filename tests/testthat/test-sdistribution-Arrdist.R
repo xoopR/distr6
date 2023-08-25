@@ -8,7 +8,7 @@ test_that("autottest", {
   wd2 = dstr("WeightDisc", pdf = arr[2, , 3], x = as.numeric(colnames(arr)))
 
   autotest_sdistribution(Arrdist,
-    pars = list(pdf = arr),
+    pars = list(pdf = arr, which.curve = 3),
     traits = list(
       valueSupport = "discrete", variateForm = "univariate",
       type = Reals$new()^"n"
@@ -31,6 +31,19 @@ test_that("autottest", {
                       2, 3, TRUE, dimnames = NULL)),
     vectorise = FALSE
   )
+})
+
+test_that("calculate mean", {
+    pdf = runif(16)
+    arr = array(pdf, c(2, 2, 4), list(NULL, 1:2, NULL))
+    arr = aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
+    darr = as.Distribution(arr, fun = "pdf")
+
+    expect_error(sprm(darr, list(which.curve = "measdfdn")), "does not lie")
+
+    sprm(darr, list(which.curve = "mean"))
+    expect_equal(darr$pdf(1:2), t(apply(gprm(darr, "pdf"), c(1, 2), mean)))
+    expect_equal(darr$cdf(1:2), t(apply(gprm(darr, "cdf"), c(1, 2), mean)))
 })
 
 test_that("c.Arrdist", {
@@ -65,11 +78,13 @@ test_that("Arrdist basics", {
 
   expect_distribution(darr, "Arrdist")
   expect_equal(darr$strprint(), "Arrdist(2x3x4)")
-  expect_equal(3, gprm(darr, "which.curve"))
+  expect_equal(0.5, gprm(darr, "which.curve"))
   sprm(darr, list(which.curve = 1))
   expect_equal(1, gprm(darr, "which.curve"))
   sprm(darr, list(which.curve = 0.9))
-  expect_equal(4, gprm(darr, "which.curve"))
+  expect_equal(0.9, gprm(darr, "which.curve"))
+  sprm(darr, list(which.curve = "mean"))
+  expect_equal("mean", gprm(darr, "which.curve"))
   expect_error(sprm(darr, list(which.curve = 6)), "third dimension")
 })
 
@@ -82,10 +97,16 @@ test_that("[.Arrdist", {
   darr = as.Distribution(arr, fun = "pdf")
 
   # logical extraction
-  expect_error(darr[logical(20)], "positive length")
+  expect_equal_distr(darr[logical(20)], darr)
   expect_distribution(darr[!logical(1), 1], "WeightedDiscrete")
   expect_distribution(darr[!logical(20), 1], "Matdist")
   expect_distribution(darr[c(TRUE, logical(19)), 1:2], "Arrdist")
+
+  # extract by mean
+  expect_equal(
+    as.numeric(darr[, "mean"]$pdf(1)),
+    apply(gprm(darr, "pdf")[, 1, ], 1, mean)
+  )
 
   # compare extracted results
 

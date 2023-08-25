@@ -61,6 +61,9 @@
 #' # 5th index
 #' x$setParameterValue(which.curve = 5)
 #' x$mean()
+#' # mean
+#' x$setParameterValue(which.curve = "mean")
+#' x$mean()
 #' @export
 Arrdist <- R6Class("Arrdist",
   inherit = SDistribution, lock_objects = F,
@@ -84,9 +87,9 @@ Arrdist <- R6Class("Arrdist",
     #' @param cdf `numeric()`\cr
     #' Cumulative distribution function for corresponding samples, should be same length `x`. If
     #' given then `pdf` calculated as difference of `cdf`s.
-    #' @param which.curve `numeric(1)` \cr
+    #' @param which.curve `numeric(1) | character(1)` \cr
     #' Which curve (third dimension) should results be displayed for? If
-    #' between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index. See examples.
+    #' between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index, can also be 'mean'. See examples.
     initialize = function(pdf = NULL, cdf = NULL, which.curve = 0.5, decorators = NULL) {
       super$initialize(
         decorators = decorators,
@@ -119,7 +122,10 @@ Arrdist <- R6Class("Arrdist",
     #' @param ... Unused.
     mean = function(...) {
       "*" %=% gprm(self, c("x", "pdf", "cdf", "which.curve"))
-      .set_improper(apply(pdf[, , which.curve], 1, function(.x) sum(.x * x)), cdf[, , which.curve])
+
+      .set_improper(apply(
+        .extCurve(pdf, which.curve), 1, function(.x) sum(.x * x)),
+        .extCurve(cdf, which.curve))
     },
 
     #' @description
@@ -140,7 +146,7 @@ Arrdist <- R6Class("Arrdist",
       }
 
       "*" %=% gprm(self, c("x", "pdf", "which.curve"))
-      x[apply(pdf[, , which.curve], 1, which.max)]
+      x[apply(.extCurve(pdf, which.curve), 1, which.max)]
     },
 
     #' @description
@@ -158,7 +164,7 @@ Arrdist <- R6Class("Arrdist",
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum((x - mean[i])^2 * pdf[i, , which.curve])
+          sum((x - mean[i])^2 * .extRow(.extCurve(pdf, which.curve), i))
         }
       })
     },
@@ -179,7 +185,7 @@ Arrdist <- R6Class("Arrdist",
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum(((x - mean[i]) / sd[i])^3 * pdf[i, , which.curve])
+          sum(((x - mean[i]) / sd[i])^3 * .extRow(.extCurve(pdf, which.curve), i))
         }
       })
     },
@@ -201,7 +207,7 @@ Arrdist <- R6Class("Arrdist",
         if (mean[[i]] == Inf) {
           Inf
         } else {
-          sum(((x - mean[i]) / sd[i])^4 * pdf[i, , which.curve])
+          sum(((x - mean[i]) / sd[i])^4 * .extRow(.extCurve(pdf, which.curve), i))
         }
       })
 
@@ -222,9 +228,9 @@ Arrdist <- R6Class("Arrdist",
     entropy = function(base = 2, ...) {
       "*" %=% gprm(self, c("cdf", "pdf", "which.curve"))
       .set_improper(apply(
-        pdf[, , which.curve], 1,
+        .extCurve(pdf, which.curve), 1,
         function(.x) -sum(.x * log(.x, base))
-      ), cdf[, , which.curve])
+      ), .extCurve(cdf, which.curve))
     },
 
     #' @description The moment generating function is defined by
@@ -236,14 +242,16 @@ Arrdist <- R6Class("Arrdist",
       "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(t) == 1) {
-        mgf <- apply(pdf[, , which.curve], 1, function(.y) sum(exp(x * t) * .y))
+        mgf <- apply(.extCurve(pdf, which.curve), 1, function(.y) sum(exp(x * t) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
-        mgf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum(exp(x * t[[i]]) * pdf[i, , which.curve]))
+        mgf <- vnapply(
+          seq_len(private$.ndists),
+          function(i) sum(exp(x * t[[i]]) * .extRow(.extCurve(pdf, which.curve), i))
+        )
       }
 
-      .set_improper(mgf, cdf[, , which.curve])
+      .set_improper(mgf, .extCurve(cdf, which.curve))
     },
 
     #' @description The characteristic function is defined by
@@ -255,14 +263,16 @@ Arrdist <- R6Class("Arrdist",
       "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(t) == 1) {
-        cf <- apply(pdf[, , which.curve], 1, function(.y) sum(exp(x * t * 1i) * .y))
+        cf <- apply(.extCurve(pdf, which.curve), 1, function(.y) sum(exp(x * t * 1i) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
-        cf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum(exp(x * t[[i]] * 1i) * pdf[i, , which.curve]))
+        cf <- vnapply(
+          seq_len(private$.ndists),
+          function(i) sum(exp(x * t[[i]] * 1i) * .extRow(.extCurve(pdf, which.curve), i))
+        )
       }
 
-      .set_improper(cf, cdf[, , which.curve])
+      .set_improper(cf, .extCurve(cdf, which.curve))
     },
 
     #' @description The probability generating function is defined by
@@ -274,14 +284,16 @@ Arrdist <- R6Class("Arrdist",
       "*" %=% gprm(self, c("cdf", "pdf", "x", "which.curve"))
 
       if (length(z) == 1) {
-        pgf <- apply(pdf[, , which.curve], 1, function(.y) sum((z^x) * .y))
+        pgf <- apply(.extCurve(pdf, which.curve), 1, function(.y) sum((z^x) * .y))
       } else {
         stopifnot(length(z) == private$.ndists)
-        pgf <- vnapply(seq_len(private$.ndists),
-                        function(i) sum((z[[i]]^x) * pdf[i, , which.curve]))
+        pgf <- vnapply(
+          seq_len(private$.ndists),
+          function(i) sum((z[[i]]^x) * .extRow(.extCurve(pdf, which.curve), i))
+        )
       }
 
-      .set_improper(pgf, cdf[, , which.curve])
+      .set_improper(pgf, .extCurve(cdf, which.curve))
     }
   ),
 
@@ -299,7 +311,7 @@ Arrdist <- R6Class("Arrdist",
     # dpqr
     .pdf = function(x, log = FALSE) {
       "pdf, data, wc" %=% gprm(self, c("pdf", "x", "which.curve"))
-      mat <- .dr3(pdf, wc)
+      mat <- .extCurve(pdf, wc)
       out <- t(C_Vec_WeightedDiscretePdf(
         x, matrix(data, ncol(mat), private$.ndists), t(mat)))
       if (log) {
@@ -311,7 +323,7 @@ Arrdist <- R6Class("Arrdist",
 
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
       "cdf, data, wc" %=% gprm(self, c("cdf", "x", "which.curve"))
-      mat <- .dr3(cdf, wc)
+      mat <- .extCurve(cdf, wc)
       out <- t(C_Vec_WeightedDiscreteCdf(
         x, matrix(data, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p
       ))
@@ -321,7 +333,7 @@ Arrdist <- R6Class("Arrdist",
 
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       "*" %=% gprm(self, c("cdf", "x", "which.curve"))
-      mat <- .dr3(cdf, which.curve)
+      mat <- .extCurve(cdf, which.curve)
       out <- t(C_Vec_WeightedDiscreteQuantile(p,
         matrix(x, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p))
       colnames(out) <- NULL
@@ -330,7 +342,8 @@ Arrdist <- R6Class("Arrdist",
 
     .rand = function(n) {
       "*" %=% gprm(self, c("pdf", "x", "which.curve"))
-      apply(.dr3(pdf, which.curve), 1, function(.y) sample(x, n, TRUE, .y))
+      apply(.extCurve(pdf, which.curve), 1,
+        function(.y) sample(x, n, TRUE, .y))
     },
 
     # traits
@@ -435,28 +448,68 @@ c.Arrdist <- function(...) {
 #' darr[1, 1:2]
 #' @export
 "[.Arrdist" <- function(ad, i = NULL, j = NULL) {
-  if (is.null(i) && is.null(j)) {
-    return(ad)
-  } else if (!is.null(i) && is.logical(i)) {
+  if (is.logical(i)) {
     i <- which(i)
-  } else if (!is.null(j) && is.logical(j)) {
+  }
+
+  if (is.logical(j)) {
     j <- which(j)
   }
 
+  if (!length(i) && !length(j)) {
+    return(ad)
+  }
+
+  if (is.character(j) && j != "mean") {
+    stop(sprintf("Parameter 'j' should be 'mean' or a number, instead got '%s'", j))
+  }
+
+  pdf1 <- .extRow(.extCurve(gprm(ad, "pdf"), j), i)
+
   if (length(i) == 1 && length(j) == 1) {
-    pdf <- gprm(ad, "pdf")[i, , j]
-    dstr("WeightedDiscrete", x = as.numeric(names(pdf)), pdf = pdf,
-          decorators = ad$decorators)
+    dstr("WeightedDiscrete",
+      x = as.numeric(colnames(pdf1)), pdf = pdf1[1, ],
+      decorators = ad$decorators
+    )
   } else {
-    # drop if moving to Matdist
-    pdf <- gprm(ad, "pdf")[i, , j, drop = !(length(j) > 1)]
-    as.Distribution(pdf, fun = "pdf", decorators = ad$decorators)
+    as.Distribution(pdf1, fun = "pdf", decorators = ad$decorators)
   }
 }
 
-.dr3 <- function(arr, i) {
-  array(
-    arr[, , i, drop = FALSE], c(nrow(arr), ncol(arr)),
-    dimnames(arr)[c(1, 2)]
-  )
+.extCurve <- function(arr, x) {
+  if (!length(x)) {
+    return(arr)
+  }
+
+  if (length(x) == 1) {
+    if (x == "mean") {
+      apply(arr, c(1, 2), mean)
+    } else if (x < 1) {
+      array(apply(arr, c(1, 2), quantile, x), c(nrow(arr), ncol(arr)),
+        dimnames(arr)[c(1, 2)])
+    } else {
+      array(arr[, , x], c(nrow(arr), ncol(arr)), dimnames(arr)[c(1, 2)])
+    }
+  } else {
+    if (all(x < 1 & x > 0)) {
+      aperm(array(apply(arr, c(1, 2), quantile, x), c(length(x), nrow(arr), ncol(arr)),
+        c(NULL, dimnames(arr)[c(1, 2)])), c(2, 3, 1))
+    } else if (all(x)  >= 1) {
+      arr[, , x, drop = FALSE]
+    } else {
+      stop("All curves to extract must be >1 OR all <1 and >0")
+    }
+  }
+}
+
+.extRow <- function(arr, x) {
+  if (!length(x)) {
+    return(arr)
+  }
+
+  if (length(dim(arr)) == 2) {
+    arr[x, , drop = FALSE]
+  } else {
+    arr[x, , , drop = FALSE]
+  }
 }

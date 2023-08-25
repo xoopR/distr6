@@ -735,7 +735,7 @@ getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
         array(0.5, c(2, 2, 3), dimnames = list(NULL, 1:2, NULL)),
         tags = c("required", "linked")),
     prm("x", "integers", tags = "immutable"),
-    prm("which.curve", Interval$new(0, 1, type = "()") + Integers$new(), which.curve, tags = "required"),
+    prm("which.curve", Interval$new(0, 1, type = "()") + Integers$new() + Set$new("mean"), which.curve, tags = "required"),
     trafo = function(x, self) {
 
       pdf <- list_element(x, "pdf")$pdf
@@ -749,9 +749,7 @@ getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
 
       assert_cdf_array(cdf)
 
-      if (x$which.curve < 1) {
-        x$which.curve = as.numeric(ceiling(stats::quantile(seq(dim(pdf)[3L]), x$which.curve)))
-      } else if (x$which.curve > dim(pdf)[3L]) {
+      if (is.numeric(x$which.curve) && x$which.curve > dim(pdf)[3L]) {
         stop(sprintf("Length is %s on third dimension but curve '%s' requested, change 'which.curve'
 parameter.", dim(pdf)[3L], x$which.curve))
       }
