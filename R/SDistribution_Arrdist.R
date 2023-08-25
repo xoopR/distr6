@@ -299,10 +299,9 @@ Arrdist <- R6Class("Arrdist",
     # dpqr
     .pdf = function(x, log = FALSE) {
       "pdf, data, wc" %=% gprm(self, c("pdf", "x", "which.curve"))
+      mat <- .dr3(pdf, wc)
       out <- t(C_Vec_WeightedDiscretePdf(
-        x, matrix(data, ncol(pdf[, , wc]), private$.ndists),
-        t(pdf[, , wc])
-      ))
+        x, matrix(data, ncol(mat), private$.ndists), t(mat)))
       if (log) {
         out <- log(out)
       }
@@ -312,9 +311,9 @@ Arrdist <- R6Class("Arrdist",
 
     .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
       "cdf, data, wc" %=% gprm(self, c("cdf", "x", "which.curve"))
+      mat <- .dr3(cdf, wc)
       out <- t(C_Vec_WeightedDiscreteCdf(
-        x, matrix(data, ncol(cdf[, , wc]), nrow(cdf[, , wc])),
-        t(cdf[, , wc]), lower.tail, log.p
+        x, matrix(data, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p
       ))
       colnames(out) <- x
       t(out)
@@ -322,16 +321,16 @@ Arrdist <- R6Class("Arrdist",
 
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       "*" %=% gprm(self, c("cdf", "x", "which.curve"))
+      mat <- .dr3(cdf, which.curve)
       out <- t(C_Vec_WeightedDiscreteQuantile(p,
-      matrix(x, ncol(cdf[, , which.curve]), nrow(cdf[, , which.curve])),
-          t(cdf[, , which.curve]), lower.tail, log.p))
+        matrix(x, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p))
       colnames(out) <- NULL
       t(out)
     },
 
     .rand = function(n) {
       "*" %=% gprm(self, c("pdf", "x", "which.curve"))
-      apply(pdf[, , which.curve], 1, function(.y) sample(x, n, TRUE, .y))
+      apply(.dr3(pdf, which.curve), 1, function(.y) sample(x, n, TRUE, .y))
     },
 
     # traits
@@ -453,4 +452,11 @@ c.Arrdist <- function(...) {
     pdf <- gprm(ad, "pdf")[i, , j, drop = !(length(j) > 1)]
     as.Distribution(pdf, fun = "pdf", decorators = ad$decorators)
   }
+}
+
+.dr3 <- function(arr, i) {
+  array(
+    arr[, , i, drop = FALSE], c(nrow(arr), ncol(arr)),
+    dimnames(arr)[c(1, 2)]
+  )
 }
