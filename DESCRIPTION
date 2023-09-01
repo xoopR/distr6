@@ -92,7 +92,7 @@ Imports:
     param6 (>= 0.2.4),
     R6,
     Rcpp,
-    set6 (>= 0.2.3),
+    set6 (>= 0.2.6),
     stats
 Suggests:
     abind,
