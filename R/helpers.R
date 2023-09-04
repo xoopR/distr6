@@ -301,7 +301,7 @@ drop_null <- function(x) {
   x[vapply(x, function(.x) length(.x) > 0, logical(1))]
 }
 
-assert_cdf_matrix <- function (x) {
+assert_cdf_matrix <- function (x, pdf) {
   x <- round(x, 14L) # M1 fix
 
   if (!all(x <= 1 & x >= 0)) {
@@ -314,16 +314,15 @@ assert_cdf_matrix <- function (x) {
     stop("Cdf matrix column names must be increasing numeric")
   }
 
-  apply(x, 1, function(.x) {
-    if (!identical(order(.x), seq(ncol(x)))) {
-      stop("Cdf must be (non-strictly) increasing")
-    }
-  })
+  # TODO: check works as expected
+  if (any(pdf < 0)) {
+    stop("Cdf must be (non-strictly) increasing")
+  }
 
   invisible(NULL)
 }
 
-assert_cdf_array <- function (x) {
+assert_cdf_array <- function (x, pdf) {
 
   x <- round(x, 14L) # M1 fix
 
@@ -337,11 +336,10 @@ assert_cdf_array <- function (x) {
     stop("Cdf matrix column names must be increasing numeric")
   }
 
-  apply(x, c(1, 3), function(.x) {
-    if (!identical(order(.x), seq(ncol(x)))) {
-      stop("Cdf must be (non-strictly) increasing")
-    }
-  })
+  # TODO: check works as expected
+  if (any(pdf < 0)) {
+    stop("Cdf must be (non-strictly) increasing")
+  }
 
   invisible(NULL)
 }
