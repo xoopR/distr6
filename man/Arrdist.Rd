@@ -74,6 +74,9 @@ x$mean()
 # 5th index
 x$setParameterValue(which.curve = 5)
 x$mean()
+# mean
+x$setParameterValue(which.curve = "mean")
+x$mean()
 }
 \references{
 McLaughlin, M. P. (2001). A compendium of common probability distributions (pp. 2014-01).
@@ -226,9 +229,9 @@ If \code{cdf} is not given then calculated as \code{cumsum(pdf)}.}
 Cumulative distribution function for corresponding samples, should be same length \code{x}. If
 given then \code{pdf} calculated as difference of \code{cdf}s.}
 
-\item{\code{which.curve}}{\code{numeric(1)} \cr
+\item{\code{which.curve}}{\code{numeric(1) | character(1)} \cr
 Which curve (third dimension) should results be displayed for? If
-between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index. See examples.}
+between (0,1) taken as the quantile of the curves otherwise if greater than 1 taken as the curve index, can also be 'mean'. See examples.}
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
