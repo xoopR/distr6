@@ -464,15 +464,15 @@ c.Arrdist <- function(...) {
     stop(sprintf("Parameter 'j' should be 'mean' or a number, instead got '%s'", j))
   }
 
-  pdf1 <- .extRow(.extCurve(gprm(ad, "pdf"), j), i)
+  cdf1 <- .extRow(.extCurve(gprm(ad, "cdf"), j), i)
 
   if (length(i) == 1 && length(j) == 1) {
     dstr("WeightedDiscrete",
-      x = as.numeric(colnames(pdf1)), pdf = pdf1[1, ],
+      x = as.numeric(colnames(cdf1)), cdf = cdf1[1, ],
       decorators = ad$decorators
     )
   } else {
-    as.Distribution(pdf1, fun = "pdf", decorators = ad$decorators)
+    as.Distribution(cdf1, fun = "cdf", decorators = ad$decorators)
   }
 }
 
