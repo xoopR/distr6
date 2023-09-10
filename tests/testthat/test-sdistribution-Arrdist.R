@@ -91,16 +91,16 @@ test_that("Arrdist basics", {
 test_that("[.Arrdist", {
   # create Array
   set.seed(1)
-  pdf = runif(400)
-  arr = array(pdf, c(20, 10, 2), list(NULL, sort(sample(1:20, 10)), NULL))
+  pdf = runif(24)
+  arr = array(pdf, c(2, 3, 4), list(NULL, 1:3, NULL))
   arr = aperm(apply(arr, c(1, 3), function(x) x / sum(x)), c(2, 1, 3))
   darr = as.Distribution(arr, fun = "pdf")
 
   # logical extraction
-  expect_equal_distr(darr[logical(20)], darr)
+  expect_equal_distr(darr[logical(2)], darr)
   expect_distribution(darr[!logical(1), 1], "WeightedDiscrete")
-  expect_distribution(darr[!logical(20), 1], "Matdist")
-  expect_distribution(darr[c(TRUE, logical(19)), 1:2], "Arrdist")
+  expect_distribution(darr[!logical(2), 1], "Matdist")
+  expect_distribution(darr[c(TRUE, logical(1)), 1:2], "Arrdist")
 
   # extract by mean
   expect_equal(
@@ -114,32 +114,32 @@ test_that("[.Arrdist", {
   expect_distribution(darr[1:2, 2], "Matdist")
 
   # row 1 curve 2
-  wd1_cdf = unname(darr[1, 1]$cdf(0:20))
-  wd1_pdf = unname(darr[1, 1]$pdf(0:20))
+  wd1_cdf = unname(darr[1, 1]$cdf(0:3))
+  wd1_pdf = unname(darr[1, 1]$pdf(0:3))
   # row 2 curve 2
-  wd2_cdf = unname(darr[2, 2]$cdf(0:20))
-  wd2_pdf = unname(darr[2, 2]$pdf(0:20))
+  wd2_cdf = unname(darr[2, 2]$cdf(0:3))
+  wd2_pdf = unname(darr[2, 2]$pdf(0:3))
 
   # check Matdist extraction matches WD
-  expect_equal(unname(darr[1:2, 1]$cdf(0:20)[, 1]), wd1_cdf)
-  expect_equal(unname(darr[1:2, 2]$cdf(0:20)[, 2]), wd2_cdf)
+  expect_equal(unname(darr[1:2, 1]$cdf(0:3)[, 1]), wd1_cdf)
+  expect_equal(unname(darr[1:2, 2]$cdf(0:3)[, 2]), wd2_cdf)
 
     # Arrdist
   darr1 = darr[1:2, 1:2]
   expect_distribution(darr1, "Arrdist")
 
   sprm(darr1, list(which.curve = 1))
-  expect_equal(unname(darr1$cdf(0:20)[, 1]), wd1_cdf)
-  expect_equal(unname(darr1$pdf(0:20)[, 1]), wd1_pdf)
+  expect_equal(unname(darr1$cdf(0:3)[, 1]), wd1_cdf)
+  expect_equal(unname(darr1$pdf(0:3)[, 1]), wd1_pdf)
 
   sprm(darr1, list(which.curve = 2))
-  expect_equal(unname(darr1$cdf(0:20)[, 2]), wd2_cdf)
-  expect_equal(unname(darr1$pdf(0:20)[, 2]), wd2_pdf)
+  expect_equal(unname(darr1$cdf(0:3)[, 2]), wd2_cdf)
+  expect_equal(unname(darr1$pdf(0:3)[, 2]), wd2_pdf)
 
   # edge cases
   small_darr = darr[1, 1:2]
-  expect_equal(dim(small_darr$cdf(0:20)), c(21, 1))
-  expect_equal(dim(small_darr$pdf(0:20)), c(21, 1))
+  expect_equal(dim(small_darr$cdf(0:3)), c(4, 1))
+  expect_equal(dim(small_darr$pdf(0:3)), c(4, 1))
   expect_equal(dim(small_darr$quantile(c(0.4, 0.5))), c(2, 1))
-  expect_equal(dim(small_darr$rand(0:20)), c(21, 1))
+  expect_equal(dim(small_darr$rand(0:3)), c(4, 1))
 })

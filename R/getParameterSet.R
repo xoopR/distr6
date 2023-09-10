@@ -748,7 +748,7 @@ getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
         }
       } else {
         pdf <- cdf
-        for (i in 2:ncol(pdf)) {
+        for (i in ncol(pdf):2) {
           pdf[, i, ] <- pdf[, i, ] - pdf[, i - 1, ]
         }
       }
