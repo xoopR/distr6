@@ -1,203 +1,128 @@
-# Code of Conduct
+# Contributor Covenant Code of Conduct
 
-We value the participation of every member of our community and want to ensure an that every contributor has an enjoyable and fulfilling experience.
-Accordingly, everyone who participates in the distr6 project is expected to show respect and courtesy to other community members at all times.
+## Our Pledge
 
-Dr Franz Király and Raphael Sonabend, as principal investigators of this project, and all project members, are dedicated to a ***harassment-free experience for everyone***, regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age or religion. **We do not tolerate harassment by and/or of members of our community in any form**.
+We as members, contributors, and leaders pledge to make participation in our
+community a harassment-free experience for everyone, regardless of age, body
+size, visible or invisible disability, ethnicity, sex characteristics, gender
+identity and expression, level of experience, education, socio-economic status,
+nationality, personal appearance, race, religion, or sexual identity
+and orientation.
 
-We are particularly motivated to support new and/or anxious collaborators, people who are looking to learn and develop their skills, and anyone who has experienced discrimination in the past.
+We pledge to act and interact in ways that contribute to an open, welcoming,
+diverse, inclusive, and healthy community.
 
-To make clear what is expected, we ask all members of the community to conform to the following Code of Conduct.
+## Our Standards
 
-* [1 Introduction](#1-introduction)
-* [2 Code of Conduct](#2-code-of-conduct)
-  * [2.1 Expected Behaviour](21-expected-behaviours)
-  * [2.2 Unacceptable Behaviour](#22-unacceptable-behaviour)
-  * [2.3 Consequences of Unacceptable Behaviour](#23-consequences-of-unacceptable-behaviour)
-  * [2.4 Feedback](#24-feedback)
-* [3 Incident Reporting Guidelines](#3-incident-reporting-guidelines)
-  * [3.1 Contact points](#31-contact-points)
-  * [3.2 Alternate contact points](#32-alternate-contact-points)
-  * [3.3 What to do if someone is in physical danger](#33-what-to-do-if-someone-is-in-physical-danger)
-  * [3.4 Code of Conduct Enforcement](#34-code-of-conduct-enforcement)
-* [4 Enforcement Manual](#4-enforcement-manual)
-  * [4.1 The Code of Conduct Committee](#41-the-code-of-conduct-committee)
-  * [4.2 Urgent Situations: Acting Unilaterally](#42-urgent-situations-acting-unilaterally)
-  * [4.3 Less-Urgent Situations](#43-less-urgent-situations)
-  * [4.4 Resolutions](#44-resolutions)
-  * [4.5 Conflicts of Interest](#45-conflicts-of-interest)
-* [5 Acknowledgements](#5-acknowledgements)
+Examples of behavior that contributes to a positive environment for our
+community include:
 
-## 1 Introduction
+* Demonstrating empathy and kindness toward other people
+* Being respectful of differing opinions, viewpoints, and experiences
+* Giving and gracefully accepting constructive feedback
+* Accepting responsibility and apologizing to those affected by our mistakes,
+  and learning from the experience
+* Focusing on what is best not just for us as individuals, but for the
+  overall community
 
-distr6 is a community-oriented and -led project.
-We value the involvement of everyone in the community.
-We are committed to creating a friendly and respectful place for learning, teaching and contributing.
-All participants in our in-person events and online communications are expected to show respect and courtesy to others at all times.
+Examples of unacceptable behavior include:
 
-To make clear what is expected, everyone participating in activities associated with the distr6 project is required to conform to this Code of Conduct.
-This Code of Conduct applies to all spaces managed by the distr6 project including, but not limited to, in-person focus groups and workshops, and communications online via GitHub.
+* The use of sexualized language or imagery, and sexual attention or
+  advances of any kind
+* Trolling, insulting or derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or email
+  address, without their explicit permission
+* Other conduct which could reasonably be considered inappropriate in a
+  professional setting
 
-The lead investigators of distr6 - Dr Franz Király and Raphael Sonabend - are responsible for enforcing the Code of Conduct.
-They can be contacted by emailing [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk) and [raphael.sonabend.15@ucl.ac.uk](raphael.sonabend.15@ucl.ac.uk) respectively.
+## Enforcement Responsibilities
 
-Reports may be reviewed by other members of the core development team, unless there is a conflict of interest, and will be kept confidential.
+Community leaders are responsible for clarifying and enforcing our standards of
+acceptable behavior and will take appropriate and fair corrective action in
+response to any behavior that they deem inappropriate, threatening, offensive,
+or harmful.
 
-## 2 Code of Conduct
+Community leaders have the right and responsibility to remove, edit, or reject
+comments, commits, code, wiki edits, issues, and other contributions that are
+not aligned to this Code of Conduct, and will communicate reasons for moderation
+decisions when appropriate.
 
-The distr6 team are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity.
-As such, we do not tolerate behaviour that is disrespectful to our community members or that excludes, intimidates, or causes discomfort to others.
-We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to: gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, veteran status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.
+## Scope
 
-Everyone who participates in the distr6 project activities is required to conform to this Code of Conduct.
-This Code of Conduct applies to all spaces managed by the distr6 project including, but not limited to, in person focus groups and workshops, and communications online via GitHub.
-By participating, contributors indicate their acceptance of the procedures by which the distr6 project core development team resolves any Code of Conduct incidents, which may include storage and processing of their personal information.
+This Code of Conduct applies within all community spaces, and also applies when
+an individual is officially representing the community in public spaces.
+Examples of representing our community include using an official e-mail address,
+posting via an official social media account, or acting as an appointed
+representative at an online or offline event.
 
-### 2.1 Expected Behaviour
+## Enforcement
 
-We are confident that our community members will together build a supportive and collaborative atmosphere at our events and during online communications.
-The following bullet points set out explicitly what we hope you will consider to be appropriate community guidelines:
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported to the community leaders responsible for enforcement at
+raphaelsonabend@gmail.com.
+All complaints will be reviewed and investigated promptly and fairly.
 
-* **Be respectful of different viewpoints and experiences**. Do not engage in homophobic, racist, transphobic, ageist, ableist, sexist, or otherwise exclusionary behaviour.
-* **Use welcoming and inclusive language**. Exclusionary comments or jokes, threats or violent language are not acceptable. Do not address others in an angry, intimidating, or demeaning manner. Be considerate of the ways the words you choose may impact others. Be patient and respectful of the fact that English is a second (or third or fourth!) language for some participants.
-* **Do not harass people**. Harassment includes unwanted physical contact, sexual attention, or repeated social contact. Know that consent is explicit, conscious and continuous—not implied. If you are unsure whether your behaviour towards another person is welcome, ask them. If someone tells you to stop, do so.
-* **Respect the privacy and safety of others**. Do not take photographs of others without their permission. Do not share other participant’s personal experiences without their express permission. Note that posting (or threatening to post) personally identifying information of others without their consent ("doxing") is a form of harassment.
-* **Be considerate of others’ participation**. Everyone should have an opportunity to be heard. In update sessions, please keep comments succinct so as to allow maximum engagement by all participants. Do not interrupt others on the basis of disagreement; hold such comments until they have finished speaking.
-* **Don’t be a bystander**. If you see something inappropriate happening, speak up. If you don't feel comfortable intervening but feel someone should, please feel free to ask a member of the Code of Conduct response team for support.
-* As an overriding general rule, please **be intentional in your actions and humble in your mistakes**.
+All community leaders are obligated to respect the privacy and security of the
+reporter of any incident.
 
-All interactions should be professional regardless of platform: either online or in-person.
-See [this explanation of the four social rules](https://www.recurse.com/manual#sub-sec-social-rules) - no feigning surprise, no well-actually's, no back-seat driving, no subtle -isms - for further recommendations for inclusive behaviours.
+## Enforcement Guidelines
 
-### 2.2 Unacceptable Behaviour
+Community leaders will follow these Community Impact Guidelines in determining
+the consequences for any action they deem in violation of this Code of Conduct:
 
-Examples of unacceptable behaviour by distr6 community members at any project event or platform include:
+### 1. Correction
 
-* written or verbal comments which have the effect of excluding people on the basis of membership of any specific group
-* causing someone to fear for their safety, such as through stalking, following, or intimidation
-* violent threats or language directed against another person
-* the display of sexual or violent images
-* unwelcome sexual attention
-* nonconsensual or unwelcome physical contact
-* sustained disruption of talks, events or communications
-* insults or put downs
-* sexist, racist, homophobic, transphobic, ableist, or exclusionary jokes
-* excessive swearing
-* incitement to violence, suicide, or self-harm
-* continuing to initiate interaction (including photography or recording) with someone after being asked to stop
-* publication of private communication without consent
+**Community Impact**: Use of inappropriate language or other behavior deemed
+unprofessional or unwelcome in the community.
 
-### 2.3 Consequences of Unacceptable Behaviour
+**Consequence**: A private, written warning from community leaders, providing
+clarity around the nature of the violation and an explanation of why the
+behavior was inappropriate. A public apology may be requested.
 
-Participants who are asked to stop any inappropriate behaviour are expected to comply immediately.
-This applies to all distr6 community events and platforms, either online or in-person.
-If a participant engages in behaviour that violates this Code of Conduct, any member of the core development team may warn the offender, ask them to leave the event or platform (without refund), or impose any other appropriate sanctions (see the [enforcement manual](#4-enforcement-manual) for details).
+### 2. Warning
 
-### 2.4 Feedback
+**Community Impact**: A violation through a single incident or series
+of actions.
 
-This Code of Conduct is not intended as a static set of rules by which everyone must abide.
-Rather, you are invited to make suggestions for updates or clarifications by contacting Dr Franz Király at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk), Raphael Sonabend [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk) or by making a pull request to this document on GitHub.
+**Consequence**: A warning with consequences for continued behavior. No
+interaction with the people involved, including unsolicited interaction with
+those enforcing the Code of Conduct, for a specified period of time. This
+includes avoiding interactions in community spaces as well as external channels
+like social media. Violating these terms may lead to a temporary or
+permanent ban.
 
-## 3 Incident Reporting Guidelines
+### 3. Temporary Ban
 
-### 3.1 Contact points
+**Community Impact**: A serious violation of community standards, including
+sustained inappropriate behavior.
 
-If you feel able to, please contact Dr Franz Király or Raphael Sonabend by email at [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk) or [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk).
+**Consequence**: A temporary ban from any sort of interaction or public
+communication with the community for a specified period of time. No public or
+private interaction with the people involved, including unsolicited interaction
+with those enforcing the Code of Conduct, is allowed during this period.
+Violating these terms may lead to a permanent ban.
 
-### 3.2 What to do if someone is in physical danger
+### 4. Permanent Ban
 
-If you believe someone is in physical danger, please contact the appropriate emergency responders.
+**Community Impact**: Demonstrating a pattern of violation of community
+standards, including sustained inappropriate behavior,  harassment of an
+individual, or aggression toward or disparagement of classes of individuals.
 
-### 3.3 Code of Conduct Enforcement
+**Consequence**: A permanent ban from any sort of public interaction within
+the community.
 
-We believe it is important to have an actionable plan before something happens. We therefore have a detailed enforcement policy which is available in the Enforcement Manual below.
+## Attribution
 
-## 4 Enforcement Manual
+This Code of Conduct is adapted from the [Contributor Covenant][homepage],
+version 2.0, available at
+https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
 
-This is the enforcement manual followed by the distr6 project research team.
-It's used when we respond to an issue to make sure we're consistent and fair.
-Enforcement of the Code of Conduct should be respectful and not include any harassing behaviours.
+Community Impact Guidelines were inspired by [Mozilla's code of conduct
+enforcement ladder](https://github.com/mozilla/diversity).
 
-### 4.1 The Code of Conduct Committee
+[homepage]: https://www.contributor-covenant.org
 
-The provisional Code of Conduct committee is:
-
-* Dr Franz Király:  [fkiraly@turing.ac.uk](mailto:fkiraly@turing.ac.uk)
-* Raphael Sonabend: [raphael.sonabend.15@ucl.ac.uk](mailto:raphael.sonabend.15@ucl.ac.uk)
-
-As the community grows, we will seek to build a larger committee including members outside of the core development team.
-
-### 4.2 Urgent Situations: Acting Unilaterally
-
-If the incident involves physical danger, or involves a threat to anyone's safety (e.g. threats of violence), any member of the community may -- and should -- act unilaterally to protect the safety of any community member.
-This can include contacting law enforcement (or other local personnel) and speaking on behalf of the distr6 team.
-
-If the act is ongoing, any community member may act immediately, before reaching consensus, to diffuse the situation.
-In ongoing situations, any member may at their discretion employ any of the tools available in this enforcement manual, including bans and blocks online, or removal from a physical space.
-
-In situations where an individual community member acts unilaterally, they must inform Dr Franz Király or Raphael Sonabend as soon as possible, and report their actions for review within 24 hours.
-
-### 4.3 Less-Urgent Situations
-
-Upon receiving a report of an incident, the Code of Conduct committee will review the incident and determine, to the best of her ability:
-
-- whether this is an ongoing situation
-- whether there is a threat to anyone's physical safety
-- what happened
-- whether this event constitutes a Code of Conduct violation
-- who, if anyone, was the bad actor
-
-This information will be collected either in person or in writing.
-The Code of Conduct committee will provide a written summary of the information surrounding the incident.
-All participants will be anonymised in the summary report, referred to as "Community Member 1", "Community Member 2", or "Research Team Member 1".
-The "de-anonymising key" will be kept in a separate file and only accessed to link repeated reports against the same person over time.
-
-The Code of Conduct committee will aim to have a resolution agreed upon within one week.
-In the event that a resolution can't be determined in that time, a member of the Code of Conduct committee will respond to the reporter(s) with an update and projected timeline for resolution.
-
-### 4.4 Resolutions
-
-The Code of Conduct committee will seek to agree on a resolution by consensus of all members investigating the report in question.
-If the committee cannot reach consensus and deadlocks for over a week, Dr Franz Király or Raphael Sonabend, as lead investigators of the distr6 project, will break the tie.
-If Dr Franz Király is unable to take part in the discussion due to a conflict of interest, an external member of the Code of Conduct committee, will make the decision.
-
-Possible responses may include:
-
-* A mediated conversation or agreement between the impacted community members.
-* A request for a verbal or written apology, public or private, from a community member.
-* A public announcement clarifying community responsibilities under the Code of Conduct.
-* Nothing, if the issue reported is not a violation or outside of the scope of this Code of Conduct.
-* A private in-person conversation between a member of the research team and the individual(s) involved.
-  In this case, the person who has the conversation will provide a written summary for record keeping.
-* A private written reprimand from a member of the research team to the individual(s) involved.
-  In this case, the research team member will deliver that reprimand to the individual(s) over email, cc'ing Dr Franz Király and Raphael Sonabend for record keeping.
-* A public announcement of an incident, ideally in the same venue that the violation occurred (i.e. on the listserv for a listserv violation; GitHub for a GitHub violation, etc.).
-  The committee may choose to publish this message elsewhere for posterity.
-* An imposed "time out" from online spaces.
-  Dr Franz Király or Raphael Sonabend will communicate this "time out" to the individual(s) involved.
-* A permanent or temporary ban from some or all distr6 project spaces (GitHub, in-person events etc).
-  The research team will maintain records of all such bans so that they may be reviewed in the future, extended to a Code of Conduct safety team as it is built, or otherwise maintained.
-  If a member of the community is removed from an event they will not be reimbursed for any part of the event that they miss.
-
-Once a resolution is agreed upon, but before it is enacted, a member of the Code of Conduct committee will contact the original reporter and any other affected parties and explain the proposed resolution.
-The Code of Conduct committee member will ask if this resolution is acceptable, and must note feedback for the record.
-However, the Code of Conduct committee is not required to act on this feedback.
-
-### 4.5 Conflicts of Interest
-
-In the event of any conflict of interest such that Dr Franz Király is not able to evaluate or enforce the reported violation, Raphael Sonabend will take Dr Franz Király's place.
-
-## 5. Acknowledgements
-
-This code is adapted from the [The Turing Way](https://github.com/alan-turing-institute/the-turing-way) project with Dr Kirstie Whitaker as lead investigator and based on the [Carpentries Code of Conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html) with sections from the [Alan Turing Institute Data Study Group Code of Conduct](https://docs.google.com/document/d/1iv2cizNPUwtEhHqaezAzjIoKkaIX02f7XbYmFMXDTGY/edit).
-All are used under the creative commons attribution license.
-
-The Carpentries Code of Conduct was adapted from guidelines written by the [Django Project](https://www.djangoproject.com/conduct/enforcement-manual/), which was itself based on the [Ada Initiative template](http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Responding_to_reports) and the [PyCon 2013 Procedure for Handling Harassment Incidents](https://us.pycon.org/2013/about/code-of-conduct/harassment-incidents/).
-Contributors to the Carpentries Code of Conduct were: Adam Obeng, Aleksandra Pawlik, Bill Mills, Carol Willing, Erin Becker, Hilmar Lapp, Kara Woo, Karin Lagesen, Pauline Barmby, Sheila Miguez, Simon Waldman, Tracy Teal.
-
-The Turing Institute Data Study Group Code of Conduct was heavily adapted from the [Citizen Lab Summer Institute 2017 Code of Conduct](https://citizenlab.ca/summerinstitute/codeofconduct.html) and used under a CC BY 2.5 CA license.
-Citizen Lab based their Code of Conduct on the [xvzf Code of Conduct](http://xvzf.io/), the [Contributor Covenant](http://contributor-covenant.org/), the [Django Code of Conduct and Reporting Guide](https://www.djangoproject.com/conduct/) and we are also grateful for [this guidance from Ada Initiative](http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Responding_to_reports).
-
-We really appreciate the work that all of the communities linked above have put into creating such a well considered process.
-
-This Code of Conduct is licensed under a [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0 CA) license which means you are free to share and adapt the work so long as the attribution to [The Turing Way](https://github.com/alan-turing-institute/the-turing-way) project with Dr Kirstie Whitaker as the principal investigator is retained, along with the attribution to the Carpentries, The Alan Turing Institute Data Study Group organising team, Citizen Lab and the other resources.
+For answers to common questions about this code of conduct, see the FAQ at
+https://www.contributor-covenant.org/faq. Translations are available at
+https://www.contributor-covenant.org/translations.
