@@ -18,7 +18,7 @@ as well as serving as the parent class to specific, familiar distributions."><me
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -240,28 +240,28 @@ as well as serving as the parent class to specific, familiar distributions.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>Distribution$new()</code></a></p></li>
-<li><p><a href="#method-strprint"><code>Distribution$strprint()</code></a></p></li>
-<li><p><a href="#method-print"><code>Distribution$print()</code></a></p></li>
-<li><p><a href="#method-summary"><code>Distribution$summary()</code></a></p></li>
-<li><p><a href="#method-parameters"><code>Distribution$parameters()</code></a></p></li>
-<li><p><a href="#method-getParameterValue"><code>Distribution$getParameterValue()</code></a></p></li>
-<li><p><a href="#method-setParameterValue"><code>Distribution$setParameterValue()</code></a></p></li>
-<li><p><a href="#method-pdf"><code>Distribution$pdf()</code></a></p></li>
-<li><p><a href="#method-cdf"><code>Distribution$cdf()</code></a></p></li>
-<li><p><a href="#method-quantile"><code>Distribution$quantile()</code></a></p></li>
-<li><p><a href="#method-rand"><code>Distribution$rand()</code></a></p></li>
-<li><p><a href="#method-prec"><code>Distribution$prec()</code></a></p></li>
-<li><p><a href="#method-stdev"><code>Distribution$stdev()</code></a></p></li>
-<li><p><a href="#method-median"><code>Distribution$median()</code></a></p></li>
-<li><p><a href="#method-iqr"><code>Distribution$iqr()</code></a></p></li>
-<li><p><a href="#method-confidence"><code>Distribution$confidence()</code></a></p></li>
-<li><p><a href="#method-correlation"><code>Distribution$correlation()</code></a></p></li>
-<li><p><a href="#method-liesInSupport"><code>Distribution$liesInSupport()</code></a></p></li>
-<li><p><a href="#method-liesInType"><code>Distribution$liesInType()</code></a></p></li>
-<li><p><a href="#method-workingSupport"><code>Distribution$workingSupport()</code></a></p></li>
-<li><p><a href="#method-clone"><code>Distribution$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-Distribution-new"><code>Distribution$new()</code></a></p></li>
+<li><p><a href="#method-Distribution-strprint"><code>Distribution$strprint()</code></a></p></li>
+<li><p><a href="#method-Distribution-print"><code>Distribution$print()</code></a></p></li>
+<li><p><a href="#method-Distribution-summary"><code>Distribution$summary()</code></a></p></li>
+<li><p><a href="#method-Distribution-parameters"><code>Distribution$parameters()</code></a></p></li>
+<li><p><a href="#method-Distribution-getParameterValue"><code>Distribution$getParameterValue()</code></a></p></li>
+<li><p><a href="#method-Distribution-setParameterValue"><code>Distribution$setParameterValue()</code></a></p></li>
+<li><p><a href="#method-Distribution-pdf"><code>Distribution$pdf()</code></a></p></li>
+<li><p><a href="#method-Distribution-cdf"><code>Distribution$cdf()</code></a></p></li>
+<li><p><a href="#method-Distribution-quantile"><code>Distribution$quantile()</code></a></p></li>
+<li><p><a href="#method-Distribution-rand"><code>Distribution$rand()</code></a></p></li>
+<li><p><a href="#method-Distribution-prec"><code>Distribution$prec()</code></a></p></li>
+<li><p><a href="#method-Distribution-stdev"><code>Distribution$stdev()</code></a></p></li>
+<li><p><a href="#method-Distribution-median"><code>Distribution$median()</code></a></p></li>
+<li><p><a href="#method-Distribution-iqr"><code>Distribution$iqr()</code></a></p></li>
+<li><p><a href="#method-Distribution-confidence"><code>Distribution$confidence()</code></a></p></li>
+<li><p><a href="#method-Distribution-correlation"><code>Distribution$correlation()</code></a></p></li>
+<li><p><a href="#method-Distribution-liesInSupport"><code>Distribution$liesInSupport()</code></a></p></li>
+<li><p><a href="#method-Distribution-liesInType"><code>Distribution$liesInType()</code></a></p></li>
+<li><p><a href="#method-Distribution-workingSupport"><code>Distribution$workingSupport()</code></a></p></li>
+<li><p><a href="#method-Distribution-clone"><code>Distribution$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-Distribution-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -374,7 +374,7 @@ Alias of distribution for parsing.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-strprint"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-strprint"></a><div class="section">
 <h3 id="method-strprint-">Method <code>strprint()</code><a class="anchor" aria-label="anchor" href="#method-strprint-"></a></h3>
 <p>Printable string representation of the <code>Distribution</code>. Primarily used internally.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -391,7 +391,7 @@ Number of parameters to display when printing.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the <code>Distribution</code>.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -413,7 +413,7 @@ Unused. Added for consistency.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-summary"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-summary"></a><div class="section">
 <h3 id="method-summary-">Method <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code><a class="anchor" aria-label="anchor" href="#method-summary-"></a></h3>
 <p>Prints a summary of the <code>Distribution</code>.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -436,7 +436,7 @@ Unused. Added for consistency.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-parameters"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-parameters"></a><div class="section">
 <h3 id="method-parameters-">Method <code>parameters()</code><a class="anchor" aria-label="anchor" href="#method-parameters-"></a></h3>
 <p>Returns the full parameter details for the supplied parameter.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -452,7 +452,7 @@ Unused. Added for consistency.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-getParameterValue"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-getParameterValue"></a><div class="section">
 <h3 id="method-getparametervalue-">Method <code>getParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-getparametervalue-"></a></h3>
 <p>Returns the value of the supplied parameter.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
@@ -474,7 +474,7 @@ If <code>"warn"</code> then returns a warning on error, otherwise breaks if <cod
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-setParameterValue"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-setParameterValue"></a><div class="section">
 <h3 id="method-setparametervalue-">Method <code>setParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-setparametervalue-"></a></h3>
 <p>Sets the value(s) of the given parameter(s).</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -520,7 +520,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-pdf"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-pdf"></a><div class="section">
 <h3 id="method-pdf-">Method <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code><a class="anchor" aria-label="anchor" href="#method-pdf-"></a></h3>
 <p>For discrete distributions the probability mass function (pmf) is returned, defined as
 $$p_X(x) = P(X = x)$$
@@ -579,7 +579,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-cdf"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-cdf"></a><div class="section">
 <h3 id="method-cdf-">Method <code>cdf()</code><a class="anchor" aria-label="anchor" href="#method-cdf-"></a></h3>
 <p>The (lower tail) cumulative distribution function, \(F_X\), is defined as
 $$F_X(x) = P(X \le x)$$
@@ -643,7 +643,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-quantile"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-quantile"></a><div class="section">
 <h3 id="method-quantile-">Method <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code><a class="anchor" aria-label="anchor" href="#method-quantile-"></a></h3>
 <p>The quantile function, \(q_X\), is the inverse cdf, i.e.
 $$q_X(p) = F^{-1}_X(p) = \inf\{x \in R: F_X(x) \ge p\}$$ #nolint</p>
@@ -706,7 +706,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-rand"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-rand"></a><div class="section">
 <h3 id="method-rand-">Method <code>rand()</code><a class="anchor" aria-label="anchor" href="#method-rand-"></a></h3>
 <p>The rand function draws <code>n</code> simulations from the distribution.</p>
 <p>If available simulations will be returned using an analytic expression. Otherwise,
@@ -742,7 +742,7 @@ data.table::data.table.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-prec"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-prec"></a><div class="section">
 <h3 id="method-prec-">Method <code>prec()</code><a class="anchor" aria-label="anchor" href="#method-prec-"></a></h3>
 <p>Returns the precision of the distribution as <code>1/self$variance()</code>.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
@@ -750,7 +750,7 @@ data.table::data.table.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-stdev"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-stdev"></a><div class="section">
 <h3 id="method-stdev-">Method <code>stdev()</code><a class="anchor" aria-label="anchor" href="#method-stdev-"></a></h3>
 <p>Returns the standard deviation of the distribution as <code>sqrt(self$variance())</code>.</p><div class="section">
 <h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
@@ -758,7 +758,7 @@ data.table::data.table.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-median"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-median"></a><div class="section">
 <h3 id="method-median-">Method <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code><a class="anchor" aria-label="anchor" href="#method-median-"></a></h3>
 <p>Returns the median of the distribution. If an analytical expression is available
 returns distribution median, otherwise if symmetric returns <code>self$mean</code>, otherwise
@@ -782,7 +782,7 @@ Ignored, addded for consistency.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-iqr"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-iqr"></a><div class="section">
 <h3 id="method-iqr-">Method <code>iqr()</code><a class="anchor" aria-label="anchor" href="#method-iqr-"></a></h3>
 <p>Inter-quartile range of the distribution. Estimated as
 <code>self$quantile(0.75) - self$quantile(0.25)</code>.</p><div class="section">
@@ -791,7 +791,7 @@ Ignored, addded for consistency.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-confidence"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-confidence"></a><div class="section">
 <h3 id="method-confidence-">Method <code>confidence()</code><a class="anchor" aria-label="anchor" href="#method-confidence-"></a></h3>
 <p>1 or 2-sided confidence interval around distribution.</p><div class="section">
 <h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
@@ -815,7 +815,7 @@ Ignored, addded for consistency.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-correlation"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-correlation"></a><div class="section">
 <h3 id="method-correlation-">Method <code>correlation()</code><a class="anchor" aria-label="anchor" href="#method-correlation-"></a></h3>
 <p>If univariate returns <code>1</code>, otherwise returns the distribution correlation.</p><div class="section">
 <h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
@@ -823,7 +823,7 @@ Ignored, addded for consistency.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-liesInSupport"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-liesInSupport"></a><div class="section">
 <h3 id="method-liesinsupport-">Method <code>liesInSupport()</code><a class="anchor" aria-label="anchor" href="#method-liesinsupport-"></a></h3>
 <p>Tests if the given values lie in the support of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><div class="section">
@@ -854,7 +854,7 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-liesInType"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-liesInType"></a><div class="section">
 <h3 id="method-liesintype-">Method <code>liesInType()</code><a class="anchor" aria-label="anchor" href="#method-liesintype-"></a></h3>
 <p>Tests if the given values lie in the type of the distribution.
 Uses <code>[set6::Set]$contains</code>.</p><div class="section">
@@ -885,7 +885,7 @@ otherwise tests if <code>x</code> lie between the maximum and minimum of the dis
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-workingSupport"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-workingSupport"></a><div class="section">
 <h3 id="method-workingsupport-">Method <code>workingSupport()</code><a class="anchor" aria-label="anchor" href="#method-workingsupport-"></a></h3>
 <p>Returns an estimate for the computational support of the distribution.
 If an analytical cdf is available, then this is computed as the smallest interval
@@ -898,7 +898,7 @@ and is more prone to error. Used primarily by decorators.</p><div class="section
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-Distribution-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
@@ -987,16 +987,16 @@ and is more prone to error. Used primarily by decorators.</p><div class="section
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="va"><a href="Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">b</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 3 4 6 5 5 4 5 7 6 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 5 6 6 7 2 5 7 4 6 2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mvn</span> <span class="op">&lt;-</span> <span class="va"><a href="MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mvn</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            V1         V2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.5080618  0.4901924</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: -0.2892072  0.2780419</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: -1.0747546  0.7628576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: -0.4595514 -0.6261939</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: -0.7058971  1.0527072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -1.3622221  0.6301749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  1.0505384 -0.8374915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  1.0540741  0.4238008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  0.8117469  0.3632410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  0.1563525 -0.5013512</span>
 </code></pre></div>
     </div>
   </div>

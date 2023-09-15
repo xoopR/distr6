@@ -18,7 +18,7 @@ is commonly used in sampling such as MCMC."><meta property="og:image" content="h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -198,6 +198,7 @@ Michael P. McLaughlin.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other discrete distributions: 
+<code><a href="Arrdist.html">Arrdist</a></code>,
 <code><a href="Bernoulli.html">Bernoulli</a></code>,
 <code><a href="Binomial.html">Binomial</a></code>,
 <code><a href="Categorical.html">Categorical</a></code>,
@@ -246,30 +247,30 @@ Michael P. McLaughlin.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>EmpiricalMV$new()</code></a></p></li>
-<li><p><a href="#method-mean"><code>EmpiricalMV$mean()</code></a></p></li>
-<li><p><a href="#method-variance"><code>EmpiricalMV$variance()</code></a></p></li>
-<li><p><a href="#method-setParameterValue"><code>EmpiricalMV$setParameterValue()</code></a></p></li>
-<li><p><a href="#method-clone"><code>EmpiricalMV$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href="Distribution.html#method-median"><code>distr6::Distribution$median()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-EmpiricalMV-new"><code>EmpiricalMV$new()</code></a></p></li>
+<li><p><a href="#method-EmpiricalMV-mean"><code>EmpiricalMV$mean()</code></a></p></li>
+<li><p><a href="#method-EmpiricalMV-variance"><code>EmpiricalMV$variance()</code></a></p></li>
+<li><p><a href="#method-EmpiricalMV-setParameterValue"><code>EmpiricalMV$setParameterValue()</code></a></p></li>
+<li><p><a href="#method-EmpiricalMV-clone"><code>EmpiricalMV$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href="Distribution.html#method-median"><code>distr6::Distribution$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></li>
+</ul></details></p><hr><a id="method-EmpiricalMV-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -297,7 +298,7 @@ Decorators to add to the distribution during construction.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-mean"></a><div class="section">
+</div><p></p><hr><a id="method-EmpiricalMV-mean"></a><div class="section">
 <h3 id="method-mean-">Method <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code><a class="anchor" aria-label="anchor" href="#method-mean-"></a></h3>
 <p>The arithmetic mean of a (discrete) probability distribution X is the expectation
 $$E_X(X) = \sum p_X(x)*x$$
@@ -315,7 +316,7 @@ with an integration analogue for continuous distributions.</p><div class="sectio
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-variance"></a><div class="section">
+</div><p></p><hr><a id="method-EmpiricalMV-variance"></a><div class="section">
 <h3 id="method-variance-">Method <code>variance()</code><a class="anchor" aria-label="anchor" href="#method-variance-"></a></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
@@ -334,7 +335,7 @@ covariance matrix is returned.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-setParameterValue"></a><div class="section">
+</div><p></p><hr><a id="method-EmpiricalMV-setParameterValue"></a><div class="section">
 <h3 id="method-setparametervalue-">Method <code>setParameterValue()</code><a class="anchor" aria-label="anchor" href="#method-setparametervalue-"></a></h3>
 <p>Sets the value(s) of the given parameter(s).</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -373,7 +374,7 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-EmpiricalMV-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -401,14 +402,14 @@ automatically resolves them by removing all conflicting parameters.</p></dd>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">EmpiricalMV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va"><a href="MultivariateNormal.html">MultivariateNormal</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EmpMV(data = list(V1 = c(0.0802001257137108, 0.385158007186413, 0.699376119395655, -1.04600574601373, -0.106510724291472, -1.62327798562225, -0.222847077851917, 0.52343448538783, 0.474363667776973, 1.0903840901371, -1.2153034506825, 0.173029150310602, -1.06270836553136, -1.27971826122904, -1.45905200548824, 0.797739916101247, 1.23426345132033, 0.597611404572122, -0.534886357778807, 1.29719358198319, -0.846614518554362, 0.990303001093252, 0.0399670133985996, 1.26907891977479, -1.01795581995172, -1.73540103729438, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.151812617728546, -0.11570064949224, -0.160021640218375, -0.696132814825775, -0.503796787072389, -0.0859574152815113, -0.215548637537304, 0.124900173403496, -0.103744095866432, 0.937232087611436, 0.454872063626914, -0.937541511474501, 0.0409662371677096, -0.238262135039452, -0.138158738311306, 0.0285318418505405, 1.32337414062004, 0.28032435668889, 0.289938670443824, -0.929889519884661, 1.00898898639977, -0.521744016022927, 0.0566030355859089, -0.256071888430946, 1.3254220632484, -0.00221991979764345, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.376213488974374, -0.308187870685536, -1.39888913294068, -2.09940028495224, 0.389535841943592, -0.689237019430062, -0.184401364389477, 0.184340030821609, -1.23897208364916, -0.917804302326466, 0.417795093732604, 1.57530181804389, 0.799353985325546, -2.13630890834188, -0.297840021637816, 0.5749056376599, 0.176503861216862, -2.17118502659383, 0.7918793284959, -0.719594708327137, -0.384105853606994, 1.48828047666346, -0.588137169462143, -0.960817227056396, -1.73796485944044, 1.45799650318171, 0.615339980553625, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.45294210784171, 1.01036099517912, -1.17294104283293, 0.724134026853417, -0.751832284522693, 0.528704160382785, 0.412608437482205, -0.452351166920322, 0.719893986765688, 1.8137471837482, 1.01080425492018, 0.411949549668818, -2.91557563145828, 1.26576447949217, 1.55085225681262, -0.916541448064469, 0.61791358951956, 0.911676995137328, -1.51943509390551, 1.71013269608605, 0.191951867141893), V2 = c(1.23757986453194, -0.573666679854782, 0.788093363509188, -1.54692869920083, -0.938931746626782, 0.872670791464634, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.52970593930064, -0.459205604888109, 0.89321895401483, 0.0768816677764389, -1.48466258523581, 1.98715837304034, 0.274543811320057, 0.172543800048366, -1.85631547192802, -0.669353081164414, -0.171313252733188, 0.101310753549767, -0.779658190153375, 0.131227486323435, -0.837845392802276, -1.45964496106589, 0.211351520988879, 0.478751193182381, 0.806196588767996, 0.693210337672355, 1.74859811539704, -0.148629295879087, 1.47985573814177, -1.07935063210548, 2.41757998247594, 0.0514801876112644, -0.829034694796578, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.635826341637857, 0.429495647543126, 0.199473438037752, -0.585268469567657, -0.0694212647828338, -0.961592861805004, 0.566793520404193, 0.226232223838914, 0.394411571641873, 0.307765231426386, -1.21043183973688, 1.19329926816863, 0.529313173461218, -1.00979219093701, 0.692484194415777, 0.807114593602611, -0.0372851508649138, -0.155853005089312, -1.42752399486306, -0.943674591566351, -1.14676521001917, 0.0874210315593153, -1.3017817965158, 0.0882458544547806, 1.00810450246081, 1.41991814096026, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.19640226942471, 0.742218593863477, 1.25248110136239, 0.0952291171540516, 0.896611345522854, -0.657405536516815, 0.470923325955734, -1.57773472869338, 0.00709925439601436, -0.0523043894861705, 0.278509245555639, -0.264900151200392, -0.135889710871032, 0.456806274161841, 1.62248083880559, -1.04273095173313, -0.491084515937937, -1.30898975059963, -1.44974341633314, 0.1138746939343, 0.0818701628700294, 1.16148038426388, -0.82502965940782, 1.21507872524883, 0.139470812826882, 0.24057283449866, 0.852942793126048, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.32811691011183, -0.981233018954947, -0.873474338424804, -0.969426292022257, -0.301940329739437, 0.300669473681439, -0.267991160764213, -1.75064693812715, 0.296712907054022, 1.39653407853515, -0.119138501037928, 0.269355667091375, 0.201240605995305, 0.901743567664628))) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EmpMV(data = list(V1 = c(-1.11770708124908, 0.719294180148146, -0.366786553521945, -1.38280654462456, 1.09737697774561, -1.18351586274755, 0.955919857349647, -0.362410261574929, 0.473010927796518, -0.901487840503131, 0.654143530252368, 1.40043628366938, -0.184604070040916, 1.00112491810716, 1.53931975633519, 0.481933035889783, 0.60812525284526, 0.897178238243967, -0.839510738327165, 1.47462145782722, -0.647664659480827, -2.95828493599688, 0.625848957328288, -0.779824936461718, -0.279968552567249, -1.37521803760787, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.240253189062202, 1.21670503565367, 0.104894383136662, -0.563165590748131, 0.526460691554571, 0.963857345945381, -1.73757459414916, -1.44394590780799, 0.263987254038645, -1.89999664420438, 1.02876278170215, 0.329781509299866, 0.641651136620282, -0.150635518586794, 0.115557818618986, 0.646639772191744, -0.144791687838482, -0.951829942754743, 0.621625304813968, -0.234464849334437, -1.029098479403, 0.833282588610078, -0.317417438003386, 0.333214514024864, 1.65899221291334, -1.2449382973939, 1.05753346736633, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.512030948283525, -1.074335353904, -0.987799498446478, -0.321236656077309, -0.0667782977971187, -0.937701972331976, 1.46537554180254, 0.744721839672622, -0.744537571265319, -0.380986623041681, -0.470096098587919, 1.02181921964899, 0.838975046021903, 0.748810805594902, 0.388891278033714, 0.760931313160775, -1.32714785040573, -0.401533698240316, -0.238238042012733, -0.116887489181343, -0.968578403179411, 1.04792700636869, 0.409534424250493, -0.018490035076494, -0.0802183862393107, -0.83541011607933, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.141605933126337, -0.0572705975888383, -0.236865878127295, -0.281797969223306, 0.82228198370739, 0.309588272517201, 1.69220854690346, 0.873951903228682, -0.394149768966025, 0.959352079958429, -1.01951263101754, 0.765271733702479, 0.382801193660458, -1.36345032879446, 0.284403502263434, 0.977976668219605, -1.1974155768956, 0.504075877095528, -0.203713995103224, 1.47051724571714, -0.254331645858334), V2 = c(0.612986853809686, -0.356286803105762, -1.00368444409547, 1.13378959529724, 0.542681232473869, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.712674363382899, -0.273490147066549, 0.544868096045993, -0.206964132407146, 0.719838521598867, 0.146230551113971, -0.0805477708782498, 0.297644015477049, -0.39704916184855, -0.549971371925818, -1.20650058450267, -0.428934239970282, -1.37121908301007, -0.348172756644133, -0.597802287294636, 1.98469365785502, 0.419854368740442, -1.00482294654163, -0.968349574496013, 1.50135832882753, 0.22319351493386, 0.812059145712118, 1.08691503362144, 0.394274789152416, -0.552306694518851, 0.707083099322089, -0.219014314717958, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.51167396759236, 1.46807236690808, 0.0118378026979214, -0.794129942272494, -1.37454111149082, 0.470812375853704, 2.59065233393221, -0.291645234360277, -0.890362446829724, 1.49990226176406, 0.581192829575359, 1.07747695108634, -0.514603949297699, 0.559022721037104, -0.469595057867476, 1.67391427971391, -0.284381259588156, -0.531453974990813, -1.39413307684281, 0.595943373559968, 0.939740756887065, -0.206529358882212, -1.26952456360936, 0.798064622878732, 0.0830091017924174, -0.656758219813108, 1.49712957542915, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.356655269267953, 1.70290578299514, 0.718399827412959, 0.475477975935626, -0.752490719559571, -1.32173274049092, -0.597280189915026, -1.04656973329631, -1.06931629747022, -0.0353517534582756, -1.02763733294949, -0.928631144244956, 0.918689019642947, -0.122910929775159, 0.649759951707336, 0.04372126696996, 1.34605887381143, -2.23971926345488, 1.19094527684367, -0.324466078163193, -0.800843583508043, -1.68231856387208, 0.43961734926871, 0.951876786526886, 0.643162916412686, 0.122586612480509, 0.524217998565875, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.29103885314588, 1.86596929680112, -0.735340321330502, 0.570616730880306, 1.60799257345012, 0.495306491482701, 0.483454352681005, -1.92359821450235, 1.54179752142989, -1.3593993725182, -0.84178315724331, -0.103025232510815, -0.170358424455377, -0.404161313820098))) </span>
 </code></pre></div>
     </div>
   </div>

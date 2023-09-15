@@ -19,7 +19,7 @@ exploited, otherwise numerical ones are used with a message."><meta property="og
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -173,18 +173,18 @@ numerical results are used with a message.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-cdfAntiDeriv"><code>ExoticStatistics$cdfAntiDeriv()</code></a></p></li>
-<li><p><a href="#method-survivalAntiDeriv"><code>ExoticStatistics$survivalAntiDeriv()</code></a></p></li>
-<li><p><a href="#method-survival"><code>ExoticStatistics$survival()</code></a></p></li>
-<li><p><a href="#method-hazard"><code>ExoticStatistics$hazard()</code></a></p></li>
-<li><p><a href="#method-cumHazard"><code>ExoticStatistics$cumHazard()</code></a></p></li>
-<li><p><a href="#method-cdfPNorm"><code>ExoticStatistics$cdfPNorm()</code></a></p></li>
-<li><p><a href="#method-pdfPNorm"><code>ExoticStatistics$pdfPNorm()</code></a></p></li>
-<li><p><a href="#method-survivalPNorm"><code>ExoticStatistics$survivalPNorm()</code></a></p></li>
-<li><p><a href="#method-clone"><code>ExoticStatistics$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href="DistributionDecorator.html#method-decorate"><code>distr6::DistributionDecorator$decorate()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href="DistributionDecorator.html#method-initialize"><code>distr6::DistributionDecorator$initialize()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-cdfAntiDeriv"></a><div class="section">
+<ul><li><p><a href="#method-ExoticStatistics-cdfAntiDeriv"><code>ExoticStatistics$cdfAntiDeriv()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-survivalAntiDeriv"><code>ExoticStatistics$survivalAntiDeriv()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-survival"><code>ExoticStatistics$survival()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-hazard"><code>ExoticStatistics$hazard()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-cumHazard"><code>ExoticStatistics$cumHazard()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-cdfPNorm"><code>ExoticStatistics$cdfPNorm()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-pdfPNorm"><code>ExoticStatistics$pdfPNorm()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-survivalPNorm"><code>ExoticStatistics$survivalPNorm()</code></a></p></li>
+<li><p><a href="#method-ExoticStatistics-clone"><code>ExoticStatistics$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href="DistributionDecorator.html#method-decorate"><code>distr6::DistributionDecorator$decorate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href="DistributionDecorator.html#method-initialize"><code>distr6::DistributionDecorator$initialize()</code></a></span></li>
+</ul></details></p><hr><a id="method-ExoticStatistics-cdfAntiDeriv"></a><div class="section">
 <h3 id="method-cdfantideriv-">Method <code>cdfAntiDeriv()</code><a class="anchor" aria-label="anchor" href="#method-cdfantideriv-"></a></h3>
 <p>The cdf anti-derivative is defined by $$acdf(a, b) = \int_a^b F_X(x) dx$$
 where X is the distribution, \(F_X\) is the cdf of the distribution \(X\) and
@@ -208,7 +208,7 @@ Upper bounds of integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-survivalAntiDeriv"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-survivalAntiDeriv"></a><div class="section">
 <h3 id="method-survivalantideriv-">Method <code>survivalAntiDeriv()</code><a class="anchor" aria-label="anchor" href="#method-survivalantideriv-"></a></h3>
 <p>The survival anti-derivative is defined by
 $$as(a, b) = \int_a^b S_X(x) dx$$
@@ -233,7 +233,7 @@ Upper bounds of integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-survival"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-survival"></a><div class="section">
 <h3 id="method-survival-">Method <code>survival()</code><a class="anchor" aria-label="anchor" href="#method-survival-"></a></h3>
 <p>The survival function is defined by
 $$S_X(x) = P(X \ge x) = 1 - F_X(x) = \int_x^\infty f_X(x) dx$$
@@ -275,7 +275,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-hazard"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-hazard"></a><div class="section">
 <h3 id="method-hazard-">Method <code>hazard()</code><a class="anchor" aria-label="anchor" href="#method-hazard-"></a></h3>
 <p>The hazard function is defined by
 $$h_X(x) = \frac{f_X}{S_X}$$
@@ -316,7 +316,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-cumHazard"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-cumHazard"></a><div class="section">
 <h3 id="method-cumhazard-">Method <code>cumHazard()</code><a class="anchor" aria-label="anchor" href="#method-cumhazard-"></a></h3>
 <p>The cumulative hazard function is defined analytically by
 $$H_X(x) = -log(S_X)$$
@@ -357,7 +357,7 @@ to the distribution in the vector to evaluate.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-cdfPNorm"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-cdfPNorm"></a><div class="section">
 <h3 id="method-cdfpnorm-">Method <code>cdfPNorm()</code><a class="anchor" aria-label="anchor" href="#method-cdfpnorm-"></a></h3>
 <p>The p-norm of the cdf is defined by
 $$(\int_a^b |F_X|^p d\mu)^{1/p}$$
@@ -388,7 +388,7 @@ Upper bounds of integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-pdfPNorm"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-pdfPNorm"></a><div class="section">
 <h3 id="method-pdfpnorm-">Method <code>pdfPNorm()</code><a class="anchor" aria-label="anchor" href="#method-pdfpnorm-"></a></h3>
 <p>The p-norm of the pdf is defined by
 $$(\int_a^b |f_X|^p d\mu)^{1/p}$$
@@ -419,7 +419,7 @@ Upper bounds of integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-survivalPNorm"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-survivalPNorm"></a><div class="section">
 <h3 id="method-survivalpnorm-">Method <code>survivalPNorm()</code><a class="anchor" aria-label="anchor" href="#method-survivalpnorm-"></a></h3>
 <p>The p-norm of the survival function is defined by
 $$(\int_a^b |S_X|^p d\mu)^{1/p}$$
@@ -450,7 +450,7 @@ Upper bounds of integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-ExoticStatistics-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>

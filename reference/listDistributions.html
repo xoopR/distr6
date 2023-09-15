@@ -18,7 +18,7 @@ traits, implemented package, and tags."><meta property="og:image" content="https
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -179,226 +179,232 @@ otherwise returns distribution names as characters.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName    Type ValueSupport  VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:         Arc                 Arcsine       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:        Bern               Bernoulli      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        Beta                    Beta      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      BetaNC          BetaNoncentral      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       Binom                Binomial      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:         Cat             Categorical       V     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      Cauchy                  Cauchy       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       ChiSq              ChiSquared      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     ChiSqNC    ChiSquaredNoncentral      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:       Degen              Degenerate       ℝ     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:        Diri               Dirichlet [0,1]^K   continuous multivariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       DUnif         DiscreteUniform       ℤ     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:         Emp               Empirical       ℝ     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:       EmpMV             EmpiricalMV       ℝ     discrete multivariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      Erlang                  Erlang      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:         Exp             Exponential      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:           F           FDistribution      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:         FNC FDistributionNoncentral      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:        Frec                 Frechet       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:       Gamma                   Gamma      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:        Geom               Geometric      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:        Gomp                Gompertz      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:        Gumb                  Gumbel      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:       Hyper          Hypergeometric      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    InvGamma            InverseGamma      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:         Lap                 Laplace       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:         Log             Logarithmic      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:       Logis                Logistic       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:      LLogis             Loglogistic      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:       Lnorm               Lognormal      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:     Matdist                 Matdist     ℝ^K     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    Multinom             Multinomial    ℕ0^K     discrete multivariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   MultiNorm      MultivariateNormal     ℝ^K   continuous multivariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:      NBinom        NegativeBinomial      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:        Norm                  Normal       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:        Pare                  Pareto      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:        Pois                 Poisson      ℕ0     discrete   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:        Rayl                Rayleigh      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: ShiftLLogis      ShiftedLoglogistic      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:           T                StudentT       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:         TNC      StudentTNoncentral       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:         Tri              Triangular       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:        Unif                 Uniform       ℝ   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:        Wald                    Wald      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:     Weibull                 Weibull      ℝ+   continuous   univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:  WeightDisc        WeightedDiscrete       ℝ     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     Arrdist                 Arrdist     ℝ^K     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        Bern               Bernoulli      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:        Beta                    Beta      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      BetaNC          BetaNoncentral      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       Binom                Binomial      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:         Cat             Categorical       V     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      Cauchy                  Cauchy       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       ChiSq              ChiSquared      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     ChiSqNC    ChiSquaredNoncentral      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:       Degen              Degenerate       ℝ     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:        Diri               Dirichlet [0,1]^K   continuous multivariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:       DUnif         DiscreteUniform       ℤ     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:         Emp               Empirical       ℝ     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:       EmpMV             EmpiricalMV       ℝ     discrete multivariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      Erlang                  Erlang      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:         Exp             Exponential      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:           F           FDistribution      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:         FNC FDistributionNoncentral      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:        Frec                 Frechet       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:       Gamma                   Gamma      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:        Geom               Geometric      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:        Gomp                Gompertz      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:        Gumb                  Gumbel      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:       Hyper          Hypergeometric      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    InvGamma            InverseGamma      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:         Lap                 Laplace       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:         Log             Logarithmic      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:       Logis                Logistic       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:      LLogis             Loglogistic      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:       Lnorm               Lognormal      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:     Matdist                 Matdist     ℝ^K     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    Multinom             Multinomial    ℕ0^K     discrete multivariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   MultiNorm      MultivariateNormal     ℝ^K   continuous multivariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:      NBinom        NegativeBinomial      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:        Norm                  Normal       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:        Pare                  Pareto      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:        Pois                 Poisson      ℕ0     discrete   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:        Rayl                Rayleigh      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: ShiftLLogis      ShiftedLoglogistic      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:           T                StudentT       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:         TNC      StudentTNoncentral       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:         Tri              Triangular       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:        Unif                 Uniform       ℝ   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:        Wald                    Wald      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:     Weibull                 Weibull      ℝ+   continuous   univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:  WeightDisc        WeightedDiscrete       ℝ     discrete   univariate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName    Type ValueSupport  VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags                  Alias</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:          -   limits                     AS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      stats                               B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      stats                              BT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      stats                            BTNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      stats   limits                BM, Bin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:          -                               C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      stats locscale                     CH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      stats                    CSQ, CHI, C2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      stats              CSQNC, CHINC, C2NC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:          -   limits DGN, Deg, Delta, Dirac</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: extraDistr                             DRC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: extraDistr   limits                     DU</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:          -                               E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:          -                             EMV</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      stats                              ER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      stats    scale                     EX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:      stats                              FD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:      stats                            FDNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: extraDistr locscale                     FR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:      stats                          G, Gam</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:      stats                         GM, Geo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:          -                        GPZ, Gom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: extraDistr locscale                GB, Gum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:      stats   limits                    HGM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: extraDistr                      IG, InvGam</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: extraDistr locscale                     LP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: extraDistr                               L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:      stats locscale                     LG</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:     actuar                         LL, LLG</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:      stats                              LN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:          -                              MD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: extraDistr   limits                     MN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:          - locscale                    MVN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:          -   limits                     NB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:      stats locscale                      N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: extraDistr                         PR, Par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:      stats                    P, Poi, Pois</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: extraDistr    scale                RY, Ray</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:          -                             SLL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:      stats                              ST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:      stats                            STNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42: extraDistr   limits                     TR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:      stats   limits                 U, Uni</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44: extraDistr                               W</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:      stats                        WB, Weib</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:          -                              WD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:          -                              AD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      stats                               B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      stats                              BT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      stats                            BTNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      stats   limits                BM, Bin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:          -                               C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      stats locscale                     CH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      stats                    CSQ, CHI, C2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      stats              CSQNC, CHINC, C2NC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:          -   limits DGN, Deg, Delta, Dirac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: extraDistr                             DRC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: extraDistr   limits                     DU</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:          -                               E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:          -                             EMV</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      stats                              ER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:      stats    scale                     EX</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:      stats                              FD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      stats                            FDNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: extraDistr locscale                     FR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:      stats                          G, Gam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:      stats                         GM, Geo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:          -                        GPZ, Gom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: extraDistr locscale                GB, Gum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:      stats   limits                    HGM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: extraDistr                      IG, InvGam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: extraDistr locscale                     LP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: extraDistr                               L</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:      stats locscale                     LG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:     actuar                         LL, LLG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:      stats                              LN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:          -                              MD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: extraDistr   limits                     MN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:          - locscale                    MVN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:          -   limits                     NB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:      stats locscale                      N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: extraDistr                         PR, Par</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:      stats                    P, Poi, Pois</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: extraDistr    scale                RY, Ray</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:          -                             SLL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:      stats                              ST</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:      stats                            STNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43: extraDistr   limits                     TR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:      stats   limits                 U, Uni</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45: extraDistr                               W</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:      stats                        WB, Weib</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:          -                              WD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags                  Alias</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Filter list</span></span></span>
 <span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VariateForm <span class="op">=</span> <span class="st">"univariate"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName Type ValueSupport VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:         Arc                 Arcsine    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:        Bern               Bernoulli   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        Beta                    Beta   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      BetaNC          BetaNoncentral   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       Binom                Binomial   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:         Cat             Categorical    V     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      Cauchy                  Cauchy    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       ChiSq              ChiSquared   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     ChiSqNC    ChiSquaredNoncentral   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:       Degen              Degenerate    ℝ     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:       DUnif         DiscreteUniform    ℤ     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:         Emp               Empirical    ℝ     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      Erlang                  Erlang   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:         Exp             Exponential   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:           F           FDistribution   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:         FNC FDistributionNoncentral   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:        Frec                 Frechet    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:       Gamma                   Gamma   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:        Geom               Geometric   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:        Gomp                Gompertz   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:        Gumb                  Gumbel   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:       Hyper          Hypergeometric   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    InvGamma            InverseGamma   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:         Lap                 Laplace    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:         Log             Logarithmic   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:       Logis                Logistic    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:      LLogis             Loglogistic   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:       Lnorm               Lognormal   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:     Matdist                 Matdist  ℝ^K     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:      NBinom        NegativeBinomial   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:        Norm                  Normal    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:        Pare                  Pareto   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:        Pois                 Poisson   ℕ0     discrete  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:        Rayl                Rayleigh   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: ShiftLLogis      ShiftedLoglogistic   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:           T                StudentT    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:         TNC      StudentTNoncentral    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:         Tri              Triangular    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:        Unif                 Uniform    ℝ   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:        Wald                    Wald   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:     Weibull                 Weibull   ℝ+   continuous  univariate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:  WeightDisc        WeightedDiscrete    ℝ     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     Arrdist                 Arrdist  ℝ^K     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        Bern               Bernoulli   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:        Beta                    Beta   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      BetaNC          BetaNoncentral   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       Binom                Binomial   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:         Cat             Categorical    V     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      Cauchy                  Cauchy    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       ChiSq              ChiSquared   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     ChiSqNC    ChiSquaredNoncentral   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:       Degen              Degenerate    ℝ     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       DUnif         DiscreteUniform    ℤ     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:         Emp               Empirical    ℝ     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      Erlang                  Erlang   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:         Exp             Exponential   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:           F           FDistribution   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:         FNC FDistributionNoncentral   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:        Frec                 Frechet    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:       Gamma                   Gamma   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:        Geom               Geometric   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:        Gomp                Gompertz   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:        Gumb                  Gumbel   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:       Hyper          Hypergeometric   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    InvGamma            InverseGamma   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:         Lap                 Laplace    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:         Log             Logarithmic   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:       Logis                Logistic    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:      LLogis             Loglogistic   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:       Lnorm               Lognormal   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:     Matdist                 Matdist  ℝ^K     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:      NBinom        NegativeBinomial   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:        Norm                  Normal    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:        Pare                  Pareto   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:        Pois                 Poisson   ℕ0     discrete  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:        Rayl                Rayleigh   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: ShiftLLogis      ShiftedLoglogistic   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:           T                StudentT    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:         TNC      StudentTNoncentral    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:         Tri              Triangular    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:        Unif                 Uniform    ℝ   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:        Wald                    Wald   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:     Weibull                 Weibull   ℝ+   continuous  univariate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  WeightDisc        WeightedDiscrete    ℝ     discrete  univariate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ShortName               ClassName Type ValueSupport VariateForm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags                  Alias</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:          -   limits                     AS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      stats                               B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      stats                              BT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      stats                            BTNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      stats   limits                BM, Bin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:          -                               C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      stats locscale                     CH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      stats                    CSQ, CHI, C2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      stats              CSQNC, CHINC, C2NC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:          -   limits DGN, Deg, Delta, Dirac</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: extraDistr   limits                     DU</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:          -                               E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      stats                              ER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      stats    scale                     EX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      stats                              FD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      stats                            FDNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: extraDistr locscale                     FR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:      stats                          G, Gam</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      stats                         GM, Geo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:          -                        GPZ, Gom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: extraDistr locscale                GB, Gum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:      stats   limits                    HGM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: extraDistr                      IG, InvGam</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: extraDistr locscale                     LP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: extraDistr                               L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:      stats locscale                     LG</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:     actuar                         LL, LLG</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:      stats                              LN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:          -                              MD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:          -   limits                     NB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:      stats locscale                      N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: extraDistr                         PR, Par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:      stats                    P, Poi, Pois</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: extraDistr    scale                RY, Ray</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:          -                             SLL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:      stats                              ST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:      stats                            STNC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: extraDistr   limits                     TR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:      stats   limits                 U, Uni</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: extraDistr                               W</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:      stats                        WB, Weib</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:          -                              WD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:          -                              AD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      stats                               B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      stats                              BT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      stats                            BTNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      stats   limits                BM, Bin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:          -                               C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      stats locscale                     CH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      stats                    CSQ, CHI, C2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      stats              CSQNC, CHINC, C2NC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:          -   limits DGN, Deg, Delta, Dirac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: extraDistr   limits                     DU</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:          -                               E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      stats                              ER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      stats    scale                     EX</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      stats                              FD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:      stats                            FDNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: extraDistr locscale                     FR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      stats                          G, Gam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:      stats                         GM, Geo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:          -                        GPZ, Gom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: extraDistr locscale                GB, Gum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:      stats   limits                    HGM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: extraDistr                      IG, InvGam</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: extraDistr locscale                     LP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: extraDistr                               L</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:      stats locscale                     LG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:     actuar                         LL, LLG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:      stats                              LN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:          -                              MD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:          -   limits                     NB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:      stats locscale                      N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: extraDistr                         PR, Par</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:      stats                    P, Poi, Pois</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: extraDistr    scale                RY, Ray</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:          -                             SLL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:      stats                              ST</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:      stats                            STNC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: extraDistr   limits                     TR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:      stats   limits                 U, Uni</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41: extraDistr                               W</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:      stats                        WB, Weib</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:          -                              WD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Package     Tags                  Alias</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Filter is case-insensitive</span></span></span>
 <span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ShortName        ClassName Type ValueSupport  VariateForm    Package</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:       Bern        Bernoulli   ℕ0     discrete   univariate      stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      Binom         Binomial   ℕ0     discrete   univariate      stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:        Cat      Categorical    V     discrete   univariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      Degen       Degenerate    ℝ     discrete   univariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      DUnif  DiscreteUniform    ℤ     discrete   univariate extraDistr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:        Emp        Empirical    ℝ     discrete   univariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      EmpMV      EmpiricalMV    ℝ     discrete multivariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       Geom        Geometric   ℕ0     discrete   univariate      stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      Hyper   Hypergeometric   ℕ0     discrete   univariate      stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:        Log      Logarithmic   ℕ0     discrete   univariate extraDistr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    Matdist          Matdist  ℝ^K     discrete   univariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:   Multinom      Multinomial ℕ0^K     discrete multivariate extraDistr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     NBinom NegativeBinomial   ℕ0     discrete   univariate          -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:       Pois          Poisson   ℕ0     discrete   univariate      stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: WeightDisc WeightedDiscrete    ℝ     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:    Arrdist          Arrdist  ℝ^K     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:       Bern        Bernoulli   ℕ0     discrete   univariate      stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      Binom         Binomial   ℕ0     discrete   univariate      stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:        Cat      Categorical    V     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      Degen       Degenerate    ℝ     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      DUnif  DiscreteUniform    ℤ     discrete   univariate extraDistr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:        Emp        Empirical    ℝ     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      EmpMV      EmpiricalMV    ℝ     discrete multivariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       Geom        Geometric   ℕ0     discrete   univariate      stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      Hyper   Hypergeometric   ℕ0     discrete   univariate      stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:        Log      Logarithmic   ℕ0     discrete   univariate extraDistr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    Matdist          Matdist  ℝ^K     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:   Multinom      Multinomial ℕ0^K     discrete multivariate extraDistr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     NBinom NegativeBinomial   ℕ0     discrete   univariate          -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:       Pois          Poisson   ℕ0     discrete   univariate      stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: WeightDisc WeightedDiscrete    ℝ     discrete   univariate          -</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Tags                  Alias</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:                             B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: limits                BM, Bin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:                             C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: limits DGN, Deg, Delta, Dirac</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: limits                     DU</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:                             E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:                           EMV</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:                       GM, Geo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: limits                    HGM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:                             L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:                            MD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: limits                     MN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: limits                     NB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:                  P, Poi, Pois</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:                            WD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:                            AD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:                             B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: limits                BM, Bin</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:                             C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: limits DGN, Deg, Delta, Dirac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: limits                     DU</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:                             E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:                           EMV</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:                       GM, Geo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: limits                    HGM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:                             L</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:                            MD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: limits                     MN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: limits                     NB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:                  P, Poi, Pois</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:                            WD</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple filters</span></span></span>
 <span class="r-in"><span><span class="fu">listDistributions</span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLuESupport <span class="op">=</span> <span class="st">"discrete"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span></span></span>

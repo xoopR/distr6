@@ -21,7 +21,7 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@ Assumes Matrix distributions have the same number of columns, otherwise use
     <h2>Arguments</h2>
     <dl><dt>mds</dt>
 <dd><p><code>(list())</code><br>
-List of <a href="Matdist.html">Matdist</a>s, should have same number of rows and columns.</p></dd>
+List of <a href="Matdist.html">Matdist</a> or <a href="Arrdist.html">Arrdist</a>s, should have same number of rows and columns.</p></dd>
 
 
 <dt>weights</dt>
@@ -173,7 +173,9 @@ Individual distribution weights. Default uniform weighting (<code>"uniform"</cod
     <h2>Details</h2>
     <p>This method returns a new <a href="Matdist.html">Matdist</a> which is less flexible than a
 <a href="MixtureDistribution.html">MixtureDistribution</a> which has parameters (i.e. <code>weights</code>) that can be
-updated after construction.</p>
+updated after construction.
+Also works for <a href="Arrdist.html">Arrdist</a>s, where we convert these to <a href="Matdist.html">Matdist</a>s, based on the
+<code>which.curve</code> initialization parameter.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -201,17 +203,17 @@ updated after construction.</p>
 <span class="r-in"><span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu">mixMatrix</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">m1</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]      [,2]      [,3]      [,4]      [,5]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.502531 0.5905562 0.6443019 0.6572062 0.4856825</span>
-<span class="r-in"><span><span class="va">m2</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]      [,2]      [,3]      [,4]      [,5]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.4757791 0.5682332 0.6716909 0.5521602 0.7295419</span>
-<span class="r-in"><span><span class="va">m3</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.5534073 0.6666805 0.6453817 0.7040638 0.5808844</span>
+<span class="r-in"><span><span class="va">m2</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]      [,2]      [,3]      [,4]      [,5]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.489155 0.5793947 0.6579964 0.6046832 0.6076122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.703359 0.5734844 0.8512322 0.7736981 0.5099031</span>
+<span class="r-in"><span><span class="va">m3</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]      [,2]     [,3]     [,4]      [,5]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.6283831 0.6200825 0.748307 0.738881 0.5453938</span>
 <span class="r-in"><span><span class="va">m4</span><span class="op">$</span><span class="fu">cdf</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]      [,2]     [,3]      [,4]     [,5]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.4784543 0.5704655 0.668952 0.5626648 0.705156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]     [,2]      [,3]      [,4]      [,5]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.6883638 0.582804 0.8306471 0.7667347 0.5170012</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

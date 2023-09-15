@@ -18,7 +18,7 @@ Distributions as well as adding generalised expectation and moments functions.">
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -171,21 +171,21 @@ numerical results are used with a message.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-mgf"><code>CoreStatistics$mgf()</code></a></p></li>
-<li><p><a href="#method-cf"><code>CoreStatistics$cf()</code></a></p></li>
-<li><p><a href="#method-pgf"><code>CoreStatistics$pgf()</code></a></p></li>
-<li><p><a href="#method-entropy"><code>CoreStatistics$entropy()</code></a></p></li>
-<li><p><a href="#method-skewness"><code>CoreStatistics$skewness()</code></a></p></li>
-<li><p><a href="#method-kurtosis"><code>CoreStatistics$kurtosis()</code></a></p></li>
-<li><p><a href="#method-variance"><code>CoreStatistics$variance()</code></a></p></li>
-<li><p><a href="#method-kthmoment"><code>CoreStatistics$kthmoment()</code></a></p></li>
-<li><p><a href="#method-genExp"><code>CoreStatistics$genExp()</code></a></p></li>
-<li><p><a href="#method-mode"><code>CoreStatistics$mode()</code></a></p></li>
-<li><p><a href="#method-mean"><code>CoreStatistics$mean()</code></a></p></li>
-<li><p><a href="#method-clone"><code>CoreStatistics$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href="DistributionDecorator.html#method-decorate"><code>distr6::DistributionDecorator$decorate()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href="DistributionDecorator.html#method-initialize"><code>distr6::DistributionDecorator$initialize()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-mgf"></a><div class="section">
+<ul><li><p><a href="#method-CoreStatistics-mgf"><code>CoreStatistics$mgf()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-cf"><code>CoreStatistics$cf()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-pgf"><code>CoreStatistics$pgf()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-entropy"><code>CoreStatistics$entropy()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-skewness"><code>CoreStatistics$skewness()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-kurtosis"><code>CoreStatistics$kurtosis()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-variance"><code>CoreStatistics$variance()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-kthmoment"><code>CoreStatistics$kthmoment()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-genExp"><code>CoreStatistics$genExp()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-mode"><code>CoreStatistics$mode()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-mean"><code>CoreStatistics$mean()</code></a></p></li>
+<li><p><a href="#method-CoreStatistics-clone"><code>CoreStatistics$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="decorate"><a href="DistributionDecorator.html#method-decorate"><code>distr6::DistributionDecorator$decorate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="DistributionDecorator" data-id="initialize"><a href="DistributionDecorator.html#method-initialize"><code>distr6::DistributionDecorator$initialize()</code></a></span></li>
+</ul></details></p><hr><a id="method-CoreStatistics-mgf"></a><div class="section">
 <h3 id="method-mgf-">Method <code>mgf()</code><a class="anchor" aria-label="anchor" href="#method-mgf-"></a></h3>
 <p>Numerically estimates the moment-generating function.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -207,7 +207,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-cf"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-cf"></a><div class="section">
 <h3 id="method-cf-">Method <code>cf()</code><a class="anchor" aria-label="anchor" href="#method-cf-"></a></h3>
 <p>Numerically estimates the characteristic function.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -229,7 +229,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-pgf"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-pgf"></a><div class="section">
 <h3 id="method-pgf-">Method <code>pgf()</code><a class="anchor" aria-label="anchor" href="#method-pgf-"></a></h3>
 <p>Numerically estimates the probability-generating function.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -251,7 +251,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-entropy"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-entropy"></a><div class="section">
 <h3 id="method-entropy-">Method <code>entropy()</code><a class="anchor" aria-label="anchor" href="#method-entropy-"></a></h3>
 <p>Numerically estimates the entropy function.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -273,7 +273,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-skewness"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-skewness"></a><div class="section">
 <h3 id="method-skewness-">Method <code>skewness()</code><a class="anchor" aria-label="anchor" href="#method-skewness-"></a></h3>
 <p>Numerically estimates the distribution skewness.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -290,7 +290,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-kurtosis"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-kurtosis"></a><div class="section">
 <h3 id="method-kurtosis-">Method <code>kurtosis()</code><a class="anchor" aria-label="anchor" href="#method-kurtosis-"></a></h3>
 <p>Numerically estimates the distribution kurtosis.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
@@ -312,7 +312,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-variance"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-variance"></a><div class="section">
 <h3 id="method-variance-">Method <code>variance()</code><a class="anchor" aria-label="anchor" href="#method-variance-"></a></h3>
 <p>Numerically estimates the distribution variance.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -329,7 +329,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-kthmoment"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-kthmoment"></a><div class="section">
 <h3 id="method-kthmoment-">Method <code>kthmoment()</code><a class="anchor" aria-label="anchor" href="#method-kthmoment-"></a></h3>
 <p>The kth central moment of a distribution is defined by
 $$CM(k)_X = E_X[(x - \mu)^k]$$
@@ -363,7 +363,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-genExp"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-genExp"></a><div class="section">
 <h3 id="method-genexp-">Method <code>genExp()</code><a class="anchor" aria-label="anchor" href="#method-genexp-"></a></h3>
 <p>Numerically estimates \(E[f(X)]\) for some function \(f\).</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
@@ -390,7 +390,7 @@ Passed to <a href="https://bnaras.github.io/cubature/reference/cubintegrate.html
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-mode"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-mode"></a><div class="section">
 <h3 id="method-mode-">Method <code><a href="https://rdrr.io/r/base/mode.html" class="external-link">mode()</a></code><a class="anchor" aria-label="anchor" href="#method-mode-"></a></h3>
 <p>Numerically estimates the distribution mode.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
@@ -408,7 +408,7 @@ which mode to return.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-mean"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-mean"></a><div class="section">
 <h3 id="method-mean-">Method <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code><a class="anchor" aria-label="anchor" href="#method-mean-"></a></h3>
 <p>Numerically estimates the distribution mean.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
@@ -425,7 +425,7 @@ Passed to <code>$genExp</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-CoreStatistics-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>

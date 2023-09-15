@@ -18,7 +18,7 @@ is commonly used in classification supervised learning."><meta property="og:imag
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -196,6 +196,7 @@ Michael P. McLaughlin.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other discrete distributions: 
+<code><a href="Arrdist.html">Arrdist</a></code>,
 <code><a href="Bernoulli.html">Bernoulli</a></code>,
 <code><a href="Binomial.html">Binomial</a></code>,
 <code><a href="Degenerate.html">Degenerate</a></code>,
@@ -211,6 +212,7 @@ Michael P. McLaughlin.</p>
 <code><a href="WeightedDiscrete.html">WeightedDiscrete</a></code></p>
 <p>Other univariate distributions: 
 <code><a href="Arcsine.html">Arcsine</a></code>,
+<code><a href="Arrdist.html">Arrdist</a></code>,
 <code><a href="Bernoulli.html">Bernoulli</a></code>,
 <code><a href="BetaNoncentral.html">BetaNoncentral</a></code>,
 <code><a href="Beta.html">Beta</a></code>,
@@ -290,37 +292,37 @@ Michael P. McLaughlin.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>Categorical$new()</code></a></p></li>
-<li><p><a href="#method-mean"><code>Categorical$mean()</code></a></p></li>
-<li><p><a href="#method-mode"><code>Categorical$mode()</code></a></p></li>
-<li><p><a href="#method-variance"><code>Categorical$variance()</code></a></p></li>
-<li><p><a href="#method-skewness"><code>Categorical$skewness()</code></a></p></li>
-<li><p><a href="#method-kurtosis"><code>Categorical$kurtosis()</code></a></p></li>
-<li><p><a href="#method-entropy"><code>Categorical$entropy()</code></a></p></li>
-<li><p><a href="#method-mgf"><code>Categorical$mgf()</code></a></p></li>
-<li><p><a href="#method-cf"><code>Categorical$cf()</code></a></p></li>
-<li><p><a href="#method-pgf"><code>Categorical$pgf()</code></a></p></li>
-<li><p><a href="#method-clone"><code>Categorical$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href="Distribution.html#method-median"><code>distr6::Distribution$median()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href="Distribution.html#method-setParameterValue"><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-Categorical-new"><code>Categorical$new()</code></a></p></li>
+<li><p><a href="#method-Categorical-mean"><code>Categorical$mean()</code></a></p></li>
+<li><p><a href="#method-Categorical-mode"><code>Categorical$mode()</code></a></p></li>
+<li><p><a href="#method-Categorical-variance"><code>Categorical$variance()</code></a></p></li>
+<li><p><a href="#method-Categorical-skewness"><code>Categorical$skewness()</code></a></p></li>
+<li><p><a href="#method-Categorical-kurtosis"><code>Categorical$kurtosis()</code></a></p></li>
+<li><p><a href="#method-Categorical-entropy"><code>Categorical$entropy()</code></a></p></li>
+<li><p><a href="#method-Categorical-mgf"><code>Categorical$mgf()</code></a></p></li>
+<li><p><a href="#method-Categorical-cf"><code>Categorical$cf()</code></a></p></li>
+<li><p><a href="#method-Categorical-pgf"><code>Categorical$pgf()</code></a></p></li>
+<li><p><a href="#method-Categorical-clone"><code>Categorical$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="median"><a href="Distribution.html#method-median"><code>distr6::Distribution$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href="Distribution.html#method-setParameterValue"><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></li>
+</ul></details></p><hr><a id="method-Categorical-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -367,7 +369,7 @@ Decorators to add to the distribution during construction.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-mean"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-mean"></a><div class="section">
 <h3 id="method-mean-">Method <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code><a class="anchor" aria-label="anchor" href="#method-mean-"></a></h3>
 <p>The arithmetic mean of a (discrete) probability distribution X is the expectation
 $$E_X(X) = \sum p_X(x)*x$$
@@ -385,7 +387,7 @@ with an integration analogue for continuous distributions.</p><div class="sectio
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-mode"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-mode"></a><div class="section">
 <h3 id="method-mode-">Method <code><a href="https://rdrr.io/r/base/mode.html" class="external-link">mode()</a></code><a class="anchor" aria-label="anchor" href="#method-mode-"></a></h3>
 <p>The mode of a probability distribution is the point at which the pdf is
 a local maximum, a distribution can be unimodal (one maximum) or multimodal (several
@@ -405,7 +407,7 @@ which mode to return.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-variance"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-variance"></a><div class="section">
 <h3 id="method-variance-">Method <code>variance()</code><a class="anchor" aria-label="anchor" href="#method-variance-"></a></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
@@ -424,7 +426,7 @@ covariance matrix is returned.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-skewness"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-skewness"></a><div class="section">
 <h3 id="method-skewness-">Method <code>skewness()</code><a class="anchor" aria-label="anchor" href="#method-skewness-"></a></h3>
 <p>The skewness of a distribution is defined by the third standardised moment,
 $$sk_X = E_X[\frac{x - \mu}{\sigma}^3]$$
@@ -443,7 +445,7 @@ distribution and \(\sigma\) is the standard deviation of the distribution.</p><d
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-kurtosis"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-kurtosis"></a><div class="section">
 <h3 id="method-kurtosis-">Method <code>kurtosis()</code><a class="anchor" aria-label="anchor" href="#method-kurtosis-"></a></h3>
 <p>The kurtosis of a distribution is defined by the fourth standardised moment,
 $$k_X = E_X[\frac{x - \mu}{\sigma}^4]$$
@@ -468,7 +470,7 @@ If <code>TRUE</code> (default) excess kurtosis returned.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-entropy"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-entropy"></a><div class="section">
 <h3 id="method-entropy-">Method <code>entropy()</code><a class="anchor" aria-label="anchor" href="#method-entropy-"></a></h3>
 <p>The entropy of a (discrete) distribution is defined by
 $$- \sum (f_X)log(f_X)$$
@@ -492,7 +494,7 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-mgf"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-mgf"></a><div class="section">
 <h3 id="method-mgf-">Method <code>mgf()</code><a class="anchor" aria-label="anchor" href="#method-mgf-"></a></h3>
 <p>The moment generating function is defined by
 $$mgf_X(t) = E_X[exp(xt)]$$
@@ -515,7 +517,7 @@ t integer to evaluate function at.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-cf"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-cf"></a><div class="section">
 <h3 id="method-cf-">Method <code>cf()</code><a class="anchor" aria-label="anchor" href="#method-cf-"></a></h3>
 <p>The characteristic function is defined by
 $$cf_X(t) = E_X[exp(xti)]$$
@@ -538,7 +540,7 @@ t integer to evaluate function at.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-pgf"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-pgf"></a><div class="section">
 <h3 id="method-pgf-">Method <code>pgf()</code><a class="anchor" aria-label="anchor" href="#method-pgf-"></a></h3>
 <p>The probability generating function is defined by
 $$pgf_X(z) = E_X[exp(z^x)]$$
@@ -561,7 +563,7 @@ z integer to evaluate probability generating function at.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-Categorical-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
@@ -603,10 +605,10 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Banana"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bapple"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
@@ -621,13 +623,13 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[7]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Banana"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[8]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Banana"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Banana"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[10]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>

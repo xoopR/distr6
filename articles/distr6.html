@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>distr6</h1>
             
-            <h4 data-toc-skip class="date">2023-09-14</h4>
+            <h4 data-toc-skip class="date">2023-09-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/distr6.rmd" class="external-link"><code>vignettes/distr6.rmd</code></a></small>
       <div class="hidden name"><code>distr6.rmd</code></div>
@@ -393,37 +393,37 @@ or package. We only show the first 5 rows of this to save space.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span></span>
 <span><span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span></span>
-<span><span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span></span>
-<span><span class="co">#&gt; 3:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
-<span><span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt; 2:   Arrdist        Arrdist  ℝ^K     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt; 3:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span></span>
+<span><span class="co">#&gt; 4:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 5:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 6:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
 <span><span class="co">#&gt;      Alias</span></span>
 <span><span class="co">#&gt; 1:      AS</span></span>
-<span><span class="co">#&gt; 2:       B</span></span>
-<span><span class="co">#&gt; 3:      BT</span></span>
-<span><span class="co">#&gt; 4:    BTNC</span></span>
-<span><span class="co">#&gt; 5: BM, Bin</span></span>
-<span><span class="co">#&gt; 6:       C</span></span>
+<span><span class="co">#&gt; 2:      AD</span></span>
+<span><span class="co">#&gt; 3:       B</span></span>
+<span><span class="co">#&gt; 4:      BT</span></span>
+<span><span class="co">#&gt; 5:    BTNC</span></span>
+<span><span class="co">#&gt; 6: BM, Bin</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span></span>
-<span><span class="co">#&gt; [5] "Binomial"       "Categorical"</span></span>
+<span><span class="co">#&gt; [1] "Arcsine"        "Arrdist"        "Bernoulli"      "Beta"          </span></span>
+<span><span class="co">#&gt; [5] "BetaNoncentral" "Binomial"</span></span>
 <span><span class="co"># Lists discrete distributions only</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>valuesupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName       ClassName Type ValueSupport VariateForm    Package   Tags</span></span>
-<span><span class="co">#&gt; 1:      Bern       Bernoulli   ℕ0     discrete  univariate      stats       </span></span>
-<span><span class="co">#&gt; 2:     Binom        Binomial   ℕ0     discrete  univariate      stats limits</span></span>
-<span><span class="co">#&gt; 3:       Cat     Categorical    V     discrete  univariate          -       </span></span>
-<span><span class="co">#&gt; 4:     Degen      Degenerate    ℝ     discrete  univariate          - limits</span></span>
-<span><span class="co">#&gt; 5:     DUnif DiscreteUniform    ℤ     discrete  univariate extraDistr limits</span></span>
-<span><span class="co">#&gt; 6:       Emp       Empirical    ℝ     discrete  univariate          -       </span></span>
+<span><span class="co">#&gt; 1:   Arrdist         Arrdist  ℝ^K     discrete  univariate          -       </span></span>
+<span><span class="co">#&gt; 2:      Bern       Bernoulli   ℕ0     discrete  univariate      stats       </span></span>
+<span><span class="co">#&gt; 3:     Binom        Binomial   ℕ0     discrete  univariate      stats limits</span></span>
+<span><span class="co">#&gt; 4:       Cat     Categorical    V     discrete  univariate          -       </span></span>
+<span><span class="co">#&gt; 5:     Degen      Degenerate    ℝ     discrete  univariate          - limits</span></span>
+<span><span class="co">#&gt; 6:     DUnif DiscreteUniform    ℤ     discrete  univariate extraDistr limits</span></span>
 <span><span class="co">#&gt;                     Alias</span></span>
-<span><span class="co">#&gt; 1:                      B</span></span>
-<span><span class="co">#&gt; 2:                BM, Bin</span></span>
-<span><span class="co">#&gt; 3:                      C</span></span>
-<span><span class="co">#&gt; 4: DGN, Deg, Delta, Dirac</span></span>
-<span><span class="co">#&gt; 5:                     DU</span></span>
-<span><span class="co">#&gt; 6:                      E</span></span>
+<span><span class="co">#&gt; 1:                     AD</span></span>
+<span><span class="co">#&gt; 2:                      B</span></span>
+<span><span class="co">#&gt; 3:                BM, Bin</span></span>
+<span><span class="co">#&gt; 4:                      C</span></span>
+<span><span class="co">#&gt; 5: DGN, Deg, Delta, Dirac</span></span>
+<span><span class="co">#&gt; 6:                     DU</span></span>
 <span></span>
 <span><span class="co"># Multiple filters can be used, note this is case-insensitive</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLueSupport <span class="op">=</span> <span class="st">"continuous"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>

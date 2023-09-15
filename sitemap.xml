@@ -94,6 +94,9 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/Arcsine.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/Arrdist.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/Bernoulli.html</loc>
   </url>
   <url>
@@ -316,6 +319,9 @@
     <loc>https://alan-turing-institute.github.io/distr6/reference/as.VectorDistribution.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/c.Arrdist.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/c.Distribution.html</loc>
   </url>
   <url>
@@ -404,6 +410,9 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/skewType.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/distr6/reference/sub-.Arrdist.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/distr6/reference/sub-.Matdist.html</loc>

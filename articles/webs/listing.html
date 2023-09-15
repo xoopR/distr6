@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Listing</h1>
             
-            <h4 data-toc-skip class="date">2023-09-14</h4>
+            <h4 data-toc-skip class="date">2023-09-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/listing.rmd" class="external-link"><code>vignettes/webs/listing.rmd</code></a></small>
       <div class="hidden name"><code>listing.rmd</code></div>
@@ -219,24 +219,24 @@ We’ve added the <code><a href="https://rdrr.io/r/utils/head.html" class="exter
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span></span>
 <span><span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span></span>
-<span><span class="co">#&gt; 2:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span></span>
-<span><span class="co">#&gt; 3:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 4:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 5:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
-<span><span class="co">#&gt; 6:       Cat    Categorical    V     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt; 2:   Arrdist        Arrdist  ℝ^K     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt; 3:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span></span>
+<span><span class="co">#&gt; 4:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 5:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 6:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
 <span><span class="co">#&gt;      Alias</span></span>
 <span><span class="co">#&gt; 1:      AS</span></span>
-<span><span class="co">#&gt; 2:       B</span></span>
-<span><span class="co">#&gt; 3:      BT</span></span>
-<span><span class="co">#&gt; 4:    BTNC</span></span>
-<span><span class="co">#&gt; 5: BM, Bin</span></span>
-<span><span class="co">#&gt; 6:       C</span></span></code></pre></div>
+<span><span class="co">#&gt; 2:      AD</span></span>
+<span><span class="co">#&gt; 3:       B</span></span>
+<span><span class="co">#&gt; 4:      BT</span></span>
+<span><span class="co">#&gt; 5:    BTNC</span></span>
+<span><span class="co">#&gt; 6: BM, Bin</span></span></code></pre></div>
 <p>To see a simplified version of the list, add the
 <code>simplify = TRUE</code> argument</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Arcsine"        "Bernoulli"      "Beta"           "BetaNoncentral"</span></span>
-<span><span class="co">#&gt; [5] "Binomial"       "Categorical"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Arcsine"        "Arrdist"        "Bernoulli"      "Beta"          </span></span>
+<span><span class="co">#&gt; [5] "BetaNoncentral" "Binomial"</span></span></code></pre></div>
 <p>Finally this list can be filtered to help you find a distribution
 with specific traits, for example for a multivariate distribution</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">

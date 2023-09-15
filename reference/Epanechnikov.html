@@ -19,7 +19,7 @@ over the support \(x \in (-1,1)\)."><meta property="og:image" content="https://a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.0</span>
       </span>
     </div>
 
@@ -195,34 +195,34 @@ be found, decorate with FunctionImputation for numeric results.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-pdfSquared2Norm"><code>Epanechnikov$pdfSquared2Norm()</code></a></p></li>
-<li><p><a href="#method-cdfSquared2Norm"><code>Epanechnikov$cdfSquared2Norm()</code></a></p></li>
-<li><p><a href="#method-variance"><code>Epanechnikov$variance()</code></a></p></li>
-<li><p><a href="#method-clone"><code>Epanechnikov$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href="Distribution.html#method-setParameterValue"><code>distr6::Distribution$setParameterValue()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize"><a href="Kernel.html#method-initialize"><code>distr6::Kernel$initialize()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean"><a href="Kernel.html#method-mean"><code>distr6::Kernel$mean()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median"><a href="Kernel.html#method-median"><code>distr6::Kernel$median()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode"><a href="Kernel.html#method-mode"><code>distr6::Kernel$mode()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness"><a href="Kernel.html#method-skewness"><code>distr6::Kernel$skewness()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-pdfSquared2Norm"></a><div class="section">
+<ul><li><p><a href="#method-Epanechnikov-pdfSquared2Norm"><code>Epanechnikov$pdfSquared2Norm()</code></a></p></li>
+<li><p><a href="#method-Epanechnikov-cdfSquared2Norm"><code>Epanechnikov$cdfSquared2Norm()</code></a></p></li>
+<li><p><a href="#method-Epanechnikov-variance"><code>Epanechnikov$variance()</code></a></p></li>
+<li><p><a href="#method-Epanechnikov-clone"><code>Epanechnikov$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="cdf"><a href="Distribution.html#method-cdf"><code>distr6::Distribution$cdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href="Distribution.html#method-confidence"><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href="Distribution.html#method-correlation"><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="getParameterValue"><a href="Distribution.html#method-getParameterValue"><code>distr6::Distribution$getParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href="Distribution.html#method-iqr"><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href="Distribution.html#method-liesInSupport"><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href="Distribution.html#method-liesInType"><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href="Distribution.html#method-parameters"><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="pdf"><a href="Distribution.html#method-pdf"><code>distr6::Distribution$pdf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href="Distribution.html#method-prec"><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href="Distribution.html#method-print"><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="quantile"><a href="Distribution.html#method-quantile"><code>distr6::Distribution$quantile()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="rand"><a href="Distribution.html#method-rand"><code>distr6::Distribution$rand()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href="Distribution.html#method-setParameterValue"><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href="Distribution.html#method-stdev"><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="strprint"><a href="Distribution.html#method-strprint"><code>distr6::Distribution$strprint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href="Distribution.html#method-summary"><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href="Distribution.html#method-workingSupport"><code>distr6::Distribution$workingSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="initialize"><a href="Kernel.html#method-initialize"><code>distr6::Kernel$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mean"><a href="Kernel.html#method-mean"><code>distr6::Kernel$mean()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="median"><a href="Kernel.html#method-median"><code>distr6::Kernel$median()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="mode"><a href="Kernel.html#method-mode"><code>distr6::Kernel$mode()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Kernel" data-id="skewness"><a href="Kernel.html#method-skewness"><code>distr6::Kernel$skewness()</code></a></span></li>
+</ul></details></p><hr><a id="method-Epanechnikov-pdfSquared2Norm"></a><div class="section">
 <h3 id="method-pdfsquared-norm-">Method <code>pdfSquared2Norm()</code><a class="anchor" aria-label="anchor" href="#method-pdfsquared-norm-"></a></h3>
 <p>The squared 2-norm of the pdf is defined by
 $$\int_a^b (f_X(u))^2 du$$
@@ -247,7 +247,7 @@ Upper limit of the integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-cdfSquared2Norm"></a><div class="section">
+</div><p></p><hr><a id="method-Epanechnikov-cdfSquared2Norm"></a><div class="section">
 <h3 id="method-cdfsquared-norm-">Method <code>cdfSquared2Norm()</code><a class="anchor" aria-label="anchor" href="#method-cdfsquared-norm-"></a></h3>
 <p>The squared 2-norm of the cdf is defined by
 $$\int_a^b (F_X(u))^2 du$$
@@ -272,7 +272,7 @@ Upper limit of the integral.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-variance"></a><div class="section">
+</div><p></p><hr><a id="method-Epanechnikov-variance"></a><div class="section">
 <h3 id="method-variance-">Method <code>variance()</code><a class="anchor" aria-label="anchor" href="#method-variance-"></a></h3>
 <p>The variance of a distribution is defined by the formula
 $$var_X = E[X^2] - E[X]^2$$
@@ -291,7 +291,7 @@ covariance matrix is returned.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-Epanechnikov-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
