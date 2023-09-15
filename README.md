@@ -4,13 +4,13 @@ distr6
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 [![distr6 status badge](https://raphaels1.r-universe.dev/badges/distr6)](https://raphaels1.r-universe.dev)
-[![tic](https://github.com/alan-turing-institute/distr6/workflows/tic/badge.svg)](https://github.com/alan-turing-institute/distr6/actions)
+[![tic](https://github.com/xoopR/distr6/workflows/tic/badge.svg)](https://github.com/xoopR/distr6/actions)
 
 [![Repo
-Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/alan-turing-institute/distr6)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://alan-turing-institute.github.io/distr6/articles/webs/api_lifecycle.html)
+Status](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/xoopR/distr6)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://xoopR.github.io/distr6/articles/webs/api_lifecycle.html)
 
-[![codecov](https://app.codecov.io/gh/alan-turing-institute/distr6/branch/main/graph/badge.svg)](https://app.codecov.io/gh/alan-turing-institute/distr6)
+[![codecov](https://app.codecov.io/gh/xoopR/distr6/branch/main/graph/badge.svg)](https://app.codecov.io/gh/xoopR/distr6)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![Paper](https://img.shields.io/badge/The%20R%20Journal-10.32614%2FRJ--2021--055-informational)](https://journal.r-project.org/archive/2021/RJ-2021-055/index.html)
@@ -33,7 +33,7 @@ currently the gold-standard in R for OO distribution handling. Using R6
 we aim to take this even further and to create a scalable interface that
 can continue to grow with the community. Full details of the API and
 class structure can be seen in the [distr6
-website](https://alan-turing-institute.github.io/distr6/).
+website](https://xoopR.github.io/distr6/).
 
 ## Main Features
 
@@ -195,15 +195,15 @@ Our plans for the next update include
 distr6 is released under the [MIT
 licence](https://opensource.org/licenses/MIT) with acknowledgements to
 the [LGPL-3 licence of
-distr](https://github.com/alan-turing-institute/distr6/blob/master/Licensing).
+distr](https://github.com/xoopR/distr6/blob/master/Licensing).
 Therefore any contributions to distr6 will also be accepted under the
 MIT licence. We welcome all bug reports, issues, questions and
 suggestions which can be [raised
-here](https://github.com/alan-turing-institute/distr6/issues) but please
+here](https://github.com/xoopR/distr6/issues) but please
 read through our [contributing
-guidelines](https://github.com/alan-turing-institute/distr6/blob/master/CONTRIBUTING.md)
+guidelines](https://github.com/xoopR/distr6/blob/master/CONTRIBUTING.md)
 for details including our [code of
-conduct](https://github.com/alan-turing-institute/distr6/blob/master/CODE_OF_CONDUCT.md).
+conduct](https://github.com/xoopR/distr6/blob/master/CODE_OF_CONDUCT.md).
 
 ## Acknowledgements
 
