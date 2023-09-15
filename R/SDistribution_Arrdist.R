@@ -79,8 +79,6 @@ Arrdist <- R6Class("Arrdist",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param x `numeric()`\cr
-    #' Data samples, *must be ordered in ascending order*.
     #' @param pdf `numeric()`\cr
     #' Probability mass function for corresponding samples, should be same length `x`.
     #' If `cdf` is not given then calculated as `cumsum(pdf)`.
