@@ -721,9 +721,47 @@ getParameterSet.Matdist <- function(object, ...) { # nolint
         pdf <- t(apply(cdf, 1, function(.y) c(.y[1], diff(.y))))
       }
 
-      assert_cdf_matrix(cdf)
+      assert_cdf_matrix(cdf, pdf)
 
       list(pdf = pdf, cdf = cdf, x = as.numeric(colnames(pdf)))
+    }
+  )
+}
+
+getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
+  pset(
+    prm("pdf", Interval$new(0, 1)^"n", tags = c("required", "linked")),
+    prm("cdf", Interval$new(0, 1)^"n",
+        array(0.5, c(2, 2, 3), dimnames = list(NULL, 1:2, NULL)),
+        tags = c("required", "linked")),
+    prm("x", "integers", tags = "immutable"),
+    prm("which.curve", Interval$new(0, 1, type = "()") + Integers$new() + Set$new("mean"), which.curve, tags = "required"),
+    trafo = function(x, self) {
+
+      pdf <- list_element(x, "pdf")$pdf
+      cdf <- list_element(x, "cdf")$cdf
+
+      if (length(pdf)) {
+        cdf <- pdf
+        for (i in 2:ncol(cdf)) {
+          cdf[, i, ] <- cdf[, i, ] + cdf[, i - 1, ]
+        }
+      } else {
+        pdf <- cdf
+        for (i in ncol(pdf):2) {
+          pdf[, i, ] <- pdf[, i, ] - pdf[, i - 1, ]
+        }
+      }
+
+      assert_cdf_array(cdf, pdf)
+
+      if (is.numeric(x$which.curve) && x$which.curve > dim(pdf)[3L]) {
+        stop(sprintf("Length is %s on third dimension but curve '%s' requested, change 'which.curve'
+parameter.", dim(pdf)[3L], x$which.curve))
+      }
+
+      list(pdf = pdf, cdf = cdf, x = as.numeric(colnames(pdf)),
+        which.curve = x$which.curve)
     }
   )
 }

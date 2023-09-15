@@ -95,7 +95,7 @@ test_that("[.Matdist", {
     fun = "pdf"
   )
 
-  expect_equal(m$strprint(), "Matdist(20)")
+  expect_equal(m$strprint(), "Matdist(20x10)")
 
   expect_error(m[logical(20)], "empty")
 

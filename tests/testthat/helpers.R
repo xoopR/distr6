@@ -98,11 +98,9 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     autotest_vec_sdistribution(sdist, pars)
   }
 
-
   expect_equal(sdist$traits, traits)
   expect_equal(sdist$properties$support, support)
   expect_equal(sdist$properties$symmetry, symmetry)
-
 
   if (!is.null(sdist$mean)) {
     expect_rounded_equal(sdist$mean(), mean, 4)
@@ -146,13 +144,9 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     if (!is.null(sdist$pgf)) expect_rounded_equal(sdist$pgf(1:2), pgf, 4)
   }
 
-
-
-
   expect_output(sdist$print())
   expect_output(sdist$summary())
   expect_output(sdist$summary(F))
-
 
   if (testUnivariate(sdist)) {
     if (isPdf(sdist)) {
@@ -176,7 +170,7 @@ autotest_sdistribution <- function(sdist, pars, traits, support, symmetry,
     }
     if (isRand(sdist)) {
       r <- sdist$rand(1:3)
-      if (object_class(sdist) == "Matdist") {
+      if (object_class(sdist) %in% c("Matdist", "Arrdist")) {
         expect_equal(dim(r), c(3, 2))
       } else {
         expect_equal(length(r), 3)
@@ -496,5 +490,7 @@ expect_distribution <- function(d, class) {
 }
 
 expect_R6_class <- function(obj, what) { # nolint
-  expect_true(inherits(obj, c(what, "R6")))
+  vec = inherits(obj, c(what, "R6"), which = TRUE)
+  expect_true(length(vec) == length(what) + 1)
+  expect_true(all(vec != 0))
 }

@@ -103,48 +103,48 @@ Other wrappers:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VectorDistribution$new()}}
-\item \href{#method-getParameterValue}{\code{VectorDistribution$getParameterValue()}}
-\item \href{#method-wrappedModels}{\code{VectorDistribution$wrappedModels()}}
-\item \href{#method-strprint}{\code{VectorDistribution$strprint()}}
-\item \href{#method-mean}{\code{VectorDistribution$mean()}}
-\item \href{#method-mode}{\code{VectorDistribution$mode()}}
-\item \href{#method-median}{\code{VectorDistribution$median()}}
-\item \href{#method-variance}{\code{VectorDistribution$variance()}}
-\item \href{#method-skewness}{\code{VectorDistribution$skewness()}}
-\item \href{#method-kurtosis}{\code{VectorDistribution$kurtosis()}}
-\item \href{#method-entropy}{\code{VectorDistribution$entropy()}}
-\item \href{#method-mgf}{\code{VectorDistribution$mgf()}}
-\item \href{#method-cf}{\code{VectorDistribution$cf()}}
-\item \href{#method-pgf}{\code{VectorDistribution$pgf()}}
-\item \href{#method-pdf}{\code{VectorDistribution$pdf()}}
-\item \href{#method-cdf}{\code{VectorDistribution$cdf()}}
-\item \href{#method-quantile}{\code{VectorDistribution$quantile()}}
-\item \href{#method-rand}{\code{VectorDistribution$rand()}}
-\item \href{#method-clone}{\code{VectorDistribution$clone()}}
+\item \href{#method-VectorDistribution-new}{\code{VectorDistribution$new()}}
+\item \href{#method-VectorDistribution-getParameterValue}{\code{VectorDistribution$getParameterValue()}}
+\item \href{#method-VectorDistribution-wrappedModels}{\code{VectorDistribution$wrappedModels()}}
+\item \href{#method-VectorDistribution-strprint}{\code{VectorDistribution$strprint()}}
+\item \href{#method-VectorDistribution-mean}{\code{VectorDistribution$mean()}}
+\item \href{#method-VectorDistribution-mode}{\code{VectorDistribution$mode()}}
+\item \href{#method-VectorDistribution-median}{\code{VectorDistribution$median()}}
+\item \href{#method-VectorDistribution-variance}{\code{VectorDistribution$variance()}}
+\item \href{#method-VectorDistribution-skewness}{\code{VectorDistribution$skewness()}}
+\item \href{#method-VectorDistribution-kurtosis}{\code{VectorDistribution$kurtosis()}}
+\item \href{#method-VectorDistribution-entropy}{\code{VectorDistribution$entropy()}}
+\item \href{#method-VectorDistribution-mgf}{\code{VectorDistribution$mgf()}}
+\item \href{#method-VectorDistribution-cf}{\code{VectorDistribution$cf()}}
+\item \href{#method-VectorDistribution-pgf}{\code{VectorDistribution$pgf()}}
+\item \href{#method-VectorDistribution-pdf}{\code{VectorDistribution$pdf()}}
+\item \href{#method-VectorDistribution-cdf}{\code{VectorDistribution$cdf()}}
+\item \href{#method-VectorDistribution-quantile}{\code{VectorDistribution$quantile()}}
+\item \href{#method-VectorDistribution-rand}{\code{VectorDistribution$rand()}}
+\item \href{#method-VectorDistribution-clone}{\code{VectorDistribution$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence">}\href{../../distr6/html/Distribution.html#method-confidence}{\code{distr6::Distribution$confidence()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation">}\href{../../distr6/html/Distribution.html#method-correlation}{\code{distr6::Distribution$correlation()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr">}\href{../../distr6/html/Distribution.html#method-iqr}{\code{distr6::Distribution$iqr()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport">}\href{../../distr6/html/Distribution.html#method-liesInSupport}{\code{distr6::Distribution$liesInSupport()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType">}\href{../../distr6/html/Distribution.html#method-liesInType}{\code{distr6::Distribution$liesInType()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters">}\href{../../distr6/html/Distribution.html#method-parameters}{\code{distr6::Distribution$parameters()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec">}\href{../../distr6/html/Distribution.html#method-prec}{\code{distr6::Distribution$prec()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print">}\href{../../distr6/html/Distribution.html#method-print}{\code{distr6::Distribution$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue">}\href{../../distr6/html/Distribution.html#method-setParameterValue}{\code{distr6::Distribution$setParameterValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev">}\href{../../distr6/html/Distribution.html#method-stdev}{\code{distr6::Distribution$stdev()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary">}\href{../../distr6/html/Distribution.html#method-summary}{\code{distr6::Distribution$summary()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport">}\href{../../distr6/html/Distribution.html#method-workingSupport}{\code{distr6::Distribution$workingSupport()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="confidence"><a href='../../distr6/html/Distribution.html#method-Distribution-confidence'><code>distr6::Distribution$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="correlation"><a href='../../distr6/html/Distribution.html#method-Distribution-correlation'><code>distr6::Distribution$correlation()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="iqr"><a href='../../distr6/html/Distribution.html#method-Distribution-iqr'><code>distr6::Distribution$iqr()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInSupport'><code>distr6::Distribution$liesInSupport()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="liesInType"><a href='../../distr6/html/Distribution.html#method-Distribution-liesInType'><code>distr6::Distribution$liesInType()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="parameters"><a href='../../distr6/html/Distribution.html#method-Distribution-parameters'><code>distr6::Distribution$parameters()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="prec"><a href='../../distr6/html/Distribution.html#method-Distribution-prec'><code>distr6::Distribution$prec()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="print"><a href='../../distr6/html/Distribution.html#method-Distribution-print'><code>distr6::Distribution$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="setParameterValue"><a href='../../distr6/html/Distribution.html#method-Distribution-setParameterValue'><code>distr6::Distribution$setParameterValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="stdev"><a href='../../distr6/html/Distribution.html#method-Distribution-stdev'><code>distr6::Distribution$stdev()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="summary"><a href='../../distr6/html/Distribution.html#method-Distribution-summary'><code>distr6::Distribution$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="distr6" data-topic="Distribution" data-id="workingSupport"><a href='../../distr6/html/Distribution.html#method-Distribution-workingSupport'><code>distr6::Distribution$workingSupport()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -238,8 +238,8 @@ VectorDistribution$new(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getParameterValue"></a>}}
-\if{latex}{\out{\hypertarget{method-getParameterValue}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-getParameterValue"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-getParameterValue}{}}}
 \subsection{Method \code{getParameterValue()}}{
 Returns the value of the supplied parameter.
 \subsection{Usage}{
@@ -258,8 +258,8 @@ id of parameter value to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-wrappedModels"></a>}}
-\if{latex}{\out{\hypertarget{method-wrappedModels}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-wrappedModels"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-wrappedModels}{}}}
 \subsection{Method \code{wrappedModels()}}{
 Returns model(s) wrapped by this wrapper.
 \subsection{Usage}{
@@ -278,8 +278,8 @@ otherwise a list of \link{Distribution}s.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-strprint"></a>}}
-\if{latex}{\out{\hypertarget{method-strprint}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-strprint"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-strprint}{}}}
 \subsection{Method \code{strprint()}}{
 Printable string representation of the \code{VectorDistribution}. Primarily used internally.
 \subsection{Usage}{
@@ -296,8 +296,8 @@ Number of distributions to include when printing.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mean"></a>}}
-\if{latex}{\out{\hypertarget{method-mean}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-mean"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-mean}{}}}
 \subsection{Method \code{mean()}}{
 Returns named vector of means from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -313,8 +313,8 @@ Returns named vector of means from each wrapped \link{Distribution}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mode"></a>}}
-\if{latex}{\out{\hypertarget{method-mode}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-mode"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-mode}{}}}
 \subsection{Method \code{mode()}}{
 Returns named vector of modes from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -332,8 +332,8 @@ which mode to return.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-median"></a>}}
-\if{latex}{\out{\hypertarget{method-median}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-median"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-median}{}}}
 \subsection{Method \code{median()}}{
 Returns named vector of medians from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -342,8 +342,8 @@ Returns named vector of medians from each wrapped \link{Distribution}.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-variance"></a>}}
-\if{latex}{\out{\hypertarget{method-variance}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-variance"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-variance}{}}}
 \subsection{Method \code{variance()}}{
 Returns named vector of variances from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -359,8 +359,8 @@ Returns named vector of variances from each wrapped \link{Distribution}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-skewness"></a>}}
-\if{latex}{\out{\hypertarget{method-skewness}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-skewness"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-skewness}{}}}
 \subsection{Method \code{skewness()}}{
 Returns named vector of skewness from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -376,8 +376,8 @@ Returns named vector of skewness from each wrapped \link{Distribution}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-kurtosis"></a>}}
-\if{latex}{\out{\hypertarget{method-kurtosis}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-kurtosis"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-kurtosis}{}}}
 \subsection{Method \code{kurtosis()}}{
 Returns named vector of kurtosis from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -396,8 +396,8 @@ If \code{TRUE} (default) excess kurtosis returned.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-entropy"></a>}}
-\if{latex}{\out{\hypertarget{method-entropy}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-entropy"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-entropy}{}}}
 \subsection{Method \code{entropy()}}{
 Returns named vector of entropy from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -416,8 +416,8 @@ Base of the entropy logarithm, default = 2 (Shannon entropy)}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mgf"></a>}}
-\if{latex}{\out{\hypertarget{method-mgf}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-mgf"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-mgf}{}}}
 \subsection{Method \code{mgf()}}{
 Returns named vector of mgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -436,8 +436,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cf"></a>}}
-\if{latex}{\out{\hypertarget{method-cf}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-cf"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-cf}{}}}
 \subsection{Method \code{cf()}}{
 Returns named vector of cf from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -456,8 +456,8 @@ t integer to evaluate function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pgf"></a>}}
-\if{latex}{\out{\hypertarget{method-pgf}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-pgf"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-pgf}{}}}
 \subsection{Method \code{pgf()}}{
 Returns named vector of pgf from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -476,8 +476,8 @@ z integer to evaluate probability generating function at.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pdf"></a>}}
-\if{latex}{\out{\hypertarget{method-pdf}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-pdf"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-pdf}{}}}
 \subsection{Method \code{pdf()}}{
 Returns named vector of pdfs from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -546,8 +546,8 @@ vd$pdf(data = array(c(1,2,4,3,5,1,3,7), dim = c(2,2,2)))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cdf"></a>}}
-\if{latex}{\out{\hypertarget{method-cdf}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-cdf"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-cdf}{}}}
 \subsection{Method \code{cdf()}}{
 Returns named vector of cdfs from each wrapped \link{Distribution}.
 Same usage as \verb{$pdf.}
@@ -590,8 +590,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-quantile"></a>}}
-\if{latex}{\out{\hypertarget{method-quantile}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-quantile"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-quantile}{}}}
 \subsection{Method \code{quantile()}}{
 Returns named vector of quantiles from each wrapped \link{Distribution}.
 Same usage as \verb{$cdf.}
@@ -634,8 +634,8 @@ to the distribution in the vector to evaluate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-rand"></a>}}
-\if{latex}{\out{\hypertarget{method-rand}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-rand"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-rand}{}}}
 \subsection{Method \code{rand()}}{
 Returns \link[data.table:data.table]{data.table::data.table} of draws from each wrapped \link{Distribution}.
 \subsection{Usage}{
@@ -657,8 +657,8 @@ If \code{TRUE} (default) simplifies the return if possible to a \code{numeric}, 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VectorDistribution-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VectorDistribution-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

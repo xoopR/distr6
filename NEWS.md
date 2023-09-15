@@ -1,4 +1,8 @@
-# distr6 1.7
+# distr6 1.8.0
+
+* Add `Arrdist`, which generalises the `Matdist` to a three-dimensional array, useful for Bayesian predictions where the third dimension is multiple distributions.
+
+# distr6 1.7.0
 
 * Added `dparse()`
 

@@ -8,7 +8,7 @@ mixMatrix(mds, weights = "uniform")
 }
 \arguments{
 \item{mds}{\code{(list())}\cr
-List of \link{Matdist}s, should have same number of rows and columns.}
+List of \link{Matdist} or \link{Arrdist}s, should have same number of rows and columns.}
 
 \item{weights}{\code{(character(1)|numeric())}\cr
 Individual distribution weights. Default uniform weighting (\code{"uniform"}).}
@@ -24,6 +24,8 @@ Assumes Matrix distributions have the same number of columns, otherwise use
 This method returns a new \link{Matdist} which is less flexible than a
 \link{MixtureDistribution} which has parameters (i.e. \code{weights}) that can be
 updated after construction.
+Also works for \link{Arrdist}s, where we convert these to \link{Matdist}s, based on the
+\code{which.curve} initialization parameter.
 }
 \examples{
 m1 <- as.Distribution(

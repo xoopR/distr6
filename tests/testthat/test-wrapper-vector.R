@@ -454,7 +454,7 @@ test_that("ids", {
                               ids = c("a", "b"))
   expect_equal(v$ids, c("a", "b"))
   expect_equal(names(v$wrappedModels()), c("a", "b"))
-  expect_equal(v["a"]$strprint(), "WeightDisc()")
+  expect_equal(v["a"]$strprint(), "WeightDisc(1)")
   expect_error(v["c"]$strprint(), "subset")
 
   v <- VectorDistribution$new(distribution = "WeightedDiscrete",

@@ -31,8 +31,8 @@
 #' @family univariate distributions
 #'
 #' @examples
-#' x <- Matdist$new(pdf = matrix(0.5, 2, 2, dimnames = list(NULL, 1:2)))
-#' Matdist$new(cdf = matrix(c(0.5, 1), 2, 2, TRUE, dimnames = list(NULL, c(1, 2)))) # equivalently
+#' x <- Matdist$new(pdf = matrix(0.5, 3, 2, dimnames = list(NULL, 1:2)))
+#' Matdist$new(cdf = matrix(c(0.5, 1), 3, 2, TRUE, dimnames = list(NULL, 1:2))) # equivalently
 #'
 #' # d/p/q/r
 #' x$pdf(1:5)
@@ -75,6 +75,7 @@ Matdist <- R6Class("Matdist",
         type = Reals$new()^"n"
       )
       private$.ndists <- nrow(gprm(self, "pdf"))
+      private$.ncols <- ncol(gprm(self, "pdf"))
       invisible(self)
     },
 
@@ -83,7 +84,7 @@ Matdist <- R6Class("Matdist",
     #' @param n `(integer(1))` \cr
     #' Ignored.
     strprint = function(n = 2) {
-      sprintf("Matdist(%s)", private$.ndists)
+      sprintf("Matdist(%sx%s)", private$.ndists, private$.ncols)
     },
 
     # stats
@@ -310,7 +311,8 @@ Matdist <- R6Class("Matdist",
     # traits
     .traits = list(valueSupport = "discrete", variateForm = "univariate"),
     .improper = FALSE,
-    .ndists = 0
+    .ndists = 0,
+    .ncols = 0
   )
 )
 

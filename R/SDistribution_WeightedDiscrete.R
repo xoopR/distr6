@@ -81,7 +81,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
     #' @param n `(integer(1))` \cr
     #' Ignored.
     strprint = function(n = 2) {
-      "WeightDisc()"
+      sprintf("WeightDisc(%s)", length(gprm(self, "pdf")))
     },
 
     # stats

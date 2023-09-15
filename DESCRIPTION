@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.7.0
+Version: 1.8.0
 Authors@R:
     c(person(given = "Raphael",
              family = "Sonabend",
@@ -92,9 +92,10 @@ Imports:
     param6 (>= 0.2.4),
     R6,
     Rcpp,
-    set6 (>= 0.2.3),
+    set6 (>= 0.2.6),
     stats
 Suggests:
+    abind,
     actuar,
     cubature,
     extraDistr,
@@ -115,7 +116,7 @@ VignetteBuilder:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 SystemRequirements: C++11
 Collate:
     'helpers.R'
@@ -140,6 +141,7 @@ Collate:
     'Kernel_Uniform.R'
     'RcppExports.R'
     'SDistribution_Arcsine.R'
+    'SDistribution_Arrdist.R'
     'SDistribution_Bernoulli.R'
     'SDistribution_Beta.R'
     'SDistribution_BetaNoncentral.R'

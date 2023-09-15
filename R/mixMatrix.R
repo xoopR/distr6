@@ -8,9 +8,11 @@
 #' This method returns a new [Matdist] which is less flexible than a
 #' [MixtureDistribution] which has parameters (i.e. `weights`) that can be
 #' updated after construction.
+#' Also works for [Arrdist]s, where we convert these to [Matdist]s, based on the
+#' `which.curve` initialization parameter.
 #'
 #' @param mds `(list())`\cr
-#' List of [Matdist]s, should have same number of rows and columns.
+#' List of [Matdist] or [Arrdist]s, should have same number of rows and columns.
 #' @param weights `(character(1)|numeric())`\cr
 #' Individual distribution weights. Default uniform weighting (`"uniform"`).
 #'
@@ -47,6 +49,14 @@ mixMatrix <- function(mds, weights = "uniform") {
   if (is.character(weights) && weights == "uniform") {
     weights <- rep(1 / length(mds), length(mds))
   }
+
+  # convert possible Arrdist to Matdist
+  mds <- lapply(mds, function(md) {
+    if (inherits(md, "Arrdist"))
+      md[,gprm(md, "which.curve")]
+    else
+      md
+  })
 
   pdfs <- .merge_matpdf_cols(lapply(mds, gprm, "pdf"))
 
