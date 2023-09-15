@@ -235,9 +235,6 @@ between (0,1) taken as the quantile of the curves otherwise if greater than 1 ta
 
 \item{\code{decorators}}{\code{(character())} \cr
 Decorators to add to the distribution during construction.}
-
-\item{\code{x}}{\code{numeric()}\cr
-Data samples, \emph{must be ordered in ascending order}.}
 }
 \if{html}{\out{</div>}}
 }
