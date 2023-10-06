@@ -173,20 +173,20 @@ C_UniformKernelQuantile <- function(x, lower, logp) {
     .Call(`_distr6_C_UniformKernelQuantile`, x, lower, logp)
 }
 
-C_vec_PdfCdf <- function(pdf) {
-    .Call(`_distr6_C_vec_PdfCdf`, pdf)
+C_vec_PdfCdf <- function(x) {
+    .Call(`_distr6_C_vec_PdfCdf`, x)
 }
 
-C_vec_CdfPdf <- function(cdf) {
-    .Call(`_distr6_C_vec_CdfPdf`, cdf)
+C_vec_CdfPdf <- function(x) {
+    .Call(`_distr6_C_vec_CdfPdf`, x)
 }
 
-C_mat_PdfCdf <- function(pdf) {
-    .Call(`_distr6_C_mat_PdfCdf`, pdf)
+C_mat_PdfCdf <- function(x) {
+    .Call(`_distr6_C_mat_PdfCdf`, x)
 }
 
-C_mat_CdfPdf <- function(cdf) {
-    .Call(`_distr6_C_mat_CdfPdf`, cdf)
+C_mat_CdfPdf <- function(x) {
+    .Call(`_distr6_C_mat_CdfPdf`, x)
 }
 
 C_dpq <- function(fun, x, args, lower = TRUE, log = FALSE) {

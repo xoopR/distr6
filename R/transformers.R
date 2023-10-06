@@ -6,7 +6,10 @@ pdfcdf <- function(pdf) {
     C_mat_PdfCdf(pdf)
   } else if (length(d) == 3) {
     # quicker than apply with C_mat_
-    aperm(apply(pdf, c(1, 3), C_vec_PdfCdf), c(2, 1, 3))
+    dn <- dimnames(pdf)
+    out <- aperm(apply(unname(pdf), c(1, 3), C_vec_PdfCdf), c(2, 1, 3))
+    dimnames(out) <- dn
+    out
   } else {
     stop(sprintf("Expected maximum of three dimensions but got '%s'.", length(d)))
   }
@@ -19,7 +22,11 @@ cdfpdf <- function(cdf) {
   } else if (length(d) == 2) {
     C_mat_CdfPdf(cdf)
   } else if (length(d) == 3) {
-    aperm(apply(cdf, c(1, 3), C_vec_CdfPdf), c(2, 1, 3))
+    # quicker than apply with C_mat_
+    dn <- dimnames(cdf)
+    out <- aperm(apply(unname(cdf), c(1, 3), C_vec_CdfPdf), c(2, 1, 3))
+    dimnames(out) <- dn
+    out
   } else {
     stop(sprintf("Expected maximum of three dimensions but got '%s'.", length(d)))
   }

@@ -2,55 +2,55 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericVector C_vec_PdfCdf(NumericVector pdf) {
-  NumericVector cdf(pdf.size());
-  cdf = clone(pdf);
-  for (int i = 0; i < cdf.size(); i++) {
-    cdf[i] = cdf[i] + cdf[i - 1];
+NumericVector C_vec_PdfCdf(NumericVector x) {
+  NumericVector out(x.size());
+  out = clone(x);
+  for (int i = 1; i < out.size(); i++) {
+    out[i] = out[i] + out[i - 1];
   }
-  return cdf;
+  return out;
 }
 
 // [[Rcpp::export]]
-NumericVector C_vec_CdfPdf(NumericVector cdf) {
-  NumericVector pdf(cdf.size());
-  pdf = clone(cdf);
-  for (int i = cdf.size(); i > 0; i--) {
-    pdf[i] = pdf[i] - pdf[i - 1];
+NumericVector C_vec_CdfPdf(NumericVector x) {
+  NumericVector out(x.size());
+  out = clone(x);
+  for (int i = x.size(); i > 0; i--) {
+    out[i] = out[i] - out[i - 1];
   }
-  return pdf;
+  return out;
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_mat_PdfCdf(NumericMatrix pdf) {
+NumericMatrix C_mat_PdfCdf(NumericMatrix x) {
 
-  int nc = pdf.ncol();
-  int nr = pdf.nrow();
+  int nc = x.ncol();
+  int nr = x.nrow();
 
-  NumericMatrix cdf(nr, nc);
-  cdf = clone(pdf);
+  NumericMatrix out(nr, nc);
+  out = clone(x);
 
   for (int i = 0; i < nr; i++) {
-    for (int j = 0; j < nc; j++) {
-      cdf(i, j) = cdf(i, j) + cdf(i, j - 1);
+    for (int j = 1; j < nc; j++) {
+      out(i, j) = out(i, j) + out(i, j - 1);
     }
   }
-  return cdf;
+  return out;
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_mat_CdfPdf(NumericMatrix cdf) {
+NumericMatrix C_mat_CdfPdf(NumericMatrix x) {
 
-  int nr = cdf.nrow();
-  int nc = cdf.ncol();
+  int nr = x.nrow();
+  int nc = x.ncol();
 
-  NumericMatrix pdf(nr, nc);
-  pdf = clone(cdf);
+  NumericMatrix out(nr, nc);
+  out = clone(x);
 
   for (int i = 0; i < nr; i++) {
     for (int j = nc; j > 0; j--) {
-      pdf(i, j) = pdf(i, j) - pdf(i, j - 1);
+      out(i, j) = out(i, j) - out(i, j - 1);
     }
   }
-  return pdf;
+  return out;
 }

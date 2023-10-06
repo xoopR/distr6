@@ -583,46 +583,46 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_vec_PdfCdf
-NumericVector C_vec_PdfCdf(NumericVector pdf);
-RcppExport SEXP _distr6_C_vec_PdfCdf(SEXP pdfSEXP) {
+NumericVector C_vec_PdfCdf(NumericVector x);
+RcppExport SEXP _distr6_C_vec_PdfCdf(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type pdf(pdfSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_vec_PdfCdf(pdf));
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_vec_PdfCdf(x));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_vec_CdfPdf
-NumericVector C_vec_CdfPdf(NumericVector cdf);
-RcppExport SEXP _distr6_C_vec_CdfPdf(SEXP cdfSEXP) {
+NumericVector C_vec_CdfPdf(NumericVector x);
+RcppExport SEXP _distr6_C_vec_CdfPdf(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type cdf(cdfSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_vec_CdfPdf(cdf));
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_vec_CdfPdf(x));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_mat_PdfCdf
-NumericMatrix C_mat_PdfCdf(NumericMatrix pdf);
-RcppExport SEXP _distr6_C_mat_PdfCdf(SEXP pdfSEXP) {
+NumericMatrix C_mat_PdfCdf(NumericMatrix x);
+RcppExport SEXP _distr6_C_mat_PdfCdf(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type pdf(pdfSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_mat_PdfCdf(pdf));
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_mat_PdfCdf(x));
     return rcpp_result_gen;
 END_RCPP
 }
 // C_mat_CdfPdf
-NumericMatrix C_mat_CdfPdf(NumericMatrix cdf);
-RcppExport SEXP _distr6_C_mat_CdfPdf(SEXP cdfSEXP) {
+NumericMatrix C_mat_CdfPdf(NumericMatrix x);
+RcppExport SEXP _distr6_C_mat_CdfPdf(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type cdf(cdfSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_mat_CdfPdf(cdf));
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_mat_CdfPdf(x));
     return rcpp_result_gen;
 END_RCPP
 }
