@@ -50,7 +50,7 @@ NumericMatrix C_mat_CdfPdf(NumericMatrix x) {
   NumericMatrix out(nr, nc);
 
   for (int i = 0; i < nr; i++) {
-    for (int j = nc; j >= 0; j--) {
+    for (int j = (nc - 1); j >= 0; j--) {
       if (j == 0) {
         out(i, j) = x(i, j);
       } else {
