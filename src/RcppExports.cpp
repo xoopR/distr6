@@ -582,6 +582,50 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_vec_PdfCdf
+NumericVector C_vec_PdfCdf(NumericVector pdf);
+RcppExport SEXP _distr6_C_vec_PdfCdf(SEXP pdfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type pdf(pdfSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_vec_PdfCdf(pdf));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_vec_CdfPdf
+NumericVector C_vec_CdfPdf(NumericVector cdf);
+RcppExport SEXP _distr6_C_vec_CdfPdf(SEXP cdfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type cdf(cdfSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_vec_CdfPdf(cdf));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_mat_PdfCdf
+NumericMatrix C_mat_PdfCdf(NumericMatrix pdf);
+RcppExport SEXP _distr6_C_mat_PdfCdf(SEXP pdfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type pdf(pdfSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_mat_PdfCdf(pdf));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_mat_CdfPdf
+NumericMatrix C_mat_CdfPdf(NumericMatrix cdf);
+RcppExport SEXP _distr6_C_mat_CdfPdf(SEXP cdfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type cdf(cdfSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_mat_CdfPdf(cdf));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_dpq
 NumericMatrix C_dpq(std::string fun, NumericVector x, std::list<NumericVector> args, int lower, int log);
 RcppExport SEXP _distr6_C_dpq(SEXP funSEXP, SEXP xSEXP, SEXP argsSEXP, SEXP lowerSEXP, SEXP logSEXP) {
@@ -655,6 +699,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_distr6_C_UniformKernelPdf", (DL_FUNC) &_distr6_C_UniformKernelPdf, 2},
     {"_distr6_C_UniformKernelCdf", (DL_FUNC) &_distr6_C_UniformKernelCdf, 3},
     {"_distr6_C_UniformKernelQuantile", (DL_FUNC) &_distr6_C_UniformKernelQuantile, 3},
+    {"_distr6_C_vec_PdfCdf", (DL_FUNC) &_distr6_C_vec_PdfCdf, 1},
+    {"_distr6_C_vec_CdfPdf", (DL_FUNC) &_distr6_C_vec_CdfPdf, 1},
+    {"_distr6_C_mat_PdfCdf", (DL_FUNC) &_distr6_C_mat_PdfCdf, 1},
+    {"_distr6_C_mat_CdfPdf", (DL_FUNC) &_distr6_C_mat_CdfPdf, 1},
     {"_distr6_C_dpq", (DL_FUNC) &_distr6_C_dpq, 5},
     {"_distr6_C_r", (DL_FUNC) &_distr6_C_r, 3},
     {NULL, NULL, 0}

@@ -1,3 +1,7 @@
+# distr6 1.8.1
+
+* Add 'transformer' functions `pdfcdf` and `cdfpdf`, which use Rcpp to transform matrics/arrays/vectors between pdf->cdf and cdf->pdf respectively.
+
 # distr6 1.8.0
 
 * Add `Arrdist`, which generalises the `Matdist` to a three-dimensional array, useful for Bayesian predictions where the third dimension is multiple distributions.
