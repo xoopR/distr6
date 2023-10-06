@@ -54,6 +54,12 @@ jobs:
           pak::pkg_system_requirements("rcmdcheck", execute = TRUE)
         shell: Rscript {0}
 
+      - name: Install valgrind
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          sudo apt-get install --yes valgrind
+
       - name: Install dependencies
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
