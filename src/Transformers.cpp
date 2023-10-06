@@ -4,9 +4,9 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 NumericVector C_vec_PdfCdf(NumericVector x) {
   NumericVector out(x.size());
-  out = clone(x);
+  out[0] = x[0];
   for (int i = 1; i < out.size(); i++) {
-    out[i] = out[i] + out[i - 1];
+    out[i] = x[i] + out[i - 1];
   }
   return out;
 }
@@ -14,9 +14,9 @@ NumericVector C_vec_PdfCdf(NumericVector x) {
 // [[Rcpp::export]]
 NumericVector C_vec_CdfPdf(NumericVector x) {
   NumericVector out(x.size());
-  out = clone(x);
+  out[0] = x[0];
   for (int i = x.size(); i > 0; i--) {
-    out[i] = out[i] - out[i - 1];
+    out[i] = x[i] - x[i - 1];
   }
   return out;
 }
@@ -28,11 +28,14 @@ NumericMatrix C_mat_PdfCdf(NumericMatrix x) {
   int nr = x.nrow();
 
   NumericMatrix out(nr, nc);
-  out = clone(x);
 
   for (int i = 0; i < nr; i++) {
-    for (int j = 1; j < nc; j++) {
-      out(i, j) = out(i, j) + out(i, j - 1);
+    for (int j = 0; j < nc; j++) {
+      if (j == 0) {
+        out(i, j) = x(i, j);
+      } else {
+        out(i, j) = x(i, j) + out(i, j - 1);
+      }
     }
   }
   return out;
@@ -45,11 +48,14 @@ NumericMatrix C_mat_CdfPdf(NumericMatrix x) {
   int nc = x.ncol();
 
   NumericMatrix out(nr, nc);
-  out = clone(x);
 
   for (int i = 0; i < nr; i++) {
-    for (int j = nc; j > 0; j--) {
-      out(i, j) = out(i, j) - out(i, j - 1);
+    for (int j = nc; j >= 0; j--) {
+      if (j == 0) {
+        out(i, j) = x(i, j);
+      } else {
+        out(i, j) = x(i, j) - x(i, j - 1);
+      }
     }
   }
   return out;
