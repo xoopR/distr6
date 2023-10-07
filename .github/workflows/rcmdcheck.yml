@@ -57,6 +57,13 @@ jobs:
           pak::pkg_system_requirements("rcmdcheck", execute = TRUE)
         shell: Rscript {0}
 
+      - name: Install valgrind
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          sudo apt-get install --yes valgrind
+
       - name: Install dependencies
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
@@ -76,6 +83,10 @@ jobs:
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Valgrind
+        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--use-valgrind", "--no-codoc", "--no-examples", "--no-manual", "--ignore-vignettes"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
       - name: Show testthat output
