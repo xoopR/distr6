@@ -86,7 +86,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Valgrind
-        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--use-valgrind", "--no-codoc", "--no-examples", "--no-manual", "--ignore-vignettes"), error_on = "error", check_dir = "check")
+        if: always()
+        run: rcmdcheck::rcmdcheck(build_args = "--no-build-vignettes", args = c("--use-valgrind", "--no-codoc", "--no-manual", "--ignore-vignettes"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
       - name: Show testthat output
