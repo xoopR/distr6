@@ -358,28 +358,6 @@ c.Matdist <- function(...) {
                   decorators = decs)
 }
 
-.merge_matpdf_cols <- function(pdfs) {
-
-  nc <- unique(viapply(pdfs, ncol))
-
-  if (length(nc) == 1) {
-    if (all(vapply(pdfs, colnames, character(nc)) == colnames(pdfs[[1]]))) {
-      return(pdfs)
-    }
-  }
-
-  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
-  # new number of rows and columns
-  nc <- length(cnms)
-
-  lapply(pdfs, function(.x) {
-    out <- matrix(0, nrow(.x), nc, FALSE, list(NULL, cnms))
-    out[, match(as.numeric(colnames(.x)), cnms)] <- .x
-    out
-  })
-}
-
-
 #' @title Extract one or more Distributions from a Matdist
 #' @description Extract a [WeightedDiscrete] or [Matdist] from a [Matdist].
 #' @param md [Matdist] from which to extract Distributions.

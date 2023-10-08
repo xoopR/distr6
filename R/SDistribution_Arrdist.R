@@ -396,35 +396,10 @@ c.Arrdist <- function(...) {
     stop("Can't combine array distributions with different lengths on third dimension.")
   }
 
-  pdfs = .merge_arrpdf_cols(pdfs)
-  pdfs = do.call(abind::abind, list(what = pdfs, along = 1))
+  pdfs <- .merge_arrpdf_cols(pdfs)
+  pdfs <- do.call(abind::abind, list(what = pdfs, along = 1))
 
   as.Distribution(pdfs, fun = "pdf", decorators = decs)
-}
-
-.merge_arrpdf_cols <- function(pdfs) {
-  if (length(unique(viapply(pdfs, function(.x) dim(.x)[[3L]]))) > 1) {
-    stop("Can only merge arrays with same length of third dimension.")
-  }
-
-  nc <- unique(viapply(pdfs, ncol))
-
-  if (length(nc) == 1) {
-    if (all(vapply(pdfs, colnames, character(nc)) == colnames(pdfs[[1]]))) {
-      return(pdfs)
-    }
-  }
-
-  cnms <- sort(unique(as.numeric(unlist(lapply(pdfs, colnames)))))
-  # new number of rows and columns
-  nc <- length(cnms)
-  nl <- dim(pdfs[[1]])[3L]
-
-  lapply(pdfs, function(.x) {
-    out <- array(0, c(nrow(.x), nc, nl), list(NULL, cnms, NULL))
-    out[, match(as.numeric(colnames(.x)), cnms), ] <- .x
-    out
-  })
 }
 
 #' @title Extract one or more Distributions from an Array distribution
