@@ -67,6 +67,12 @@ test_that("c.Arrdist", {
   expect_equal(dim(r), c(50, 60))
   expect_true(all(r <= 20))
   expect_true(all(r >= 1))
+
+  arr4pdf = array(runif(200), c(20, 10, 1))
+  arr4pdf = arr4pdf / sum(arr4pdf)
+  colnames(arr4pdf) = 1:10
+  arr4 = as.Distribution(arr4pdf, fun = "pdf")
+  expect_error(c(arr1, arr4), "Can't combine")
 })
 
 test_that("Arrdist basics", {

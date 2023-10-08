@@ -403,6 +403,10 @@ c.Arrdist <- function(...) {
 }
 
 .merge_arrpdf_cols <- function(pdfs) {
+  if (length(unique(viapply(pdfs, function(.x) dim(.x)[[3L]]))) > 1) {
+    stop("Can only merge arrays with same length of third dimension.")
+  }
+
   nc <- unique(viapply(pdfs, ncol))
 
   if (length(nc) == 1) {
