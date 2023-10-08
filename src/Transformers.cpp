@@ -3,21 +3,29 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericVector C_vec_PdfCdf(NumericVector x) {
-  NumericVector out(x.size());
+  int len = x.size();
+
+  NumericVector out(len);
   out[0] = x[0];
-  for (int i = 1; i < out.size(); i++) {
+
+  for (int i = 1; i < len; i++) {
     out[i] = x[i] + out[i - 1];
   }
+
   return out;
 }
 
 // [[Rcpp::export]]
 NumericVector C_vec_CdfPdf(NumericVector x) {
-  NumericVector out(x.size());
+  int len = x.size();
+
+  NumericVector out(len);
   out[0] = x[0];
-  for (int i = x.size(); i > 0; i--) {
+
+  for (int i = (len - 1); i > 0; i--) {
     out[i] = x[i] - x[i - 1];
   }
+
   return out;
 }
 
