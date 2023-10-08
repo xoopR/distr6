@@ -220,6 +220,7 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'merge_cols.R'
     'mixMatrix.R'
     'mixturiseVector.R'
     'plot_continuous.R'
