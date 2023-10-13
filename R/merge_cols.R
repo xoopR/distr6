@@ -12,7 +12,7 @@
     ))
   }
 
-  if (dim(arrs[[1L]]) == 2L) {
+  if (length(dim(arrs[[1L]])) == 2L) {
     out <- .merge_matpdf_cols(arrs)
   } else {
     out <- .merge_arrpdf_cols(arrs)
