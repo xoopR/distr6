@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.8.0
+Version: 1.8.1
 Authors@R:
     c(person(given = "Raphael",
              family = "Sonabend",
@@ -220,6 +220,7 @@ Collate:
     'listWrappers.R'
     'makeUniqueDistributions.R'
     'measures.R'
+    'merge_cols.R'
     'mixMatrix.R'
     'mixturiseVector.R'
     'plot_continuous.R'
@@ -234,4 +235,5 @@ Collate:
     'simulateEmpiricalDistribution.R'
     'skewType.R'
     'sugar.R'
+    'transformers.R'
     'zzz.R'

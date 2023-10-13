@@ -685,12 +685,12 @@ getParameterSet.WeightedDiscrete <- function(object, ...) { # nolint
 
       if (length(pdfs)) {
         cdfs <- setNames(
-          lapply(pdfs, cumsum),
+          lapply(pdfs, pdfcdf),
           gsub("pdf", "cdf", names(pdfs))
         )
       } else {
         pdfs <- setNames(
-          lapply(cdfs, function(.x) c(.x[1], diff(.x))),
+          lapply(cdfs, cdfpdf),
           gsub("cdf", "pdf", names(cdfs))
         )
       }
@@ -716,9 +716,9 @@ getParameterSet.Matdist <- function(object, ...) { # nolint
       cdf <- list_element(x, "cdf")$cdf
 
       if (length(pdf)) {
-        cdf <- t(apply(pdf, 1, cumsum))
+        cdf <- pdfcdf(pdf)
       } else {
-        pdf <- t(apply(cdf, 1, function(.y) c(.y[1], diff(.y))))
+        pdf <- cdfpdf(cdf)
       }
 
       assert_cdf_matrix(cdf, pdf)
@@ -742,15 +742,9 @@ getParameterSet.Arrdist <- function(object, which.curve = 0.5, ...) { # nolint
       cdf <- list_element(x, "cdf")$cdf
 
       if (length(pdf)) {
-        cdf <- pdf
-        for (i in 2:ncol(cdf)) {
-          cdf[, i, ] <- cdf[, i, ] + cdf[, i - 1, ]
-        }
+        cdf <- pdfcdf(pdf)
       } else {
-        pdf <- cdf
-        for (i in ncol(pdf):2) {
-          pdf[, i, ] <- pdf[, i, ] - pdf[, i - 1, ]
-        }
+        pdf <- cdfpdf(cdf)
       }
 
       assert_cdf_array(cdf, pdf)

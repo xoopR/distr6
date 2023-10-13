@@ -38,7 +38,7 @@ test_that("ShortName, ClassName and Alias are unique between distributions", {
   expect_equal(length(d6), length(unique(d6)))
 })
 
-test_that("Every distribution is created with it's propper R6 class", {
+test_that("Every distribution is created with it's proper R6 class", {
   # Get calls
   d6 <- listDistributions()[,(ids = paste(tolower(ShortName), tolower(ClassName), tolower(Alias), sep = ", "))]
   calls <- strsplit(d6, ",")
