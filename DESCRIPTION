@@ -1,6 +1,6 @@
 Package: distr6
 Title: The Complete R6 Probability Distributions Interface
-Version: 1.8.1
+Version: 1.8.2
 Authors@R:
     c(person(given = "Raphael",
              family = "Sonabend",
@@ -68,7 +68,12 @@ Authors@R:
       person(given = "Michal",
              family = "Lauer",
              role = "ctb",
-             email = "michal.lauer.25@gmail.com"))
+             email = "michal.lauer.25@gmail.com"),
+      person(given = "John",
+             family = "Zobolas",
+             role = "ctb",
+             email = "bblodfon@gmail.com",
+             comment = c(ORCID = "0000-0002-3609-8674")))
 Description: An R6 object oriented distributions package. Unified
     interface for 42 probability distributions and 11 kernels including
     functionality for multiple scientific types. Additionally
