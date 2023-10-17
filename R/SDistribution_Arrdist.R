@@ -404,7 +404,7 @@ c.Arrdist <- function(..., decorators = NULL) {
   pdfs <- .merge_arrpdf_cols(pdfs)
   pdfs <- do.call(abind::abind, list(what = pdfs, along = 1))
 
-  as.Distribution(pdfs, fun = "pdf", decorators = decs)
+  as.Distribution(pdfs, fun = "pdf", decorators = decorators)
 }
 
 #' @title Extract one or more Distributions from an Array distribution
