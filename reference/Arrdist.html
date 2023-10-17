@@ -18,7 +18,7 @@ is commonly used in matrixed Bayesian estimators such as Kaplan-Meier with confi
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.3</span>
       </span>
     </div>
 
@@ -629,15 +629,15 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]    1    1    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    2    1    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]    2    1    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]    1    1    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]    2    1    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    1    2    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    2    2    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]    2    2    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]    1    2    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]    1    2    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    1    1    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    2    1    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    1    1    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]    1    2    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]    2    2    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]    2    1    1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Statistics</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -683,43 +683,43 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-in"><span><span class="va">arr</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               1          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.06681378 0.93318622</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.22413341 0.77586659</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.95511176 0.04488824</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              1         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.3412373 0.6587627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.2664466 0.7335534</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.5305820 0.4694180</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              1         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.8426893 0.1573107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.2428983 0.7571017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.3352515 0.6647485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.8277336 0.1722664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.4466535 0.5533465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.5996728 0.4003272</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              1         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.6954297 0.3045703</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.4507189 0.5492811</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.6871444 0.3128556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.2716887 0.7283113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.2487555 0.7512445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.4154993 0.5845007</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">Arrdist</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">arr</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span> <span class="co"># default 0.5 quantile (in this case index 3)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.304570 1.677602 1.349856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.658763 1.663328 1.400327</span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>which.curve <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="co"># equivalently</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.304570 1.549281 1.312856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.728311 1.751244 1.584501</span>
 <span class="r-in"><span><span class="co"># 1% quantile</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>which.curve <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1919264 1.3327393 0.4517343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3521622 1.0253090 0.7905269</span>
 <span class="r-in"><span><span class="co"># 5th index</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>which.curve <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.055088 1.665445 1.533025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.138431 1.663328 1.218915</span>
 <span class="r-in"><span><span class="co"># mean</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>which.curve <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.442878 1.685059 1.381075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.526695 1.616501 1.371394</span>
 </code></pre></div>
     </div>
   </div>

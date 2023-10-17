@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">distr6</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.3</span>
       </span>
     </div>
 
@@ -147,13 +147,17 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Arrdist</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span>, decorators <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p>array distributions to be concatenated.</p></dd>
+
+
+<dt>decorators</dt>
+<dd><p>If supplied then adds given decorators, otherwise pulls them from underlying distributions.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -175,7 +179,7 @@
 <span class="r-in"><span>  <span class="fu"><a href="as.Distribution.html">as.Distribution</a></span><span class="op">(</span><span class="va">arr</span>, fun <span class="op">=</span> <span class="st">"pdf"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">c</span>, <span class="va">arr</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Arrdist(60x18x2) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Arrdist(60x17x2) </span>
 </code></pre></div>
     </div>
   </div>
