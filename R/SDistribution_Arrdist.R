@@ -372,6 +372,7 @@ Arrdist <- R6Class("Arrdist",
 #' @title Combine Array Distributions into a Arrdist
 #' @description Helper function for quickly combining distributions into a [Arrdist].
 #' @param ... array distributions to be concatenated.
+#' @param decorators If supplied then adds given decorators, otherwise pulls them from underlying distributions.
 #' @return [Arrdist]
 #' @examples
 #' # create three array distributions with different column names
@@ -383,13 +384,17 @@ Arrdist <- R6Class("Arrdist",
 #' })
 #' do.call(c, arr)
 #' @export
-c.Arrdist <- function(...) {
+c.Arrdist <- function(..., decorators = NULL) {
   # get the pdfs and decorators
   pdfdec <- unlist(lapply(list(...), function(x) list(gprm(x, "pdf"), x$decorators)),
     recursive = FALSE
   )
   pdfs <- pdfdec[seq.int(1, length(pdfdec), by = 2)]
-  decs <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
+
+
+  if (is.null(decorators)) {
+    decorators <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
+  }
 
   nt <- unique(vapply(pdfs, function(.x) dim(.x)[3L], integer(1)))
   if (length(nt) > 1) {
@@ -399,7 +404,7 @@ c.Arrdist <- function(...) {
   pdfs <- .merge_arrpdf_cols(pdfs)
   pdfs <- do.call(abind::abind, list(what = pdfs, along = 1))
 
-  as.Distribution(pdfs, fun = "pdf", decorators = decs)
+  as.Distribution(pdfs, fun = "pdf", decorators = decorators)
 }
 
 #' @title Extract one or more Distributions from an Array distribution

@@ -4,10 +4,12 @@
 \alias{c.Matdist}
 \title{Combine Matrix Distributions into a Matdist}
 \usage{
-\method{c}{Matdist}(...)
+\method{c}{Matdist}(..., decorators = NULL)
 }
 \arguments{
 \item{...}{matrix distributions to be concatenated.}
+
+\item{decorators}{If supplied then adds given decorators, otherwise pulls them from underlying distributions.}
 }
 \value{
 \link{Matdist}

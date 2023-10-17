@@ -335,6 +335,7 @@ Matdist <- R6Class("Matdist",
 #' @title Combine Matrix Distributions into a Matdist
 #' @description Helper function for quickly combining distributions into a [Matdist].
 #' @param ... matrix distributions to be concatenated.
+#' @param decorators If supplied then adds given decorators, otherwise pulls them from underlying distributions.
 #' @return [Matdist]
 #' @examples
 #' # create three matrix distributions with different column names
@@ -346,16 +347,20 @@ Matdist <- R6Class("Matdist",
 #' })
 #' do.call(c, mats)
 #' @export
-c.Matdist <- function(...) {
+c.Matdist <- function(..., decorators = NULL) {
   # get the pdfs and decorators
   pdfdec <- unlist(lapply(list(...), function(x) list(gprm(x, "pdf"), x$decorators)),
     recursive = FALSE
   )
   pdfs <- pdfdec[seq.int(1, length(pdfdec), by = 2)]
-  decs <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
+
+  if (is.null(decorators)) {
+    decorators <- unique(unlist(pdfdec[seq.int(2, length(pdfdec), by = 2)]))
+  }
+
 
   as.Distribution(do.call(rbind, .merge_matpdf_cols(pdfs)), fun = "pdf",
-                  decorators = decs)
+                  decorators = decorators)
 }
 
 #' @title Extract one or more Distributions from a Matdist
