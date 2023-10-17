@@ -1,3 +1,7 @@
+# distr6 1.8.3
+
+* Add `decorators` argument to `c.Matdist` and `c.Arrdist`
+
 # distr6 1.8.1
 
 * Add 'transformer' functions `pdfcdf` and `cdfpdf`, which use Rcpp to transform matrics/arrays/vectors between pdf->cdf and cdf->pdf respectively.

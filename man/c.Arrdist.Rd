@@ -4,10 +4,12 @@
 \alias{c.Arrdist}
 \title{Combine Array Distributions into a Arrdist}
 \usage{
-\method{c}{Arrdist}(...)
+\method{c}{Arrdist}(..., decorators = NULL)
 }
 \arguments{
 \item{...}{array distributions to be concatenated.}
+
+\item{decorators}{If supplied then adds given decorators, otherwise pulls them from underlying distributions.}
 }
 \value{
 \link{Arrdist}
