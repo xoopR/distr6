@@ -399,11 +399,11 @@ NumericMatrix C_ShiftedLoglogisticQuantile(NumericVector x, NumericVector locati
 
 
 // [[Rcpp::export]]
-NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data,
+NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericVector data,
                                         NumericMatrix pdf) {
 
-  int nc = data.ncol();
-  int nr = data.nrow();
+  int nc = pdf.ncol();
+  int nr = pdf.nrow();
   int n = x.length();
 
   NumericMatrix mat(n, nc);
@@ -415,7 +415,7 @@ NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data,
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (data(j, i) == x[k]) {
+        if (data(j) == x[k]) {
           mat(k, i) = pdf(j, i);
           break;
         }
@@ -467,11 +467,11 @@ NumericVector C_WeightedDiscreteCdf(NumericVector x, NumericVector data, Numeric
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, NumericMatrix cdf,
+NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericVector data, NumericMatrix cdf,
                                         bool lower, bool logp) {
 
-  int nc = data.ncol();
-  int nr = data.nrow();
+  int nc = cdf.ncol();
+  int nr = cdf.nrow();
   int n = x.length();
 
   NumericMatrix mat(n, nc);
@@ -483,13 +483,13 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, Num
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (j == 0 && x[k] < data(0, i)) {
+        if (j == 0 && x[k] < data(0)) {
           mat(k, i) = 0;
           break;
         } else if (j == nr - 1) {
           mat(k, i) = cdf(j, i);
           break;
-        } else if (x[k] >= data(j, i) && x[k] < data(j + 1, i)) {
+        } else if (x[k] >= data(j) && x[k] < data(j + 1)) {
           mat(k, i) = cdf(j, i);
           break;
         }
@@ -540,11 +540,11 @@ NumericVector C_WeightedDiscreteQuantile(NumericVector x, NumericVector data, Nu
 }
 
 // [[Rcpp::export]]
-NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data, NumericMatrix cdf,
+NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericVector data, NumericMatrix cdf,
                                              bool lower, bool logp) {
 
-  int nc = data.ncol();
-  int nr = data.nrow();
+  int nc = cdf.ncol();
+  int nr = cdf.nrow();
   int n = x.length();
 
   NumericMatrix mat(n, nc);
@@ -567,7 +567,7 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data
         }
 
         if (y <= cdf(j, i)) {
-          mat(k, i) = data(j, i);
+          mat(k, i) = data(j);
           break;
         }
       }
