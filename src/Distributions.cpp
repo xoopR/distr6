@@ -415,7 +415,7 @@ NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericVector data,
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (data(j) == x[k]) {
+        if (data[j] == x[k]) {
           mat(k, i) = pdf(j, i);
           break;
         }
