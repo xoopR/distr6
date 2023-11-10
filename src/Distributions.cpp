@@ -408,9 +408,9 @@ NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericVector data,
 
   NumericMatrix mat(n, nc);
 
-  // i - distribution
-  // j - data samples
-  // k - evaluates
+  // i - data samples
+  // j - data points
+  // k - new data points
 
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
@@ -476,9 +476,9 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericVector data, Num
 
   NumericMatrix mat(n, nc);
 
-  // i - distribution
-  // j - data samples
-  // k - evaluates
+  // i - data samples
+  // j - data points
+  // k - new data points
 
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
