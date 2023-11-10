@@ -483,13 +483,13 @@ NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericVector data, Num
   for (int i = 0; i < nc; i++) {
     for (int k = 0; k < n; k++) {
       for (int j = 0; j < nr; j++) {
-        if (j == 0 && x[k] < data(0)) {
+        if (j == 0 && x[k] < data[0]) {
           mat(k, i) = 0;
           break;
         } else if (j == nr - 1) {
           mat(k, i) = cdf(j, i);
           break;
-        } else if (x[k] >= data(j) && x[k] < data(j + 1)) {
+        } else if (x[k] >= data[j] && x[k] < data[j + 1]) {
           mat(k, i) = cdf(j, i);
           break;
         }
@@ -567,7 +567,7 @@ NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericVector data
         }
 
         if (y <= cdf(j, i)) {
-          mat(k, i) = data(j);
+          mat(k, i) = data[j];
           break;
         }
       }
