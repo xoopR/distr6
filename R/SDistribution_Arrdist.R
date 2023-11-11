@@ -310,8 +310,7 @@ Arrdist <- R6Class("Arrdist",
     .pdf = function(x, log = FALSE) {
       "pdf, data, wc" %=% gprm(self, c("pdf", "x", "which.curve"))
       mat <- .extCurve(pdf, wc)
-      out <- t(C_Vec_WeightedDiscretePdf(
-        x, matrix(data, ncol(mat), private$.ndists), t(mat)))
+      out <- t(C_Vec_WeightedDiscretePdf(x, data, t(mat)))
       if (log) {
         out <- log(out)
       }
@@ -319,12 +318,11 @@ Arrdist <- R6Class("Arrdist",
       t(out)
     },
 
-    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       "cdf, data, wc" %=% gprm(self, c("cdf", "x", "which.curve"))
       mat <- .extCurve(cdf, wc)
-      out <- t(C_Vec_WeightedDiscreteCdf(
-        x, matrix(data, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p
-      ))
+      out <- t(C_Vec_WeightedDiscreteCdf(x, data, t(mat), lower.tail,
+        log.p))
       colnames(out) <- x
       t(out)
     },
@@ -332,8 +330,8 @@ Arrdist <- R6Class("Arrdist",
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       "*" %=% gprm(self, c("cdf", "x", "which.curve"))
       mat <- .extCurve(cdf, which.curve)
-      out <- t(C_Vec_WeightedDiscreteQuantile(p,
-        matrix(x, ncol(mat), nrow(mat)), t(mat), lower.tail, log.p))
+      out <- t(C_Vec_WeightedDiscreteQuantile(p, x, t(mat), lower.tail,
+        log.p))
       colnames(out) <- NULL
       t(out)
     },

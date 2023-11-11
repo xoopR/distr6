@@ -375,8 +375,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           data[[i]] <- data[[i]][seq.int(lng)]
         }
         pdf <- matrix(unlist(pdf), nrow = length(data[[1]]), ncol = length(data))
-        data <- matrix(unlist(data), ncol = ncol(pdf))
-        out <- C_Vec_WeightedDiscretePdf(x, data, pdf)
+        out <- C_Vec_WeightedDiscretePdf(x, unlist(data), pdf)
         if (log) {
           out <- log(out)
         }
@@ -396,8 +395,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           data[[i]] <- data[[i]][seq.int(lng)]
         }
         cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
-        data <- matrix(unlist(data), ncol = ncol(cdf))
-        C_Vec_WeightedDiscreteCdf(x, data, cdf, lower.tail, log.p)
+        C_Vec_WeightedDiscreteCdf(x, unlist(data), cdf, lower.tail, log.p)
       } else {
         .wd_cdf(x, data, cdf, lower.tail, log.p)
       }
@@ -414,8 +412,7 @@ WeightedDiscrete <- R6Class("WeightedDiscrete",
           data[[i]] <- data[[i]][seq.int(lng)]
         }
         cdf <- matrix(unlist(cdf), nrow = length(data[[1]]), ncol = length(data))
-        data <- matrix(unlist(data), ncol = ncol(cdf))
-        C_Vec_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p)
+        C_Vec_WeightedDiscreteQuantile(p, unlist(data), cdf, lower.tail, log.p)
       } else {
         C_WeightedDiscreteQuantile(p, data, cdf, lower.tail, log.p)
       }

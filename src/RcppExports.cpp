@@ -179,13 +179,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_Vec_WeightedDiscretePdf
-NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericMatrix data, NumericMatrix pdf);
+NumericMatrix C_Vec_WeightedDiscretePdf(NumericVector x, NumericVector data, NumericMatrix pdf);
 RcppExport SEXP _distr6_C_Vec_WeightedDiscretePdf(SEXP xSEXP, SEXP dataSEXP, SEXP pdfSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type data(dataSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type pdf(pdfSEXP);
     rcpp_result_gen = Rcpp::wrap(C_Vec_WeightedDiscretePdf(x, data, pdf));
     return rcpp_result_gen;
@@ -207,13 +207,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_Vec_WeightedDiscreteCdf
-NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericMatrix data, NumericMatrix cdf, bool lower, bool logp);
+NumericMatrix C_Vec_WeightedDiscreteCdf(NumericVector x, NumericVector data, NumericMatrix cdf, bool lower, bool logp);
 RcppExport SEXP _distr6_C_Vec_WeightedDiscreteCdf(SEXP xSEXP, SEXP dataSEXP, SEXP cdfSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type data(dataSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type cdf(cdfSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);
@@ -237,13 +237,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // C_Vec_WeightedDiscreteQuantile
-NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericMatrix data, NumericMatrix cdf, bool lower, bool logp);
+NumericMatrix C_Vec_WeightedDiscreteQuantile(NumericVector x, NumericVector data, NumericMatrix cdf, bool lower, bool logp);
 RcppExport SEXP _distr6_C_Vec_WeightedDiscreteQuantile(SEXP xSEXP, SEXP dataSEXP, SEXP cdfSEXP, SEXP lowerSEXP, SEXP logpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type data(dataSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type cdf(cdfSEXP);
     Rcpp::traits::input_parameter< bool >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< bool >::type logp(logpSEXP);

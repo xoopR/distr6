@@ -1,3 +1,7 @@
+# distr6 1.8.4
+
+* Fix massive bottleneck in Matdist and Arrdist
+
 # distr6 1.8.3
 
 * Add `decorators` argument to `c.Matdist` and `c.Arrdist`

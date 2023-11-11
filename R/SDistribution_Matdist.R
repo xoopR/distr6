@@ -274,10 +274,7 @@ Matdist <- R6Class("Matdist",
     # dpqr
     .pdf = function(x, log = FALSE) {
       "pdf, data" %=% gprm(self, c("pdf", "x"))
-      out <- t(C_Vec_WeightedDiscretePdf(
-        x, matrix(data, ncol(pdf), private$.ndists),
-        t(pdf)
-      ))
+      out <- t(C_Vec_WeightedDiscretePdf(x, data, t(pdf)))
       if (log) {
         out <- log(out)
       }
@@ -285,20 +282,18 @@ Matdist <- R6Class("Matdist",
       t(out)
     },
 
-    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) { # FIXME
+    .cdf = function(x, lower.tail = TRUE, log.p = FALSE) {
       "cdf, data" %=% gprm(self, c("cdf", "x"))
-      out <- t(C_Vec_WeightedDiscreteCdf(
-        x, matrix(data, ncol(cdf), nrow(cdf)),
-        t(cdf), lower.tail, log.p
-      ))
+      out <- t(C_Vec_WeightedDiscreteCdf(x, data, t(cdf), lower.tail,
+        log.p))
       colnames(out) <- x
       t(out)
     },
 
     .quantile = function(p, lower.tail = TRUE, log.p = FALSE) {
       "*" %=% gprm(self, c("cdf", "x"))
-      out <- t(C_Vec_WeightedDiscreteQuantile(p, matrix(x, ncol(cdf), nrow(cdf)),
-          t(cdf), lower.tail, log.p))
+      out <- t(C_Vec_WeightedDiscreteQuantile(p, x, t(cdf), lower.tail,
+        log.p))
       colnames(out) <- NULL
       t(out)
     },
