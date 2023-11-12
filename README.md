@@ -171,7 +171,7 @@ install.packages('distr6')
 And GitHub
 
 ``` r
-remotes::install_github("alan-turing-institute/distr6")
+remotes::install_github("xoopR/distr6")
 ```
 
 distr6 [will not be on
