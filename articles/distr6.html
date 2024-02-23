@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>distr6</h1>
             
-            <h4 data-toc-skip class="date">2023-11-12</h4>
+            <h4 data-toc-skip class="date">2024-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/distr6.rmd" class="external-link"><code>vignettes/distr6.rmd</code></a></small>
       <div class="hidden name"><code>distr6.rmd</code></div>
@@ -232,11 +232,12 @@ chosen in construction are shown in the print method.</p>
 <span><span class="va">N</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Norm(mean = 0, var = 1)</span></span>
 <span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+     1 linked,required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      0        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+      1 linked,required</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="parameters-in-distr6">Parameters in distr6<a class="anchor" aria-label="anchor" href="#parameters-in-distr6"></a>
@@ -250,11 +251,12 @@ setParameterValue</p>
 <p>Note how all parameters that are related also update</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+     2 linked,required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      0        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+      2 linked,required</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="representing-a-distribution">Representing a distribution<a class="anchor" aria-label="anchor" href="#representing-a-distribution"></a>
@@ -273,11 +275,12 @@ output slightly.</p>
 <span><span class="co">#&gt; Normal Probability Distribution. </span></span>
 <span><span class="co">#&gt; Parameterised with:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+     2 linked,required</span></span>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      0        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+      2 linked,required</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Quick Statistics</span></span>
@@ -391,14 +394,16 @@ distr6 provides a way of listing all of these, and filtering by traits
 or package. We only show the first 5 rows of this to save space.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    ShortName      ClassName Type ValueSupport VariateForm Package   Tags</span></span>
-<span><span class="co">#&gt; 1:       Arc        Arcsine    ℝ   continuous  univariate       - limits</span></span>
-<span><span class="co">#&gt; 2:   Arrdist        Arrdist  ℝ^K     discrete  univariate       -       </span></span>
-<span><span class="co">#&gt; 3:      Bern      Bernoulli   ℕ0     discrete  univariate   stats       </span></span>
-<span><span class="co">#&gt; 4:      Beta           Beta   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 5:    BetaNC BetaNoncentral   ℝ+   continuous  univariate   stats       </span></span>
-<span><span class="co">#&gt; 6:     Binom       Binomial   ℕ0     discrete  univariate   stats limits</span></span>
+<span><span class="co">#&gt;    ShortName      ClassName   Type ValueSupport VariateForm Package   Tags</span></span>
+<span><span class="co">#&gt;       &lt;char&gt;         &lt;char&gt; &lt;char&gt;       &lt;char&gt;      &lt;char&gt;  &lt;char&gt; &lt;char&gt;</span></span>
+<span><span class="co">#&gt; 1:       Arc        Arcsine      ℝ   continuous  univariate       - limits</span></span>
+<span><span class="co">#&gt; 2:   Arrdist        Arrdist    ℝ^K     discrete  univariate       -       </span></span>
+<span><span class="co">#&gt; 3:      Bern      Bernoulli     ℕ0     discrete  univariate   stats       </span></span>
+<span><span class="co">#&gt; 4:      Beta           Beta     ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 5:    BetaNC BetaNoncentral     ℝ+   continuous  univariate   stats       </span></span>
+<span><span class="co">#&gt; 6:     Binom       Binomial     ℕ0     discrete  univariate   stats limits</span></span>
 <span><span class="co">#&gt;      Alias</span></span>
+<span><span class="co">#&gt;     &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:      AS</span></span>
 <span><span class="co">#&gt; 2:      AD</span></span>
 <span><span class="co">#&gt; 3:       B</span></span>
@@ -410,14 +415,16 @@ or package. We only show the first 5 rows of this to save space.</p>
 <span><span class="co">#&gt; [5] "BetaNoncentral" "Binomial"</span></span>
 <span><span class="co"># Lists discrete distributions only</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>valuesupport <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    ShortName       ClassName Type ValueSupport VariateForm    Package   Tags</span></span>
-<span><span class="co">#&gt; 1:   Arrdist         Arrdist  ℝ^K     discrete  univariate          -       </span></span>
-<span><span class="co">#&gt; 2:      Bern       Bernoulli   ℕ0     discrete  univariate      stats       </span></span>
-<span><span class="co">#&gt; 3:     Binom        Binomial   ℕ0     discrete  univariate      stats limits</span></span>
-<span><span class="co">#&gt; 4:       Cat     Categorical    V     discrete  univariate          -       </span></span>
-<span><span class="co">#&gt; 5:     Degen      Degenerate    ℝ     discrete  univariate          - limits</span></span>
-<span><span class="co">#&gt; 6:     DUnif DiscreteUniform    ℤ     discrete  univariate extraDistr limits</span></span>
+<span><span class="co">#&gt;    ShortName       ClassName   Type ValueSupport VariateForm    Package   Tags</span></span>
+<span><span class="co">#&gt;       &lt;char&gt;          &lt;char&gt; &lt;char&gt;       &lt;char&gt;      &lt;char&gt;     &lt;char&gt; &lt;char&gt;</span></span>
+<span><span class="co">#&gt; 1:   Arrdist         Arrdist    ℝ^K     discrete  univariate          -       </span></span>
+<span><span class="co">#&gt; 2:      Bern       Bernoulli     ℕ0     discrete  univariate      stats       </span></span>
+<span><span class="co">#&gt; 3:     Binom        Binomial     ℕ0     discrete  univariate      stats limits</span></span>
+<span><span class="co">#&gt; 4:       Cat     Categorical      V     discrete  univariate          -       </span></span>
+<span><span class="co">#&gt; 5:     Degen      Degenerate      ℝ     discrete  univariate          - limits</span></span>
+<span><span class="co">#&gt; 6:     DUnif DiscreteUniform      ℤ     discrete  univariate extraDistr limits</span></span>
 <span><span class="co">#&gt;                     Alias</span></span>
+<span><span class="co">#&gt;                    &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:                     AD</span></span>
 <span><span class="co">#&gt; 2:                      B</span></span>
 <span><span class="co">#&gt; 3:                BM, Bin</span></span>
@@ -428,6 +435,7 @@ or package. We only show the first 5 rows of this to save space.</p>
 <span><span class="co"># Multiple filters can be used, note this is case-insensitive</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/listDistributions.html">listDistributions</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VaLueSupport <span class="op">=</span> <span class="st">"continuous"</span>, package <span class="op">=</span> <span class="st">"extraDistr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ShortName    ClassName    Type ValueSupport  VariateForm    Package     Tags</span></span>
+<span><span class="co">#&gt;       &lt;char&gt;       &lt;char&gt;  &lt;char&gt;       &lt;char&gt;       &lt;char&gt;     &lt;char&gt;   &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:      Diri    Dirichlet [0,1]^K   continuous multivariate extraDistr         </span></span>
 <span><span class="co">#&gt; 2:      Frec      Frechet       ℝ   continuous   univariate extraDistr locscale</span></span>
 <span><span class="co">#&gt; 3:      Gumb       Gumbel      ℝ+   continuous   univariate extraDistr locscale</span></span>
@@ -435,6 +443,7 @@ or package. We only show the first 5 rows of this to save space.</p>
 <span><span class="co">#&gt; 5:       Lap      Laplace       ℝ   continuous   univariate extraDistr locscale</span></span>
 <span><span class="co">#&gt; 6:      Pare       Pareto      ℝ+   continuous   univariate extraDistr         </span></span>
 <span><span class="co">#&gt;         Alias</span></span>
+<span><span class="co">#&gt;        &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:        DRC</span></span>
 <span><span class="co">#&gt; 2:         FR</span></span>
 <span><span class="co">#&gt; 3:    GB, Gum</span></span>

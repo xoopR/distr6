@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting and Setting Parameters</h1>
             
-            <h4 data-toc-skip class="date">2023-11-12</h4>
+            <h4 data-toc-skip class="date">2024-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/parameters.rmd" class="external-link"><code>vignettes/webs/parameters.rmd</code></a></small>
       <div class="hidden name"><code>parameters.rmd</code></div>
@@ -204,11 +204,12 @@ parameterisation</p>
 <code>parameters</code> method</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+     1 linked,required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      0        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+      1 linked,required</span></span></code></pre></div>
 <p>Notice how not only the parameters in the given parameterisation are
 displayed, but all the ones possible. Individual values can be obtained
 with <code>getParameterValue</code>, which is a wrapper around
@@ -226,11 +227,12 @@ accordingly. For example,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>var <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     0        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+     2 linked,required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      0        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+      2 linked,required</span></span></code></pre></div>
 <p>Not only has the variance been updated, but so too have the precision
 and standard deviation parameters. But be careful not to set conflicting
 parameterisations.</p>
@@ -252,11 +254,12 @@ error.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">$</span><span class="fu">setParameterValue</span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">4</span>, prec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">N</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1: mean       ℝ     4        required</span></span>
-<span><span class="co">#&gt; 2: prec      ℝ+     2 linked,required</span></span>
-<span><span class="co">#&gt; 3:   sd      ℝ+       linked,required</span></span>
-<span><span class="co">#&gt; 4:  var      ℝ+       linked,required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   mean       ℝ      4        required</span></span>
+<span><span class="co">#&gt; 2:   prec      ℝ+      2 linked,required</span></span>
+<span><span class="co">#&gt; 3:     sd      ℝ+        linked,required</span></span>
+<span><span class="co">#&gt; 4:    var      ℝ+        linked,required</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>

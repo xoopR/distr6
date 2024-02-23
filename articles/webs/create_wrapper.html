@@ -179,7 +179,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating a Wrapper</h1>
             
-            <h4 data-toc-skip class="date">2023-11-12</h4>
+            <h4 data-toc-skip class="date">2024-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_wrapper.rmd" class="external-link"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
       <div class="hidden name"><code>create_wrapper.rmd</code></div>
@@ -217,6 +217,7 @@ automatically updated</p>
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="va"><a href="../../reference/MixtureDistribution.html">MixtureDistribution</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>,<span class="va"><a href="../../reference/Binomial.html">Binomial</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               Id               Support   Value                    Tags</span></span>
+<span><span class="co">#&gt;           &lt;char&gt;                &lt;char&gt;  &lt;list&gt;                  &lt;list&gt;</span></span>
 <span><span class="co">#&gt; 1:  Binom1__prob                 [0,1]     0.5 Binom1__linked,required</span></span>
 <span><span class="co">#&gt; 2: Binom1__qprob                 [0,1]         Binom1__linked,required</span></span>
 <span><span class="co">#&gt; 3:  Binom1__size                    ℕ+      10                required</span></span>
@@ -243,6 +244,7 @@ model</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               Id               Support   Value                    Tags</span></span>
+<span><span class="co">#&gt;           &lt;char&gt;                &lt;char&gt;  &lt;list&gt;                  &lt;list&gt;</span></span>
 <span><span class="co">#&gt; 1:  Binom1__prob                 [0,1]     0.2 Binom1__linked,required</span></span>
 <span><span class="co">#&gt; 2: Binom1__qprob                 [0,1]         Binom1__linked,required</span></span>
 <span><span class="co">#&gt; 3:  Binom1__size                    ℕ+      10                required</span></span>
@@ -251,10 +253,11 @@ model</p>
 <span><span class="co">#&gt; 6:  Binom2__size                    ℕ+      10                required</span></span>
 <span><span class="co">#&gt; 7:  mix__weights ([0,1]^2) ∪ {uniform} uniform                required</span></span>
 <span><span class="va">M</span><span class="op">$</span><span class="fu">wrappedModels</span><span class="op">(</span><span class="st">"Binom1"</span><span class="op">)</span><span class="op">$</span><span class="fu">parameters</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       Id Support Value            Tags</span></span>
-<span><span class="co">#&gt; 1:  prob   [0,1]   0.5 linked,required</span></span>
-<span><span class="co">#&gt; 2: qprob   [0,1]       linked,required</span></span>
-<span><span class="co">#&gt; 3:  size      ℕ+    10        required</span></span></code></pre></div>
+<span><span class="co">#&gt;        Id Support  Value            Tags</span></span>
+<span><span class="co">#&gt;    &lt;char&gt;  &lt;char&gt; &lt;list&gt;          &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:   prob   [0,1]    0.5 linked,required</span></span>
+<span><span class="co">#&gt; 2:  qprob   [0,1]        linked,required</span></span>
+<span><span class="co">#&gt; 3:   size      ℕ+     10        required</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="wrappedmodels">wrappedModels<a class="anchor" aria-label="anchor" href="#wrappedmodels"></a>

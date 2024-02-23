@@ -609,7 +609,7 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">quantile</span><span class="op">(</span><span class="fl">0.42</span><span class="op">)</span> <span class="co"># Assumes ordered in construction</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2 2 2 2 1 2 2 2 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 2 2 2 1 2 3 2 2 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Statistics</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">mean</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -621,10 +621,11 @@ z integer to evaluate probability generating function at.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Weighted Discrete Probability Distribution. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameterised with:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Id Support       Value            Tags</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: cdf [0,1]^n             required,linked</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: pdf [0,1]^n 0.2,0.6,0.2 required,linked</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   x     ℝ^n       1,2,3 required,unique</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Id Support       Value            Tags</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;  &lt;char&gt;      &lt;list&gt;          &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    cdf [0,1]^n             required,linked</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    pdf [0,1]^n 0.2,0.6,0.2 required,linked</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      x     ℝ^n       1,2,3 required,unique</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Quick Statistics</span>

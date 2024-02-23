@@ -741,7 +741,7 @@ to the distribution in the vector to evaluate.</p></dd>
 
 </div><p></p><hr><a id="method-VectorDistribution-rand"></a><div class="section">
 <h3 id="method-rand-">Method <code>rand()</code><a class="anchor" aria-label="anchor" href="#method-rand-"></a></h3>
-<p>Returns <a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a> of draws from each wrapped <a href="Distribution.html">Distribution</a>.</p><div class="section">
+<p>Returns <a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a> of draws from each wrapped <a href="Distribution.html">Distribution</a>.</p><div class="section">
 <h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">VectorDistribution</span><span class="op">$</span><span class="fu">rand</span><span class="op">(</span><span class="va">n</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -802,7 +802,7 @@ data.table::data.table.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">VectorDistribution</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  distribution <span class="op">=</span> <span class="st">"Binomial"</span>,</span></span>
-<span class="r-in"><span>  params <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.2</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  params <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.2</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Alternatively</span></span></span>
@@ -825,19 +825,23 @@ data.table::data.table.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Binom1     Binom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0703125 0.01061683</span>
 <span class="r-in"><span><span class="co"># Equivalently</span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Binom1     Binom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0703125 0.01061683</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Binom1     Binom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.01757813 0.04246733</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 0.07031250 0.11147674</span>
 <span class="r-in"><span><span class="co"># or as a matrix</span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Binom1     Binom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.01757813 0.04246733</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 0.07031250 0.11147674</span>
 <span class="r-in"><span></span></span>
@@ -853,16 +857,19 @@ data.table::data.table.</p></dd>
 <span class="r-in"><span><span class="co"># evaluates Multinom1 and Multinom2 at (1, 4)</span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Multinom1 Multinom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;     &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   0.32805         0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># evaluates Multinom1 at (1, 4) and Multinom2 at (5, 3)</span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">3</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Multinom1  Multinom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   0.32805 0.04667544</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># and the same across many samples</span></span></span>
 <span class="r-in"><span><span class="va">vd</span><span class="op">$</span><span class="fu">pdf</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">7</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Multinom1  Multinom2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   0.32805 0.04667544</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.07290 0.19765032</span>
 </code></pre></div>
