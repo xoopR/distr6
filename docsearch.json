@@ -2,21 +2,21 @@
   "index_name": "distr6",
   "start_urls": [
     {
-      "url": "https://alan-turing-institute.github.io/distr6/index.html",
+      "url": "https://xoopr.github.io/distr6/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://alan-turing-institute.github.io/distr6/reference",
+      "url": "https://xoopr.github.io/distr6/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://alan-turing-institute.github.io/distr6/articles",
+      "url": "https://xoopr.github.io/distr6/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://alan-turing-institute.github.io/distr6/sitemap.xml"
+    "https://xoopr.github.io/distr6/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
