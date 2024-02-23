@@ -9,6 +9,8 @@ survival and hazard functions and anti-derivatives. If possible analytical expre
 exploited, otherwise numerical ones are used with a message.
 }
 \details{
+Numerical approximations will not work for multivariate distributions.
+
 Decorator objects add functionality to the given \link{Distribution} object by copying methods
 in the decorator environment to the chosen \link{Distribution} environment.
 

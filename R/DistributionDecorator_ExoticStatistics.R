@@ -4,6 +4,8 @@
 #' survival and hazard functions and anti-derivatives. If possible analytical expressions are
 #' exploited, otherwise numerical ones are used with a message.
 #'
+#' @details Numerical approximations will not work for multivariate distributions.
+#'
 #' @template class_decorator
 #' @template param_bounds
 #' @template param_log
