@@ -148,7 +148,7 @@
             
             <h4 data-toc-skip class="date">2024-02-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_sdistribution.rmd" class="external-link"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/vignettes/webs/create_sdistribution.rmd" class="external-link"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
       <div class="hidden name"><code>create_sdistribution.rmd</code></div>
 
     </div>
@@ -165,19 +165,19 @@ methods/variables.</p>
 distr6 inherit from the <code>SDistribution</code> class. This means
 they share a common interface. The only differences between these
 distributions is that some will have methods missing as no analytic
-results are available. See the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml
+results are available. See the <a href="https://raw.githubusercontent.com/wiki/xoopr/distr6/images/uml.png" class="external-link">uml
 diagram</a> for an overview of how this all fits in together. A core
 design principle in distr6 is that only analytical methods are defined
 in the SDistribution child classes, all numerical results are available
-through decorators. See the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html" class="external-link">decorators</a>
-tutorial for more information on decorators and the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html" class="external-link">analytical
+through decorators. See the <a href="https://xoopr.github.io/distr6/articles/webs/decorators.html">decorators</a>
+tutorial for more information on decorators and the <a href="https://xoopr.github.io/distr6/articles/webs/analytic_and_numeric_methods.html">analytical
 and numerical</a> article for further discussions on analytical and
 numerical methods. The summary is that when creating your own
 SDistribution class, please do not put any numerical methods in the core
 interface, if a closed form expression cannot be found, omit the method
 entirely and it can be imputed with a decorator. If your desired method
 is not available in one of our decorators but you think it is useful,
-see the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html" class="external-link">creating
+see the <a href="https://xoopr.github.io/distr6/articles/webs/create_decorator.html">creating
 a decorator</a> extension guidelines.</p>
 </div>
 <div class="section level2">
@@ -250,7 +250,7 @@ distribution</p>
 <ol style="list-style-type: decimal">
 <li>Methods that require parameters use the <code>self</code> keyword
 and the <code>getParameterValue</code> method, we looked at this in the
-<a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html" class="external-link">custom
+<a href="https://xoopr.github.io/distr6/articles/webs/custom_distributions.html">custom
 distribution tutorial</a>
 </li>
 <li>The arguments to the methods are not optional, they must have the
@@ -356,9 +356,9 @@ class. In summary the different components include</p>
 </ol>
 <p>## Extension Guidelines</p>
 <ul>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html" class="external-link">Kernel</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html" class="external-link">Wrapper</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html" class="external-link">Decorator</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_kernel.html">Kernel</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_wrapper.html">Wrapper</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_decorator.html">Decorator</a></li>
 </ul>
 </div>
 </div>

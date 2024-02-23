@@ -149,7 +149,7 @@ Methods</h1>
             
             <h4 data-toc-skip class="date">2024-02-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/analytic_and_numeric_methods.rmd" class="external-link"><code>vignettes/webs/analytic_and_numeric_methods.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/vignettes/webs/analytic_and_numeric_methods.rmd" class="external-link"><code>vignettes/webs/analytic_and_numeric_methods.rmd</code></a></small>
       <div class="hidden name"><code>analytic_and_numeric_methods.rmd</code></div>
 
     </div>
@@ -158,7 +158,7 @@ Methods</h1>
     
 <p>This document is for understanding how and when distr6 uses
 analytical or numerical results. For a tutorial on how to use
-decorators, <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html" class="external-link">see
+decorators, <a href="https://xoopr.github.io/distr6/articles/webs/decorators.html">see
 here</a>.</p>
 <p>distr6 operates under a strict rule that implemented distributions,
 of class <code>SDistribution</code>, and similarly implemented kernels,
@@ -228,7 +228,7 @@ will not be overloaded by the <code>CoreStatistics</code> decorator.</p>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     unlist(self$getParameterValue("mean"))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x7fceed158050&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x7fa9394bda50&gt;</span></span></code></pre></div>
 <p>Similarly where possible an analytical method is always preferred.
 For example, if an analytical <code>cdf</code> expression is available,
 then the <code>survival</code> function in <code>ExoticStatistics</code>
@@ -243,7 +243,7 @@ calculated.</p>
 decorator always adds a <code>genExp</code> method for a generalised
 numerical expectation formula, this is required for numerical results
 for variance, moments, etc.</p>
-<p>See the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html" class="external-link">decorators
+<p>See the <a href="https://xoopr.github.io/distr6/articles/webs/decorators.html">decorators
 tutorial</a> for details on how to decorate a Distribution.</p>
   </div>
 

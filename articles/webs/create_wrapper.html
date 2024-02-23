@@ -148,7 +148,7 @@
             
             <h4 data-toc-skip class="date">2024-02-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/distr6/blob/HEAD/vignettes/webs/create_wrapper.rmd" class="external-link"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/vignettes/webs/create_wrapper.rmd" class="external-link"><code>vignettes/webs/create_wrapper.rmd</code></a></small>
       <div class="hidden name"><code>create_wrapper.rmd</code></div>
 
     </div>
@@ -162,7 +162,7 @@
 fact that there are no set rules for what can and can’t go in a wrapper.
 Every implemented wrapper inherits from the
 <code>DistributionWrapper</code> class which in turn inherits from
-<code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png" class="external-link">uml
+<code>Distribution</code> (see the <a href="https://raw.githubusercontent.com/wiki/xoopr/distr6/images/uml.png" class="external-link">uml
 diagram</a>). The <code>DistributionWrapper</code> class introduces its
 own constructor, the <code>wrappedModels</code> method and overloads the
 <code>setParameterValue</code> method. We will briefly discuss why these
@@ -239,7 +239,7 @@ wrappers, which we will see more below.</p>
 <h2 id="creating-a-wrapper">Creating a Wrapper<a class="anchor" aria-label="anchor" href="#creating-a-wrapper"></a>
 </h2>
 <p>Now we have a background of the <code>DistributionWrapper</code>
-class we can discuss actually creating a wrapper. As discussed in the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html" class="external-link">wrappers
+class we can discuss actually creating a wrapper. As discussed in the <a href="https://xoopr.github.io/distr6/articles/webs/wrappers.html">wrappers
 tutorial</a>, there are multiple types of wrappers, each will be
 implemented slightly differently. Therefore we’re just going to look at
 one quick example from each example and point you to the source code for
@@ -292,7 +292,7 @@ constructor:</p>
 remember that any arguments passed to the
 <code>DistributionWrapper</code> constructor are in turn passed to the
 <code>Distribution</code> constructor, hence we can think of implemented
-wrappers as custom distributions. Read the <a href="https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.rmd" class="external-link">custom
+wrappers as custom distributions. Read the <a href="https://xoopr.github.io/distr6/articles/webs/custom_distributions.rmd">custom
 distribution tutorial</a> for more information about the arguments
 passed to the <code>Distribution</code> constructor.</p>
 <p>Notice also that the new <code>pdf</code> and <code>cdf</code>
@@ -338,7 +338,7 @@ the above</p>
 <li>As multiple distributions are wrapped we first call
 <code>makeUniqueDistributions</code>, a helper function that ensures the
 IDs of the distributions are unique. This automatically clones all
-distributions passed to it to prevent the R6 copying problem (<a href="https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html" class="external-link">see
+distributions passed to it to prevent the R6 copying problem (<a href="https://xoopr.github.io/distr6/articles/webs/intro_to_r6.html">see
 here</a>).</li>
 <li>We add a private variable <code>.weights</code> which is accessed in
 the pdf/cdf. In general we allow additional private variables and
@@ -368,9 +368,9 @@ and correctly getting/setting parameters</li>
 <h2 id="extension-guidelines">Extension Guidelines<a class="anchor" aria-label="anchor" href="#extension-guidelines"></a>
 </h2>
 <ul>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html" class="external-link">SDistribution</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html" class="external-link">Kernel</a></li>
-<li><a href="https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html" class="external-link">Decorator</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html">SDistribution</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_kernel.html">Kernel</a></li>
+<li><a href="https://xoopr.github.io/distr6/articles/webs/create_decorator.html">Decorator</a></li>
 </ul>
 </div>
   </div>
