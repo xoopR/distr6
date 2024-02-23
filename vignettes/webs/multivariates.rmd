@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/properties_traits.html) we used variables and methods to find properties and traits of the Normal distribution. Before that we looked at statistical methods and construction of the Normal distribution. In this tutorial we look at multivariate distributions, which should feel similar to univariate distributions.
+In the [previous tutorial](https://xoopr.github.io/distr6/articles/webs/properties_traits.html) we used variables and methods to find properties and traits of the Normal distribution. Before that we looked at statistical methods and construction of the Normal distribution. In this tutorial we look at multivariate distributions, which should feel similar to univariate distributions.
 
 ## Constructing a Multivariate Distribution
 
@@ -53,6 +53,4 @@ Note: `cdf()` and `quantile()` are often omitted from multivariate distributions
 
 ## Summary
 
-In this tutorial we looked at multivariate distributions and discussed the difference between distr6 and R stats in using the d/p/q/r functions. The [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/listing.html) concludes the 'Basic' set of tutorials with a look at listing in distr6 to help you navigate the package more easily.
-
-
+In this tutorial we looked at multivariate distributions and discussed the difference between distr6 and R stats in using the d/p/q/r functions. The [next tutorial](https://xoopr.github.io/distr6/articles/webs/listing.html) concludes the 'Basic' set of tutorials with a look at listing in distr6 to help you navigate the package more easily.

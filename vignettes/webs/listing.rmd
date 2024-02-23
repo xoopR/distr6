@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the d/p/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
+In the [previous tutorial](https://xoopr.github.io/distr6/articles/webs/multivariates.html) we looked at multivariate distributions and how to use the d/p/q/r functions to evaluate multiple points of these. This tutorial concludes the 'Basic' set of tutorials with the use of 'listing' in distr6.
 
 ## Listing
 
@@ -51,4 +51,3 @@ head(listDistributions(filter = list(variateform = "multivariate", package = "ex
 ## Summary
 
 In this tutorial we looked at the `listDistributions()` function so that you don't have to remember which are implemented in distr6. In this set of tutorials we covered the basics of constructing a (univariate) distribution, getting and setting parameters, evaluating statistical results and extending all this to multivariate distributions. The next set of tutorials cover more advanced functionality including decorators for numeric results, wrappers for composite distributions, custom distributions, S3 functionality, and symbolic sets.
-

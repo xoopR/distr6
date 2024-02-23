@@ -60,4 +60,4 @@ Normal$new(mean = 2, var = 2, sd = 3, prec = 4)
 
 ## Summary
 
-In this tutorial we looked at constructing a distribution with different parameterisations. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/parameters.html) we look at getting and setting parameters and how this functions with your chosen parameterisation.
+In this tutorial we looked at constructing a distribution with different parameterisations. In the [next tutorial](https://xoopr.github.io/distr6/articles/webs/parameters.html) we look at getting and setting parameters and how this functions with your chosen parameterisation.

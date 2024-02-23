@@ -72,7 +72,7 @@ ExoticStatistics$set("public", "survival", function(x1, log.p = FALSE) {
 })
 ```
 
-Note the use of `private$.isCdf`, this checks to see if the `cdf` method is defined in the `Distribution`. Remember that every `Distribution` object always have public d/p/q/r methods defined but do not necessarily have a private d/p/q/r method which actually does all the work. Therefore every `Distribution` includes flags for whether or not the d/p/q/r method is defined. To test this yourself, create a custom distribution object with a pdf only, and see what happens when you call the `cdf` method (it will return NULL). 
+Note the use of `private$.isCdf`, this checks to see if the `cdf` method is defined in the `Distribution`. Remember that every `Distribution` object always have public d/p/q/r methods defined but do not necessarily have a private d/p/q/r method which actually does all the work. Therefore every `Distribution` includes flags for whether or not the d/p/q/r method is defined. To test this yourself, create a custom distribution object with a pdf only, and see what happens when you call the `cdf` method (it will return NULL).
 
 Therefore the use of `private$.isCdf` tells the decorator whether it can use analytical results or if numeric integration is required.
 
@@ -82,11 +82,11 @@ Note: if the user has already decorated their distribution with `FunctionImputat
 
 1. Decorators are simple to implement, just define a new class inheriting from `DistributionDecorator`
 2. Add as many public methods as you want, but remember to include messages for numerical integration
-3. Make use of the private `.isCdf`, `.isPdf`, `.isQuantile`, `.isRand` methods to exploit analytical results. 
+3. Make use of the private `.isCdf`, `.isPdf`, `.isQuantile`, `.isRand` methods to exploit analytical results.
 
 
 ## Extension Guidelines
 
-* [SDistribution](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html)
-* [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
-* [Wrapper](https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html)
+* [SDistribution](https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html)
+* [Kernel](https://xoopr.github.io/distr6/articles/webs/create_kernel.html)
+* [Wrapper](https://xoopr.github.io/distr6/articles/webs/create_wrapper.html)

@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In the [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we evaluated the density, distribution and quantile functions from a Standard Normal distributions. As well as sampling from this distribution and accessing various statistical results. In this tutorial we cover how to access distribution properties and traits.
+In the [previous tutorial](https://xoopr.github.io/distr6/articles/webs/statistical_methods.html) we evaluated the density, distribution and quantile functions from a Standard Normal distributions. As well as sampling from this distribution and accessing various statistical results. In this tutorial we cover how to access distribution properties and traits.
 
 ## Properties vs Traits
 
@@ -22,7 +22,7 @@ Before discussing how to actually view properties and traits it is worth underst
 
 ## Traits
 
-In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of "continuous", "discrete" or "mixture", this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then '0' is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html)). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).
+In distr6 we refer to three traits: type, valueSupport and variateForm. The distribution type is the set of values theoretically be produced from the density function. Usually these are one of, the set of Reals, the set of Positive Reals, the set of Integers. valueSupport is one of "continuous", "discrete" or "mixture", this tells us what values the distribution can take as an input. Continuous distributions can take any (usually) real-valued input, discrete distributions can only take integers as inputs, and mixtures can take a combination of the two. We use the convention in distr6 that if a non-integer is passed to a discrete distribution then '0' is returned without error. Finally variateForm refers to the distribution being one of univariate, multivariate or matrixvariate. Currently most distributions in distr6 are univariate but we have a few multivariates implemented (see the [next tutorial](https://xoopr.github.io/distr6/articles/webs/multivariates.html)). If a distribution is univariate then it requires only one point to be evaluated, where as a multivariate distribution requires multiple points (a matrixvariate distribution requires a whole matrix!).
 
 To view all the traits of the Normal distribution, call the method `traits()`,
 ```{r}
@@ -60,8 +60,4 @@ N$description
 
 ## Summary
 
-In this tutorial we covered the difference between properties and traits, how to call properties and traits as a list or as individual items, and finally distribution variables. Remember you don't have to learn all these method and variable names off by heart, it's all listed in every distribution help page. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/multivariates.html) we turn to multivariate distributions.
-
-
-
-
+In this tutorial we covered the difference between properties and traits, how to call properties and traits as a list or as individual items, and finally distribution variables. Remember you don't have to learn all these method and variable names off by heart, it's all listed in every distribution help page. In the [next tutorial](https://xoopr.github.io/distr6/articles/webs/multivariates.html) we turn to multivariate distributions.

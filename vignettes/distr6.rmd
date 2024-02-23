@@ -8,7 +8,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with distribution construction, full inheritance and more complex design patterns. The API is built to be scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://alan-turing-institute.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://alan-turing-institute.github.io/distr6/index.html) covers more complex use-cases including composite distributions and decorators for numeric methods.
+distr6 is a unified, self-contained and scalable interface to probability distributions in R. Making use of the R6 paradigm, distr6 implements a fully object-oriented (OO) interface complete with distribution construction, full inheritance and more complex design patterns. The API is built to be scalable and intuitive, ensuring that every distribution has the same interface and that more complex properties are abstracted from the core functionality. A full set of tutorials can be found [here](https://xoopr.github.io/distr6/index.html). In this introductory vignette we briefly demonstrate how to construct a distribution, view and edit its parameters and evaluate different in-built methods. The [website](https://xoopr.github.io/distr6/index.html) covers more complex use-cases including composite distributions and decorators for numeric methods.
 
 
 ## Getting Started
@@ -80,7 +80,7 @@ N$traits
 ```
 
 ### d/p/q/r
-distr6 is intended not to replace R stats distributions but to be a different way of interfacing 
+distr6 is intended not to replace R stats distributions but to be a different way of interfacing
 them. All distributions in R stats can be found in distr6 and all their d/p/q/r functions which
 refer to density/cumulative distribution/quantile/random are all available in distr6. Continuing
 our Normal distribution example:
@@ -142,6 +142,6 @@ head(listDistributions(filter = list(VaLueSupport = "continuous", package = "ext
 
 ## Further Documentation
 
- * [Tutorials](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html)
- * [Extension guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html)
- * [Project Wiki](https://github.com/alan-turing-institute/distr6/wiki)
+ * [Tutorials](https://xoopr.github.io/distr6/articles/webs/intro_to_r6.html)
+ * [Extension guidelines](https://xoopr.github.io/distr6/articles/webs/preliminaries.html)
+ * [Project Wiki](https://github.com/xoopr/distr6/wiki)

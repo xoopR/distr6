@@ -24,6 +24,6 @@
 #'
 #' And for more advanced usage see the complete tutorials at
 #'
-#' \href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html} #nolint
+#' \href{https://xoopr.github.io/distr6/index.html}{https://xoopr.github.io/distr6/index.html} #nolint
 #'
 "_PACKAGE"

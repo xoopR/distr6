@@ -18,7 +18,7 @@ This tutorial assumes that you have a good knowledge of R6 and so we will not be
 
 ## SDistribution Class
 
-All implemented probability distributions (excluding Kernels) in distr6 inherit from the `SDistribution` class. This means they share a common interface. The only differences between these distributions is that some will have methods missing as no analytic results are available. See the [uml diagram](https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png) for an overview of how this all fits in together. A core design principle in distr6 is that only analytical methods are defined in the SDistribution child classes, all numerical results are available through decorators. See the [decorators](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) tutorial for more information on decorators and the [analytical and numerical](https://alan-turing-institute.github.io/distr6/articles/webs/analytic_and_numeric_methods.html) article for further discussions on analytical and numerical methods. The summary is that when creating your own SDistribution class, please do not put any numerical methods in the core interface, if a closed form expression cannot be found, omit the method entirely and it can be imputed with a decorator. If your desired method is not available in one of our decorators but you think it is useful, see the [creating a decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html) extension guidelines.
+All implemented probability distributions (excluding Kernels) in distr6 inherit from the `SDistribution` class. This means they share a common interface. The only differences between these distributions is that some will have methods missing as no analytic results are available. See the [uml diagram](https://raw.githubusercontent.com/wiki/xoopr/distr6/images/uml.png) for an overview of how this all fits in together. A core design principle in distr6 is that only analytical methods are defined in the SDistribution child classes, all numerical results are available through decorators. See the [decorators](https://xoopr.github.io/distr6/articles/webs/decorators.html) tutorial for more information on decorators and the [analytical and numerical](https://xoopr.github.io/distr6/articles/webs/analytic_and_numeric_methods.html) article for further discussions on analytical and numerical methods. The summary is that when creating your own SDistribution class, please do not put any numerical methods in the core interface, if a closed form expression cannot be found, omit the method entirely and it can be imputed with a decorator. If your desired method is not available in one of our decorators but you think it is useful, see the [creating a decorator](https://xoopr.github.io/distr6/articles/webs/create_decorator.html) extension guidelines.
 
 ## Creating an SDistribution
 
@@ -77,7 +77,7 @@ Normal$set("public", "mgf", function(t){
 
 Note:
 
-1. Methods that require parameters use the `self` keyword and the `getParameterValue` method, we looked at this in the [custom distribution tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html)
+1. Methods that require parameters use the `self` keyword and the `getParameterValue` method, we looked at this in the [custom distribution tutorial](https://xoopr.github.io/distr6/articles/webs/custom_distributions.html)
 2. The arguments to the methods are not optional, they must have the names given in the `?SDistribution` help page, this ensures that the automated S3 dispatch methods run correctly
 
 ### The Constructor
@@ -165,6 +165,6 @@ In a separate script called getParameterSet.R we have the generic and dispatch m
 
   ## Extension Guidelines
 
-  * [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
-  * [Wrapper](https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html)
-  * [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)
+  * [Kernel](https://xoopr.github.io/distr6/articles/webs/create_kernel.html)
+  * [Wrapper](https://xoopr.github.io/distr6/articles/webs/create_wrapper.html)
+  * [Decorator](https://xoopr.github.io/distr6/articles/webs/create_decorator.html)

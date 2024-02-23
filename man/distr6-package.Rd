@@ -31,14 +31,14 @@ To learn more about distr6, start with the distr6 vignette:
 
 And for more advanced usage see the complete tutorials at
 
-\href{https://alan-turing-institute.github.io/distr6/index.html}{https://alan-turing-institute.github.io/distr6/index.html} #nolint
+\href{https://xoopr.github.io/distr6/index.html}{https://xoopr.github.io/distr6/index.html} #nolint
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://alan-turing-institute.github.io/distr6/}
-  \item \url{https://github.com/alan-turing-institute/distr6/}
-  \item Report bugs at \url{https://github.com/alan-turing-institute/distr6/issues}
+  \item \url{https://xoopr.github.io/distr6/}
+  \item \url{https://github.com/xoopr/distr6/}
+  \item Report bugs at \url{https://github.com/xoopr/distr6/issues}
 }
 
 }

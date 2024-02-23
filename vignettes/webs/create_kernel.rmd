@@ -17,7 +17,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ## Kernel Class
 
 Similarly to implemented probability distributions, implemented kernels all inherit from a single
-class 'kernel', which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png)).  But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
+class 'kernel', which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/xoopr/distr6/images/uml.png)).  But this is a much simpler class with reduced methods and many of these return the same result and are therefore defined in the `kernel` parent class. For every kernel the following is true
 
 * `kernel$mean()` == 0
 * `kernel$median()` == 0
@@ -124,6 +124,6 @@ Kernels are much simpler to extend than SDistributions. Just remember the follow
 
 ## Extension Guidelines
 
-* [SDistribution](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html)
-* [Wrapper](https://alan-turing-institute.github.io/distr6/articles/webs/create_wrapper.html)
-* [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)
+* [SDistribution](https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html)
+* [Wrapper](https://xoopr.github.io/distr6/articles/webs/create_wrapper.html)
+* [Decorator](https://xoopr.github.io/distr6/articles/webs/create_decorator.html)

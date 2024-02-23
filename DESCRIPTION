@@ -87,9 +87,9 @@ Description: An R6 object oriented distributions package. Unified
     Normal distribution and Michael et al. (1976) <doi:10.2307/2683801>
     for sampling the Wald distribution.
 License: MIT + file LICENSE
-URL: https://alan-turing-institute.github.io/distr6/,
-    https://github.com/alan-turing-institute/distr6/
-BugReports: https://github.com/alan-turing-institute/distr6/issues
+URL: https://xoopr.github.io/distr6/,
+    https://github.com/xoopr/distr6/
+BugReports: https://github.com/xoopr/distr6/issues
 Imports:
     checkmate,
     data.table,

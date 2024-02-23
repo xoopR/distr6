@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-This document is for understanding how and when distr6 uses analytical or numerical results. For a tutorial on how to use decorators, [see here](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html).
+This document is for understanding how and when distr6 uses analytical or numerical results. For a tutorial on how to use decorators, [see here](https://xoopr.github.io/distr6/articles/webs/decorators.html).
 
 distr6 operates under a strict rule that implemented distributions, of class `SDistribution`, and similarly implemented kernels, of class `Kernel`, should only contain analytical methods. This ensures that all results are as precise as possible and ensure optimal efficiency.
 
@@ -63,8 +63,4 @@ Finally, even if an analytical expression for `expectation` exists, the `CoreSta
 
 
 
-See the [decorators tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/decorators.html) for details on how to decorate a Distribution.
-
-
-
-
+See the [decorators tutorial](https://xoopr.github.io/distr6/articles/webs/decorators.html) for details on how to decorate a Distribution.

@@ -31,7 +31,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/s3_piping.html) introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.
+The [previous tutorial](https://xoopr.github.io/distr6/articles/webs/s3_piping.html) introduced S3 and piping into distr6, allowing different approaches to calling R6 methods. In this tutorial we take a look at a big feature of distr6, decorators.
 
 Note: Decorators in distr6 are still maturing, this means the API is still subject to minor changes and the internal computations may be improved, therefore we are aware performance may be sub-optimal.
 
@@ -91,7 +91,7 @@ N$pdfPNorm(2,0,4)
 
 ### FunctionImputation
 
-The final implemented decorator is used to impute missing d/p/q/r methods. We will return to the `FunctionImputation` decorator in a [future tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
+The final implemented decorator is used to impute missing d/p/q/r methods. We will return to the `FunctionImputation` decorator in a [future tutorial](https://xoopr.github.io/distr6/articles/webs/custom_distributions.html) which looks at constructing custom distributions.
 
 ## How to Decorate
 
@@ -113,6 +113,6 @@ And that's all there is to it! If you forget which decorators are available, jus
 
 ## Summary
 
-In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing d/p/q/r functions. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) we look at the next big feature in distr6, wrappers.
+In this tutorial we looked at decorators in distr6 to obtain numeric results, methods for statistical modelling and imputation methods for missing d/p/q/r functions. In the [next tutorial](https://xoopr.github.io/distr6/articles/webs/wrappers.html) we look at the next big feature in distr6, wrappers.
 
 ## References

@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-The [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html) introduced wrappers in distr6. This final tutorial puts everything we've learnt together to create your own custom distribution object (this is not the same as creating a new class!). All distributions implemented in distr6 inherit from class `SDistribution` this tells you that they are the 'special distributions' that we have implemented. `SDistribution` is an 'abstract' class, this means it can't be constructed to make a `SDistribution` object, however the `Distribution` class can be.
+The [previous tutorial](https://xoopr.github.io/distr6/articles/webs/wrappers.html) introduced wrappers in distr6. This final tutorial puts everything we've learnt together to create your own custom distribution object (this is not the same as creating a new class!). All distributions implemented in distr6 inherit from class `SDistribution` this tells you that they are the 'special distributions' that we have implemented. `SDistribution` is an 'abstract' class, this means it can't be constructed to make a `SDistribution` object, however the `Distribution` class can be.
 
 ## Constructing a Custom Distribution
 
@@ -136,8 +136,8 @@ U$survivalPNorm(3, 2, 6)
 
 These tutorials have covered everything from the basics of constructing an implemented `SDistribution` right the way through, accessing and setting parameters, analysis distributions, manipulating them with decorators and wrappers, and finally adding your own custom distribution and using decorators to analyse it. Everything we have covered also applies to the Kernels in distr6, although these have less functionality, to see which are implemented run `listKernels()`.
 
-The [Extension Guidelines](https://alan-turing-institute.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/alan-turing-institute/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
+The [Extension Guidelines](https://xoopr.github.io/distr6/articles/webs/preliminaries.html) explain how to implement your own SDistribution, Kernel, Decorator or Wrapper and the Appendices include discussions about OOP, R6, C vs. R implementation, the current API lifecycle and other design decisions. The [project wiki](https://github.com/xoopr/distr6/wiki) includes design documentation and contributor guidelines, please read these before making a pull request.
 
-We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise an issue](https://github.com/alan-turing-institute/distr6/issues).
+We hope you find distr6 intuitive to use but if you have any questions or want to report a bug, please don't hesitate to [raise an issue](https://github.com/xoopr/distr6/issues).
 
 Good luck and happy coding!

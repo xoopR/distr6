@@ -14,7 +14,7 @@ set.seed(42)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-In our [previous tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them. Parameters are handled by [param6](https://cran.r-project.org/package=param6), full documentation can be found at the package [website](https://xoopr.github.io/param6/).
+In our [previous tutorial](https://xoopr.github.io/distr6/articles/webs/constructing_a_distribution.html) we constructed a Normal distribution with a variety of parameterisations. Now we will look at how to access the parameters of the distribution and how to update them. Parameters are handled by [param6](https://cran.r-project.org/package=param6), full documentation can be found at the package [website](https://xoopr.github.io/param6/).
 
 ## Accessing Parameters
 
@@ -72,4 +72,4 @@ N$parameters()
 
 ## Summary
 
-In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the d/p/q/r functions.
+In this tutorial we looked at getting and setting parameters for the Normal distribution. In the [next tutorial](https://xoopr.github.io/distr6/articles/webs/statistical_methods.html) we look at accessing mathematical and statistical methods including the d/p/q/r functions.

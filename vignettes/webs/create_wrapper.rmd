@@ -16,7 +16,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## DistributionWrapper Class
 
-Wrappers may the hardest class to extend in distr6, simply due to the fact that there are no set rules for what can and can't go in a wrapper. Every implemented wrapper inherits from the `DistributionWrapper` class which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/alan-turing-institute/distr6/images/uml.png)). The `DistributionWrapper` class introduces its own constructor, the `wrappedModels` method and overloads the `setParameterValue` method. We will briefly discuss why these three methods are important to all implemented methods.
+Wrappers may the hardest class to extend in distr6, simply due to the fact that there are no set rules for what can and can't go in a wrapper. Every implemented wrapper inherits from the `DistributionWrapper` class which in turn inherits from `Distribution` (see the [uml diagram](https://raw.githubusercontent.com/wiki/xoopr/distr6/images/uml.png)). The `DistributionWrapper` class introduces its own constructor, the `wrappedModels` method and overloads the `setParameterValue` method. We will briefly discuss why these three methods are important to all implemented methods.
 
 ### The Constructor
 
@@ -49,7 +49,7 @@ We saw above the use of `wrappedModels`, this is a simple accessor found in all 
 
 ## Creating a Wrapper
 
-Now we have a background of the `DistributionWrapper` class we can discuss actually creating a wrapper. As discussed in the [wrappers tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/wrappers.html), there are multiple types of wrappers, each will be implemented slightly differently. Therefore we're just going to look at one quick example from each example and point you to the source code for further examples.
+Now we have a background of the `DistributionWrapper` class we can discuss actually creating a wrapper. As discussed in the [wrappers tutorial](https://xoopr.github.io/distr6/articles/webs/wrappers.html), there are multiple types of wrappers, each will be implemented slightly differently. Therefore we're just going to look at one quick example from each example and point you to the source code for further examples.
 
 ### TruncatedDistribution
 
@@ -92,7 +92,7 @@ All wrappers should pass the following to the parent-class constructor:
 3. distlist - The named list of distributions (even if just one)
 4. description - Optional, updated description after wrapping
 
-And then any other arguments that may be changed by wrapping, remember that any arguments passed to the `DistributionWrapper` constructor are in turn passed to the `Distribution` constructor, hence we can think of implemented wrappers as custom distributions. Read the [custom distribution tutorial](https://alan-turing-institute.github.io/distr6/articles/webs/custom_distributions.rmd) for more information about the arguments passed to the `Distribution` constructor.
+And then any other arguments that may be changed by wrapping, remember that any arguments passed to the `DistributionWrapper` constructor are in turn passed to the `Distribution` constructor, hence we can think of implemented wrappers as custom distributions. Read the [custom distribution tutorial](https://xoopr.github.io/distr6/articles/webs/custom_distributions.rmd) for more information about the arguments passed to the `Distribution` constructor.
 
 Notice also that the new `pdf` and `cdf` methods reference the original model using the `wrappedModels` method. This will generally be the case with all wrappers.
 
@@ -130,7 +130,7 @@ MixtureDistribution$set("private",".weights",numeric(0))
 
 Again this is a shortened version of the code. Note the following in the above
 
-1. As multiple distributions are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://alan-turing-institute.github.io/distr6/articles/webs/intro_to_r6.html)).
+1. As multiple distributions are wrapped we first call `makeUniqueDistributions`, a helper function that ensures the IDs of the distributions are unique. This automatically clones all distributions passed to it to prevent the R6 copying problem ([see here](https://xoopr.github.io/distr6/articles/webs/intro_to_r6.html)).
 2. We add a private variable `.weights` which is accessed in the pdf/cdf. In general we allow additional private variables and methods to be added to wrappers, but not public ones.
 3. The type and support are updated to account for multiple distributions.
 4. All implemented wrappers inherit from `DistributionWrapper` and again `lock_objects = FALSE`
@@ -143,6 +143,6 @@ Again this is a shortened version of the code. Note the following in the above
 
 ## Extension Guidelines
 
-* [SDistribution](https://alan-turing-institute.github.io/distr6/articles/webs/create_sdistribution.html)
-* [Kernel](https://alan-turing-institute.github.io/distr6/articles/webs/create_kernel.html)
-* [Decorator](https://alan-turing-institute.github.io/distr6/articles/webs/create_decorator.html)
+* [SDistribution](https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html)
+* [Kernel](https://xoopr.github.io/distr6/articles/webs/create_kernel.html)
+* [Decorator](https://xoopr.github.io/distr6/articles/webs/create_decorator.html)
