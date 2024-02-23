@@ -318,7 +318,7 @@ assertNegativeSkew <- function() {}
 
 makeChecks(
   assertionName = "NegativeSkew",
-  cond = skewType(object$skewness()) == "Negative Skew",
+  cond = skewType(object$skewness()) == "negative skew",
   defaulterrormsg = paste(object$short_name, "is not negative skew"),
   pos = environment()
 )
@@ -345,7 +345,7 @@ assertPositiveSkew <- function() {}
 
 makeChecks(
   assertionName = "PositiveSkew",
-  cond = skewType(object$skewness()) == "Positive Skew",
+  cond = skewType(object$skewness()) == "positive skew",
   defaulterrormsg = paste(object$short_name, "is not positive skew"),
   pos = environment()
 )
@@ -373,7 +373,7 @@ assertNoSkew <- function() {}
 
 makeChecks(
   assertionName = "NoSkew",
-  cond = skewType(object$skewness()) == "No Skew",
+  cond = skewType(object$skewness()) == "no skew",
   defaulterrormsg = paste(object$short_name, "is not no skew"),
   pos = environment()
 )
