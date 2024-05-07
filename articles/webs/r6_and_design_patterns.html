@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
 <script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -146,7 +146,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>R6 and Design Patterns</h1>
             
-            <h4 data-toc-skip class="date">2024-02-23</h4>
+            <h4 data-toc-skip class="date">2024-05-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/vignettes/webs/r6_and_design_patterns.rmd" class="external-link"><code>vignettes/webs/r6_and_design_patterns.rmd</code></a></small>
       <div class="hidden name"><code>r6_and_design_patterns.rmd</code></div>
@@ -257,12 +257,12 @@ well as for the <strong>abstract factory</strong> design pattern.</p>
 an <code>initialize</code> method for construction. Therefore, to make a
 class abstract we overload the <code>initialize</code> method as
 follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AbstractClass<span class="sc">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(){</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">stop</span>(<span class="fu">paste</span>(RSmisc<span class="sc">::</span><span class="fu">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> })</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># So on construction</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AbstractClass<span class="sc">$</span><span class="fu">new</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> AbstractClass<span class="sc">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(){</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">stop</span>(<span class="fu">paste</span>(RSmisc<span class="sc">::</span><span class="fu">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="sc">+</span> })</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># So on construction</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="sc">&gt;</span> AbstractClass<span class="sc">$</span><span class="fu">new</span>()</span></code></pre></div>
 <pre><code>Error in .subset2(public_bind_env, "initialize")(...) : 
   AbstractClass is an abstract class that can't be initialized.</code></pre>
 <hr>
@@ -312,20 +312,20 @@ already present in the object.</p>
 the original object is overwritten with whichever decorators were
 already added and the new decorator that is being constructed. The
 decorator object is not saved to local memory.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>DistributionDecorator<span class="sc">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(distribution){</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">getR6Class</span>(self) <span class="sc">==</span> <span class="st">"DistributionDecorator"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="fu">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>)) <span class="co"># Defines the Abstract Decorator parent class as abstract.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  decorators <span class="ot">=</span> distribution<span class="sc">$</span><span class="fu">decorators</span>() <span class="co"># Gets decorator list from object.</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(decorators)){</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    decorators <span class="ot">=</span> <span class="fu">lapply</span>(decorators,get)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  decorators <span class="ot">=</span> <span class="fu">unique</span>(<span class="fu">c</span>(decorators,<span class="fu">get</span>(<span class="fu">getR6Class</span>(self)))) <span class="co"># Combines decorators present in the object with the current decorator to be added.</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(<span class="fu">paste0</span>(<span class="fu">substitute</span>(distribution)), Distribution<span class="sc">$</span><span class="fu">new</span>(distribution)), pos <span class="ot">=</span> .GlobalEnv<span class="er">)</span> <span class="co"># Constructs a new object via Method 1) and assigns this to the environment with the same name as the undecorated object.</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="fu">substitute</span>(distribution),<span class="st">"is now decorated with"</span>,<span class="fu">getR6Class</span>(self),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>DistributionDecorator<span class="sc">$</span><span class="fu">set</span>(<span class="st">"public"</span>,<span class="st">"initialize"</span>,<span class="cf">function</span>(distribution){</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">getR6Class</span>(self) <span class="sc">==</span> <span class="st">"DistributionDecorator"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="fu">getR6Class</span>(self), <span class="st">"is an abstract class that can't be initialized."</span>)) <span class="co"># Defines the Abstract Decorator parent class as abstract.</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  decorators <span class="ot">=</span> distribution<span class="sc">$</span><span class="fu">decorators</span>() <span class="co"># Gets decorator list from object.</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(decorators)){</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    decorators <span class="ot">=</span> <span class="fu">lapply</span>(decorators,get)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  }</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  decorators <span class="ot">=</span> <span class="fu">unique</span>(<span class="fu">c</span>(decorators,<span class="fu">get</span>(<span class="fu">getR6Class</span>(self)))) <span class="co"># Combines decorators present in the object with the current decorator to be added.</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">assign</span>(<span class="fu">paste0</span>(<span class="fu">substitute</span>(distribution)), Distribution<span class="sc">$</span><span class="fu">new</span>(distribution)), pos <span class="ot">=</span> .GlobalEnv<span class="er">)</span> <span class="co"># Constructs a new object via Method 1) and assigns this to the environment with the same name as the undecorated object.</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="fu">substitute</span>(distribution),<span class="st">"is now decorated with"</span>,<span class="fu">getR6Class</span>(self),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>})</span></code></pre></div>
 <hr>
 </div>
 <div class="section level3">
@@ -404,7 +404,7 @@ by editing its pdf and/or cdf)</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-GoF" class="csl-entry">
 Gamma, Erich, Richard Helm, Ralph Johnson, and John Vlissides. 1994.
 <span>“Design Patterns: Elements of Reusable Object-Oriented
@@ -431,7 +431,7 @@ Software.”</span> Addison-Wesley.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

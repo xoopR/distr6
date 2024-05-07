@@ -1,8 +1,7 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  distr6: distr6.html
   analytic_and_numeric_methods: webs/analytic_and_numeric_methods.html
   api_lifecycle: webs/api_lifecycle.html
   constructing_a_distribution: webs/constructing_a_distribution.html
@@ -12,6 +11,7 @@ articles:
   create_wrapper: webs/create_wrapper.html
   custom_distributions: webs/custom_distributions.html
   decorators: webs/decorators.html
+  distr6: distr6.html
   intro_to_r6: webs/intro_to_r6.html
   listing: webs/listing.html
   multivariates: webs/multivariates.html
@@ -22,7 +22,7 @@ articles:
   s3_piping: webs/s3_piping.html
   statistical_methods: webs/statistical_methods.html
   wrappers: webs/wrappers.html
-last_built: 2024-02-23T14:45Z
+last_built: 2024-05-07T11:09Z
 urls:
   reference: https://xoopr.github.io/distr6/reference
   article: https://xoopr.github.io/distr6/articles

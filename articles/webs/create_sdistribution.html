@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
 <script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -146,7 +146,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating an SDistribution</h1>
             
-            <h4 data-toc-skip class="date">2024-02-23</h4>
+            <h4 data-toc-skip class="date">2024-05-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/vignettes/webs/create_sdistribution.rmd" class="external-link"><code>vignettes/webs/create_sdistribution.rmd</code></a></small>
       <div class="hidden name"><code>create_sdistribution.rmd</code></div>
@@ -264,14 +264,14 @@ that the automated S3 dispatch methods run correctly</li>
 <p>The constructor for all SDistribution objects looks the same, below
 is the constructor for the Normal distribution, which we will talk
 through as an example.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(<span class="at">mean =</span> <span class="cn">NULL</span>, <span class="at">var =</span> <span class="cn">NULL</span>, <span class="at">sd =</span> <span class="cn">NULL</span>, <span class="at">prec =</span> <span class="cn">NULL</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">decorators =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">decorators =</span> decorators,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">support =</span> Reals<span class="sc">$</span><span class="fu">new</span>(),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">symmetry =</span> <span class="st">"sym"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> Reals<span class="sc">$</span><span class="fu">new</span>()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(<span class="at">mean =</span> <span class="cn">NULL</span>, <span class="at">var =</span> <span class="cn">NULL</span>, <span class="at">sd =</span> <span class="cn">NULL</span>, <span class="at">prec =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                      <span class="at">decorators =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">decorators =</span> decorators,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">support =</span> Reals<span class="sc">$</span><span class="fu">new</span>(),</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">symmetry =</span> <span class="st">"sym"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">type =</span> Reals<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Note the following:</p>
 <ol style="list-style-type: decimal">
 <li>The arguments to the constructor include all possible
@@ -381,7 +381,7 @@ class. In summary the different components include</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
