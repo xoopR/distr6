@@ -174,9 +174,7 @@ And GitHub
 remotes::install_github("xoopR/distr6")
 ```
 
-distr6 [will not be on
-CRAN](https://twitter.com/RaphaelS101/status/1506321623250571265) for
-the forseeable future.
+distr6 will not be on CRAN.
 
 ## Future Plans
 
