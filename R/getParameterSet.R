@@ -335,7 +335,7 @@ getParameterSet.Logistic <- function(object, ...) {
                         gsub("scale", "sd", names(scales)))
       } else {
         scales <- setNames(as.list(unlist(sds) * sqrt(3) / pi),
-                        gsub("scale", "sd", names(scales)))
+                        gsub("sd", "scale", names(sds)))
       }
 
       unique_nlist(c(scales, sds, x))
