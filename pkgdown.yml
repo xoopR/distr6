@@ -1,29 +1,28 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
-  analytic_and_numeric_methods: webs/analytic_and_numeric_methods.html
-  api_lifecycle: webs/api_lifecycle.html
-  constructing_a_distribution: webs/constructing_a_distribution.html
-  create_decorator: webs/create_decorator.html
-  create_kernel: webs/create_kernel.html
-  create_sdistribution: webs/create_sdistribution.html
-  create_wrapper: webs/create_wrapper.html
-  custom_distributions: webs/custom_distributions.html
-  decorators: webs/decorators.html
+  webs/analytic_and_numeric_methods: webs/analytic_and_numeric_methods.html
+  webs/api_lifecycle: webs/api_lifecycle.html
+  webs/constructing_a_distribution: webs/constructing_a_distribution.html
+  webs/create_decorator: webs/create_decorator.html
+  webs/create_kernel: webs/create_kernel.html
+  webs/create_sdistribution: webs/create_sdistribution.html
+  webs/create_wrapper: webs/create_wrapper.html
+  webs/custom_distributions: webs/custom_distributions.html
+  webs/decorators: webs/decorators.html
   distr6: distr6.html
-  intro_to_r6: webs/intro_to_r6.html
-  listing: webs/listing.html
-  multivariates: webs/multivariates.html
-  parameters: webs/parameters.html
-  preliminaries: webs/preliminaries.html
-  properties_traits: webs/properties_traits.html
-  r6_and_design_patterns: webs/r6_and_design_patterns.html
-  s3_piping: webs/s3_piping.html
-  statistical_methods: webs/statistical_methods.html
-  wrappers: webs/wrappers.html
-last_built: 2024-05-07T11:09Z
+  webs/intro_to_r6: webs/intro_to_r6.html
+  webs/listing: webs/listing.html
+  webs/multivariates: webs/multivariates.html
+  webs/parameters: webs/parameters.html
+  webs/preliminaries: webs/preliminaries.html
+  webs/properties_traits: webs/properties_traits.html
+  webs/r6_and_design_patterns: webs/r6_and_design_patterns.html
+  webs/s3_piping: webs/s3_piping.html
+  webs/statistical_methods: webs/statistical_methods.html
+  webs/wrappers: webs/wrappers.html
+last_built: 2024-07-08T13:48Z
 urls:
   reference: https://xoopr.github.io/distr6/reference
   article: https://xoopr.github.io/distr6/articles
-

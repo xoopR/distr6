@@ -7,7 +7,7 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
       <ul class="nav navbar-nav"><li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Basic
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -57,7 +57,7 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Advanced
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -73,7 +73,7 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Appendices
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -92,25 +92,25 @@ mixturiseVector(lapply(mds, as.VectorDistribution))."><meta property="og:image" 
 <li>
   <a href="https://github.com/RaphaelS1/distr6" class="external-link">
     <span class="fa fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Mix Matrix Distributions into a new Matdist</h1>
-    <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/HEAD/R/mixMatrix.R" class="external-link"><code>R/mixMatrix.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/xoopr/distr6/blob/main/R/mixMatrix.R" class="external-link"><code>R/mixMatrix.R</code></a></small>
     <div class="hidden name"><code>mixMatrix.Rd</code></div>
     </div>
 
@@ -128,12 +128,14 @@ Assumes Matrix distributions have the same number of columns, otherwise use
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>mds</dt>
+
+
+<dl><dt id="arg-mds">mds<a class="anchor" aria-label="anchor" href="#arg-mds"></a></dt>
 <dd><p><code>(list())</code><br>
 List of <a href="Matdist.html">Matdist</a> or <a href="Arrdist.html">Arrdist</a>s, should have same number of rows and columns.</p></dd>
 
 
-<dt>weights</dt>
+<dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
 <dd><p><code>(character(1)|numeric())</code><br>
 Individual distribution weights. Default uniform weighting (<code>"uniform"</code>).</p></dd>
 
@@ -198,16 +200,16 @@ Also works for <a href="Arrdist.html">Arrdist</a>s, where we convert these to <a
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: 'c08037a20302b0f7fe5a1b7060957f04',
     indexName: 'distr6',
     inputSelector: 'input#search-input.form-control',

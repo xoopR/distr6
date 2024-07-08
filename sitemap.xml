@@ -1,477 +1,161 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://xoopr.github.io/distr6/404.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/PULL_REQUEST_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/distr6.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/analytic_and_numeric_methods.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/api_lifecycle.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/constructing_a_distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/create_decorator.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/create_kernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/create_wrapper.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/custom_distributions.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/decorators.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/intro_to_r6.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/listing.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/multivariates.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/preliminaries.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/properties_traits.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/r6_and_design_patterns.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/s3_piping.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/statistical_methods.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/articles/webs/wrappers.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/index.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Arcsine.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Arrdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Bernoulli.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Beta.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/BetaNoncentral.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Binomial.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Categorical.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Cauchy.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/ChiSquared.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/ChiSquaredNoncentral.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Convolution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/CoreStatistics.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Cosine.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Degenerate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Dirichlet.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/DiscreteUniform.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/DistributionDecorator.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/DistributionWrapper.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Empirical.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/EmpiricalMV.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Epanechnikov.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Erlang.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/ExoticStatistics.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Exponential.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/FDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/FDistributionNoncentral.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Frechet.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/FunctionImputation.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Gamma.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Geometric.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Gompertz.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Gumbel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/HuberizedDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Hypergeometric.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/InverseGamma.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Kernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Laplace.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Logarithmic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Logistic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/LogisticKernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Loglogistic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Lognormal.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Matdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/MixtureDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Multinomial.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/MultivariateNormal.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/NegativeBinomial.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Normal.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/NormalKernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Pareto.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Poisson.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/ProductDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Quartic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Rayleigh.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/SDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/ShiftedLoglogistic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Sigmoid.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Silverman.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/StudentT.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/StudentTNoncentral.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Triangular.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/TriangularKernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Tricube.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Triweight.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/TruncatedDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Uniform.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/UniformKernel.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Wald.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/Weibull.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/WeightedDiscrete.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/as.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/as.MixtureDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/as.ProductDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/as.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/c.Arrdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/c.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/c.Matdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/decorate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/distr6-deprecated.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/distr6-package.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/distr6News.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/distrSimulate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/dparse.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/dstr.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/exkurtosisType.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/generalPNorm.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/gprm.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/huberize.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/length.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/lines.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/listDecorators.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/listDistributions.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/listKernels.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/listWrappers.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/makeUniqueDistributions.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/mixMatrix.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/mixturiseVector.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/plot.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/plot.Matdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/plot.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/qqplot.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/rep.Distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/simulateEmpiricalDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/skewType.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/sub-.Arrdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/sub-.Matdist.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/sub-.VectorDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testContinuous.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testDiscrete.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testDistribution.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testDistributionList.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testLeptokurtic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testMatrixvariate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testMesokurtic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testMixture.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testMultivariate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testNegativeSkew.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testNoSkew.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testParameterSet.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testParameterSetList.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testPlatykurtic.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testPositiveSkew.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testSymmetric.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/testUnivariate.html</loc>
-  </url>
-  <url>
-    <loc>https://xoopr.github.io/distr6/reference/truncate.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://xoopr.github.io/distr6/404.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/CONTRIBUTING.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/LICENSE-text.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/LICENSE.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/PULL_REQUEST_TEMPLATE.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/distr6.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/index.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/analytic_and_numeric_methods.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/api_lifecycle.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/constructing_a_distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/create_decorator.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/create_kernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/create_sdistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/create_wrapper.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/custom_distributions.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/decorators.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/intro_to_r6.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/listing.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/multivariates.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/parameters.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/preliminaries.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/properties_traits.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/r6_and_design_patterns.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/s3_piping.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/statistical_methods.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/articles/webs/wrappers.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/authors.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/index.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/news/index.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Arcsine.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Arrdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Bernoulli.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Beta.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/BetaNoncentral.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Binomial.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Categorical.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Cauchy.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/ChiSquared.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/ChiSquaredNoncentral.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Convolution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/CoreStatistics.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Cosine.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Degenerate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Dirichlet.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/DiscreteUniform.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/DistributionDecorator.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/DistributionWrapper.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Empirical.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/EmpiricalMV.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Epanechnikov.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Erlang.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/ExoticStatistics.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Exponential.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/FDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/FDistributionNoncentral.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Frechet.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/FunctionImputation.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Gamma.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Geometric.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Gompertz.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Gumbel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/HuberizedDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Hypergeometric.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/InverseGamma.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Kernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Laplace.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Logarithmic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Logistic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/LogisticKernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Loglogistic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Lognormal.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Matdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/MixtureDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Multinomial.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/MultivariateNormal.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/NegativeBinomial.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Normal.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/NormalKernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Pareto.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Poisson.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/ProductDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Quartic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Rayleigh.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/SDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/ShiftedLoglogistic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Sigmoid.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Silverman.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/StudentT.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/StudentTNoncentral.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Triangular.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/TriangularKernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Tricube.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Triweight.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/TruncatedDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Uniform.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/UniformKernel.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/VectorDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Wald.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/Weibull.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/WeightedDiscrete.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/as.Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/as.MixtureDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/as.ProductDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/as.VectorDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/c.Arrdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/c.Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/c.Matdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/decorate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/distr6-deprecated.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/distr6-package.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/distr6News.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/distrSimulate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/dparse.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/dstr.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/exkurtosisType.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/generalPNorm.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/gprm.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/huberize.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/index.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/length.VectorDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/lines.Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/listDecorators.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/listDistributions.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/listKernels.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/listWrappers.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/makeUniqueDistributions.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/mixMatrix.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/mixturiseVector.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/plot.Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/plot.Matdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/plot.VectorDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/qqplot.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/rep.Distribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/simulateEmpiricalDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/skewType.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/sub-.Arrdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/sub-.Matdist.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/sub-.VectorDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testContinuous.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testDiscrete.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testDistribution.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testDistributionList.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testLeptokurtic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testMatrixvariate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testMesokurtic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testMixture.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testMultivariate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testNegativeSkew.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testNoSkew.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testParameterSet.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testParameterSetList.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testPlatykurtic.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testPositiveSkew.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testSymmetric.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/testUnivariate.html</loc></url>
+<url><loc>https://xoopr.github.io/distr6/reference/truncate.html</loc></url>
 </urlset>
+
