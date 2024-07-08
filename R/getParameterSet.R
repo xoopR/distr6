@@ -304,7 +304,7 @@ getParameterSet.Laplace <- function(object, ...) {
           vars <- setNames(2 * unlist(scales)^2,
                            gsub("scale", "var", names(scales)))
         } else {
-          scales <- setNames(sqrt(vars / 2),
+          scales <- setNames(sqrt(unlist(vars) / 2),
                              gsub("var", "scale", names(vars)))
         }
 
