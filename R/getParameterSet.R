@@ -662,7 +662,7 @@ getParameterSet.Weibull <- function(object, ...) {
       } else {
         scales <-
           setNames(as.list(exp(log(unlist(altscales)) / -unlist(shapes))),
-                   gsub("scale", "altscale", names(scales)))
+                   gsub("altscale", "scale", names(altscales)))
       }
 
       unique_nlist(c(scales, altscales, shapes, x))
