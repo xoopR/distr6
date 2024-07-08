@@ -304,7 +304,7 @@ getParameterSet.Laplace <- function(object, ...) {
           vars <- setNames(2 * unlist(scales)^2,
                            gsub("scale", "var", names(scales)))
         } else {
-          scales <- setNames(sqrt(vars / 2),
+          scales <- setNames(sqrt(unlist(vars) / 2),
                              gsub("var", "scale", names(vars)))
         }
 
@@ -335,7 +335,7 @@ getParameterSet.Logistic <- function(object, ...) {
                         gsub("scale", "sd", names(scales)))
       } else {
         scales <- setNames(as.list(unlist(sds) * sqrt(3) / pi),
-                        gsub("scale", "sd", names(scales)))
+                        gsub("sd", "scale", names(sds)))
       }
 
       unique_nlist(c(scales, sds, x))
@@ -662,7 +662,7 @@ getParameterSet.Weibull <- function(object, ...) {
       } else {
         scales <-
           setNames(as.list(exp(log(unlist(altscales)) / -unlist(shapes))),
-                   gsub("scale", "altscale", names(scales)))
+                   gsub("altscale", "scale", names(altscales)))
       }
 
       unique_nlist(c(scales, altscales, shapes, x))
