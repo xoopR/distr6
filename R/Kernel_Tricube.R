@@ -269,7 +269,7 @@ Tricube <- R6Class("Tricube",
             ret[i] <- 0
             }
 
-        } else if (abs(xi == 2)) {ret[i] <- 0}
+        } else if (abs(xi) == 2) {ret[i] <- 0}
       }
       return(ret)
     },
